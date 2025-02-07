@@ -28,9 +28,11 @@
   }
 }
 
-.myInfoExpanded,
-.reviewHistoryExpanded {
-  pointer-events: none;
+.expanded {
+  cursor: default;
+  &:hover {
+    transform: none;
+  }
 }
 
 .myInfoExpanded .dashboardItem:nth-child(2),

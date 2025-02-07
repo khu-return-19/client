@@ -1,7 +1,5 @@
 .myInfo {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   padding: 1.25rem;
   border: 1px solid #e0e0e0;
@@ -9,4 +7,18 @@
   background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   height: calc(100vh - 180px);
+}
+
+.myInfoInner {
+  width: 100%;
+  max-width: 60rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 }

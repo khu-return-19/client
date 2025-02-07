@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MyInfo.module.scss";
-import { MyInfoTitle, Name, CoverLetter } from "components/dashboard";
+import { MyInfoTitle, Name, CoverLetter } from "components/dashboard/myInfo";
 
 function MyInfo() {
   return (

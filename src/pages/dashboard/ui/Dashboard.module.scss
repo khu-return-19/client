@@ -1,9 +1,8 @@
 .dashboard {
   display: grid;
-  grid-template-rows: auto;
   grid-gap: 1.25rem;
   margin: 1.25rem;
-  transition: all 1.5s ease;
+  transition: all 1s ease;
 }
 
 .defaultGrid {
@@ -20,9 +19,24 @@
 
 .dashboardItem {
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 1s ease, opacity 1s ease, max-width 1s ease;
+  overflow: hidden;
+  max-width: 100%;
 
   &:hover {
     transform: scale(1.05);
   }
+}
+
+.expanded {
+  cursor: default;
+  &:hover {
+    transform: none;
+  }
+}
+
+.myInfoExpanded .dashboardItem:nth-child(2),
+.reviewHistoryExpanded .dashboardItem:nth-child(1) {
+  max-width: 0;
+  opacity: 0;
 }

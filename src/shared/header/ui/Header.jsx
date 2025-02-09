@@ -15,8 +15,10 @@ function Header() {
   return (
     <div className={styles.header}>
       <div className={styles.inner}>
-        <div className={styles.logo}>Logo</div>
-        <button className={styles.menu} onClick={handleAuth}>
+        <a href="/" className={styles.logoLink}>
+          <img className={styles.logo} src="/logo.png" alt="로고" />
+        </a>
+        <button className={styles.loginButton} onClick={handleAuth}>
           {isLoggedIn ? "로그아웃" : "로그인"}
         </button>
       </div>

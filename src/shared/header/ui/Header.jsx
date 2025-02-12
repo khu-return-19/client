@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 import axios from "axios";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const userName = "홍길동";
 
   const handleAuth = () => {
@@ -16,7 +16,7 @@ function Header() {
 
   useEffect(() => {
     axios
-      .get("https://zackinthebox.shop/give")
+      .get("https://zackinthebox.shop/give", { withCredentials: true })
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true);

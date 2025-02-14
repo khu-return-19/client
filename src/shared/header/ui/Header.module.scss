@@ -1,35 +1,44 @@
 .header {
-  height: 6.25rem;
   display: flex;
   justify-content: center;
-  padding: 0 1.25rem;
+  align-items: center;
+  height: 6.25rem;
   background-color: #0e3270;
 }
 
-.inner {
+.container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 70rem;
-  width: 100%;
+  max-width: 80rem;
 }
 
-.loginButton {
-  background-color: #007bff; /* 파란색 배경 */
-  color: white; /* 글자색 */
+.menuSection {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.menu {
+  color: white;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.authSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
   font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
 
-  &:hover {
-    background-color: #0056b3; /* 더 진한 파란색 */
-    transform: scale(1.05); /* 살짝 확대 */
-  }
-
-  &:active {
-    transform: scale(0.95); /* 클릭 시 살짝 축소 */
-  }
+.login,
+.logout {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
 }

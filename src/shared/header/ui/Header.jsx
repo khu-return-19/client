@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 import axios from "axios";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const userName = "홍길동";
 
   const handleAuth = () => {
@@ -44,8 +44,8 @@ function Header() {
           <a href="/profile" className={styles.menu}>
             내정보
           </a>
-          <a href="/" className={styles.menu}>
-            자기소개서 분석
+          <a href="/analysis" className={styles.menu}>
+            분석 보고서
           </a>
           {isLoggedIn ? (
             <div className={styles.authSection}>

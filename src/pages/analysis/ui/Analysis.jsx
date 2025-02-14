@@ -16,6 +16,10 @@ function Analysis() {
     navigate(`/analysis/${analysisId}`);
   };
 
+  const handleAnalyzeClick = () => {
+    navigate("/analysis/select");
+  };
+
   const handleCheckboxChange = (analysisId) => {
     setSelectedAnalysis((prev) => {
       const newSet = new Set(prev);
@@ -67,7 +71,9 @@ function Analysis() {
             </tbody>
           </table>
           <div className={styles.buttonGroup}>
-            <div className={styles.create}>새 자기소개서 분석</div>
+            <div className={styles.create} onClick={handleAnalyzeClick}>
+              새 자기소개서 분석
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Profile.module.scss";
 import { useNavigate } from "react-router-dom";
-import ResumeModal from "shared/resumeModal/ui/ResumeModal.jsx";
+import ResumeModal from "shared/resumeModal";
 
 const mockUserInfo = {
   name: "홍길동",

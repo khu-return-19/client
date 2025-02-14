@@ -11,8 +11,8 @@ const mockUserInfo = {
 };
 
 const mockResumes = [
-  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12" },
-  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10" },
+  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
+  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10 14:11" },
 ];
 
 function Profile() {
@@ -50,6 +50,7 @@ function Profile() {
                 <th>제목</th>
                 <th>설명</th>
                 <th>최근 수정 일자</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -59,12 +60,14 @@ function Profile() {
                   <td>{resume.title}</td>
                   <td>{resume.description}</td>
                   <td>{resume.lastModified}</td>
+                  <td>
+                    <div className={styles.delete}>삭제</div>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className={styles.buttonGroup}>
-            <div className={styles.delete}>자기소개서 삭제</div>
             <div className={styles.create} onClick={openCreateModal}>
               새 자기소개서 작성
             </div>

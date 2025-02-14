@@ -1,0 +1,60 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  width: 84%;
+  height: 84%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #0e3270;
+  height: 48px;
+  padding: 10px 20px;
+  align-content: center;
+  box-sizing: border-box;
+  color: white;
+}
+
+.content {
+  background: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.body {
+  background-color: #f1f1f1;
+  height: 100%;
+  border: 1px solid #ccc;
+  padding: 8px;
+  color: #444444;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  .confirm,
+  .cancel {
+    background-color: #0e3270;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}

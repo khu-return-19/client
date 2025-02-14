@@ -4,6 +4,7 @@ import Landing from "./pages/landing";
 import Header from "./shared/header";
 import Profile from "pages/profile";
 import Resume from "pages/profile-resume";
+import Analysis from "pages/analysis";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:resumeId" element={<Resume />} />
+        <Route path="/Analysis" element={<Analysis />} />
       </Routes>
     </Router>
   );

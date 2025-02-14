@@ -44,7 +44,7 @@ function Header() {
           <a href="/profile" className={styles.menu}>
             내정보
           </a>
-          <a href="/" className={styles.menu}>
+          <a href="/analysis" className={styles.menu}>
             분석 보고서
           </a>
           {isLoggedIn ? (

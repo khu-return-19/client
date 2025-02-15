@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./Profile.module.scss";
 import { useNavigate } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
+import { ResumeDeleteModal, ResumeDeleteCompleteModal } from "components/profile";
 
 const mockUserInfo = {
   name: "홍길동",
@@ -17,14 +18,28 @@ const mockResumes = [
 
 function Profile() {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [isResumeDeleteModalOpen, setIsResumeDeleteModalOpen] = useState(false);
+  const [isResumeDeleteCompleteModalOpen, setIsResumeDeleteCompleteModalOpen] = useState(false);
+  const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
 
   const handleRowClick = (resumeId) => {
     navigate(`/profile/${resumeId}`);
   };
 
   const openCreateModal = () => {
-    setIsModalOpen(true);
+    setIsResumeModalOpen(true);
+  };
+
+  const openDeleteModal = (title) => {
+    console.log(title);
+    setSelectedResumeTitle(title);
+    setIsResumeDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    setIsResumeDeleteModalOpen(false);
+    setIsResumeDeleteCompleteModalOpen(true);
   };
 
   return (
@@ -43,30 +58,40 @@ function Profile() {
         </div>
         <div className={styles.resumesSection}>
           <div className={styles.subtitle}>나의 자기소개서</div>
-          <table className={styles.resumeTable}>
-            <thead>
-              <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>설명</th>
-                <th>최근 수정 일자</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {mockResumes.map((resume, index) => (
-                <tr key={resume.id} onClick={() => handleRowClick(resume.id)} className={styles.clickableRow}>
-                  <td>{index + 1}</td>
-                  <td>{resume.title}</td>
-                  <td>{resume.description}</td>
-                  <td>{resume.lastModified}</td>
-                  <td>
-                    <div className={styles.delete}>삭제</div>
-                  </td>
+          <div className={styles.tableContainer}>
+            <table className={styles.resumeTable}>
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>제목</th>
+                  <th>설명</th>
+                  <th>최근 수정 일자</th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {mockResumes.map((resume, index) => (
+                  <tr key={resume.id} onClick={() => handleRowClick(resume.id)} className={styles.clickableRow}>
+                    <td>{index + 1}</td>
+                    <td>{resume.title}</td>
+                    <td>{resume.description}</td>
+                    <td>{resume.lastModified}</td>
+                    <td>
+                      <div
+                        className={styles.delete}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openDeleteModal(resume.title);
+                        }}
+                      >
+                        삭제
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className={styles.buttonGroup}>
             <div className={styles.create} onClick={openCreateModal}>
               새 자기소개서 작성
@@ -75,11 +100,24 @@ function Profile() {
         </div>
       </div>
       <ResumeModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isResumeModalOpen}
+        onClose={() => setIsResumeModalOpen(false)}
         onSubmit={(data) => console.log("새 자기소개서 생성:", data)}
         mode="create"
       />
+      {isResumeDeleteModalOpen && (
+        <ResumeDeleteModal
+          onClose={() => setIsResumeDeleteModalOpen(false)}
+          title={selectedResumeTitle}
+          onDeleteConfirm={handleDeleteConfirm}
+        />
+      )}
+      {isResumeDeleteCompleteModalOpen && (
+        <ResumeDeleteCompleteModal
+          onClose={() => setIsResumeDeleteCompleteModalOpen(false)}
+          title={selectedResumeTitle}
+        />
+      )}
     </div>
   );
 }

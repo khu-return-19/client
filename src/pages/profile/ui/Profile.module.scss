@@ -47,6 +47,11 @@
   margin-bottom: 0.5rem;
 }
 
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .resumeTable {
   width: 100%;
   border-collapse: collapse;
@@ -55,10 +60,6 @@
 .clickableRow {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    //background-color: #f0f0f0;
-  }
 }
 
 .resumeTable th {

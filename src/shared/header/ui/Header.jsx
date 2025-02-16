@@ -1,32 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import axios from "axios";
+import { useAuth } from "auth/authContext";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const userName = "홍길동";
-
-  const handleAuth = () => {
-    if (isLoggedIn) {
-      setIsLoggedIn(false);
-    } else {
-      window.location.href = "https://zackinthebox.shop/oauth2/authorization/google";
-    }
-  };
-
-  useEffect(() => {
-    axios
-      .get("https://zackinthebox.shop/give", { withCredentials: true })
-      .then((response) => {
-        if (response.status === 200) {
-          setIsLoggedIn(true);
-          console.log(response.data);
-        }
-      })
-      .catch((error) => {
-        setIsLoggedIn(false);
-      });
-  }, []);
+  const { isLoggedIn, userInfo, login, logout } = useAuth();
 
   return (
     <div className={styles.header}>
@@ -49,16 +27,16 @@ function Header() {
           </a>
           {isLoggedIn ? (
             <div className={styles.authSection}>
-              <span className={styles.userName}>{userName}님</span>
+              <span className={styles.userName}>{userInfo.name}님</span>
               <div>|</div>
-              <a href="" className={styles.logout} onClick={handleAuth}>
+              <div className={styles.logout} onClick={logout}>
                 로그아웃
-              </a>
+              </div>
             </div>
           ) : (
-            <a href="https://zackinthebox.shop/oauth2/authorization/google" className={styles.login}>
+            <div className={styles.login} onClick={login}>
               로그인
-            </a>
+            </div>
           )}
         </div>
       </div>

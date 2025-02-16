@@ -3,13 +3,7 @@ import styles from "./Profile.module.scss";
 import { useNavigate } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
 import { ResumeDeleteModal, ResumeDeleteCompleteModal } from "components/profile";
-
-const mockUserInfo = {
-  name: "홍길동",
-  department: "소프트웨어융합대학 컴퓨터공학과",
-  email: "example.khu.ac.kr",
-  count: "1 / 3",
-};
+import { useAuth } from "auth/authContext";
 
 const mockResumes = [
   { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
@@ -22,6 +16,8 @@ function Profile() {
   const [isResumeDeleteModalOpen, setIsResumeDeleteModalOpen] = useState(false);
   const [isResumeDeleteCompleteModalOpen, setIsResumeDeleteCompleteModalOpen] = useState(false);
   const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
+
+  const { userInfo } = useAuth();
 
   const handleRowClick = (resumeId) => {
     navigate(`/profile/${resumeId}`);
@@ -48,13 +44,13 @@ function Profile() {
         <div className={styles.title}>내 정보</div>
         <div className={styles.horizontalLine}></div>
         <div className={styles.info}>
-          <div>이름 : {mockUserInfo.name}</div>
+          <div>이름 : {userInfo.name}</div>
           <div>|</div>
-          <div>학과 : {mockUserInfo.department}</div>
+          <div>학과 : {userInfo.major}</div>
           <div>|</div>
-          <div>이메일 : {mockUserInfo.email}</div>
+          <div>이메일 : {userInfo.email}</div>
           <div>|</div>
-          <div>오늘 남은 이용 횟수 : {mockUserInfo.count}</div>
+          <div>오늘 남은 이용 횟수 : {userInfo.count}</div>
         </div>
         <div className={styles.resumesSection}>
           <div className={styles.subtitle}>나의 자기소개서</div>

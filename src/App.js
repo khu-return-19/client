@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "auth/authContext";
 import Landing from "./pages/landing";
 import Header from "./shared/header";
 import Profile from "pages/profile";
@@ -10,17 +11,19 @@ import AnalysisSelect from "pages/analysis-select";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/:resumeId" element={<Resume />} />
-        <Route path="/Analysis" element={<Analysis />} />
-        <Route path="/Analysis/:analysisId" element={<AnalysisDetail />} />
-        <Route path="/Analysis/select" element={<AnalysisSelect />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:resumeId" element={<Resume />} />
+          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/analysis/:analysisId" element={<AnalysisDetail />} />
+          <Route path="/analysis/select" element={<AnalysisSelect />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -45,7 +45,7 @@ function Analysis() {
                 <th>번호</th>
                 <th>제목</th>
                 <th>설명</th>
-                <th>최근 수정 일자</th>
+                <th>생성 일자</th>
                 <th>
                   <div className={`${styles.delete} ${isAnyChecked ? styles.deleteActive : ""}`}>삭제</div>
                 </th>

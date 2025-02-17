@@ -131,7 +131,7 @@ function Profile() {
         <ResumeDeleteModal
           onClose={() => setIsResumeDeleteModalOpen(false)}
           title={selectedResumeTitle}
-          onDeleteConfirm={handleDeleteResume(selectedResumeId)}
+          onDeleteConfirm={() => handleDeleteResume(selectedResumeId)}
         />
       )}
       {isResumeDeleteCompleteModalOpen && (

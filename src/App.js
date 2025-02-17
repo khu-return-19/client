@@ -17,9 +17,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:resumeId" element={<Resume />} />
+          <Route path="/profile/:id" element={<Resume />} />
           <Route path="/analysis" element={<Analysis />} />
-          <Route path="/analysis/:analysisId" element={<AnalysisDetail />} />
+          <Route path="/analysis/:id" element={<AnalysisDetail />} />
           <Route path="/analysis/select" element={<AnalysisSelect />} />
         </Routes>
       </Router>

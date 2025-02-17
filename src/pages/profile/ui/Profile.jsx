@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Profile.module.scss";
 import { useNavigate } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
 import { ResumeDeleteModal, ResumeDeleteCompleteModal } from "components/profile";
 import { useAuth } from "auth/authContext";
-
-const mockResumes = [
-  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
-  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10 14:11" },
-];
+import api from "api/axiosInstance";
 
 function Profile() {
   const navigate = useNavigate();
@@ -16,8 +12,33 @@ function Profile() {
   const [isResumeDeleteModalOpen, setIsResumeDeleteModalOpen] = useState(false);
   const [isResumeDeleteCompleteModalOpen, setIsResumeDeleteCompleteModalOpen] = useState(false);
   const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
+  const [resumes, setResumes] = useState([]);
+  const [selectedResumeId, setSelectedResumeId] = useState("");
 
   const { userInfo } = useAuth();
+
+  useEffect(() => {
+    fetchResumes();
+  }, []);
+
+  const fetchResumes = async () => {
+    try {
+      const response = await api.get("/resumes");
+      setResumes(response.data);
+    } catch (error) {
+      console.error("자기소개서 목록을 불러오는 중 오류 발생:", error);
+    }
+  };
+
+  const handleCreateResume = async (data) => {
+    try {
+      await api.post("/resume", data);
+      setIsResumeModalOpen(false);
+      fetchResumes();
+    } catch (error) {
+      console.error("자기소개서 저장 중 오류 발생:", error);
+    }
+  };
 
   const handleRowClick = (resumeId) => {
     navigate(`/profile/${resumeId}`);
@@ -27,15 +48,21 @@ function Profile() {
     setIsResumeModalOpen(true);
   };
 
-  const openDeleteModal = (title) => {
-    console.log(title);
+  const openDeleteModal = (title, resumeId) => {
     setSelectedResumeTitle(title);
+    setSelectedResumeId(resumeId);
     setIsResumeDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    setIsResumeDeleteModalOpen(false);
-    setIsResumeDeleteCompleteModalOpen(true);
+  const handleDeleteResume = async (resumeId) => {
+    try {
+      await api.delete(`/resume/${resumeId}`);
+      fetchResumes();
+      setIsResumeDeleteModalOpen(false);
+      setIsResumeDeleteCompleteModalOpen(true);
+    } catch (error) {
+      console.error("자기소개서 삭제 중 오류 발생:", error);
+    }
   };
 
   return (
@@ -66,18 +93,18 @@ function Profile() {
                 </tr>
               </thead>
               <tbody>
-                {mockResumes.map((resume, index) => (
+                {resumes.map((resume, index) => (
                   <tr key={resume.id} onClick={() => handleRowClick(resume.id)} className={styles.clickableRow}>
                     <td>{index + 1}</td>
                     <td>{resume.title}</td>
                     <td>{resume.description}</td>
-                    <td>{resume.lastModified}</td>
+                    <td>{resume.modifiedAt}</td>
                     <td>
                       <div
                         className={styles.delete}
                         onClick={(e) => {
                           e.stopPropagation();
-                          openDeleteModal(resume.title);
+                          openDeleteModal(resume.title, resume.id);
                         }}
                       >
                         삭제
@@ -98,14 +125,13 @@ function Profile() {
       <ResumeModal
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
-        onSubmit={(data) => console.log("새 자기소개서 생성:", data)}
-        mode="create"
+        onSubmit={handleCreateResume}
       />
       {isResumeDeleteModalOpen && (
         <ResumeDeleteModal
           onClose={() => setIsResumeDeleteModalOpen(false)}
           title={selectedResumeTitle}
-          onDeleteConfirm={handleDeleteConfirm}
+          onDeleteConfirm={handleDeleteResume(selectedResumeId)}
         />
       )}
       {isResumeDeleteCompleteModalOpen && (

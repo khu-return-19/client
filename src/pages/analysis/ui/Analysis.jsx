@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Analysis.module.scss";
 import { useNavigate } from "react-router-dom";
-
-const mockanalysis = [
-  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
-  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10 14:11" },
-];
+import api from "api/axiosInstance";
 
 function Analysis() {
   const navigate = useNavigate();
+  const [analyses, setAnalyses] = useState([]);
   const [selectedAnalysis, setSelectedAnalysis] = useState(new Set());
   const isAnyChecked = selectedAnalysis.size > 0;
+
+  useEffect(() => {
+    fetchAnalyses();
+  }, []);
+
+  const fetchAnalyses = async () => {
+    try {
+      const response = await api.get("/analyses");
+      setAnalyses(response.data);
+    } catch (error) {
+      console.error("분석 보고서를 불러오는 중 오류 발생:", error);
+    }
+  };
 
   const handleRowClick = (analysisId) => {
     navigate(`/analysis/${analysisId}`);
@@ -52,12 +62,12 @@ function Analysis() {
               </tr>
             </thead>
             <tbody>
-              {mockanalysis.map((analysis, index) => (
+              {analyses.map((analysis, index) => (
                 <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
                   <td>{index + 1}</td>
                   <td>{analysis.title}</td>
-                  <td>{analysis.description}</td>
-                  <td>{analysis.lastModified}</td>
+                  <td>{analysis.preview}</td>
+                  <td>{analysis.createdAt}</td>
                   <td>
                     <input
                       type="checkbox"

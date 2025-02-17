@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Resume.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
-
-const mockUserInfo = {
-  name: "홍길동",
-  department: "소프트웨어융합대학 컴퓨터공학과",
-  email: "example.khu.ac.kr",
-  count: "1 / 3",
-};
-
-const mockResumeData = {
-  title: "프론트엔드 개발 직군 지원 자기소개서",
-  description: "프론트엔드 개발자로 지원하기 위한 자기소개서입니다.",
-  body: "안녕하세요! 저는 사용자 경험을 중요하게 생각하는 프론트엔드 개발자 지망생입니다. 최신 기술을 학습하고 적용하는 것을 즐기며, React와 TypeScript를 활용한 프로젝트 경험이 있습니다...",
-};
+import { useAuth } from "auth/authContext";
+import api from "api/axiosInstance";
 
 function Resume() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resume, setResume] = useState();
+  const { id } = useParams();
+  const { userInfo } = useAuth();
+
+  useEffect(() => {
+    fetchResume();
+  }, [id]);
+
+  const fetchResume = async () => {
+    try {
+      const response = await api.get(`/resume/${id}`);
+      setResume(response.data);
+    } catch (error) {
+      console.error("자기소개서를 불러오는 중 오류 발생:", error);
+    }
+  };
 
   const handleNavigateToProfile = () => {
     navigate("/profile");
@@ -28,25 +33,35 @@ function Resume() {
     setIsModalOpen(true);
   };
 
+  const handleUpdateResume = async (data) => {
+    try {
+      const response = await api.patch(`/resume/${id}`, data);
+      setResume(response.data);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("자기소개서를 수정하는 중 오류 발생:", error);
+    }
+  };
+
   return (
     <div className={styles.resume}>
       <div className={styles.container}>
         <div className={styles.title}>내 정보</div>
         <div className={styles.horizontalLine}></div>
         <div className={styles.info}>
-          <div>이름 : {mockUserInfo.name}</div>
+          <div>이름 : {userInfo.name}</div>
           <div>|</div>
-          <div>학과 : {mockUserInfo.department}</div>
+          <div>학과 : {userInfo.major}</div>
           <div>|</div>
-          <div>이메일 : {mockUserInfo.email}</div>
+          <div>이메일 : {userInfo.email}</div>
           <div>|</div>
-          <div>오늘 남은 이용 횟수 : {mockUserInfo.count}</div>
+          <div>오늘 남은 이용 횟수 : {userInfo.count}</div>
         </div>
         <div className={styles.content}>
           <div className={styles.header}>
             <div className={styles.headerContent}>
-              <div className={styles.contentTitle}>{mockResumeData.title}</div>
-              <div className={styles.contentDescription}>{mockResumeData.description}</div>
+              <div className={styles.contentTitle}>{resume?.title}</div>
+              <div className={styles.contentDescription}>{resume?.description}</div>
             </div>
             <div className={styles.buttonGroup}>
               <div className={styles.list} onClick={handleNavigateToProfile}>
@@ -57,14 +72,14 @@ function Resume() {
               </div>
             </div>
           </div>
-          <div className={styles.body}>{mockResumeData.body}</div>
+          <div className={styles.body}>{resume?.content}</div>
         </div>
       </div>
       <ResumeModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={(data) => console.log("자기소개서 수정:", data)}
-        mode="edit"
+        onSubmit={handleUpdateResume}
+        resumeData={resume}
       />
     </div>
   );

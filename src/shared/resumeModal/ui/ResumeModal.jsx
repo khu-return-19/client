@@ -12,7 +12,7 @@ function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
       setDescription(resumeData.description || "");
       setContent(resumeData.content || "");
     }
-  }, []);
+  }, [resumeData]);
 
   const handleSubmit = async () => {
     await onSubmit({ title, description, content });

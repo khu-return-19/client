@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ResumeModal.module.scss";
 
-function ResumeModal({ isOpen, onClose, onSubmit, mode, resumeData }) {
+function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
   const [title, setTitle] = useState(resumeData?.title || "");
   const [description, setDescription] = useState(resumeData?.description || "");
   const [content, setContent] = useState(resumeData?.content || "");
 
+  useEffect(() => {
+    if (resumeData) {
+      setTitle(resumeData.title || "");
+      setDescription(resumeData.description || "");
+      setContent(resumeData.content || "");
+    }
+  }, [resumeData]);
+
   const handleSubmit = () => {
-    onSubmit({ resumeData });
-    onClose();
+    onSubmit({ title, description, content });
   };
 
   if (!isOpen) return null;
@@ -46,7 +53,9 @@ function ResumeModal({ isOpen, onClose, onSubmit, mode, resumeData }) {
             className={styles.detail}
           />
           <div className={styles.buttonGroup}>
-            <div className={styles.save}>저장</div>
+            <div className={styles.save} onClick={handleSubmit}>
+              저장
+            </div>
             <div onClick={onClose} className={styles.cancel}>
               취소
             </div>

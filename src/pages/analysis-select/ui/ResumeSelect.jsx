@@ -3,16 +3,13 @@ import styles from "./ResumeSelect.module.scss";
 import { useNavigate } from "react-router-dom";
 import api from "api/axiosInstance";
 import Resume from "pages/profile-resume";
-
-const mockanalysis = [
-  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
-  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10 14:11" },
-];
+import { AnalysisModal } from "components/analysis-select";
 
 function ResumeSelect() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [resumes, setResumes] = useState([]);
+  const [selectedResumeId, setSelectedResumeId] = useState(null);
 
   useEffect(() => {
     fetchResumes();
@@ -27,7 +24,8 @@ function ResumeSelect() {
     }
   };
 
-  const handleRowClick = (analysisId) => {
+  const handleRowClick = (resumeId) => {
+    setSelectedResumeId(resumeId);
     setIsModalOpen(true);
   };
 
@@ -79,6 +77,9 @@ function ResumeSelect() {
           </table>
         </div>
       </div>
+      {isModalOpen && (
+        <AnalysisModal onClose={() => setIsModalOpen(false)} onSubmit={(resumeId) => {}} resumeId={selectedResumeId} />
+      )}
     </div>
   );
 }

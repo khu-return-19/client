@@ -8,6 +8,8 @@ import Resume from "pages/profile-resume";
 import Analysis from "pages/analysis";
 import AnalysisDetail from "pages/analysis-detail";
 import ResumeSelect from "./pages/analysis-select";
+import PrivateRoute from "./privateRoute";
+import { LoginError } from "pages/Error";
 
 function App() {
   return (
@@ -16,11 +18,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:id" element={<Resume />} />
-          <Route path="/analysis" element={<Analysis />} />
-          <Route path="/analysis/:id" element={<AnalysisDetail />} />
-          <Route path="/analysis/select" element={<ResumeSelect />} />
+          <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+          <Route path="/profile/:id" element={<PrivateRoute element={<Resume />} />} />
+          <Route path="/analysis" element={<PrivateRoute element={<Analysis />} />} />
+          <Route path="/analysis/:id" element={<PrivateRoute element={<AnalysisDetail />} />} />
+          <Route path="/analysis/select" element={<PrivateRoute element={<ResumeSelect />} />} />
+          <Route path="/error" element={<LoginError />} />
         </Routes>
       </Router>
     </AuthProvider>

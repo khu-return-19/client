@@ -1,0 +1,25 @@
+.loginError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 6.25rem);
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.container span {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.container span:first-child {
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}

@@ -5,6 +5,7 @@ import ResumeModal from "shared/resumeModal";
 import { ResumeDeleteModal, ResumeDeleteCompleteModal } from "components/profile";
 import { useAuth } from "auth/authContext";
 import api from "api/axiosInstance";
+import { MyInfo } from "components/shared";
 
 function Profile() {
   const navigate = useNavigate();
@@ -70,15 +71,7 @@ function Profile() {
       <div className={styles.container}>
         <div className={styles.title}>내 정보</div>
         <div className={styles.horizontalLine}></div>
-        <div className={styles.info}>
-          <div>이름 : {userInfo.name}</div>
-          <div>|</div>
-          <div>학과 : {userInfo.major}</div>
-          <div>|</div>
-          <div>이메일 : {userInfo.email}</div>
-          <div>|</div>
-          <div>오늘 남은 이용 횟수 : {userInfo.count}</div>
-        </div>
+        <MyInfo />
         <div className={styles.resumesSection}>
           <div className={styles.subtitle}>나의 자기소개서</div>
           <div className={styles.tableContainer}>

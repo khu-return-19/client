@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Header.module.scss";
-import axios from "axios";
 import { useAuth } from "auth/authContext";
 
 function Header() {

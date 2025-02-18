@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ResumeModal.module.scss";
+import { useAuth } from "auth/authContext";
 
 function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
   const [title, setTitle] = useState(resumeData?.title || "");
   const [description, setDescription] = useState(resumeData?.description || "");
   const [content, setContent] = useState(resumeData?.content || "");
+  const { userInfo } = useAuth();
 
   useEffect(() => {
     if (resumeData) {
@@ -26,7 +28,7 @@ function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <div className={styles.header}>홍길동님의 자기소개서</div>
+        <span className={styles.header}>{userInfo.name}님의 자기소개서</span>
         <div className={styles.content}>
           <div>
             <div>자기소개서 제목</div>

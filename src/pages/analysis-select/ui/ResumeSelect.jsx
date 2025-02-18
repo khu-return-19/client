@@ -1,23 +1,36 @@
-import React, { useState } from "react";
-import styles from "./AnalysisSelect.module.scss";
+import React, { useState, useEffect } from "react";
+import styles from "./ResumeSelect.module.scss";
 import { useNavigate } from "react-router-dom";
+import api from "api/axiosInstance";
+import Resume from "pages/profile-resume";
 import { AnalysisModal } from "components/analysis-select";
 
-const mockanalysis = [
-  { id: 1, title: "첫 번째 자기소개서", description: "프론트엔드 개발 직군 지원용", lastModified: "2025-02-12 08:42" },
-  { id: 2, title: "두 번째 자기소개서", description: "백엔드 개발 직군 지원용", lastModified: "2025-02-10 14:11" },
-];
-
-function AnalysisSelect() {
+function ResumeSelect() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [resumes, setResumes] = useState([]);
+  const [selectedResumeId, setSelectedResumeId] = useState(null);
 
-  const handleRowClick = (analysisId) => {
+  useEffect(() => {
+    fetchResumes();
+  }, []);
+
+  const fetchResumes = async () => {
+    try {
+      const response = await api.get("/resumes");
+      setResumes(response.data);
+    } catch (error) {
+      console.error("자기소개서 목록을 불러오는 중 오류 발생:", error);
+    }
+  };
+
+  const handleRowClick = (resumeId) => {
+    setSelectedResumeId(resumeId);
     setIsModalOpen(true);
   };
 
   return (
-    <div className={styles.analysisSelect}>
+    <div className={styles.resumeSelect}>
       <div className={styles.container}>
         <div className={styles.title}>분석 보고서</div>
         <div className={styles.horizontalLine}></div>
@@ -40,9 +53,9 @@ function AnalysisSelect() {
             </div>
           </div>
         </div>
-        <div className={styles.analysisSection}>
-          <div className={styles.subtitle}>나의 자기소개서 분석 보고서</div>
-          <table className={styles.analysisTable}>
+        <div className={styles.resumeSection}>
+          <div className={styles.subtitle}>나의 자기소개서</div>
+          <table className={styles.resumeTable}>
             <thead>
               <tr>
                 <th>번호</th>
@@ -52,21 +65,23 @@ function AnalysisSelect() {
               </tr>
             </thead>
             <tbody>
-              {mockanalysis.map((analysis, index) => (
-                <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
+              {resumes.map((resume, index) => (
+                <tr key={resume.id} className={styles.clickableRow} onClick={() => handleRowClick(resume.id)}>
                   <td>{index + 1}</td>
-                  <td>{analysis.title}</td>
-                  <td>{analysis.description}</td>
-                  <td>{analysis.lastModified}</td>
+                  <td>{resume.title}</td>
+                  <td>{resume.description}</td>
+                  <td>{resume.modifiedAt}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-      {isModalOpen && <AnalysisModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <AnalysisModal onClose={() => setIsModalOpen(false)} onSubmit={(resumeId) => {}} resumeId={selectedResumeId} />
+      )}
     </div>
   );
 }
 
-export default AnalysisSelect;
+export default ResumeSelect;

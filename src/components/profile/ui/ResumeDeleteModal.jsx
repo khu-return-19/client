@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./ResumeDeleteModal.module.scss";
 
 function ResumeDeleteModal({ onClose, onDeleteConfirm, title }) {

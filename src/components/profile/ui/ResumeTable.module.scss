@@ -1,0 +1,71 @@
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.resumeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clickableRow {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.resumeTable th {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.resumeTable td {
+  border-top: 1px solid #c8c8c8;
+  border-bottom: 1px solid #c8c8c8;
+  padding: 0.75rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.resumeTable th:nth-child(1),
+.resumeTable td:nth-child(1) {
+  width: 8%; // 번호
+}
+
+.resumeTable th:nth-child(2),
+.resumeTable td:nth-child(2) {
+  width: 32%; // 제목
+}
+
+.resumeTable th:nth-child(3),
+.resumeTable td:nth-child(3) {
+  width: 36%; // 설명
+}
+
+.resumeTable th:nth-child(4),
+.resumeTable td:nth-child(4) {
+  width: 16%; // 최근 수정 일자
+}
+
+.resumeTable th:nth-child(5),
+.resumeTable td:nth-child(5) {
+  width: 8%; // 삭제 버튼
+  text-align: center;
+}
+
+.delete {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  padding: 4px 0px;
+  border-radius: 4px;
+  width: 64px;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}

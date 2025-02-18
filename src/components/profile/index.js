@@ -1,4 +1,5 @@
 import ResumeDeleteModal from "./ui/ResumeDeleteModal";
 import ResumeDeleteCompleteModal from "./ui/ResumeDeleteCompleteModal";
+import ResumeTable from "./ui/ResumeTable";
 
-export { ResumeDeleteModal, ResumeDeleteCompleteModal };
+export { ResumeDeleteModal, ResumeDeleteCompleteModal, ResumeTable };

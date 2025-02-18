@@ -1,47 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Profile.module.scss";
-import { useNavigate } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
-import { ResumeDeleteModal, ResumeDeleteCompleteModal } from "components/profile";
-import { useAuth } from "auth/authContext";
+import { ResumeDeleteCompleteModal, ResumeDeleteModal, ResumeTable } from "components/profile";
 import api from "api/axiosInstance";
+import { MyInfo } from "components/shared";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function Profile() {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [selectedResumeId, setSelectedResumeId] = useState("");
+  const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
   const [isResumeDeleteModalOpen, setIsResumeDeleteModalOpen] = useState(false);
   const [isResumeDeleteCompleteModalOpen, setIsResumeDeleteCompleteModalOpen] = useState(false);
-  const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
-  const [resumes, setResumes] = useState([]);
-  const [selectedResumeId, setSelectedResumeId] = useState("");
 
-  const { userInfo } = useAuth();
-
-  useEffect(() => {
-    fetchResumes();
-  }, []);
-
-  const fetchResumes = async () => {
-    try {
-      const response = await api.get("/resumes");
-      setResumes(response.data);
-    } catch (error) {
-      console.error("자기소개서 목록을 불러오는 중 오류 발생:", error);
-    }
-  };
-
-  const handleCreateResume = async (data) => {
-    try {
-      await api.post("/resume", data);
+  const createResumeMutation = useMutation({
+    mutationFn: (data) => api.post("/resume", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["resumes"]);
       setIsResumeModalOpen(false);
-      fetchResumes();
-    } catch (error) {
-      console.error("자기소개서 저장 중 오류 발생:", error);
-    }
+    },
+  });
+
+  const handleCreateResume = (data) => {
+    createResumeMutation.mutate(data);
   };
 
-  const handleRowClick = (resumeId) => {
-    navigate(`/profile/${resumeId}`);
+  const deleteResumeMutation = useMutation({
+    mutationFn: (resumeId) => api.delete(`/resume/${resumeId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["resumes"]);
+      setIsResumeDeleteModalOpen(false);
+      setIsResumeDeleteCompleteModalOpen(true);
+    },
+  });
+
+  const handleDeleteResume = () => {
+    if (selectedResumeId) {
+      deleteResumeMutation.mutate(selectedResumeId);
+    }
   };
 
   const openCreateModal = () => {
@@ -54,67 +52,15 @@ function Profile() {
     setIsResumeDeleteModalOpen(true);
   };
 
-  const handleDeleteResume = async (resumeId) => {
-    try {
-      await api.delete(`/resume/${resumeId}`);
-      fetchResumes();
-      setIsResumeDeleteModalOpen(false);
-      setIsResumeDeleteCompleteModalOpen(true);
-    } catch (error) {
-      console.error("자기소개서 삭제 중 오류 발생:", error);
-    }
-  };
-
   return (
     <div className={styles.profile}>
       <div className={styles.container}>
         <div className={styles.title}>내 정보</div>
         <div className={styles.horizontalLine}></div>
-        <div className={styles.info}>
-          <div>이름 : {userInfo.name}</div>
-          <div>|</div>
-          <div>학과 : {userInfo.major}</div>
-          <div>|</div>
-          <div>이메일 : {userInfo.email}</div>
-          <div>|</div>
-          <div>오늘 남은 이용 횟수 : {userInfo.count}</div>
-        </div>
+        <MyInfo />
         <div className={styles.resumesSection}>
           <div className={styles.subtitle}>나의 자기소개서</div>
-          <div className={styles.tableContainer}>
-            <table className={styles.resumeTable}>
-              <thead>
-                <tr>
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>설명</th>
-                  <th>최근 수정 일자</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {resumes.map((resume, index) => (
-                  <tr key={resume.id} onClick={() => handleRowClick(resume.id)} className={styles.clickableRow}>
-                    <td>{index + 1}</td>
-                    <td>{resume.title}</td>
-                    <td>{resume.description}</td>
-                    <td>{resume.modifiedAt}</td>
-                    <td>
-                      <div
-                        className={styles.delete}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openDeleteModal(resume.title, resume.id);
-                        }}
-                      >
-                        삭제
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ResumeTable openDeleteModal={openDeleteModal} />
           <div className={styles.buttonGroup}>
             <div className={styles.create} onClick={openCreateModal}>
               새 자기소개서 작성

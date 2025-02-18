@@ -1,3 +1,3 @@
-import AnalysisSelect from "./ui/AnalysisSelect";
+import ResumeSelect from "./ui/ResumeSelect";
 
-export default AnalysisSelect;
+export default ResumeSelect;

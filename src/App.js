@@ -7,7 +7,7 @@ import Profile from "pages/profile";
 import Resume from "pages/profile-resume";
 import Analysis from "pages/analysis";
 import AnalysisDetail from "pages/analysis-detail";
-import AnalysisSelect from "pages/analysis-select";
+import ResumeSelect from "./pages/analysis-select";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Route path="/profile/:id" element={<Resume />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/analysis/:id" element={<AnalysisDetail />} />
-          <Route path="/analysis/select" element={<AnalysisSelect />} />
+          <Route path="/analysis/select" element={<ResumeSelect />} />
         </Routes>
       </Router>
     </AuthProvider>

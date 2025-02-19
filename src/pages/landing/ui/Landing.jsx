@@ -40,7 +40,7 @@ function Landing() {
           </button>
         </div>
         <div className={styles.imageSection}>
-          <img className={styles.image} src="https://via.placeholder.com/400x300" alt="AI 분석 이미지" />
+          <img className={styles.image} src="/mainImage.webp" alt="AI 분석 이미지" />
         </div>
       </div>
       <div className={styles.scrollSection}>

@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Header.module.scss";
 import { useAuth } from "auth/authContext";
 import { Link } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const Header = React.memo(() => {
   const { isLoggedIn, userInfo, login, logout } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className={styles.header}>
       <div className={styles.container}>
         <a href="/" className={styles.logo}>
-          <img className={styles.logo} src="/logo.png" alt="로고" />
+          <img className={styles.logoImage} src="/logo.png" alt="로고" />
         </a>
-        <div className={styles.menuSection}>
+
+        <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </div>
+
+        <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
           <Link to="/" className={styles.menu}>
             서비스 소개
           </Link>
@@ -26,6 +33,7 @@ const Header = React.memo(() => {
           <Link to="/analysis" className={styles.menu}>
             분석 보고서
           </Link>
+
           {isLoggedIn ? (
             <div className={styles.authSection}>
               <span className={styles.userName}>{userInfo.name}님</span>

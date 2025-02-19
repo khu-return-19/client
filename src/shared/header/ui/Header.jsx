@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./Header.module.scss";
 import { useAuth } from "auth/authContext";
+import { Link } from "react-router-dom";
 
-function Header() {
+const Header = React.memo(() => {
   const { isLoggedIn, userInfo, login, logout } = useAuth();
 
   return (
@@ -12,18 +13,19 @@ function Header() {
           <img className={styles.logo} src="/logo.png" alt="로고" />
         </a>
         <div className={styles.menuSection}>
-          <a href="/" className={styles.menu}>
+          <Link to="/" className={styles.menu}>
             서비스 소개
-          </a>
-          <a href="/" className={styles.menu}>
+          </Link>
+          <Link to="/" className={styles.menu}>
             공지사항
-          </a>
-          <a href="/profile" className={styles.menu}>
+          </Link>
+          <Link to="/profile" className={styles.menu}>
             내정보
-          </a>
-          <a href="/analysis" className={styles.menu}>
+          </Link>
+
+          <Link to="/analysis" className={styles.menu}>
             분석 보고서
-          </a>
+          </Link>
           {isLoggedIn ? (
             <div className={styles.authSection}>
               <span className={styles.userName}>{userInfo.name}님</span>
@@ -41,6 +43,6 @@ function Header() {
       </div>
     </div>
   );
-}
+});
 
 export default Header;

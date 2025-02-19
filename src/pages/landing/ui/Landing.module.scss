@@ -58,7 +58,8 @@
 .image {
   max-width: 100%;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  mask-image: radial-gradient(circle, rgba(255, 255, 255, 1) 72%, rgba(255, 255, 255, 0));
 }
 
 .scrollSection {

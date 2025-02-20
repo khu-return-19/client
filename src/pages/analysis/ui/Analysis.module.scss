@@ -37,6 +37,10 @@
   margin-bottom: 0.5rem;
 }
 
+.tableContainer {
+  overflow-x: auto;
+}
+
 .analysisTable {
   width: 100%;
   border-collapse: collapse;

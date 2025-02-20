@@ -49,37 +49,39 @@ function Analysis() {
         <div className={styles.horizontalLine}></div>
         <div className={styles.analysisSection}>
           <div className={styles.subtitle}>나의 자기소개서 분석 보고서</div>
-          <table className={styles.analysisTable}>
-            <thead>
-              <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>설명</th>
-                <th>생성 일자</th>
-                <th>
-                  <div className={`${styles.delete} ${isAnyChecked ? styles.deleteActive : ""}`}>삭제</div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {analyses.map((analysis, index) => (
-                <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
-                  <td>{index + 1}</td>
-                  <td>{analysis.title}</td>
-                  <td>{analysis.preview}</td>
-                  <td>{analysis.createdAt}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      className={styles.checkbox}
-                      onChange={() => handleCheckboxChange(analysis.id)}
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  </td>
+          <div className={styles.tableContainer}>
+            <table className={styles.analysisTable}>
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>제목</th>
+                  <th>설명</th>
+                  <th>생성 일자</th>
+                  <th>
+                    <div className={`${styles.delete} ${isAnyChecked ? styles.deleteActive : ""}`}>삭제</div>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {analyses.map((analysis, index) => (
+                  <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
+                    <td>{index + 1}</td>
+                    <td>{analysis.title}</td>
+                    <td>{analysis.preview}</td>
+                    <td>{analysis.createdAt}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        className={styles.checkbox}
+                        onChange={() => handleCheckboxChange(analysis.id)}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className={styles.buttonGroup}>
             <div className={styles.create} onClick={handleAnalyzeClick}>
               새 자기소개서 분석

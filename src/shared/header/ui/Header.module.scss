@@ -58,7 +58,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .container {
     position: relative;
     justify-content: center;
@@ -93,7 +93,9 @@
   }
 
   .menu,
-  .login {
+  .login,
+  .logout,
+  .authSection {
     color: black;
     padding: 24px;
     width: 100%;
@@ -101,5 +103,10 @@
     &:hover {
       background-color: #f3f4f5;
     }
+  }
+
+  .logout {
+    padding: 0;
+    width: auto;
   }
 }

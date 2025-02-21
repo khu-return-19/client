@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./AnalysisDetail.module.scss";
 import ReactMarkdown from "react-markdown";
-import api from "api/axiosInstance";
 import { useParams } from "react-router-dom";
+import { useFetchAnalysis } from "api/analysisApi";
 
 function AnalysisDetail() {
   const { id } = useParams();
-  const [analysis, setAnalysis] = useState(null);
 
-  useEffect(() => {
-    fetchAnalysis();
-  }, [id]);
+  const { data: analysis, isLoading, isError } = useFetchAnalysis(id);
 
-  const fetchAnalysis = async () => {
-    try {
-      const response = await api.get(`/analysis/${id}`);
-      setAnalysis(response.data);
-    } catch (error) {
-      console.error("분석 보고서를 불러오는 중 오류 발생:", error);
-    }
-  };
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>분석 보고서를 불러오는 데 오류가 발생했습니다.</div>;
+
   return (
     <div className={styles.analysisDetail}>
       <div className={styles.container}>

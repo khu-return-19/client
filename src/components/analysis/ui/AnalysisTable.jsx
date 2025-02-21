@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./AnalysisTable.module.scss";
-import api from "api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useFetchAnalyses } from "api/analysisApi";
 

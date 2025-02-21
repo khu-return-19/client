@@ -11,3 +11,15 @@ export const useFetchAnalyses = () => {
     },
   });
 };
+
+// NOTE: 특정 분석 보고서 조회
+export const useFetchAnalysis = (id) => {
+  return useQuery({
+    queryKey: ["analysis", id],
+    queryFn: async () => {
+      const response = await api.get(`/analysis/${id}`);
+      return response.data;
+    },
+    enabled: !!id, // id가 있을 때만 활성화
+  });
+};

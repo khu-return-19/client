@@ -4,50 +4,47 @@ import ResumeModal from "shared/resumeModal";
 import { ResumeDeleteCompleteModal, ResumeDeleteModal, ResumeTable } from "components/profile";
 import api from "api/axiosInstance";
 import { MyInfo } from "components/shared";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useCreateResume, useDeleteResume } from "api/resumeApi";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Profile() {
-  const queryClient = useQueryClient();
-
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [selectedResumeId, setSelectedResumeId] = useState("");
   const [selectedResumeTitle, setSelectedResumeTitle] = useState("");
   const [isResumeDeleteModalOpen, setIsResumeDeleteModalOpen] = useState(false);
   const [isResumeDeleteCompleteModalOpen, setIsResumeDeleteCompleteModalOpen] = useState(false);
 
-  const createResumeMutation = useMutation({
-    mutationFn: (data) => api.post("/resume", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["resumes"]);
-      setIsResumeModalOpen(false);
-      toast.success("새로운 자기소개서가 추가되었습니다!");
-    },
-    onError: () => {
-      toast.error("자기소개서 추가 중 오류가 발생했습니다.");
-    },
-  });
+  const createResumeMutation = useCreateResume();
+  const deleteResumeMutation = useDeleteResume();
+  const queryClient = useQueryClient();
 
   const handleCreateResume = (data) => {
-    createResumeMutation.mutate(data);
+    createResumeMutation.mutate(data, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["resumes"]);
+        setIsResumeModalOpen(false);
+        toast.success("새로운 자기소개서가 추가되었습니다!");
+      },
+      onError: () => {
+        toast.error("자기소개서 추가 중 오류가 발생했습니다.");
+      },
+    });
   };
-
-  const deleteResumeMutation = useMutation({
-    mutationFn: (resumeId) => api.delete(`/resume/${resumeId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["resumes"]);
-      setIsResumeDeleteModalOpen(false);
-      setIsResumeDeleteCompleteModalOpen(true);
-      toast.success("자기소개서를 삭제했습니다!");
-    },
-    onError: () => {
-      toast.error("자기소개서 삭제 중 오류가 발생했습니다.");
-    },
-  });
 
   const handleDeleteResume = () => {
     if (selectedResumeId) {
-      deleteResumeMutation.mutate(selectedResumeId);
+      deleteResumeMutation.mutate(selectedResumeId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries(["resumes"]);
+          setIsResumeDeleteModalOpen(false);
+          setIsResumeDeleteCompleteModalOpen(true);
+          toast.success("자기소개서를 삭제했습니다!");
+        },
+        onError: () => {
+          toast.error("자기소개서 삭제 중 오류가 발생했습니다.");
+        },
+      });
     }
   };
 

@@ -6,6 +6,7 @@ import { useAuth } from "auth/authContext";
 import api from "api/axiosInstance";
 import { MyInfo } from "components/shared";
 import { useFetchResume, useUpdateResume } from "api/resumeApi";
+import { toast } from "react-toastify";
 
 function Resume() {
   const navigate = useNavigate();
@@ -29,9 +30,11 @@ function Resume() {
       onSuccess: () => {
         refetch(); // 자기소개서 업데이트 후 새로고침
         setIsModalOpen(false);
+        toast.success("자기소개서가 수정되었습니다!");
       },
       onError: (error) => {
         console.error("자기소개서를 수정하는 중 오류 발생:", error);
+        toast.error("자기소개서 수정 중 오류가 발생했습니다.");
       },
     });
   };

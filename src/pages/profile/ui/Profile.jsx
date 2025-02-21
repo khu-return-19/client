@@ -5,6 +5,7 @@ import { ResumeDeleteCompleteModal, ResumeDeleteModal, ResumeTable } from "compo
 import api from "api/axiosInstance";
 import { MyInfo } from "components/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 function Profile() {
   const queryClient = useQueryClient();
@@ -20,6 +21,10 @@ function Profile() {
     onSuccess: () => {
       queryClient.invalidateQueries(["resumes"]);
       setIsResumeModalOpen(false);
+      toast.success("새로운 자기소개서가 추가되었습니다!");
+    },
+    onError: () => {
+      toast.error("자기소개서 추가 중 오류가 발생했습니다.");
     },
   });
 
@@ -33,6 +38,10 @@ function Profile() {
       queryClient.invalidateQueries(["resumes"]);
       setIsResumeDeleteModalOpen(false);
       setIsResumeDeleteCompleteModalOpen(true);
+      toast.success("자기소개서를 삭제했습니다!");
+    },
+    onError: () => {
+      toast.error("자기소개서 삭제 중 오류가 발생했습니다.");
     },
   });
 

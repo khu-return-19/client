@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./AnalysisTable.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFetchAnalyses, useDeleteAnalyses } from "api/analysisApi";
+import { toast } from "react-toastify";
 
 function AnalysisTable() {
   const navigate = useNavigate();
@@ -35,9 +36,11 @@ function AnalysisTable() {
       onSuccess: () => {
         setSelectedAnalysis(new Set());
         refetch();
+        toast.success("선택한 분석 보고서를 삭제했습니다!");
       },
       onError: (error) => {
         console.error("삭제 실패:", error);
+        toast.error("삭제 중 오류가 발생했습니다.");
       },
     });
   };

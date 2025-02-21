@@ -4,30 +4,22 @@ import { useNavigate } from "react-router-dom";
 import api from "api/axiosInstance";
 import Resume from "pages/profile-resume";
 import { AnalysisModal } from "components/analysis-select";
+import { useFetchResumes } from "api/resumeApi";
 
 function ResumeSelect() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [resumes, setResumes] = useState([]);
   const [selectedResumeId, setSelectedResumeId] = useState(null);
 
-  useEffect(() => {
-    fetchResumes();
-  }, []);
-
-  const fetchResumes = async () => {
-    try {
-      const response = await api.get("/resumes");
-      setResumes(response.data);
-    } catch (error) {
-      console.error("자기소개서 목록을 불러오는 중 오류 발생:", error);
-    }
-  };
+  const { data: resumes = [], isLoading, isError } = useFetchResumes();
 
   const handleRowClick = (resumeId) => {
     setSelectedResumeId(resumeId);
     setIsModalOpen(true);
   };
+
+  if (isLoading) return <p>불러오는 중...</p>;
+  if (isError) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
 
   return (
     <div className={styles.resumeSelect}>

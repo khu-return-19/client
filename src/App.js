@@ -10,6 +10,7 @@ import AnalysisDetail from "pages/analysis-detail";
 import ResumeSelect from "./pages/analysis-select";
 import PrivateRoute from "./privateRoute";
 import { LoginError } from "pages/Error";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/error" element={<LoginError />} />
         </Routes>
       </Router>
+      <ToastContainer position="top-right" autoClose={3000} />
     </AuthProvider>
   );
 }

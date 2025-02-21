@@ -2,37 +2,36 @@ import React, { useEffect, useState } from "react";
 import styles from "./AnalysisModal.module.scss";
 import api from "api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { useFetchResume } from "api/resumeApi";
+import { useCreateAnalysis } from "api/analysisApi";
+import { toast } from "react-toastify";
 
 function AnalysisModal({ onClose, onSubmit, resumeId }) {
-  const [resume, setResume] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchResume();
-  }, [resumeId]);
-
-  const fetchResume = async () => {
-    try {
-      const response = await api.get(`/resume/${resumeId}`);
-      setResume(response.data);
-    } catch (error) {
-      console.error("자기소개서를 불러오는 중 오류 발생:", error);
-    }
-  };
+  const { data: resume, isLoading, isError, refetch } = useFetchResume(resumeId);
+  const createAnalysisMutation = useCreateAnalysis();
 
   const handleSubmit = async () => {
-    try {
-      const response = await api.post("/analysis", { id: resumeId });
-      const analysisId = response.data?.id;
-      if (analysisId) {
-        navigate(`/analysis/${analysisId}`);
-      } else {
-        console.error("분석 ID가 반환되지 않았습니다.");
-      }
-    } catch (error) {
-      console.error("분석 요청 중 오류 발생:", error);
-    }
+    createAnalysisMutation.mutate(resumeId, {
+      onSuccess: (data) => {
+        const analysisId = data?.id;
+        if (analysisId) {
+          navigate(`/analysis/${analysisId}`);
+          toast.success("자기소개서 분석 요청이 성공했습니다!");
+        } else {
+          console.error("분석 ID가 반환되지 않았습니다.");
+        }
+      },
+      onError: (error) => {
+        console.error("분석 요청 중 오류 발생:", error);
+        toast.error("분석 요청 중 오류가 발생했습니다.");
+      },
+    });
   };
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>자기소개서를 불러오는 데 오류가 발생했습니다.</div>;
 
   return (
     <div className={styles.modalOverlay}>

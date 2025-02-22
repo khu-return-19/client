@@ -1,3 +1,4 @@
 import AnalysisModal from "./ui/AnalysisModal";
+import ResumeTable from "./ui/ResumeTable";
 
-export { AnalysisModal };
+export { AnalysisModal, ResumeTable };

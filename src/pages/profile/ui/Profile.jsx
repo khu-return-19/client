@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./Profile.module.scss";
 import ResumeModal from "shared/resumeModal";
 import { ResumeDeleteCompleteModal, ResumeDeleteModal, ResumeTable } from "components/profile";
-import api from "api/axiosInstance";
 import { MyInfo } from "components/shared";
 import { toast } from "react-toastify";
 import { useCreateResume, useDeleteResume } from "api/resumeApi";

@@ -3,6 +3,7 @@ import styles from "./AnalysisTable.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFetchAnalyses, useDeleteAnalyses } from "api/analysisApi";
 import { toast } from "react-toastify";
+import SkeletonAnalysisTable from "./SkeletonAnalysisTable";
 
 function AnalysisTable() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function AnalysisTable() {
     });
   };
 
-  if (isLoading) return <p>불러오는 중...</p>;
+  if (isLoading) return <SkeletonAnalysisTable />;
   if (isError) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
 
   return (

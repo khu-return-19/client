@@ -1,33 +1,29 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./MyInfo.module.scss";
-import { useAuth } from "auth/authContext";
-import SkeletonMyInfo from "./SkeletonMyInfo";
 
-function MyInfo() {
-  const { userInfo, loading } = useAuth();
-
-  if (loading) return <SkeletonMyInfo />;
-
+function SkeletonMyInfo() {
   return (
     <div className={styles.myInfo}>
       <div className={styles.row}>
         <span className={styles.label}>이름 :</span>
-        <span>{userInfo.name}</span>
+        <Skeleton width={100} />
       </div>
       <div className={styles.row}>
         <span className={styles.label}>학과 :</span>
-        <span>{userInfo.major}</span>
+        <Skeleton width={150} />
       </div>
       <div className={styles.row}>
         <span className={styles.label}>이메일 :</span>
-        <span>{userInfo.email}</span>
+        <Skeleton width={200} />
       </div>
       <div className={styles.row}>
         <span className={styles.label}>오늘 남은 이용 횟수 :</span>
-        <span>{userInfo.count} / 3</span>
+        <Skeleton width={50} />
       </div>
     </div>
   );
 }
 
-export default MyInfo;
+export default SkeletonMyInfo;

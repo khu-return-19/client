@@ -5,6 +5,7 @@ import ResumeModal from "shared/resumeModal";
 import { MyInfo } from "components/shared";
 import { useFetchResume, useUpdateResume } from "api/resumeApi";
 import { toast } from "react-toastify";
+import { SkeletonResume } from "components/profile-resume";
 
 function Resume() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function Resume() {
     });
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <SkeletonResume />;
   if (isError) return <div>자기소개서를 불러오는 데 오류가 발생했습니다.</div>;
 
   return (

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./ResumeTable.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFetchResumes } from "api/resumeApi";
+import SkeletonResumeTable from "./SkeletonResumeTable";
 
 function ResumeTable({ openDeleteModal }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function ResumeTable({ openDeleteModal }) {
     navigate(`/profile/${resumeId}`);
   };
 
-  if (isLoading) return <p>불러오는 중...</p>;
+  if (isLoading) return <SkeletonResumeTable />;
   if (isError) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
 
   return (

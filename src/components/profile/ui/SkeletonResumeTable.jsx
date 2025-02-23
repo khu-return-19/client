@@ -19,7 +19,9 @@ function SkeletonResumeTable() {
         <tbody>
           {Array.from({ length: 5 }).map((_, index) => (
             <tr key={index} className={styles.clickableRow}>
-              <td>{index + 1}</td>
+              <td>
+                <Skeleton width={30} />
+              </td>
               <td>
                 <Skeleton width={160} />
               </td>
@@ -30,7 +32,7 @@ function SkeletonResumeTable() {
                 <Skeleton width={120} />
               </td>
               <td>
-                <div className={styles.delete}>삭제</div>
+                <Skeleton width={40} />
               </td>
             </tr>
           ))}

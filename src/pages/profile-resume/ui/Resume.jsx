@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Resume.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import ResumeModal from "shared/resumeModal";
-import { useAuth } from "auth/authContext";
-import api from "api/axiosInstance";
 import { MyInfo } from "components/shared";
 import { useFetchResume, useUpdateResume } from "api/resumeApi";
 import { toast } from "react-toastify";
@@ -12,7 +10,6 @@ function Resume() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
-  const { userInfo } = useAuth();
 
   const { data: resume, isLoading, isError, refetch } = useFetchResume(id);
   const { mutate: updateResume } = useUpdateResume(id);

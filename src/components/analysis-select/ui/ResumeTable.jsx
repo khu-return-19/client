@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ResumeTable.module.scss";
 import { useFetchResumes } from "api/resumeApi";
 import AnalysisModal from "./AnalysisModal";
+import SkeletonResumeTable from "./SkeletonResumeTable";
 
 function ResumeTable() {
   const { data: resumes = [], isLoading, isError } = useFetchResumes();
@@ -13,7 +14,7 @@ function ResumeTable() {
     setIsModalOpen(true);
   };
 
-  if (isLoading) return <p>불러오는 중...</p>;
+  if (isLoading) return <SkeletonResumeTable />;
   if (isError) return <p>데이터를 불러오는 중 오류가 발생했습니다.</p>;
 
   return (

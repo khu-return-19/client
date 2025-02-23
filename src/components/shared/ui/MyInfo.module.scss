@@ -21,13 +21,12 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
 
   @media (min-width: 1025px) {
     &:not(:last-child)::after {
       content: "|";
       position: absolute;
-      right: -12px;
+      right: -16px;
       color: #aaa;
     }
   }
@@ -35,7 +34,6 @@
   @media (max-width: 1024px) {
     display: flex;
     align-items: center;
-    gap: 8px;
 
     &:not(:last-child)::after {
       content: "";

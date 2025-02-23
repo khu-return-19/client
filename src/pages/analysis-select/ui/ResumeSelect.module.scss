@@ -26,15 +26,6 @@
   background-color: black;
 }
 
-.info {
-  width: 100%;
-  display: flex;
-  gap: 16px;
-  background-color: #fff8f4;
-  padding: 24px;
-  box-sizing: border-box;
-}
-
 .resumeSection {
   width: 100%;
   display: flex;
@@ -44,33 +35,4 @@
 .subtitle {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-}
-
-.resumeTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.clickableRow {
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.resumeTable th {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  padding: 0.75rem;
-  text-align: center;
-  font-weight: bold;
-}
-
-.resumeTable td {
-  border-top: 1px solid #c8c8c8;
-  border-bottom: 1px solid #c8c8c8;
-  padding: 0.75rem;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
 }

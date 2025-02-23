@@ -1,26 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import styles from "./ResumeModal.module.scss";
 import { useAuth } from "auth/authContext";
 
 function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
-  const [title, setTitle] = useState(resumeData?.title || "");
-  const [description, setDescription] = useState(resumeData?.description || "");
-  const [content, setContent] = useState(resumeData?.content || "");
   const { userInfo } = useAuth();
 
-  useEffect(() => {
-    if (resumeData) {
-      setTitle(resumeData.title || "");
-      setDescription(resumeData.description || "");
-      setContent(resumeData.content || "");
-    }
-  }, [resumeData]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: resumeData?.title || "",
+      description: resumeData?.description || "",
+      content: resumeData?.content || "",
+    },
+  });
 
-  const handleSubmit = async () => {
-    await onSubmit({ title, description, content });
-    setTitle("");
-    setDescription("");
-    setContent("");
+  useEffect(() => {
+    if (isOpen) {
+      reset({
+        title: resumeData?.title || "",
+        description: resumeData?.description || "",
+        content: resumeData?.content || "",
+      });
+    }
+  }, [isOpen]);
+
+  const title = watch("title", "");
+  const description = watch("description", "");
+  const content = watch("content", "");
+
+  const MAX_TITLE_LENGTH = 30;
+  const MAX_DESCRIPTION_LENGTH = 50;
+  const MAX_CONTENT_LENGTH = 5000;
+
+  const onValidSubmit = (data) => {
+    onSubmit(data);
   };
 
   if (!isOpen) return null;
@@ -29,43 +48,65 @@ function ResumeModal({ isOpen, onClose, onSubmit, resumeData }) {
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
         <span className={styles.header}>{userInfo.name}님의 자기소개서</span>
-        <div className={styles.content}>
+        <form onSubmit={handleSubmit(onValidSubmit)} className={styles.content}>
+          {/* 제목 입력 */}
           <div>
             <div>자기소개서 제목</div>
             <input
               type="text"
               placeholder="제목"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className={styles.titleInput}
+              {...register("title", {
+                required: "제목을 입력해주세요.",
+              })}
+              maxLength={MAX_TITLE_LENGTH}
+              className={`${styles.titleInput} ${errors.title ? styles.inputError : ""}`}
             />
-            <div className={styles.titleValidation}>*자기소개서 제목은 필수로 입력해야합니다.</div>
+            <div className={`${styles.titleBottom} ${errors.title ? styles.withError : styles.noError}`}>
+              {errors.title && <div className={styles.validationError}>{errors.title.message}</div>}
+              <div className={styles.charCount}>
+                {title.length} / {MAX_TITLE_LENGTH}
+              </div>
+            </div>
           </div>
+
+          {/* 설명 입력 */}
           <div>
             <div>자기소개서 설명</div>
             <input
               type="text"
               placeholder="설명"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              {...register("description")}
+              maxLength={MAX_DESCRIPTION_LENGTH}
               className={styles.descriptionInput}
             />
-          </div>
-          <textarea
-            placeholder=""
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className={styles.detail}
-          />
-          <div className={styles.buttonGroup}>
-            <div className={styles.save} onClick={handleSubmit}>
-              저장
+            <div className={styles.charCount}>
+              {description.length} / {MAX_DESCRIPTION_LENGTH}
             </div>
+          </div>
+
+          {/* 내용 입력 */}
+          <div className={styles.detailArea}>
+            <textarea
+              placeholder="내용을 입력하세요."
+              {...register("content")}
+              maxLength={MAX_CONTENT_LENGTH}
+              className={styles.detail}
+            />
+            <div className={styles.charCount}>
+              {content.length} / {MAX_CONTENT_LENGTH}
+            </div>
+          </div>
+
+          {/* 버튼 그룹 */}
+          <div className={styles.buttonGroup}>
+            <button type="submit" className={styles.save}>
+              저장
+            </button>
             <div onClick={onClose} className={styles.cancel}>
               취소
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

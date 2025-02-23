@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./AnalysisModal.module.scss";
-import api from "api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useFetchResume } from "api/resumeApi";
 import { useCreateAnalysis } from "api/analysisApi";
 import { toast } from "react-toastify";
 
-function AnalysisModal({ onClose, onSubmit, resumeId }) {
+function AnalysisModal({ onClose, resumeId }) {
   const navigate = useNavigate();
 
-  const { data: resume, isLoading, isError, refetch } = useFetchResume(resumeId);
+  const { data: resume, isLoading, isError } = useFetchResume(resumeId);
   const createAnalysisMutation = useCreateAnalysis();
 
   const handleSubmit = async () => {

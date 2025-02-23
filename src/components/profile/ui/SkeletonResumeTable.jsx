@@ -1,0 +1,43 @@
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import styles from "./ResumeTable.module.scss";
+
+function SkeletonResumeTable() {
+  return (
+    <div className={styles.tableContainer}>
+      <table className={styles.resumeTable}>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>설명</th>
+            <th>최근 수정 일자</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <tr key={index} className={styles.clickableRow}>
+              <td>{index + 1}</td>
+              <td>
+                <Skeleton width={160} />
+              </td>
+              <td>
+                <Skeleton width={200} />
+              </td>
+              <td>
+                <Skeleton width={120} />
+              </td>
+              <td>
+                <div className={styles.delete}>삭제</div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default SkeletonResumeTable;

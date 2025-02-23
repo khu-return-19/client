@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useFetchResume } from "api/resumeApi";
 import { useCreateAnalysis } from "api/analysisApi";
 import { toast } from "react-toastify";
+import SkeletonAnalysisModal from "./SkeletonAnalysisModal";
+import { useAuth } from "auth/authContext";
 
 function AnalysisModal({ onClose, resumeId }) {
   const navigate = useNavigate();
 
   const { data: resume, isLoading, isError } = useFetchResume(resumeId);
   const createAnalysisMutation = useCreateAnalysis();
+  const { userInfo } = useAuth();
 
   const handleSubmit = async () => {
     createAnalysisMutation.mutate(resumeId, {
@@ -29,13 +32,13 @@ function AnalysisModal({ onClose, resumeId }) {
     });
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <SkeletonAnalysisModal />;
   if (isError) return <div>자기소개서를 불러오는 데 오류가 발생했습니다.</div>;
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <div className={styles.header}>홍길동님의 자기소개서</div>
+        <div className={styles.header}>{userInfo.name}님의 자기소개서</div>
         <div className={styles.content}>
           <div>{resume?.title}</div>
           <div>{resume?.description}</div>

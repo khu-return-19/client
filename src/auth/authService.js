@@ -8,7 +8,7 @@ export const login = () => {
 // NOTE: 로그아웃
 export const logout = async () => {
   try {
-    await api.post("/logout");
+    await api.post("/sign-out");
   } catch (error) {
     console.error("로그아웃 실패:", error);
   }

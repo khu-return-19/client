@@ -3,13 +3,14 @@ import styles from "./AnalysisDetail.module.scss";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { useFetchAnalysis } from "api/analysisApi";
+import { SkeletonAnalysisDetail } from "components/analysis-detail";
 
 function AnalysisDetail() {
   const { id } = useParams();
 
   const { data: analysis, isLoading, isError } = useFetchAnalysis(id);
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <SkeletonAnalysisDetail />;
   if (isError) return <div>분석 보고서를 불러오는 데 오류가 발생했습니다.</div>;
 
   return (

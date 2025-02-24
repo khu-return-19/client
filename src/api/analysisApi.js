@@ -2,13 +2,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "api/axiosInstance";
 
 // NOTE: 분석 보고서 목록 조회
-export const useFetchAnalyses = () => {
+export const useFetchAnalyses = ({ page }) => {
   return useQuery({
-    queryKey: ["analyses"],
+    queryKey: ["analyses", page],
     queryFn: async () => {
-      const response = await api.get("/analyses");
+      const response = await api.get(`/analyses?page=${page}`);
       return response.data;
     },
+    keepPreviousData: true, // 페이지가 변경되어도 이전 데이터를 유지
   });
 };
 

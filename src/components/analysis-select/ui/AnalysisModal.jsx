@@ -6,6 +6,7 @@ import { useCreateAnalysis } from "api/analysisApi";
 import { toast } from "react-toastify";
 import SkeletonAnalysisModal from "./SkeletonAnalysisModal";
 import { useAuth } from "auth/authContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 function AnalysisModal({ onClose, resumeId }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function AnalysisModal({ onClose, resumeId }) {
   const { data: resume, isLoading, isError } = useFetchResume(resumeId);
   const createAnalysisMutation = useCreateAnalysis();
   const { userInfo } = useAuth();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
     createAnalysisMutation.mutate(resumeId, {
@@ -21,6 +23,7 @@ function AnalysisModal({ onClose, resumeId }) {
         if (analysisId) {
           navigate(`/analysis/${analysisId}`);
           toast.success("자기소개서 분석 요청이 성공했습니다!");
+          queryClient.invalidateQueries(["authStatus"]);
         } else {
           console.error("분석 ID가 반환되지 않았습니다.");
         }

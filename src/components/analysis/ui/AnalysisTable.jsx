@@ -113,43 +113,45 @@ function AnalysisTable() {
 
   return (
     <div className={styles.tableContainer}>
-      <table className={styles.analysisTable}>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>설명</th>
-            <th>생성 일자</th>
-            <th>
-              <div
-                className={`${styles.delete} ${isAnyChecked ? styles.deleteActive : ""}`}
-                onClick={handleDelete}
-                disabled={!isAnyChecked || isDeleting}
-              >
-                {isDeleting ? "삭제 중..." : "삭제"}
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {analyses.map((analysis, index) => (
-            <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
-              <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-              <td>{analysis.title}</td>
-              <td>{analysis.preview}</td>
-              <td>{analysis.createdAt}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  className={styles.checkbox}
-                  onChange={() => handleCheckboxChange(analysis.id)}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              </td>
+      <div className={styles.table}>
+        <table className={styles.analysisTable}>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>설명</th>
+              <th>생성 일자</th>
+              <th>
+                <div
+                  className={`${styles.delete} ${isAnyChecked ? styles.deleteActive : ""}`}
+                  onClick={handleDelete}
+                  disabled={!isAnyChecked || isDeleting}
+                >
+                  {isDeleting ? "삭제 중..." : "삭제"}
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {analyses.map((analysis, index) => (
+              <tr key={analysis.id} className={styles.clickableRow} onClick={() => handleRowClick(analysis.id)}>
+                <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                <td>{analysis.title}</td>
+                <td>{analysis.preview}</td>
+                <td>{analysis.createdAt}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    className={styles.checkbox}
+                    onChange={() => handleCheckboxChange(analysis.id)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* 페이지네이션 UI */}
       {totalPages > 1 && (

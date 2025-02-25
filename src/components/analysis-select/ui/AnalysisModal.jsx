@@ -13,11 +13,12 @@ function AnalysisModal({ onClose, resumeId }) {
 
   const { data: resume, isLoading, isError } = useFetchResume(resumeId);
   const createAnalysisMutation = useCreateAnalysis();
+  const { mutate, isPending } = createAnalysisMutation;
   const { userInfo } = useAuth();
   const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
-    createAnalysisMutation.mutate(resumeId, {
+    mutate(resumeId, {
       onSuccess: (data) => {
         const analysisId = data?.id;
         if (analysisId) {
@@ -48,8 +49,8 @@ function AnalysisModal({ onClose, resumeId }) {
           <div className={styles.body}>{resume?.content}</div>
           <div className={styles.noticeText}>위 자기소개서를 기반으로 분석을 진행합니다.</div>
           <div className={styles.buttonGroup}>
-            <div className={styles.confirm} onClick={handleSubmit}>
-              확인
+            <div className={styles.confirm} onClick={!isPending ? handleSubmit : null}>
+              {isPending ? "처리 중..." : "확인"}
             </div>
             <div onClick={onClose} className={styles.cancel}>
               취소

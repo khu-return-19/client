@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { checkAuthStatus, login, logout } from "auth/authService";
+import { checkAuthStatus, fetchUserInfo, login, logout } from "auth/authService";
 
 const authContext = createContext();
 
@@ -9,13 +9,25 @@ export function AuthProvider({ children }) {
 
   // NOTE: 로그인 상태를 체크하는 useQuery
   const {
-    data: userInfo,
-    isLoading,
-    isError,
-    isSuccess,
+    data: isAuthenticated,
+    isLoading: isAuthLoading,
+    isError: isAuthError,
+    isSuccess: isAuthSuccess,
   } = useQuery({
-    queryKey: "authStatus",
+    queryKey: ["authStatus"],
     queryFn: checkAuthStatus,
+    retry: false,
+  });
+
+  // NOTE: 사용자 정보를 가져오는 useQuery (로그인 상태일 때만 실행)
+  const {
+    data: userInfo,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo,
+    enabled: isAuthSuccess && isAuthenticated, // 로그인 상태일 때만 요청
     retry: false,
   });
 
@@ -23,8 +35,8 @@ export function AuthProvider({ children }) {
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // NOTE: 로그아웃 후에는 인증 정보를 새로고침하여 반영
-      queryClient.invalidateQueries("authStatus");
+      queryClient.invalidateQueries(["authStatus"]);
+      queryClient.removeQueries(["userInfo"]);
     },
   });
 
@@ -32,7 +44,9 @@ export function AuthProvider({ children }) {
     logoutMutation.mutate();
   };
 
-  const isLoggedIn = isSuccess && userInfo !== null;
+  const isLoggedIn = isAuthSuccess && isAuthenticated;
+  const loading = isAuthLoading || isUserLoading;
+  const error = isAuthError || isUserError;
 
   return (
     <authContext.Provider
@@ -41,8 +55,8 @@ export function AuthProvider({ children }) {
         userInfo,
         login,
         logout: handleLogout,
-        loading: isLoading,
-        error: isError,
+        loading,
+        error,
       }}
     >
       {children}

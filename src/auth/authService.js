@@ -14,12 +14,24 @@ export const logout = async () => {
   }
 };
 
-// NOTE: 로그인 상태 확인 및 사용자 정보 가져오기
+// NOTE: 로그인 상태 확인
 export const checkAuthStatus = async () => {
   try {
-    const response = await api.get("/my-info");
-    return response.data; // { id, username, name, email, role, count }
+    const response = await api.get("/status");
+    return response.data;
   } catch (error) {
+    console.error("로그인 상태 확인 실패:", error);
+    return false;
+  }
+};
+
+// NOTE: 사용자 정보 가져오기 (로그인 상태일 때만 호출)
+export const fetchUserInfo = async () => {
+  try {
+    const response = await api.get("/my-info");
+    return response.data;
+  } catch (error) {
+    console.error("사용자 정보 가져오기 실패:", error);
     return null;
   }
 };

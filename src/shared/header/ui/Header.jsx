@@ -12,6 +12,7 @@ const Header = React.memo(() => {
     setMenuOpen(false);
   };
 
+  // TODO: Optional Chaining 수정 필요
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -40,7 +41,7 @@ const Header = React.memo(() => {
 
           {isLoggedIn ? (
             <div className={styles.authSection}>
-              <span className={styles.userName}>{userInfo.name}님</span>
+              <span className={styles.userName}>{userInfo?.name}님</span>
               <div>|</div>
               <div
                 className={styles.logout}

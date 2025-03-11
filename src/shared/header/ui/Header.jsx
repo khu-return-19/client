@@ -3,10 +3,12 @@ import styles from "./Header.module.scss";
 import { useAuth } from "auth/authContext";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import { LoginModal } from "shared/loginModal";
 
 const Header = React.memo(() => {
   const { isLoggedIn, userInfo, login, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
   const handleMenuClose = () => {
     setMenuOpen(false);
@@ -24,48 +26,46 @@ const Header = React.memo(() => {
           {menuOpen ? <FiX /> : <FiMenu />}
         </div>
 
-        <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
-          <Link to="/" className={styles.menu} onClick={handleMenuClose}>
-            서비스 소개
-          </Link>
-          <Link to="/" className={styles.menu} onClick={handleMenuClose}>
-            공지사항
-          </Link>
-          <Link to="/profile" className={styles.menu} onClick={handleMenuClose}>
-            내정보
-          </Link>
-
-          <Link to="/analysis" className={styles.menu} onClick={handleMenuClose}>
-            분석 보고서
-          </Link>
-
+        <div className={styles.rightSection}>
           {isLoggedIn ? (
-            <div className={styles.authSection}>
-              <span className={styles.userName}>{userInfo?.name}님</span>
-              <div>|</div>
-              <div
-                className={styles.logout}
-                onClick={() => {
-                  logout();
-                  handleMenuClose();
-                }}
-              >
-                로그아웃
+            <div className={styles.rightTopSection}>
+              <div>내 분석 레포트</div>
+              <div className={styles.authSection}>
+                <span className={styles.userName}>{userInfo?.name}님</span>
+                <div
+                  className={styles.logout}
+                  onClick={() => {
+                    logout();
+                    handleMenuClose();
+                  }}
+                >
+                  로그아웃
+                </div>
               </div>
             </div>
           ) : (
-            <div
-              className={styles.login}
-              onClick={() => {
-                login();
-                handleMenuClose();
-              }}
-            >
+            <div className={styles.login} onClick={() => setLoginModalOpen(true)}>
               로그인
             </div>
           )}
+
+          <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
+            <Link to="/" className={styles.menu} onClick={handleMenuClose}>
+              서비스 소개
+            </Link>
+            <Link to="/" className={styles.menu} onClick={handleMenuClose}>
+              주요 사이트
+            </Link>
+            <div className={styles.analysis}>
+              <Link to="/" className={styles.analysisText} onClick={handleMenuClose}>
+                자기소개서 분석
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
+
+      {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
     </div>
   );
 });

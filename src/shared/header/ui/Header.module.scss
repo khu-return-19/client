@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 6.25rem;
-  background-color: #253a73;
+  background-color: #0e3270;
   padding: 0 1rem;
 }
 
@@ -27,35 +27,65 @@
   cursor: pointer;
 }
 
-.menuSection {
+.rightSection {
   display: flex;
-  align-items: center;
-  gap: 4rem;
-  z-index: 10;
-}
+  flex-direction: column;
+  gap: 12px;
 
-.menu {
-  color: white;
-  font-size: 1.25rem;
-  text-decoration: none;
-}
+  .rightTopSection {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    color: white;
+  }
 
-.authSection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  color: white;
-  font-size: 1rem;
-  text-decoration: none;
-}
+  .authSection {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+  }
 
-.login,
-.logout {
-  color: white;
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
+  .login {
+    color: #ffff00;
+    font-weight: bold;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+  }
+
+  .logout {
+    color: #ffff00;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .menuSection {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    z-index: 10;
+
+    .menu {
+      color: white;
+      font-size: 1.25rem;
+      text-decoration: none;
+    }
+
+    .analysis {
+      background-color: white;
+      padding: 4px 20px;
+      border-radius: 8px;
+    }
+
+    .analysisText {
+      color: #0e3270;
+      text-decoration: none;
+    }
+  }
 }
 
 @media (max-width: 1024px) {

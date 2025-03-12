@@ -37,6 +37,17 @@
     justify-content: end;
     gap: 20px;
     color: white;
+
+    .mySection {
+      display: flex;
+      gap: 10px;
+
+      .report,
+      .resume {
+        text-decoration: none;
+        color: white;
+      }
+    }
   }
 
   .authSection {

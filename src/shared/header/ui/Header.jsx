@@ -30,7 +30,9 @@ const Header = React.memo(() => {
           {isLoggedIn ? (
             <div className={styles.rightTopSection}>
               <div className={styles.mySection}>
-                <div className={styles.report}>내 분석 레포트</div>
+                <Link to="/analysis" className={styles.report}>
+                  내 분석 레포트
+                </Link>
                 <div>|</div>
                 <Link to="/resume" className={styles.resume}>
                   내 이력서

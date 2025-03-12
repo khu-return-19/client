@@ -50,7 +50,7 @@ const Header = React.memo(() => {
           )}
 
           <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
-            <Link to="/" className={styles.menu} onClick={handleMenuClose}>
+            <Link to="/about/intro" className={styles.menu} onClick={handleMenuClose}>
               서비스 소개
             </Link>
             <Link to="/" className={styles.menu} onClick={handleMenuClose}>

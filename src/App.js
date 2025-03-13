@@ -15,6 +15,7 @@ import Intro from "pages/intro";
 import AboutLayout from "shared/aboutLayout";
 import Evaluation3D from "pages/evaluation3D";
 import Team from "pages/team";
+import Analyze from "pages/analyze";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/analysis/:id" element={<PrivateRoute element={<AnalysisDetail />} />} />
           <Route path="/analysis/select" element={<PrivateRoute element={<ResumeSelect />} />} />
           <Route path="/error" element={<LoginError />} />
+          <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
         </Routes>
       </Router>
       <ToastContainer position="top-right" autoClose={3000} />

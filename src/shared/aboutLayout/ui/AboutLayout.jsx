@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Sidebar from "shared/sidebar";
+import TabMenu from "shared/tabMenu";
+import GoToMainButton from "components/shared/goToMainButton";
 import styles from "./AboutLayout.module.scss";
 
 function AboutLayout() {
@@ -8,7 +9,7 @@ function AboutLayout() {
 
   const titles = {
     "/about/intro": "서비스 소개",
-    "/about/evaluation": "3D 역량 평가란?",
+    "/about/evaluation": "3D 역량분석이란?",
     "/about/team": "구성원",
   };
 
@@ -21,9 +22,10 @@ function AboutLayout() {
         </div>
 
         <div className={styles.container}>
-          <Sidebar />
+          <TabMenu />
           <div className={styles.content}>
             <Outlet />
+            <GoToMainButton />
           </div>
         </div>
       </div>

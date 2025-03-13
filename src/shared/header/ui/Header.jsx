@@ -97,9 +97,9 @@ const Header = React.memo(() => {
 
             {/* 자기소개서 분석 */}
             <div className={styles.analysis}>
-              <Link to="/" className={styles.analysisText} onClick={handleMenuClose}>
+              <span className={styles.analysisText} onClick={() => (window.location.href = "/analyze")}>
                 자기소개서 분석
-              </Link>
+              </span>
             </div>
           </div>
         </div>

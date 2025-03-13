@@ -24,12 +24,12 @@ export const useFetchResumes = () => {
 //   });
 // };
 
-// 자기소개서 수정
-export const useUpdateResume = (id) => {
-  return useMutation({
-    mutationFn: (data) => api.patch(`/resume/${id}`, data),
-  });
-};
+// // 자기소개서 수정
+// export const useUpdateResume = (id) => {
+//   return useMutation({
+//     mutationFn: (data) => api.patch(`/resume/${id}`, data),
+//   });
+// };
 
 // NOTE: 자기소개서 생성
 export const useCreateResume = () => {
@@ -53,5 +53,11 @@ export const useFetchResume = () => {
       const response = await api.get("/resume");
       return response.data;
     },
+  });
+};
+
+export const useUpdateResume = () => {
+  return useMutation({
+    mutationFn: (data) => api.patch("/resume", data),
   });
 };

@@ -25,21 +25,31 @@ export const useFetchAnalysis = (id) => {
   });
 };
 
-// NOTE: 분석 보고서 생성
-export const useCreateAnalysis = () => {
-  return useMutation({
-    mutationFn: async (resumeId) => {
-      const response = await api.post("/analysis", { id: resumeId });
-      return response.data;
-    },
-  });
-};
+// // NOTE: 분석 보고서 생성
+// export const useCreateAnalysis = () => {
+//   return useMutation({
+//     mutationFn: async (resumeId) => {
+//       const response = await api.post("/analysis", { id: resumeId });
+//       return response.data;
+//     },
+//   });
+// };
 
 // NOTE: 분석 보고서 삭제
 export const useDeleteAnalyses = () => {
   return useMutation({
     mutationFn: async (ids) => {
       const response = await api.delete("/analyses", { data: { id: ids } });
+      return response.data;
+    },
+  });
+};
+
+// NOTE: 분석 보고서 생성
+export const useCreateAnalysis = () => {
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await api.post("/analysis", data);
       return response.data;
     },
   });

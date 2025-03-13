@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./Resume.module.scss";
-import { useFetchResume } from "api/resumeApi";
+import { useFetchResume, useUpdateResume } from "api/resumeApi";
 
+// TODO: 학점 숫자만 가능하도록 유효성 검사
 function Resume() {
   const { register, handleSubmit, setValue } = useForm();
   const { data: resumeData, isLoading } = useFetchResume();
+  const { mutate: updateResume } = useUpdateResume();
 
   useEffect(() => {
     if (resumeData) {
@@ -16,7 +18,7 @@ function Resume() {
   }, [resumeData]);
 
   const onSubmit = (data) => {
-    console.log("이력서 데이터:", data);
+    updateResume(data);
   };
 
   return (

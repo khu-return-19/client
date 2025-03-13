@@ -20,7 +20,11 @@ function Analysis() {
         </div>
         <div></div>
       </div>
-      <div>내 분석 레포트</div>
+      <div className={styles.content}>
+        <div>내 분석 레포트</div>
+        <div>자소서 원본 보기</div>
+        <div>내용~~</div>
+      </div>
     </div>
   );
 }

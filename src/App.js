@@ -13,6 +13,8 @@ import { LoginError } from "pages/Error";
 import { ToastContainer } from "react-toastify";
 import Intro from "pages/intro";
 import AboutLayout from "shared/aboutLayout";
+import Evaluation3D from "pages/evaluation3D";
+import Team from "pages/team";
 
 function App() {
   return (
@@ -23,8 +25,8 @@ function App() {
           <Route path="/about" element={<AboutLayout />}>
             <Route index element={<Navigate to="intro" replace />} />
             <Route path="intro" element={<Intro />} />
-            {/* <Route path="evaluation" element={<Evaluation />} />
-            <Route path="team" element={<Team />} /> */}
+            <Route path="evaluation" element={<Evaluation3D />} />
+            <Route path="team" element={<Team />} />
           </Route>
 
           <Route path="/" element={<Landing />} />

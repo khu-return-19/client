@@ -39,10 +39,14 @@
 
 .container {
   display: flex;
-  padding: 36px 56px;
-  gap: 20px;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px 56px;
 }
 
 .content {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
 }

@@ -1,21 +1,27 @@
-.sidebar {
-  width: 228px;
+.tabMenu {
   display: flex;
-  flex-direction: column;
   gap: 12px;
 }
 
 .menu {
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
   text-decoration: none;
   font-size: 16px;
   border-radius: 6px;
   padding: 10px;
   cursor: pointer;
   color: #0e3270;
+  background-color: white;
+  text-align: center;
+  align-content: center;
+  border: 1px solid #e0e6ed;
 }
 
 .active {
   background-color: #0e3270;
+  border: none;
 
   div {
     color: white;

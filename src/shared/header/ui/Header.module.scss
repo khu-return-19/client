@@ -63,8 +63,6 @@
   .login {
     color: #ffff00;
     font-weight: bold;
-    display: flex;
-    justify-content: end;
     cursor: pointer;
   }
 
@@ -77,12 +75,17 @@
   .menuSection {
     display: flex;
     align-items: center;
-    gap: 4rem;
+    gap: 20px;
     z-index: 10;
+
+    .menuItem {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
 
     .menu {
       color: white;
-      font-size: 1.25rem;
+      font-size: 16px;
       text-decoration: none;
     }
 
@@ -97,6 +100,54 @@
       text-decoration: none;
     }
   }
+}
+
+.menuItem {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown {
+  position: absolute;
+  transform: translate(-50%);
+  top: 100%;
+  left: 50%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  z-index: 100;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: height 0.3s ease-out, visibility 0.3s;
+}
+
+.dropdown.activeAbout {
+  height: 216px;
+  visibility: visible;
+}
+
+.dropdown.activeSitemap {
+  height: 164px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown span {
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s;
+  border-radius: 8px;
+}
+
+.dropdown span:hover {
+  background: #eff2f6;
 }
 
 @media (max-width: 1024px) {

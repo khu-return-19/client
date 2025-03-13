@@ -6,9 +6,11 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { LoginModal } from "shared/loginModal";
 
 const Header = React.memo(() => {
-  const { isLoggedIn, userInfo, login, logout } = useAuth();
+  const { isLoggedIn, userInfo, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+
+  const [hoveredMenu, setHoveredMenu] = useState(null);
 
   const handleMenuClose = () => {
     setMenuOpen(false);
@@ -52,18 +54,48 @@ const Header = React.memo(() => {
               </div>
             </div>
           ) : (
-            <div className={styles.login} onClick={() => setLoginModalOpen(true)}>
-              로그인
+            <div className={styles.rightTopSection}>
+              <div className={styles.login} onClick={() => setLoginModalOpen(true)}>
+                로그인
+              </div>
             </div>
           )}
 
           <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
-            <Link to="/about/intro" className={styles.menu} onClick={handleMenuClose}>
-              서비스 소개
-            </Link>
-            <Link to="/" className={styles.menu} onClick={handleMenuClose}>
-              주요 사이트
-            </Link>
+            {/* 서비스 소개 */}
+            <div
+              className={styles.menuItem}
+              onMouseEnter={() => setHoveredMenu("about")}
+              onMouseLeave={() => setHoveredMenu(null)}
+            >
+              <span className={styles.menu} onClick={() => (window.location.href = "/about/intro")}>
+                서비스 소개
+              </span>
+              <div className={`${styles.dropdown} ${hoveredMenu === "about" ? styles.activeAbout : ""}`}>
+                <span onClick={() => (window.location.href = "/about/intro")}>서비스 소개</span>
+                <span onClick={() => (window.location.href = "/about/evaluation")}>3D 역량분석이란?</span>
+                <span onClick={() => (window.location.href = "/about/team")}>구성원</span>
+                <span onClick={() => (window.location.href = "/about/notice")}>공지사항</span>
+              </div>
+            </div>
+
+            {/* 주요 사이트 */}
+            <div
+              className={styles.menuItem}
+              onMouseEnter={() => setHoveredMenu("sitemap")}
+              onMouseLeave={() => setHoveredMenu(null)}
+            >
+              <span className={styles.menu} onClick={() => (window.location.href = "/")}>
+                주요 사이트
+              </span>
+              <div className={`${styles.dropdown} ${hoveredMenu === "sitemap" ? styles.activeSitemap : ""}`}>
+                <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>미래인재센터</span>
+                <span onClick={() => window.open("https://_", "_blank")}>취창업스쿨</span>
+                <span onClick={() => window.open("https://_", "_blank")}>상담신청</span>
+              </div>
+            </div>
+
+            {/* 자기소개서 분석 */}
             <div className={styles.analysis}>
               <Link to="/" className={styles.analysisText} onClick={handleMenuClose}>
                 자기소개서 분석

@@ -7,6 +7,8 @@
   height: calc(100vh - 100px);
   background-color: #eff2f6;
   transition: width 0.3s ease;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .collapsed {
@@ -23,4 +25,87 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100vh - 240px);
+
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.list.collapsed {
+  opacity: 0;
+  pointer-events: none; // 안 보이는 상태에서 클릭 안 되게
+}
+
+.analysisItem {
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e0e6ed;
+  }
+
+  &.selected {
+    background-color: #d0e7ff;
+  }
+}
+
+.loader {
+  text-align: center;
+  padding: 10px;
+}
+
+.rightSection {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .title {
+    font-size: 20px;
+    color: #0e3270;
+    font-weight: bold;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .originalResumeButton {
+    display: flex;
+    gap: 8px;
+    color: #969696;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  /* 원본 내용 */
+  .originalResume {
+    border: 1px solid transparent;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, height 0s 0.3s, border 0.5s ease;
+  }
+
+  /* 열릴 때의 상태 */
+  .originalResume.open {
+    border: 1px solid #969696;
+    height: 500px;
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+  }
 }

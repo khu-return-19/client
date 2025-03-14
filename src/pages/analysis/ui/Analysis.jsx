@@ -1,9 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Analysis.module.scss";
+import { useFetchAnalyses, useFetchAnalysis } from "api/analysisApi";
+import { mergeNewData } from "pages/analysis/utils/mergeNewData";
+import { useNavigate, useParams } from "react-router-dom";
+import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import dayjs from "dayjs";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [groupedAnalyses, setGroupedAnalyses] = useState({});
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [inputVisible, setInputVisible] = useState(false);
+  const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);
+
+  const { data, isLoading, isError, fetchNextPage, hasNextPage } = useFetchAnalyses();
+  const observerRef = useRef(null);
+  const { data: analysis } = useFetchAnalysis(id);
+
+  useEffect(() => {
+    if (data?.pages) {
+      const newAnalyses = data.pages.at(-1);
+      setGroupedAnalyses((prevGrouped) => mergeNewData(prevGrouped, newAnalyses));
+
+      const firstAnalysis = data.pages.flat()[0];
+      if (firstAnalysis?.id) {
+        navigate(`/analysis/${firstAnalysis.id}`, { replace: true });
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!observerRef.current || !hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage(); // 스크롤이 끝에 도달하면 다음 페이지 요청
+        }
+      },
+      { threshold: 0.8 }
+    );
+
+    observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [hasNextPage, fetchNextPage]);
+
+  const toggleInputVisibility = () => {
+    setInputVisible((prev) => !prev);
+  };
+
+  const handleAnalysisSelect = (analysisId) => {
+    setSelectedAnalysisId(analysisId);
+    navigate(`/analysis/${analysisId}`);
+  };
 
   return (
     <div className={styles.analysis}>
@@ -18,12 +69,47 @@ function Analysis() {
             onClick={() => setIsCollapsed((prev) => !prev)}
           />
         </div>
-        <div></div>
+        <div className={`${styles.list} ${isCollapsed ? styles.collapsed : ""}`}>
+          {Object.keys(groupedAnalyses).length > 0 ? (
+            Object.entries(groupedAnalyses).map(([category, analyses]) => (
+              <div key={category} className={styles.category}>
+                <div className={styles.categoryTitle}>{category}</div>
+                {analyses.map((analysis) => (
+                  <div
+                    key={analysis.id}
+                    className={`${styles.analysisItem} ${selectedAnalysisId === analysis.id ? styles.selected : ""}`}
+                    onClick={() => handleAnalysisSelect(analysis.id)}
+                  >
+                    <div className={styles.title}>{analysis.title}</div>
+                    <div className={styles.date}>{dayjs(analysis.createdAt).format("YYYY-MM-DD HH:mm")}</div>
+                  </div>
+                ))}
+              </div>
+            ))
+          ) : (
+            <div>데이터가 없습니다.</div>
+          )}
+          <div ref={observerRef} className={styles.loader}>
+            {isLoading && "로딩 중..."}
+          </div>
+        </div>
       </div>
-      <div className={styles.content}>
-        <div>내 분석 레포트</div>
-        <div>자소서 원본 보기</div>
-        <div>내용~~</div>
+      <div className={styles.rightSection}>
+        <div className={styles.title}>내 분석 레포트</div>
+        <div className={styles.content}>
+          <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
+            <div>자소서 원본 보기</div>
+            {inputVisible ? (
+              <AiOutlineUp className={styles.toggleIcon} />
+            ) : (
+              <AiOutlineDown className={styles.toggleIcon} />
+            )}
+          </div>
+          <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
+            <div>{analysis?.input}</div>
+          </div>
+          <div>{analysis?.content}</div>
+        </div>
       </div>
     </div>
   );

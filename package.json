@@ -6,6 +6,7 @@
     "@tanstack/react-query": "^5.66.6",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",

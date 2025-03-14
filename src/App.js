@@ -29,12 +29,13 @@ function App() {
             <Route path="evaluation" element={<Evaluation3D />} />
             <Route path="team" element={<Team />} />
           </Route>
-
           <Route path="/" element={<Landing />} />
           <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
           <Route path="/resume" element={<PrivateRoute element={<Resume />} />} />
+
           <Route path="/analysis" element={<PrivateRoute element={<Analysis />} />} />
-          <Route path="/analysis/:id" element={<PrivateRoute element={<AnalysisDetail />} />} />
+          <Route path="/analysis/:id" element={<PrivateRoute element={<Analysis />} />} />
+
           <Route path="/analysis/select" element={<PrivateRoute element={<ResumeSelect />} />} />
           <Route path="/error" element={<LoginError />} />
           <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />

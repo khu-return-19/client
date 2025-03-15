@@ -16,6 +16,7 @@ import AboutLayout from "shared/aboutLayout";
 import Evaluation3D from "pages/evaluation3D";
 import Team from "pages/team";
 import Analyze from "pages/analyze";
+import Notice from "pages/notice";
 
 function App() {
   return (
@@ -23,12 +24,15 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          {/* 서비스 소개 */}
           <Route path="/about" element={<AboutLayout />}>
             <Route index element={<Navigate to="intro" replace />} />
             <Route path="intro" element={<Intro />} />
             <Route path="evaluation" element={<Evaluation3D />} />
             <Route path="team" element={<Team />} />
           </Route>
+          <Route path="/notice" element={<Notice />} />
+
           <Route path="/" element={<Landing />} />
           <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
           <Route path="/resume" element={<PrivateRoute element={<Resume />} />} />

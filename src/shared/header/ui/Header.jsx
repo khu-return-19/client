@@ -75,7 +75,7 @@ const Header = React.memo(() => {
                 <span onClick={() => (window.location.href = "/about/intro")}>서비스 소개</span>
                 <span onClick={() => (window.location.href = "/about/evaluation")}>3D 역량분석이란?</span>
                 <span onClick={() => (window.location.href = "/about/team")}>구성원</span>
-                <span onClick={() => (window.location.href = "/about/notice")}>공지사항</span>
+                <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
               </div>
             </div>
 

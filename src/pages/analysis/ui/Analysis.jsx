@@ -5,6 +5,7 @@ import { mergeNewData } from "pages/analysis/utils/mergeNewData";
 import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import dayjs from "dayjs";
+import api from "api/axiosInstance";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -14,6 +15,7 @@ function Analysis() {
   const { id } = useParams();
   const [inputVisible, setInputVisible] = useState(false);
   const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);
+  const [streamingContent, setStreamingContent] = useState("");
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage } = useFetchAnalyses();
   const observerRef = useRef(null);
@@ -46,6 +48,28 @@ function Analysis() {
     observer.observe(observerRef.current);
     return () => observer.disconnect();
   }, [hasNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    console.log(analysis);
+    if (!analysis || analysis.status !== null) return; // status가 null일 때만 실행
+
+    const eventSource = new EventSource(`https://zackinthebox.shop/stream/analysis/${id}`, { withCredentials: true });
+    console.log(eventSource);
+
+    eventSource.onmessage = (event) => {
+      setStreamingContent((prev) => prev + event.data + "\n"); // 실시간 데이터 추가
+      console.log(event.data);
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("SSE Error:", error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close(); // 컴포넌트 언마운트 시 해제
+    };
+  }, [analysis, id]);
 
   const toggleInputVisibility = () => {
     setInputVisible((prev) => !prev);
@@ -108,7 +132,11 @@ function Analysis() {
           <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
             <div>{analysis?.input}</div>
           </div>
-          <div>{analysis?.content}</div>
+          {analysis?.status === null ? (
+            <div className={styles.streaming}>{streamingContent || "분석 중..."}</div>
+          ) : (
+            <div className={styles.body}>{analysis?.content}</div>
+          )}
         </div>
       </div>
     </div>

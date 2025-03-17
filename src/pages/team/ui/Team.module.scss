@@ -7,3 +7,43 @@
   gap: 40px;
   align-items: center;
 }
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0e3270;
+}
+
+.members {
+  display: grid;
+  grid-template-columns: 1fr; /* 기본적으로 한 열로 시작 */
+  gap: 40px;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.member {
+  background-color: red;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* 1280px 이상에서는 첫 번째 줄에 교수님이 100% 차지 */
+@media (min-width: 1280px) {
+  .members {
+    grid-template-columns: 1fr 1fr; /* 두 개의 열 */
+  }
+
+  .member:nth-child(1) {
+    grid-column: span 2; /* 첫 번째 항목(교수님)은 두 열을 차지 */
+  }
+}
+
+/* 화면이 줄어들면 한 줄에 한 명씩 배치 */
+@media (max-width: 768px) {
+  .members {
+    grid-template-columns: 1fr; /* 모바일에서 한 열로 */
+  }
+}

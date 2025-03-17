@@ -4,10 +4,16 @@ import { Link } from "react-router-dom";
 import styles from "./Footer.module.scss";
 
 function Footer() {
+  const handleScrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className={styles.footer}>
       <div className={styles.policy}>
-        <Link to="/privacy-policy">개인정보처리방침</Link>
+        <Link to="/privacy-policy" onClick={handleScrollToTop}>
+          개인정보처리방침
+        </Link>
       </div>
       <div className={styles.content}>
         <div className={styles.info}>

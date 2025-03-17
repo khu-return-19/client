@@ -14,8 +14,6 @@ export const groupAnalysesByDate = (analyses) => {
   analyses.forEach((analysis) => {
     const createdAt = dayjs(analysis.createdAt);
 
-    console.log("----------------------");
-
     if (createdAt.isSame(today, "day")) {
       groupedData["오늘"] = groupedData["오늘"] || [];
       groupedData["오늘"].push(analysis);

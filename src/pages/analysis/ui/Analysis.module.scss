@@ -49,12 +49,9 @@
   margin-bottom: 10px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #e0e6ed;
-  }
-
+  &:hover,
   &.selected {
-    background-color: #d0e7ff;
+    background-color: #e0e6ed;
   }
 }
 
@@ -64,6 +61,11 @@
 }
 
 .rightSection {
+  display: flex;
+  justify-content: center;
+}
+
+.rightWraaper {
   flex: 1;
   padding: 40px;
   display: flex;
@@ -72,9 +74,9 @@
   height: calc(100vh - 100px);
   box-sizing: border-box;
   width: 100%;
+  max-width: 650px;
 
   overflow-y: auto;
-  word-wrap: break-word;
   word-break: break-word;
   white-space: normal;
   overflow-wrap: break-word;

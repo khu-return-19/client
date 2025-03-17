@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import styles from "./Notice.module.scss";
+import GoToMainButton from "components/shared/goToMainButton";
 
 const allNotices = [
   { id: 1, title: "Notice 1", modifiedAt: "2025-03-14" },
@@ -104,6 +105,7 @@ function Notice() {
           )}
         </div>
       </div>
+      <GoToMainButton />
     </div>
   );
 }

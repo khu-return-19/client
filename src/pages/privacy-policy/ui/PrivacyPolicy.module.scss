@@ -1,0 +1,26 @@
+.privacyPolicy {
+  background-color: #eff2f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 80px;
+}
+
+.wrapper {
+  width: 686px;
+  background-color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.title {
+  color: #0e3270;
+  font-size: 24px;
+  font-weight: bold;
+}

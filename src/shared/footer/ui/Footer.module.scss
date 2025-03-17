@@ -1,0 +1,41 @@
+.footer {
+  background-color: #2e2d34;
+  color: #969696;
+  font-size: 14px;
+}
+
+.policy {
+  border-bottom: 1px solid rgb(150, 150, 150, 0.4);
+  padding: 0px 120px;
+  height: 40px;
+  align-content: center;
+
+  a {
+    color: #969696;
+    text-decoration: none;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 120px;
+  align-content: center;
+
+  .info {
+    display: flex;
+    gap: 25px;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+.copyright {
+  font-size: 14px;
+  margin-top: 10px;
+}

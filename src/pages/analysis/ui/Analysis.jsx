@@ -5,7 +5,7 @@ import { mergeNewData } from "pages/analysis/utils/mergeNewData";
 import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import dayjs from "dayjs";
-import api from "api/axiosInstance";
+import ReactMarkdown from "react-markdown";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -50,11 +50,11 @@ function Analysis() {
   }, [hasNextPage, fetchNextPage]);
 
   useEffect(() => {
-    console.log(analysis);
     if (!analysis || analysis.status !== null) return; // status가 null일 때만 실행
 
-    const eventSource = new EventSource(`https://zackinthebox.shop/stream/analysis/${id}`, { withCredentials: true });
-    console.log(eventSource);
+    const eventSource = new EventSource(`${process.env.REACT_APP_BASE_URL}/stream/analysis/${id}`, {
+      withCredentials: true,
+    });
 
     eventSource.onmessage = (event) => {
       setStreamingContent((prev) => prev + event.data + "\n"); // 실시간 데이터 추가
@@ -119,24 +119,26 @@ function Analysis() {
         </div>
       </div>
       <div className={styles.rightSection}>
-        <div className={styles.title}>내 분석 레포트</div>
-        <div className={styles.content}>
-          <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
-            <div>자소서 원본 보기</div>
-            {inputVisible ? (
-              <AiOutlineUp className={styles.toggleIcon} />
+        <div className={styles.rightWraaper}>
+          <div className={styles.title}>내 분석 레포트</div>
+          <div className={styles.content}>
+            <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
+              <div>자소서 원본 보기</div>
+              {inputVisible ? (
+                <AiOutlineUp className={styles.toggleIcon} />
+              ) : (
+                <AiOutlineDown className={styles.toggleIcon} />
+              )}
+            </div>
+            <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
+              <div>{analysis?.input}</div>
+            </div>
+            {analysis?.status === null ? (
+              <ReactMarkdown className={styles.streaming}>{streamingContent || "분석 중..."}</ReactMarkdown>
             ) : (
-              <AiOutlineDown className={styles.toggleIcon} />
+              <ReactMarkdown className={styles.body}>{analysis?.content}</ReactMarkdown>
             )}
           </div>
-          <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
-            <div>{analysis?.input}</div>
-          </div>
-          {analysis?.status === null ? (
-            <div className={styles.streaming}>{streamingContent || "분석 중..."}</div>
-          ) : (
-            <div className={styles.body}>{analysis?.content}</div>
-          )}
         </div>
       </div>
     </div>

@@ -4,19 +4,8 @@ import GoToMainButton from "components/shared/goToMainButton";
 import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useFetchNotices, useDeleteNotice } from "api/noticeApi";
 
-const allNotices = [
-  { id: 1, title: "Notice 1", modifiedAt: "2025-03-14" },
-  { id: 2, title: "Notice 2", modifiedAt: "2025-03-13" },
-  { id: 3, title: "Notice 3", modifiedAt: "2025-03-12" },
-  { id: 4, title: "Notice 1", modifiedAt: "2025-03-14" },
-  { id: 5, title: "Notice 2", modifiedAt: "2025-03-13" },
-  { id: 6, title: "Notice 3", modifiedAt: "2025-03-12" },
-  { id: 7, title: "Notice 1", modifiedAt: "2025-03-14" },
-  { id: 8, title: "Notice 2", modifiedAt: "2025-03-13" },
-];
-
-// TODO: 실제 데이터 로직 연결 필요
 function Notice() {
   const itemsPerPage = 8;
   // const totalNotice =  || 0;
@@ -24,6 +13,11 @@ function Notice() {
   const totalPages = Math.ceil(totalNotice / itemsPerPage);
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
+  const notices = data?.notices || [];
+  const { mutate: deleteNotice } = useDeleteNotice();
+
   const [menuOpen, setMenuOpen] = useState(null);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -73,6 +67,15 @@ function Notice() {
 
   const handleDelete = (id) => {
     console.log("삭제:", id);
+    deleteNotice(id, {
+      onSuccess: () => {
+        alert("공지사항이 삭제되었습니다.");
+      },
+      onError: (error) => {
+        console.error("삭제 실패:", error);
+        alert("삭제 중 오류가 발생했습니다.");
+      },
+    });
   };
 
   const handleNextGroup = () => {
@@ -115,7 +118,7 @@ function Notice() {
           <div className={styles.table}>
             <table className={styles.analysisTable}>
               <tbody>
-                {allNotices.map((notice, index) => (
+                {notices.map((notice, index) => (
                   <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
                     <td>{notice.title}</td>
                     <td className={styles.modifiedAt}>

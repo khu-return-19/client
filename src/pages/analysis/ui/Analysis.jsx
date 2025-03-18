@@ -131,7 +131,18 @@ function Analysis() {
               )}
             </div>
             <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
-              <div>{analysis?.input}</div>
+              <div className={styles.resumeTitle}>자기소개서</div>
+              <div className={styles.input}>{analysis?.input}</div>
+              <div className={styles.companyAndPosition}>
+                <div className={styles.companyWrapper}>
+                  <div className={styles.subTitle}>지원 회사명</div>
+                  <div className={styles.input}>{analysis?.company}</div>
+                </div>
+                <div className={styles.positionWrapper}>
+                  <div className={styles.subTitle}>지원 직무</div>
+                  <div className={styles.input}>{analysis?.position}</div>
+                </div>
+              </div>
             </div>
             {analysis?.status === null ? (
               <ReactMarkdown className={styles.streaming}>{streamingContent || "분석 중..."}</ReactMarkdown>

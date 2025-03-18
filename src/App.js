@@ -17,6 +17,7 @@ import Analyze from "./pages/analyze";
 import Notice from "./pages/notice";
 import Footer from "./shared/footer";
 import PrivacyPolicy from "pages/privacy-policy";
+import Write from "pages/notice/write";
 
 function AppContent() {
   const location = useLocation();
@@ -47,6 +48,7 @@ function AppContent() {
         <Route path="/error" element={<LoginError />} />
         <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/notice/write" element={<Write />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

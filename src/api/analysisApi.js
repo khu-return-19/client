@@ -36,8 +36,10 @@ export const useFetchAnalysis = (id) => {
 // NOTE: 분석 보고서 삭제
 export const useDeleteAnalyses = () => {
   return useMutation({
-    mutationFn: async (ids) => {
-      const response = await api.delete("/analyses", { data: { id: ids } });
+    mutationFn: async (id) => {
+      const response = await api.delete("/analysis", {
+        data: { id },
+      });
       return response.data;
     },
   });

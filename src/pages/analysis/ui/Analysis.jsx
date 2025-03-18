@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Analysis.module.scss";
-import { useFetchAnalyses, useFetchAnalysis } from "api/analysisApi";
+import { useFetchAnalyses, useFetchAnalysis, useDeleteAnalyses } from "api/analysisApi";
 import { mergeNewData } from "pages/analysis/utils/mergeNewData";
 import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import dayjs from "dayjs";
 import ReactMarkdown from "react-markdown";
+import { AiOutlineClose } from "react-icons/ai";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -20,6 +21,7 @@ function Analysis() {
   const { data, isLoading, isError, fetchNextPage, hasNextPage } = useFetchAnalyses();
   const observerRef = useRef(null);
   const { data: analysis } = useFetchAnalysis(id);
+  const deleteAnalysis = useDeleteAnalyses();
 
   useEffect(() => {
     if (data?.pages) {
@@ -29,6 +31,7 @@ function Analysis() {
       const firstAnalysis = data.pages.flat()[0];
       if (firstAnalysis?.id) {
         navigate(`/analysis/${firstAnalysis.id}`, { replace: true });
+        setSelectedAnalysisId(firstAnalysis.id);
       }
     }
   }, [data]);
@@ -80,6 +83,18 @@ function Analysis() {
     navigate(`/analysis/${analysisId}`);
   };
 
+  const handleDeleteAnalysis = (id) => {
+    deleteAnalysis.mutate(id, {
+      onSuccess: () => {
+        alert("삭제가 완료되었습니다.");
+      },
+      onError: (error) => {
+        console.error("삭제 중 오류 발생:", error);
+        alert("삭제 실패");
+      },
+    });
+  };
+
   return (
     <div className={styles.analysis}>
       <div className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}>
@@ -105,7 +120,9 @@ function Analysis() {
                     onClick={() => handleAnalysisSelect(analysis.id)}
                   >
                     <div className={styles.title}>{analysis.title}</div>
-                    <div className={styles.date}>{dayjs(analysis.createdAt).format("YYYY-MM-DD HH:mm")}</div>
+                    <div className={styles.deleteButton} onClick={() => handleDeleteAnalysis(analysis.id)}>
+                      <AiOutlineClose />
+                    </div>
                   </div>
                 ))}
               </div>

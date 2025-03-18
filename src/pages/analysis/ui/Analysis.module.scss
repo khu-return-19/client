@@ -47,12 +47,19 @@
 .analysisItem {
   padding: 12px;
   border-radius: 5px;
-  margin-bottom: 10px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &:hover,
   &.selected {
     background-color: #e0e6ed;
+  }
+
+  .deleteButton {
+    display: flex;
+    align-items: center;
   }
 }
 

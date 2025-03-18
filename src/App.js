@@ -22,6 +22,7 @@ function AppContent() {
   const location = useLocation();
 
   const noFooterPages = ["/analyze", "/error"];
+  const isNoFooterPage = noFooterPages.includes(location.pathname) || location.pathname.startsWith("/analysis");
 
   return (
     <>
@@ -48,7 +49,7 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
 
-      {!noFooterPages.includes(location.pathname) && <Footer />}
+      {!isNoFooterPage && <Footer />}
     </>
   );
 }

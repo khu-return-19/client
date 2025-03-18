@@ -37,7 +37,9 @@ export const useDeleteNotice = () => {
 
   return useMutation({
     mutationFn: async (id) => {
-      const response = await api.delete("/notice", id);
+      const response = await api.delete("/notice", {
+        data: { id },
+      });
       return response.data;
     },
     onSuccess: () => {

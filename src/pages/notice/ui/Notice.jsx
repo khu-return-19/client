@@ -14,8 +14,7 @@ function Notice() {
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
-  const notices = data?.notices || [];
+  const { data: notices, isLoading } = useFetchNotices(currentPage, itemsPerPage);
   const { mutate: deleteNotice } = useDeleteNotice();
 
   const [menuOpen, setMenuOpen] = useState(null);
@@ -103,6 +102,23 @@ function Notice() {
     navigate("/notice/write");
   };
 
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+
+    // UTC 시간에서 한국 시간(KST)으로 변환 (9시간 추가)
+    const koreaTime = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+    // 날짜 형식 지정 (YYYY.MM.DD)
+    return koreaTime
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\. /g, ".")
+      .replace(/\.$/, "");
+  };
+
   return (
     <div className={styles.notice}>
       <div className={styles.wrapper}>
@@ -118,11 +134,11 @@ function Notice() {
           <div className={styles.table}>
             <table className={styles.analysisTable}>
               <tbody>
-                {notices.map((notice, index) => (
+                {notices?.map((notice, index) => (
                   <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
                     <td>{notice.title}</td>
                     <td className={styles.modifiedAt}>
-                      <div>{notice.modifiedAt}</div>
+                      <div>{formatDate(notice.modifiedAt)}</div>
                       {userInfo?.role === "admin" ? (
                         <div className={styles.menuContainer}>
                           <div

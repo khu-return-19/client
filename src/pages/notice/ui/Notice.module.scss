@@ -48,10 +48,22 @@
 .tableContainer {
   display: flex;
   flex-direction: column;
-  gap: 60px;
   justify-content: space-between;
   height: 100%;
   box-sizing: border-box;
+}
+
+.table {
+  height: 100%;
+}
+
+.noNotices {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #969696;
 }
 
 .analysisTable {
@@ -136,7 +148,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
   gap: 40px;
 
   .prevButton,

@@ -132,39 +132,43 @@ function Notice() {
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.table}>
-            <table className={styles.analysisTable}>
-              <tbody>
-                {notices?.map((notice, index) => (
-                  <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
-                    <td>{notice.title}</td>
-                    <td className={styles.modifiedAt}>
-                      <div>{formatDate(notice.modifiedAt)}</div>
-                      {userInfo?.role === "admin" ? (
-                        <div className={styles.menuContainer}>
-                          <div
-                            className={styles.menuButton}
-                            onClick={() => handleMenuToggle(notice.id)}
-                            ref={buttonRef}
-                          >
-                            <AiOutlineMore />
-                          </div>
-                          {menuOpen === notice.id && (
-                            <div className={styles.menuDropdown} ref={menuRef}>
-                              <div onClick={() => handleEdit(notice.id)}>수정</div>
-                              <div onClick={() => handleDelete(notice.id)} className={styles.delete}>
-                                삭제
-                              </div>
+            {notices?.length === 0 ? (
+              <div className={styles.noNotices}>공지사항이 아직 존재하지 않습니다.</div>
+            ) : (
+              <table className={styles.analysisTable}>
+                <tbody>
+                  {notices?.map((notice, index) => (
+                    <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
+                      <td>{notice.title}</td>
+                      <td className={styles.modifiedAt}>
+                        <div>{formatDate(notice.modifiedAt)}</div>
+                        {userInfo?.role === "admin" ? (
+                          <div className={styles.menuContainer}>
+                            <div
+                              className={styles.menuButton}
+                              onClick={() => handleMenuToggle(notice.id)}
+                              ref={buttonRef}
+                            >
+                              <AiOutlineMore />
                             </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div> &gt;</div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                            {menuOpen === notice.id && (
+                              <div className={styles.menuDropdown} ref={menuRef}>
+                                <div onClick={() => handleEdit(notice.id)}>수정</div>
+                                <div onClick={() => handleDelete(notice.id)} className={styles.delete}>
+                                  삭제
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div> &gt;</div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* 페이지네이션 UI */}

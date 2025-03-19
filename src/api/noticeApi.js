@@ -15,6 +15,18 @@ export const useFetchNotices = (page, size) => {
   });
 };
 
+// NOTE: 특정 공지사항 조회
+export const useFetchNotice = (id) => {
+  return useQuery({
+    queryKey: ["notice", id],
+    queryFn: async () => {
+      const response = await api.get(`/notice/${id}`);
+      return response.data;
+    },
+    enabled: !!id, // id가 있을 때만 요청 실행
+  });
+};
+
 // NOTE: 공지사항 등록
 export const useCreateNotice = () => {
   const queryClient = useQueryClient();

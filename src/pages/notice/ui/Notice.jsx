@@ -67,8 +67,8 @@ function Notice() {
     console.log("수정:", id);
   };
 
-  const handleDelete = (id) => {
-    console.log("삭제:", id);
+  const handleDelete = (event, id) => {
+    event.stopPropagation();
     deleteNotice(id, {
       onSuccess: () => {
         alert("공지사항이 삭제되었습니다.");
@@ -156,8 +156,8 @@ function Notice() {
                             </div>
                             {menuOpen === notice.id && (
                               <div className={styles.menuDropdown} ref={menuRef}>
-                                <div onClick={() => handleEdit(notice.id)}>수정</div>
-                                <div onClick={() => handleDelete(notice.id)} className={styles.delete}>
+                                <div onClick={(event) => handleEdit(event, notice.id)}>수정</div>
+                                <div onClick={(event) => handleDelete(event, notice.id)} className={styles.delete}>
                                   삭제
                                 </div>
                               </div>

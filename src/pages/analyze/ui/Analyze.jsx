@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useFetchResume } from "api/resumeApi";
 import { useCreateAnalysis } from "api/analysisApi";
 import { useNavigate } from "react-router-dom";
+import { AnalysisConfirmModal } from "layouts/analyze";
 
 function Analyze() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState(null);
+
   const { register, handleSubmit, setValue } = useForm();
   const { data: resumeData, isLoading } = useFetchResume();
 
@@ -21,26 +25,31 @@ function Analyze() {
   }, [resumeData]);
 
   const onSubmit = (data) => {
+    setFormData(data);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirm = () => {
+    if (!formData) return;
+
     const requestBody = {
-      company: data.company,
-      position: data.position,
-      input: data.input,
+      company: formData.company,
+      position: formData.position,
+      input: formData.input,
       resume: {
-        major: data.major,
-        universityName: data.universityName,
-        gpa: parseFloat(data.gpa) || 0.0,
-        career: data.career,
-        languageScore: data.languageScore,
-        certificate: data.certificate,
+        major: formData.major,
+        universityName: formData.universityName,
+        gpa: parseFloat(formData.gpa) || 0.0,
+        career: formData.career,
+        languageScore: formData.languageScore,
+        certificate: formData.certificate,
       },
     };
 
     createAnalysis.mutate(requestBody, {
       onSuccess: (response) => {
-        console.log("분석 성공:", response);
-        // TODO: 성공 시 결과 화면으로 이동 or 결과 표시
         if (response) {
-          navigate(`/analysis/${response}`); // id 값이 있으면 해당 페이지로 이동
+          navigate(`/analysis/${response}`);
         }
       },
       onError: (error) => {
@@ -48,6 +57,8 @@ function Analyze() {
         // TODO: 실패 시 사용자에게 알림
       },
     });
+
+    setIsModalOpen(false);
   };
 
   return (
@@ -144,6 +155,7 @@ function Analyze() {
           </div>
         </form>
       </div>
+      <AnalysisConfirmModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onConfirm={handleConfirm} />
     </div>
   );
 }

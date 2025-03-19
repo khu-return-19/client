@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, use } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./NoticeDetail.module.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice, useDeleteNotice } from "api/noticeApi";

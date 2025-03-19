@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import styles from "./Write.module.scss";
+import styles from "./WriteNotice.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useCreateNotice } from "api/noticeApi";
 
-function Write() {
+function WriteNotice() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -37,7 +37,7 @@ function Write() {
   };
 
   return (
-    <div className={styles.write}>
+    <div className={styles.writeNotice}>
       <div className={styles.wrapper}>
         <div className={styles.main}>
           <div className={styles.title}>공지사항 작성</div>
@@ -75,4 +75,4 @@ function Write() {
   );
 }
 
-export default Write;
+export default WriteNotice;

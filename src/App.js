@@ -19,6 +19,7 @@ import Footer from "./shared/footer";
 import PrivacyPolicy from "pages/privacy-policy";
 import Write from "pages/notice/write";
 import NoticeDetail from "pages/noticeDetail";
+import EditNotice from "pages/notice-edit";
 
 function AppContent() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function AppContent() {
         <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/notice/write" element={<Write />} />
+        <Route path="/notice/:id/edit" element={<EditNotice />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

@@ -60,3 +60,19 @@ export const useDeleteNotice = () => {
     },
   });
 };
+
+// NOTE: 공지사항 수정
+export const useUpdateNotice = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, title, content }) => {
+      const response = await api.patch("/notice", { id, title, content });
+      return response.data;
+    },
+    onSuccess: () => {
+      // 공지 수정 후 공지 목록 갱신
+      queryClient.invalidateQueries(["notices"]);
+    },
+  });
+};

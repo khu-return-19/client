@@ -63,8 +63,9 @@ function Notice() {
     setMenuOpen((prev) => (prev === id ? null : id));
   };
 
-  const handleEdit = (id) => {
-    console.log("수정:", id);
+  const handleEdit = (event, id) => {
+    event.stopPropagation();
+    navigate(`/notice/${id}/edit`);
   };
 
   const handleDelete = (event, id) => {

@@ -23,7 +23,7 @@ function Notice() {
 
   const navigate = useNavigate();
   const { userInfo } = useAuth();
-  // TODO: 버튼 클릭 시 다시 안 열리게 수정 필요
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -45,7 +45,9 @@ function Notice() {
     };
   }, [menuOpen]);
 
-  const handleRowClick = (noticeId) => {};
+  const handleRowClick = (noticeId) => {
+    navigate(`/notice/${noticeId}`);
+  };
 
   const handlePrevGroup = () => {
     if (pageGroup > 0) {
@@ -56,7 +58,8 @@ function Notice() {
     }
   };
 
-  const handleMenuToggle = (id) => {
+  const handleMenuToggle = (event, id) => {
+    event.stopPropagation();
     setMenuOpen((prev) => (prev === id ? null : id));
   };
 
@@ -146,7 +149,7 @@ function Notice() {
                           <div className={styles.menuContainer}>
                             <div
                               className={styles.menuButton}
-                              onClick={() => handleMenuToggle(notice.id)}
+                              onClick={(event) => handleMenuToggle(event, notice.id)}
                               ref={buttonRef}
                             >
                               <AiOutlineMore />

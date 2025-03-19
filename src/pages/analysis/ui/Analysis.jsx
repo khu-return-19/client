@@ -7,6 +7,7 @@ import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import dayjs from "dayjs";
 import ReactMarkdown from "react-markdown";
 import { AiOutlineClose } from "react-icons/ai";
+import remarkGfm from "remark-gfm";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -162,9 +163,13 @@ function Analysis() {
               </div>
             </div>
             {analysis?.status === null ? (
-              <ReactMarkdown className={styles.streaming}>{streamingContent || "분석 중..."}</ReactMarkdown>
+              <ReactMarkdown className={styles.streaming} remarkPlugins={[remarkGfm]}>
+                {streamingContent || "분석 중..."}
+              </ReactMarkdown>
             ) : (
-              <ReactMarkdown className={styles.body}>{analysis?.content}</ReactMarkdown>
+              <ReactMarkdown className={styles.body} remarkPlugins={[remarkGfm]}>
+                {analysis?.content}
+              </ReactMarkdown>
             )}
           </div>
         </div>

@@ -15,6 +15,18 @@ export const useFetchNotices = (page, size) => {
   });
 };
 
+// NOTE: 특정 공지사항 조회
+export const useFetchNotice = (id) => {
+  return useQuery({
+    queryKey: ["notice", id],
+    queryFn: async () => {
+      const response = await api.get(`/notice/${id}`);
+      return response.data;
+    },
+    enabled: !!id, // id가 있을 때만 요청 실행
+  });
+};
+
 // NOTE: 공지사항 등록
 export const useCreateNotice = () => {
   const queryClient = useQueryClient();
@@ -37,11 +49,29 @@ export const useDeleteNotice = () => {
 
   return useMutation({
     mutationFn: async (id) => {
-      const response = await api.delete("/notice", id);
+      const response = await api.delete("/notice", {
+        data: { id },
+      });
       return response.data;
     },
     onSuccess: () => {
       // 공지 삭제 후 공지 목록 갱신
+      queryClient.invalidateQueries(["notices"]);
+    },
+  });
+};
+
+// NOTE: 공지사항 수정
+export const useUpdateNotice = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, title, content }) => {
+      const response = await api.patch("/notice", { id, title, content });
+      return response.data;
+    },
+    onSuccess: () => {
+      // 공지 수정 후 공지 목록 갱신
       queryClient.invalidateQueries(["notices"]);
     },
   });

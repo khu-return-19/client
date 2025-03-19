@@ -17,7 +17,9 @@ import Analyze from "./pages/analyze";
 import Notice from "./pages/notice";
 import Footer from "./shared/footer";
 import PrivacyPolicy from "pages/privacy-policy";
-import Write from "pages/notice/write";
+import WriteNotice from "pages/notice-write";
+import NoticeDetail from "pages/notice-detail";
+import EditNotice from "pages/notice-edit";
 
 function AppContent() {
   const location = useLocation();
@@ -37,18 +39,18 @@ function AppContent() {
           <Route path="team" element={<Team />} />
         </Route>
         <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/:id" element={<NoticeDetail />} />
 
         <Route path="/" element={<Landing />} />
         <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
         <Route path="/resume" element={<PrivateRoute element={<Resume />} />} />
-
         <Route path="/analysis" element={<PrivateRoute element={<Analysis />} />} />
         <Route path="/analysis/:id" element={<PrivateRoute element={<Analysis />} />} />
-
         <Route path="/error" element={<LoginError />} />
         <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/notice/write" element={<Write />} />
+        <Route path="/notice/write" element={<WriteNotice />} />
+        <Route path="/notice/:id/edit" element={<EditNotice />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

@@ -14,8 +14,7 @@ function Notice() {
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
-  const notices = data?.notices || [];
+  const { data: notices, isLoading } = useFetchNotices(currentPage, itemsPerPage);
   const { mutate: deleteNotice } = useDeleteNotice();
 
   const [menuOpen, setMenuOpen] = useState(null);
@@ -24,7 +23,7 @@ function Notice() {
 
   const navigate = useNavigate();
   const { userInfo } = useAuth();
-  // TODO: 버튼 클릭 시 다시 안 열리게 수정 필요
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -46,7 +45,9 @@ function Notice() {
     };
   }, [menuOpen]);
 
-  const handleRowClick = (noticeId) => {};
+  const handleRowClick = (noticeId) => {
+    navigate(`/notice/${noticeId}`);
+  };
 
   const handlePrevGroup = () => {
     if (pageGroup > 0) {
@@ -57,16 +58,18 @@ function Notice() {
     }
   };
 
-  const handleMenuToggle = (id) => {
+  const handleMenuToggle = (event, id) => {
+    event.stopPropagation();
     setMenuOpen((prev) => (prev === id ? null : id));
   };
 
-  const handleEdit = (id) => {
-    console.log("수정:", id);
+  const handleEdit = (event, id) => {
+    event.stopPropagation();
+    navigate(`/notice/${id}/edit`);
   };
 
-  const handleDelete = (id) => {
-    console.log("삭제:", id);
+  const handleDelete = (event, id) => {
+    event.stopPropagation();
     deleteNotice(id, {
       onSuccess: () => {
         alert("공지사항이 삭제되었습니다.");
@@ -103,6 +106,23 @@ function Notice() {
     navigate("/notice/write");
   };
 
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+
+    // UTC 시간에서 한국 시간(KST)으로 변환 (9시간 추가)
+    const koreaTime = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+    // 날짜 형식 지정 (YYYY.MM.DD)
+    return koreaTime
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\. /g, ".")
+      .replace(/\.$/, "");
+  };
+
   return (
     <div className={styles.notice}>
       <div className={styles.wrapper}>
@@ -116,39 +136,43 @@ function Notice() {
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.table}>
-            <table className={styles.analysisTable}>
-              <tbody>
-                {notices.map((notice, index) => (
-                  <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
-                    <td>{notice.title}</td>
-                    <td className={styles.modifiedAt}>
-                      <div>{notice.modifiedAt}</div>
-                      {userInfo?.role === "admin" ? (
-                        <div className={styles.menuContainer}>
-                          <div
-                            className={styles.menuButton}
-                            onClick={() => handleMenuToggle(notice.id)}
-                            ref={buttonRef}
-                          >
-                            <AiOutlineMore />
-                          </div>
-                          {menuOpen === notice.id && (
-                            <div className={styles.menuDropdown} ref={menuRef}>
-                              <div onClick={() => handleEdit(notice.id)}>수정</div>
-                              <div onClick={() => handleDelete(notice.id)} className={styles.delete}>
-                                삭제
-                              </div>
+            {notices?.length === 0 ? (
+              <div className={styles.noNotices}>공지사항이 아직 존재하지 않습니다.</div>
+            ) : (
+              <table className={styles.analysisTable}>
+                <tbody>
+                  {notices?.map((notice, index) => (
+                    <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
+                      <td>{notice.title}</td>
+                      <td className={styles.modifiedAt}>
+                        <div>{formatDate(notice.modifiedAt)}</div>
+                        {userInfo?.role === "admin" ? (
+                          <div className={styles.menuContainer}>
+                            <div
+                              className={styles.menuButton}
+                              onClick={(event) => handleMenuToggle(event, notice.id)}
+                              ref={buttonRef}
+                            >
+                              <AiOutlineMore />
                             </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div> &gt;</div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                            {menuOpen === notice.id && (
+                              <div className={styles.menuDropdown} ref={menuRef}>
+                                <div onClick={(event) => handleEdit(event, notice.id)}>수정</div>
+                                <div onClick={(event) => handleDelete(event, notice.id)} className={styles.delete}>
+                                  삭제
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div> &gt;</div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* 페이지네이션 UI */}

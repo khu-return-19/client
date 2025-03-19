@@ -1,0 +1,98 @@
+.writeNotice {
+  background-color: #eff2f6;
+  display: flex;
+  justify-content: center;
+  padding: 120px 0px;
+}
+
+.wrapper {
+  width: 1040px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0e3270;
+  }
+
+  .body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .titleArea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .titleInput {
+      width: 100%;
+      height: 56px;
+      background-color: #eff2f6;
+      border-radius: 8px;
+      border: none;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+  }
+
+  .contentArea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .contentInput {
+      height: 300px;
+      border: none;
+      border-radius: 8px;
+      background-color: #eff2f6;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+
+  .uploadButton,
+  .cancelButton {
+    width: 600px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .uploadButton {
+    background-color: #0e3270;
+    color: white;
+  }
+
+  .cancelButton {
+    border: 1px solid #e0e6ed;
+  }
+}

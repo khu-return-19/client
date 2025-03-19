@@ -8,6 +8,8 @@ import dayjs from "dayjs";
 import ReactMarkdown from "react-markdown";
 import { AiOutlineClose } from "react-icons/ai";
 import remarkGfm from "remark-gfm";
+import Modal from "shared/modal";
+import { DeleteAnalysisModal } from "layouts/analysis";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -18,11 +20,11 @@ function Analysis() {
   const [inputVisible, setInputVisible] = useState(false);
   const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);
   const [streamingContent, setStreamingContent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage } = useFetchAnalyses();
   const observerRef = useRef(null);
   const { data: analysis } = useFetchAnalysis(id);
-  const deleteAnalysis = useDeleteAnalyses();
 
   useEffect(() => {
     if (data?.pages) {
@@ -84,16 +86,9 @@ function Analysis() {
     navigate(`/analysis/${analysisId}`);
   };
 
-  const handleDeleteAnalysis = (id) => {
-    deleteAnalysis.mutate(id, {
-      onSuccess: () => {
-        alert("삭제가 완료되었습니다.");
-      },
-      onError: (error) => {
-        console.error("삭제 중 오류 발생:", error);
-        alert("삭제 실패");
-      },
-    });
+  const handleDeleteClick = (analysisId) => {
+    setSelectedAnalysisId(analysisId);
+    setIsModalOpen(true);
   };
 
   return (
@@ -121,7 +116,13 @@ function Analysis() {
                     onClick={() => handleAnalysisSelect(analysis.id)}
                   >
                     <div className={styles.title}>{analysis.title}</div>
-                    <div className={styles.deleteButton} onClick={() => handleDeleteAnalysis(analysis.id)}>
+                    <div
+                      className={styles.deleteButton}
+                      onClick={(e) => {
+                        e.stopPropagation(); // 삭제 버튼 클릭 시 목록 선택 방지
+                        handleDeleteClick(analysis.id);
+                      }}
+                    >
                       <AiOutlineClose />
                     </div>
                   </div>
@@ -174,6 +175,7 @@ function Analysis() {
           </div>
         </div>
       </div>
+      <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={selectedAnalysisId} />
     </div>
   );
 }

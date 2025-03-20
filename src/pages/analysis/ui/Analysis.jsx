@@ -8,6 +8,8 @@ import dayjs from "dayjs";
 import ReactMarkdown from "react-markdown";
 import { AiOutlineClose } from "react-icons/ai";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
 import Modal from "shared/modal";
 import { DeleteAnalysisModal } from "layouts/analysis";
 
@@ -63,8 +65,7 @@ function Analysis() {
     });
 
     eventSource.onmessage = (event) => {
-      setStreamingContent((prev) => prev + event.data + "\n"); // 실시간 데이터 추가
-      console.log(event.data);
+      setStreamingContent((prev) => prev + event.data.replace(/\u00A0/g, " "));
     };
 
     eventSource.onerror = (error) => {
@@ -90,6 +91,10 @@ function Analysis() {
     setSelectedAnalysisId(analysisId);
     setIsModalOpen(true);
   };
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return (
     <div className={styles.analysis}>
@@ -164,12 +169,20 @@ function Analysis() {
               </div>
             </div>
             {analysis?.status === null ? (
-              <ReactMarkdown className={styles.streaming} remarkPlugins={[remarkGfm]}>
-                {streamingContent || "분석 중..."}
+              <ReactMarkdown
+                className={styles.streaming}
+                remarkPlugins={[remarkGfm, remarkBreaks]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {JSON.parse(`"${streamingContent}"`) || "분석 중..."}
               </ReactMarkdown>
             ) : (
-              <ReactMarkdown className={styles.body} remarkPlugins={[remarkGfm]}>
-                {analysis?.content}
+              <ReactMarkdown
+                className={styles.body}
+                remarkPlugins={[remarkGfm, remarkBreaks]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {JSON.parse(`"${analysis?.content}"`)}
               </ReactMarkdown>
             )}
           </div>

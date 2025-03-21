@@ -7,7 +7,7 @@ import Profile from "./pages/profile";
 import Resume from "./pages/resume";
 import Analysis from "./pages/analysis";
 import PrivateRoute from "./privateRoute";
-import { LoginError } from "pages/Error";
+import LoginError from "pages/Error/login";
 import { ToastContainer } from "react-toastify";
 import Intro from "./pages/intro";
 import AboutLayout from "./shared/aboutLayout";
@@ -20,6 +20,7 @@ import PrivacyPolicy from "pages/privacy-policy";
 import WriteNotice from "pages/notice-write";
 import NoticeDetail from "pages/notice-detail";
 import EditNotice from "pages/notice-edit";
+import NotFound from "pages/Error/notFound";
 
 function AppContent() {
   const location = useLocation();
@@ -38,19 +39,22 @@ function AppContent() {
           <Route path="evaluation" element={<Evaluation3D />} />
           <Route path="team" element={<Team />} />
         </Route>
+
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
+        <Route path="/notice/write" element={<WriteNotice />} />
+        <Route path="/notice/:id/edit" element={<EditNotice />} />
 
         <Route path="/" element={<Landing />} />
         <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
         <Route path="/resume" element={<PrivateRoute element={<Resume />} />} />
         <Route path="/analysis" element={<PrivateRoute element={<Analysis />} />} />
         <Route path="/analysis/:id" element={<PrivateRoute element={<Analysis />} />} />
-        <Route path="/error" element={<LoginError />} />
         <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/notice/write" element={<WriteNotice />} />
-        <Route path="/notice/:id/edit" element={<EditNotice />} />
+
+        <Route path="/error" element={<LoginError />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

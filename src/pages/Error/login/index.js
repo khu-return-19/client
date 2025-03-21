@@ -1,3 +1,3 @@
 import LoginError from "./ui/LoginError";
 
-export { LoginError };
+export default LoginError;

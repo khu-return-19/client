@@ -1,0 +1,46 @@
+.notFound {
+  background-color: #e0e6ed;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #0e3270;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  .subTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4d4d4d;
+  }
+
+  .text {
+    text-align: center;
+    font-size: 16px;
+    color: #969696;
+  }
+}

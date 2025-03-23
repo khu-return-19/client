@@ -4,7 +4,8 @@ import GoToMainButton from "components/shared/goToMainButton";
 import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useFetchNotices, useDeleteNotice } from "api/noticeApi";
+import { useFetchNotices } from "api/noticeApi";
+import { DeleteNoticeModal } from "layouts/notice";
 
 function Notice() {
   const itemsPerPage = 8;
@@ -13,9 +14,10 @@ function Notice() {
   const totalPages = Math.ceil(totalNotice / itemsPerPage);
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNoticeId, setSelectedNoticeId] = useState(null);
 
   const { data: notices, isLoading } = useFetchNotices(currentPage, itemsPerPage);
-  const { mutate: deleteNotice } = useDeleteNotice();
 
   const [menuOpen, setMenuOpen] = useState(null);
   const menuRef = useRef(null);
@@ -70,15 +72,9 @@ function Notice() {
 
   const handleDelete = (event, id) => {
     event.stopPropagation();
-    deleteNotice(id, {
-      onSuccess: () => {
-        alert("공지사항이 삭제되었습니다.");
-      },
-      onError: (error) => {
-        console.error("삭제 실패:", error);
-        alert("삭제 중 오류가 발생했습니다.");
-      },
-    });
+    setSelectedNoticeId(id);
+    setMenuOpen(null);
+    setIsModalOpen(true);
   };
 
   const handleNextGroup = () => {
@@ -206,6 +202,7 @@ function Notice() {
         </div>
       </div>
       <GoToMainButton />
+      <DeleteNoticeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} noticeId={selectedNoticeId} />
     </div>
   );
 }

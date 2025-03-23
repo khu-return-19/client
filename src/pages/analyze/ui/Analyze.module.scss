@@ -94,6 +94,29 @@
     flex-direction: column;
     gap: 40px;
 
+    .inputGroup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+
+      .introductionTitle {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .introductionContent {
+        width: 100%;
+        height: 216px;
+        color: #969696;
+        background-color: #eff2f6;
+        padding: 12px;
+        resize: none;
+        border-radius: 8px;
+        border: none;
+      }
+    }
+
     .companyAndJob {
       display: flex;
       gap: 12px;

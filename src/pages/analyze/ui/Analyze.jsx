@@ -5,6 +5,7 @@ import { useFetchResume } from "api/resumeApi";
 import { useCreateAnalysis } from "api/analysisApi";
 import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal } from "layouts/analyze";
+import { useAuth } from "auth/authContext";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,8 +13,9 @@ function Analyze() {
 
   const { register, handleSubmit, setValue } = useForm();
   const { data: resumeData, isLoading } = useFetchResume();
-
   const createAnalysis = useCreateAnalysis();
+  const { userInfo } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +71,7 @@ function Analyze() {
             <div>3D 역량분석</div>
             <div className={styles.subTitle}>
               <div>자소서 내용을 입력해주시면 AI 첨삭을 받을 수 있습니다.</div>
-              <div>오늘 남은 이용 횟수 : 1/3 2025/02/11 00:00:00</div>
+              <div>오늘 남은 이용 횟수 : {userInfo.count}/3</div>
             </div>
           </div>
           <div className={styles.notice}>
@@ -130,10 +132,11 @@ function Analyze() {
               </div>
             </div>
           </div>
+
           <div className={styles.introduction}>
             <div className={styles.inputGroup}>
-              <div className={styles.inputLabel}>자기소개서</div>
-              <textarea {...register("input")} />
+              <div className={styles.introductionTitle}>자기소개서</div>
+              <textarea className={styles.introductionContent} {...register("input")} />
             </div>
             <div className={styles.companyAndJob}>
               <div className={styles.inputGroup}>

@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styles from "./WriteNotice.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useCreateNotice } from "api/noticeApi";
+import { NoticeCancelModal } from "layouts/notice-write";
 
 function WriteNotice() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { mutate: createNotice, isLoading } = useCreateNotice();
 
@@ -33,7 +35,7 @@ function WriteNotice() {
   };
 
   const handleCancelClick = () => {
-    navigate("/notice");
+    setIsModalOpen(true);
   };
 
   return (
@@ -71,6 +73,7 @@ function WriteNotice() {
           </div>
         </div>
       </div>
+      <NoticeCancelModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./EditNotice.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchNotice, useUpdateNotice } from "api/noticeApi";
+import { NoticeCancelModal } from "layouts/notice-edit";
 
 function EditNotice() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function EditNotice() {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 기존 데이터가 로드되면 상태 업데이트
   useEffect(() => {
@@ -44,7 +46,7 @@ function EditNotice() {
   };
 
   const handleCancelClick = () => {
-    navigate(`/notice/${id}`);
+    setIsModalOpen(true);
   };
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -85,6 +87,7 @@ function EditNotice() {
           </div>
         </div>
       </div>
+      <NoticeCancelModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} noticeId={id} />
     </div>
   );
 }

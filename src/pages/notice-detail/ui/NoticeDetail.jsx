@@ -4,11 +4,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice, useDeleteNotice } from "api/noticeApi";
 import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
+import { DeleteNoticeModal } from "layouts/notice-detail";
 
 function NoticeDetail() {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -52,17 +54,8 @@ function NoticeDetail() {
   };
 
   const handleDelete = (id) => {
-    deleteNotice(id, {
-      onSuccess: () => {
-        alert("공지사항이 삭제되었습니다.");
-        navigate("/notice");
-        window.scrollTo(0, 0);
-      },
-      onError: (error) => {
-        console.error("삭제 실패:", error);
-        alert("삭제 중 오류가 발생했습니다.");
-      },
-    });
+    setMenuOpen(null);
+    setIsModalOpen(true);
   };
 
   const formatDate = (isoString) => {
@@ -123,6 +116,7 @@ function NoticeDetail() {
       <div className={styles.listButton} onClick={handleClick}>
         목록
       </div>
+      <DeleteNoticeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} noticeId={id} />
     </div>
   );
 }

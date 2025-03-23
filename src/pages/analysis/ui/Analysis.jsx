@@ -182,7 +182,7 @@ function Analysis() {
                 remarkPlugins={[remarkGfm, remarkBreaks]}
                 rehypePlugins={[rehypeRaw]}
               >
-                {JSON.parse(`"${analysis?.content}"`)}
+                {JSON.parse(`"${analysis?.content}"`).replace(/\u00A0/g, " ")}
               </ReactMarkdown>
             )}
           </div>

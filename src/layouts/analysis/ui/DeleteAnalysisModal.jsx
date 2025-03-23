@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./DeleteAnalysisModal.module.scss";
 import Modal from "shared/modal";
 import { useDeleteAnalyses } from "api/analysisApi";
+import { toast } from "react-toastify";
 
 function DeleteAnalysisModal({ isOpen, onClose, analysisId }) {
   const deleteAnalysis = useDeleteAnalyses();
@@ -9,12 +10,12 @@ function DeleteAnalysisModal({ isOpen, onClose, analysisId }) {
   const handleDeleteAnalysis = () => {
     deleteAnalysis.mutate(analysisId, {
       onSuccess: () => {
-        alert("삭제가 완료되었습니다.");
+        toast.success("분석 레포트가 삭제되었습니다.");
         onClose();
       },
       onError: (error) => {
         console.error("삭제 중 오류 발생:", error);
-        alert("삭제 실패");
+        toast.error("삭제 중 오류가 발생했습니다.");
       },
     });
   };

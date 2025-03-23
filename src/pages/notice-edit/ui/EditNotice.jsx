@@ -3,6 +3,7 @@ import styles from "./EditNotice.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchNotice, useUpdateNotice } from "api/noticeApi";
 import { NoticeCancelModal } from "layouts/notice-edit";
+import { toast } from "react-toastify";
 
 function EditNotice() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function EditNotice() {
 
   const handleUpdateClick = () => {
     if (!title.trim() || !content.trim()) {
-      alert("제목과 내용을 입력해주세요.");
+      toast.info("제목과 내용을 입력해주세요.");
       return;
     }
 
@@ -34,12 +35,12 @@ function EditNotice() {
       { id, title, content },
       {
         onSuccess: () => {
-          alert("공지사항이 수정되었습니다.");
+          toast.success("공지사항이 수정되었습니다.");
           navigate(`/notice/${id}`);
         },
         onError: (error) => {
           console.error("공지 수정 실패:", error);
-          alert("공지 수정에 실패했습니다.");
+          toast.error("공지 수정에 실패했습니다.");
         },
       }
     );

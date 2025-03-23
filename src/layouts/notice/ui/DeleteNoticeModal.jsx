@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./DeleteNoticeModal.module.scss";
 import Modal from "shared/modal";
 import { useDeleteNotice } from "api/noticeApi";
+import { toast } from "react-toastify";
 
 function DeleteNoticeModal({ isOpen, onClose, noticeId }) {
   const { mutate: deleteNotice } = useDeleteNotice();
@@ -9,12 +10,12 @@ function DeleteNoticeModal({ isOpen, onClose, noticeId }) {
   const handleDeleteNotice = () => {
     deleteNotice(noticeId, {
       onSuccess: () => {
-        alert("공지사항이 삭제되었습니다.");
+        toast.success("공지사항이 삭제되었습니다.");
         onClose();
       },
       onError: (error) => {
         console.error("삭제 실패:", error);
-        alert("삭제 중 오류가 발생했습니다.");
+        toast.error("삭제 중 오류가 발생했습니다.");
       },
     });
   };

@@ -6,6 +6,7 @@ import { useCreateAnalysis } from "api/analysisApi";
 import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal } from "layouts/analyze";
 import { useAuth } from "auth/authContext";
+import { toast } from "react-toastify";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,11 +53,12 @@ function Analyze() {
       onSuccess: (response) => {
         if (response) {
           navigate(`/analysis/${response}`);
+          toast.success("분석을 요청했습니다.");
         }
       },
       onError: (error) => {
         console.error("분석 실패:", error);
-        // TODO: 실패 시 사용자에게 알림
+        toast.error("분석 요청 중 오류가 발생했습니다.");
       },
     });
 

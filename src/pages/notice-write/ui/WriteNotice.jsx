@@ -3,6 +3,7 @@ import styles from "./WriteNotice.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useCreateNotice } from "api/noticeApi";
 import { NoticeCancelModal } from "layouts/notice-write";
+import { toast } from "react-toastify";
 
 function WriteNotice() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function WriteNotice() {
 
   const handleUploadClick = () => {
     if (!title.trim() || !content.trim()) {
-      alert("제목과 내용을 입력해주세요.");
+      toast.info("제목과 내용을 입력해주세요.");
       return;
     }
 
@@ -23,12 +24,12 @@ function WriteNotice() {
       { title, content },
       {
         onSuccess: () => {
-          alert("공지사항이 등록되었습니다.");
+          toast.success("공지사항이 등록되었습니다.");
           navigate("/notice");
         },
         onError: (error) => {
           console.error("공지 등록 실패:", error);
-          alert("공지 등록에 실패했습니다.");
+          toast.error("공지 등록에 실패했습니다.");
         },
       }
     );

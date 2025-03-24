@@ -4,6 +4,7 @@ import { useAuth } from "auth/authContext";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { LoginModal } from "shared/loginModal";
+import { FiExternalLink } from "react-icons/fi";
 
 const Header = React.memo(() => {
   const { isLoggedIn, userInfo, logout } = useAuth();
@@ -89,9 +90,15 @@ const Header = React.memo(() => {
                 주요 사이트
               </span>
               <div className={`${styles.dropdown} ${hoveredMenu === "sitemap" ? styles.activeSitemap : ""}`}>
-                <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>미래인재센터</span>
-                <span onClick={() => window.open("https://_", "_blank")}>취창업스쿨</span>
-                <span onClick={() => window.open("https://_", "_blank")}>상담신청</span>
+                <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>
+                  미래인재센터 <FiExternalLink className={styles.externalIcon} />
+                </span>
+                <span onClick={() => window.open("https://_", "_blank")}>
+                  취창업스쿨 <FiExternalLink className={styles.externalIcon} />
+                </span>
+                <span onClick={() => window.open("https://_", "_blank")}>
+                  상담신청 <FiExternalLink className={styles.externalIcon} />
+                </span>
               </div>
             </div>
 

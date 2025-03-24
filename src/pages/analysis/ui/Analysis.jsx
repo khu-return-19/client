@@ -113,7 +113,7 @@ function Analysis() {
 
     element.addEventListener("scroll", handleScroll);
     return () => element.removeEventListener("scroll", handleScroll);
-  }, [rightSectionRef?.current, streamingContent]);
+  }, [rightSectionRef?.current, analysis?.content, streamingContent]);
 
   // 버튼 클릭 시 스크롤 맨 아래로 이동
   const scrollToBottom = () => {

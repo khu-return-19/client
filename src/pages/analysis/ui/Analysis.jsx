@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import styles from "./Analysis.module.scss";
 import { useFetchAnalyses, useFetchAnalysis, useDeleteAnalyses } from "api/analysisApi";
 import { mergeNewData } from "pages/analysis/utils/mergeNewData";
@@ -12,6 +12,7 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import Modal from "shared/modal";
 import { DeleteAnalysisModal } from "layouts/analysis";
+import { MdOutlineArrowDownward } from "react-icons/md";
 
 function Analysis() {
   const [isActive, setIsActive] = useState(false);
@@ -23,6 +24,9 @@ function Analysis() {
   const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);
   const [streamingContent, setStreamingContent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const rightSectionRef = useRef(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage } = useFetchAnalyses();
   const observerRef = useRef(null);
@@ -92,6 +96,33 @@ function Analysis() {
     setIsModalOpen(true);
   };
 
+  // 스크롤 감지 핸들러
+  const handleScroll = () => {
+    const element = rightSectionRef.current;
+    if (!element) return;
+
+    const isAtBottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 1;
+    setShowScrollButton((prev) => !isAtBottom);
+  };
+
+  useEffect(() => {
+    const element = rightSectionRef.current;
+    if (!element) return;
+
+    handleScroll();
+
+    element.addEventListener("scroll", handleScroll);
+    return () => element.removeEventListener("scroll", handleScroll);
+  }, [rightSectionRef?.current, streamingContent]);
+
+  // 버튼 클릭 시 스크롤 맨 아래로 이동
+  const scrollToBottom = () => {
+    rightSectionRef.current?.scrollTo({
+      top: rightSectionRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   if (isLoading) {
     return <div></div>;
   }
@@ -142,7 +173,7 @@ function Analysis() {
           </div>
         </div>
       </div>
-      <div className={styles.rightSection}>
+      <div className={styles.rightSection} ref={rightSectionRef}>
         <div className={styles.rightWraaper}>
           <div className={styles.title}>내 분석 레포트</div>
           <div className={styles.content}>
@@ -187,6 +218,12 @@ function Analysis() {
             )}
           </div>
         </div>
+        <button
+          onClick={scrollToBottom}
+          className={`${styles.scrollToBottomButton} ${showScrollButton ? styles.show : ""}`}
+        >
+          <MdOutlineArrowDownward />
+        </button>
       </div>
       <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={selectedAnalysisId} />
     </div>

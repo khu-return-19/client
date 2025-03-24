@@ -179,3 +179,25 @@
     width: 100%;
   }
 }
+
+.scrollToBottomButton {
+  position: fixed;
+  bottom: 50px;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  padding: 6px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.scrollToBottomButton.show {
+  opacity: 1;
+  transform: scale(1);
+}

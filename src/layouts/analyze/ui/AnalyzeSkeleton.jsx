@@ -1,82 +1,18 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Analyze.module.scss";
-import { useForm } from "react-hook-form";
-import { useFetchResume } from "api/resumeApi";
-import { useCreateAnalysis } from "api/analysisApi";
-import { useNavigate } from "react-router-dom";
-import { AnalysisConfirmModal, AnalyzeSkeleton } from "layouts/analyze";
-import { useAuth } from "auth/authContext";
-import { toast } from "react-toastify";
+import React from "react";
+import styles from "./AnalyzeSkeleton.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-function Analyze() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState(null);
-
-  const { register, handleSubmit, setValue } = useForm();
-  const { data: resumeData, isLoading } = useFetchResume();
-  const createAnalysis = useCreateAnalysis();
-  const { userInfo } = useAuth();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (resumeData) {
-      Object.entries(resumeData).forEach(([key, value]) => {
-        setValue(key, value ?? "");
-      });
-    }
-  }, [resumeData]);
-
-  const onSubmit = (data) => {
-    setFormData(data);
-    setIsModalOpen(true);
-  };
-
-  const handleConfirm = () => {
-    if (!formData) return;
-
-    const requestBody = {
-      company: formData.company,
-      position: formData.position,
-      input: formData.input,
-      resume: {
-        major: formData.major,
-        universityName: formData.universityName,
-        gpa: parseFloat(formData.gpa) || 0.0,
-        career: formData.career,
-        languageScore: formData.languageScore,
-        certificate: formData.certificate,
-      },
-    };
-
-    createAnalysis.mutate(requestBody, {
-      onSuccess: (response) => {
-        if (response) {
-          navigate(`/analysis/${response}`);
-          toast.success("분석을 요청했습니다.");
-        }
-      },
-      onError: (error) => {
-        console.error("분석 실패:", error);
-        toast.error("분석 요청 중 오류가 발생했습니다.");
-      },
-    });
-
-    setIsModalOpen(false);
-  };
-
-  if (isLoading) return <AnalyzeSkeleton />;
-  // return <AnalyzeSkeleton />;
-
+function AnalyzeSkeleton() {
   return (
     <div className={styles.analyze}>
       <div className={styles.wrapper}>
         <div className={styles.info}>
           <div className={styles.title}>
-            <div>3D 역량분석</div>
+            <div className={styles.titleText}>3D 역량분석</div>
             <div className={styles.subTitle}>
               <div>자소서 내용을 입력해주시면 AI 첨삭을 받을 수 있습니다.</div>
-              <div>오늘 남은 이용 횟수 : {userInfo.count}/3</div>
+              <Skeleton width={150} height={20} />
             </div>
           </div>
           <div className={styles.notice}>
@@ -101,39 +37,39 @@ function Analyze() {
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <form className={styles.form}>
           <div className={styles.resume}>
             <div>내 이력서</div>
             <div className={styles.resumeContent}>
               <div className={styles.school}>
                 <div className={styles.inputGroup}>
                   <div className={styles.inputLabel}>학교 이름</div>
-                  <input {...register("universityName")} />
+                  <Skeleton height={56} />
                 </div>
                 <div className={styles.inputGroup}>
                   <div className={styles.inputLabel}>학점</div>
-                  <input {...register("gpa")} />
+                  <Skeleton height={56} />
                 </div>
               </div>
 
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>전공</div>
-                <input {...register("major")} />
+                <Skeleton height={56} />
               </div>
 
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>경력 및 수상 실적</div>
-                <input {...register("career")} />
+                <Skeleton height={56} />
               </div>
 
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>어학 성적</div>
-                <input {...register("languageScore")} />
+                <Skeleton height={56} />
               </div>
 
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>자격증</div>
-                <input {...register("certificate")} />
+                <Skeleton height={56} />
               </div>
             </div>
           </div>
@@ -141,16 +77,16 @@ function Analyze() {
           <div className={styles.introduction}>
             <div className={styles.inputGroup}>
               <div className={styles.introductionTitle}>자기소개서</div>
-              <textarea className={styles.introductionContent} {...register("input")} />
+              <Skeleton height={216} />
             </div>
             <div className={styles.companyAndJob}>
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>지원회사명</div>
-                <input {...register("company")} />
+                <Skeleton height={56} />
               </div>
               <div className={styles.inputGroup}>
                 <div className={styles.inputLabel}>지원 직무</div>
-                <input {...register("position")} />
+                <Skeleton height={56} />
               </div>
             </div>
           </div>
@@ -163,9 +99,8 @@ function Analyze() {
           </div>
         </form>
       </div>
-      <AnalysisConfirmModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onConfirm={handleConfirm} />
     </div>
   );
 }
 
-export default Analyze;
+export default AnalyzeSkeleton;

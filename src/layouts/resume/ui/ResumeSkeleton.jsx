@@ -1,34 +1,14 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import styles from "./Resume.module.scss";
-import { useFetchResume, useUpdateResume } from "api/resumeApi";
-import { ResumeSkeleton } from "layouts/resume";
+import React from "react";
+import styles from "./ResumeSkeleton.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-// TODO: 학점 숫자만 가능하도록 유효성 검사
-function Resume() {
-  const { register, handleSubmit, setValue } = useForm();
-  const { data: resumeData, isLoading } = useFetchResume();
-  const { mutate: updateResume } = useUpdateResume();
-
-  useEffect(() => {
-    if (resumeData) {
-      Object.entries(resumeData).forEach(([key, value]) => {
-        setValue(key, value ?? "");
-      });
-    }
-  }, [resumeData]);
-
-  const onSubmit = (data) => {
-    updateResume(data);
-  };
-
-  if (isLoading) return <ResumeSkeleton />;
-
+function ResumeSkeleton() {
   return (
     <div className={styles.resume}>
       <div className={styles.wrapper}>
         <div className={styles.myResume}>
-          <div>내 이력서</div>
+          <div className={styles.title}>내 이력서</div>
           <div className={styles.notice}>
             <img src="/infoImage.png" alt="" className={styles.infoImage} />
             <div>
@@ -40,48 +20,45 @@ function Resume() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <div className={styles.form}>
           <div className={styles.school}>
             <div className={styles.inputGroup}>
               <div className={styles.inputLabel}>학교 이름</div>
-              <input {...register("universityName")} />
+              <Skeleton height={56} />
             </div>
             <div className={styles.inputGroup}>
               <div className={styles.inputLabel}>학점</div>
-              <input {...register("gpa")} />
+              <Skeleton height={56} />
             </div>
           </div>
 
           <div className={styles.inputGroup}>
             <div className={styles.inputLabel}>전공</div>
-            <input {...register("major")} />
+            <Skeleton height={56} />
           </div>
 
           <div className={styles.inputGroup}>
             <div className={styles.inputLabel}>경력 및 수상 실적</div>
-            <input {...register("career")} />
+            <Skeleton height={56} />
           </div>
 
           <div className={styles.inputGroup}>
             <div className={styles.inputLabel}>어학 성적</div>
-            <input {...register("languageScore")} />
+            <Skeleton height={56} />
           </div>
 
           <div className={styles.inputGroup}>
             <div className={styles.inputLabel}>자격증</div>
-            <input {...register("certificate")} />
+            <Skeleton height={56} />
           </div>
 
           <div className={styles.save}>
-            <div>위 이력서를 기반으로 분석을 진행합니다.</div>
-            <button type="submit" className={styles.saveButton}>
-              저장
-            </button>
+            <button className={styles.saveButton}>수정</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Resume;
+export default ResumeSkeleton;

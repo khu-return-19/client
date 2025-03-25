@@ -1,0 +1,132 @@
+import React, { useState, useRef, useEffect } from "react";
+import styles from "./AnalysisDetail.module.scss";
+import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import { useFetchAnalysis } from "api/analysisApi";
+import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
+import { MdOutlineArrowDownward } from "react-icons/md";
+import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
+
+function AnalysisDetail() {
+  const [inputVisible, setInputVisible] = useState(false);
+  const [streamingContent, setStreamingContent] = useState("");
+  const [showScrollButton, setShowScrollButton] = useState(false);
+  const rightSectionRef = useRef(null);
+
+  const { id } = useParams();
+  const { data: analysis, isLoading } = useFetchAnalysis(id);
+
+  useEffect(() => {
+    if (!analysis || analysis.status !== null) return;
+
+    const eventSource = new EventSource(`${process.env.REACT_APP_BASE_URL}/stream/analysis/${id}`, {
+      withCredentials: true,
+    });
+
+    eventSource.onmessage = (event) => {
+      setStreamingContent((prev) => prev + event.data.replace(/\u00A0/g, " "));
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("SSE Error:", error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close(); // 컴포넌트 언마운트 시 해제
+    };
+  }, [analysis, id]);
+
+  useEffect(() => {
+    const element = rightSectionRef.current;
+    if (!element) return;
+
+    handleScroll();
+
+    element.addEventListener("scroll", handleScroll);
+    return () => element.removeEventListener("scroll", handleScroll);
+  }, [rightSectionRef?.current, analysis?.content, streamingContent]);
+
+  const toggleInputVisibility = () => {
+    setInputVisible((prev) => !prev);
+  };
+
+  // 스크롤 감지 핸들러
+  const handleScroll = () => {
+    const element = rightSectionRef.current;
+    if (!element) return;
+
+    const isAtBottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 1;
+    setShowScrollButton((prev) => !isAtBottom);
+  };
+
+  // 버튼 클릭 시 스크롤 맨 아래로 이동
+  const scrollToBottom = () => {
+    rightSectionRef.current?.scrollTo({
+      top: rightSectionRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
+  if (isLoading) return <AnalysisDetailSkeleton />;
+
+  return (
+    <div className={styles.analysisDetail} ref={rightSectionRef}>
+      <div className={styles.rightWraaper}>
+        <div className={styles.title}>내 분석 레포트</div>
+        <div className={styles.content}>
+          <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
+            <div>자소서 원본 보기</div>
+            {inputVisible ? (
+              <AiOutlineUp className={styles.toggleIcon} />
+            ) : (
+              <AiOutlineDown className={styles.toggleIcon} />
+            )}
+          </div>
+          <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
+            <div className={styles.resumeTitle}>자기소개서</div>
+            <div className={styles.input}>{analysis?.input}</div>
+            <div className={styles.companyAndPosition}>
+              <div className={styles.companyWrapper}>
+                <div className={styles.subTitle}>지원 회사명</div>
+                <div className={styles.input}>{analysis?.company}</div>
+              </div>
+              <div className={styles.positionWrapper}>
+                <div className={styles.subTitle}>지원 직무</div>
+                <div className={styles.input}>{analysis?.position}</div>
+              </div>
+            </div>
+          </div>
+          {analysis?.status === null ? (
+            <ReactMarkdown
+              className={styles.streaming}
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {JSON.parse(`"${streamingContent}"`) || "분석 중..."}
+            </ReactMarkdown>
+          ) : (
+            <ReactMarkdown
+              className={styles.body}
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {JSON.parse(`"${analysis?.content}"`).replace(/\u00A0/g, " ")}
+            </ReactMarkdown>
+          )}
+        </div>
+      </div>
+      <button
+        onClick={scrollToBottom}
+        className={`${styles.scrollToBottomButton} ${showScrollButton ? styles.show : ""}`}
+      >
+        <MdOutlineArrowDownward />
+      </button>
+    </div>
+  );
+}
+
+export default AnalysisDetail;

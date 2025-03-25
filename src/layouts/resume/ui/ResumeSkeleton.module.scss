@@ -1,0 +1,80 @@
+.resume {
+  background-color: #f6f5ef;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.wrapper {
+  background-color: white;
+  width: 863px;
+  border: 1px solid #eae8e2;
+  border-radius: 8px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.myResume {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .title {
+    color: #990e17;
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+.notice {
+  background-color: #fff8f3;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+
+  .infoImage {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  .school {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .inputGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .save {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    margin-top: 40px;
+
+    .saveButton {
+      width: 100%;
+      height: 56px;
+      background-color: #990e17;
+      color: white;
+      border-radius: 8px;
+      border: none;
+      font-size: 20px;
+    }
+  }
+}

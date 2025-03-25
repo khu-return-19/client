@@ -31,6 +31,8 @@ function AppContent() {
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<Landing />} />
+
         {/* 서비스 소개 */}
         <Route path="/about" element={<AboutLayout />}>
           <Route index element={<Navigate to="intro" replace />} />
@@ -39,18 +41,20 @@ function AppContent() {
           <Route path="team" element={<Team />} />
         </Route>
 
+        {/* 공지사항 */}
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
         <Route path="/notice/write" element={<WriteNotice />} />
         <Route path="/notice/:id/edit" element={<EditNotice />} />
 
-        <Route path="/" element={<Landing />} />
-        <Route path="/resume" element={<PrivateRoute element={<Resume />} />} />
-        <Route path="/analysis" element={<PrivateRoute element={<Analysis />} />} />
-        <Route path="/analysis/:id" element={<PrivateRoute element={<Analysis />} />} />
-        <Route path="/analyze" element={<PrivateRoute element={<Analyze />} />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/analysis/:id" element={<Analysis />} />
+          <Route path="/analyze" element={<Analyze />} />
+        </Route>
 
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/error" element={<LoginError />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,0 +1,27 @@
+.analysisDetailSkeleton {
+  padding: 0px 20px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+.wrapper {
+  width: 100%;
+  padding: 40px 0px;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .title {
+    color: #990e17;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}

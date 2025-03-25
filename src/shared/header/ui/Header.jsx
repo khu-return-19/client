@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { LoginModal } from "shared/loginModal";
 import { FiExternalLink } from "react-icons/fi";
+import { HeaderSkeleton } from "layouts/header";
 
 const Header = React.memo(() => {
-  const { isLoggedIn, userInfo, logout } = useAuth();
+  const { isLoggedIn, userInfo, logout, loading } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
@@ -16,6 +17,10 @@ const Header = React.memo(() => {
   const handleMenuClose = () => {
     setMenuOpen(false);
   };
+
+  if (loading) {
+    return <HeaderSkeleton />;
+  }
 
   // TODO: Optional Chaining 수정 필요
   return (

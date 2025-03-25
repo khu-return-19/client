@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6.25rem;
+  background-color: #990e17;
+  padding: 0 1rem;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 80rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.menuIcon {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .rightTopSection {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+
+    .mySection {
+      display: flex;
+      gap: 10px;
+      color: white;
+    }
+  }
+
+  .authSection {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .menuSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .menu,
+    .analysis {
+      padding: 0px 20px;
+    }
+  }
+}

@@ -59,13 +59,14 @@
       text-decoration: none;
       font-size: 0.875rem;
       font-weight: bold;
-
-      .login,
-      .logout {
-        color: #ffff00;
-        font-weight: bold;
-        cursor: pointer;
-      }
+    }
+    .login,
+    .logout {
+      color: #ffff00;
+      font-weight: bold;
+      cursor: pointer;
+      align-content: center;
+      font-size: 0.875rem;
     }
   }
 
@@ -91,7 +92,8 @@
       font-weight: bold;
       text-decoration: none;
     }
-    .menu.activeAbout {
+    .menu.activeAbout,
+    .menu.activeSitemap {
       color: #eae8e2;
     }
 

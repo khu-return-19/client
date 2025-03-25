@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice, useDeleteNotice } from "api/noticeApi";
 import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
-import { DeleteNoticeModal } from "layouts/notice-detail";
+import { DeleteNoticeModal, NoticeDetailSkeleton } from "layouts/notice-detail";
 
 function NoticeDetail() {
   const menuRef = useRef(null);
@@ -14,7 +14,7 @@ function NoticeDetail() {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: notice, isLoading, error } = useFetchNotice(id);
+  const { data: notice, isLoading } = useFetchNotice(id);
   const { mutate: deleteNotice } = useDeleteNotice();
 
   const { userInfo } = useAuth();
@@ -39,10 +39,6 @@ function NoticeDetail() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
-
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>공지사항을 불러오는 중 오류가 발생했습니다.</div>;
-  if (!notice) return <div>공지사항이 존재하지 않습니다.</div>;
 
   const handleMenuToggle = (event, id) => {
     event.stopPropagation();
@@ -80,6 +76,8 @@ function NoticeDetail() {
     window.scrollTo(0, 0);
   };
 
+  if (isLoading) return <NoticeDetailSkeleton />;
+
   return (
     <div className={styles.noticeDetail}>
       <div className={styles.wrapper}>
@@ -114,7 +112,7 @@ function NoticeDetail() {
         </div>
       </div>
       <div className={styles.listButton} onClick={handleClick}>
-        목록
+        목록으로
       </div>
       <DeleteNoticeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} noticeId={id} />
     </div>

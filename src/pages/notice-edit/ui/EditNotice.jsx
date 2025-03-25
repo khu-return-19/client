@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./EditNotice.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchNotice, useUpdateNotice } from "api/noticeApi";
-import { NoticeCancelModal } from "layouts/notice-edit";
+import { NoticeCancelModal, EditNoticeSkeleton } from "layouts/notice-edit";
 import { toast } from "react-toastify";
 
 function EditNotice() {
@@ -50,8 +50,7 @@ function EditNotice() {
     setIsModalOpen(true);
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>공지사항을 불러오는 중 오류가 발생했습니다.</div>;
+  if (isLoading) return <EditNoticeSkeleton />;
 
   return (
     <div className={styles.editNotice}>

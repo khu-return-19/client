@@ -93,7 +93,10 @@ const Header = React.memo(() => {
               onMouseEnter={() => setHoveredMenu("sitemap")}
               onMouseLeave={() => setHoveredMenu(null)}
             >
-              <span className={styles.menu} onClick={() => (window.location.href = "/")}>
+              <span
+                className={`${styles.menu} ${hoveredMenu === "sitemap" ? styles.activeSitemap : ""}`}
+                onClick={() => (window.location.href = "/")}
+              >
                 주요 사이트
               </span>
               <div className={`${styles.dropdown} ${hoveredMenu === "sitemap" ? styles.activeSitemap : ""}`}>

@@ -22,7 +22,6 @@ const Header = React.memo(() => {
     return <HeaderSkeleton />;
   }
 
-  // TODO: Optional Chaining 수정 필요
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -47,7 +46,7 @@ const Header = React.memo(() => {
                 </Link>
               </div>
               <div className={styles.authSection}>
-                <span className={styles.userName}>{userInfo?.name}님</span>
+                <span className={styles.userName}>{userInfo.name}님</span>
                 <div
                   className={styles.logout}
                   onClick={() => {
@@ -74,7 +73,10 @@ const Header = React.memo(() => {
               onMouseEnter={() => setHoveredMenu("about")}
               onMouseLeave={() => setHoveredMenu(null)}
             >
-              <span className={styles.menu} onClick={() => (window.location.href = "/about/intro")}>
+              <span
+                className={`${styles.menu} ${hoveredMenu === "about" ? styles.activeAbout : ""}`}
+                onClick={() => (window.location.href = "/about/intro")}
+              >
                 서비스 소개
               </span>
               <div className={`${styles.dropdown} ${hoveredMenu === "about" ? styles.activeAbout : ""}`}>
@@ -116,7 +118,6 @@ const Header = React.memo(() => {
           </div>
         </div>
       </div>
-
       {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
     </div>
   );

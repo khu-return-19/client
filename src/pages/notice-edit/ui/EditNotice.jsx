@@ -10,7 +10,7 @@ function EditNotice() {
   const { id } = useParams();
 
   // 기존 공지사항 데이터 불러오기
-  const { data: notice, isLoading, error } = useFetchNotice(id);
+  const { data: notice, isLoading } = useFetchNotice(id);
   const { mutate: updateNotice, isLoading: isUpdating } = useUpdateNotice();
 
   const [title, setTitle] = useState("");

@@ -1,0 +1,84 @@
+.analysisSidebar {
+  width: 280px;
+  height: calc(100vh - 100px);
+  background-color: #eff2f6;
+  transition: width 0.3s ease;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.collapsed {
+  width: 72px;
+}
+
+.iconSection {
+  padding: 20px 16px;
+  box-sizing: border-box;
+  height: 80px;
+}
+
+.sidebarIcon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100vh - 240px);
+
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.list.collapsed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.analysisItem {
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover,
+  &.selected {
+    background-color: #e0e6ed;
+  }
+
+  .deleteButton {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 4px solid #e0e0e0;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

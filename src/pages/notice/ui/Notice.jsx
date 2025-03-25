@@ -5,7 +5,7 @@ import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useFetchNotices } from "api/noticeApi";
-import { DeleteNoticeModal } from "layouts/notice";
+import { DeleteNoticeModal, NoticeSkeleton } from "layouts/notice";
 
 function Notice() {
   const itemsPerPage = 8;
@@ -118,6 +118,10 @@ function Notice() {
       .replace(/\. /g, ".")
       .replace(/\.$/, "");
   };
+
+  if (isLoading) {
+    return <NoticeSkeleton />;
+  }
 
   return (
     <div className={styles.notice}>

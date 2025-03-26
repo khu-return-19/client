@@ -13,7 +13,6 @@ function Resume() {
     setValue,
     formState: { errors, isSubmitted },
   } = useForm();
-  console.log(isSubmitted, errors);
   const { data: resumeData, isLoading } = useFetchResume();
   const { mutate: updateResume } = useUpdateResume();
 

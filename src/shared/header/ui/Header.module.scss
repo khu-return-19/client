@@ -47,6 +47,10 @@
         color: white;
         font-size: 0.875rem;
         font-weight: bold;
+
+        &:hover {
+          color: #eae8e2;
+        }
       }
     }
 
@@ -92,6 +96,7 @@
       font-weight: bold;
       text-decoration: none;
     }
+
     .menu.activeAbout,
     .menu.activeSitemap {
       color: #eae8e2;
@@ -155,6 +160,10 @@
       font-size: 1rem;
       font-weight: bold;
       box-sizing: border-box;
+
+      &:hover {
+        background-color: #eae8e2;
+      }
     }
   }
 }

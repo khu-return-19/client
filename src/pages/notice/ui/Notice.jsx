@@ -6,18 +6,19 @@ import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useFetchNotices } from "api/noticeApi";
 import { DeleteNoticeModal, NoticeSkeleton } from "layouts/notice";
+import { dataTagSymbol } from "@tanstack/react-query";
 
 function Notice() {
   const itemsPerPage = 8;
-  // const totalNotice =  || 0;
-  const totalNotice = 100;
-  const totalPages = Math.ceil(totalNotice / itemsPerPage);
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNoticeId, setSelectedNoticeId] = useState(null);
 
-  const { data: notices, isLoading } = useFetchNotices(currentPage, itemsPerPage);
+  const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
+
+  const totalNotice = data?.total || 0;
+  const totalPages = data?.page || 1;
 
   const [menuOpen, setMenuOpen] = useState(null);
   const menuRef = useRef(null);
@@ -136,12 +137,12 @@ function Notice() {
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.table}>
-            {notices?.length === 0 ? (
+            {data.notices?.length === 0 ? (
               <div className={styles.noNotices}>공지사항이 아직 존재하지 않습니다.</div>
             ) : (
               <table className={styles.analysisTable}>
                 <tbody>
-                  {notices?.map((notice, index) => (
+                  {data.notices?.map((notice, index) => (
                     <tr key={notice.id} className={styles.clickableRow} onClick={() => handleRowClick(notice.id)}>
                       <td>{notice.title}</td>
                       <td className={styles.modifiedAt}>
@@ -176,7 +177,7 @@ function Notice() {
           </div>
 
           {/* 페이지네이션 UI */}
-          {totalPages > 1 && (
+          {totalPages >= 1 && (
             <div className={styles.pagination}>
               <div
                 onClick={handlePrevGroup}

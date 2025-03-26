@@ -24,7 +24,7 @@ import NotFound from "pages/Error/notFound";
 function AppContent() {
   const location = useLocation();
 
-  const noFooterPages = ["/analyze", "/error"];
+  const noFooterPages = ["/resume", "/error"];
   const isNoFooterPage = noFooterPages.includes(location.pathname) || location.pathname.startsWith("/analysis");
 
   return (

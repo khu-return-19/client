@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
 import { useAuth } from "auth/authContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { LoginModal } from "shared/loginModal";
 import { FiExternalLink } from "react-icons/fi";
 import { HeaderSkeleton } from "layouts/header";
 
 const Header = React.memo(() => {
-  const { isLoggedIn, userInfo, logout, loading } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-
   const [hoveredMenu, setHoveredMenu] = useState(null);
+
+  const navigate = useNavigate();
+
+  const { isLoggedIn, userInfo, logout, loading } = useAuth();
 
   const handleMenuClose = () => {
     setMenuOpen(false);
@@ -113,10 +115,8 @@ const Header = React.memo(() => {
             </div>
 
             {/* 자기소개서 분석 */}
-            <div className={styles.analysis}>
-              <span className={styles.analysisText} onClick={() => (window.location.href = "/analyze")}>
-                자기소개서 분석
-              </span>
+            <div className={styles.analysis} onClick={() => navigate("/analyze")}>
+              <span className={styles.analysisText}>자기소개서 분석</span>
             </div>
           </div>
         </div>

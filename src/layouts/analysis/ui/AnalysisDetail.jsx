@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./AnalysisDetail.module.scss";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { useFetchAnalysis } from "api/analysisApi";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
@@ -16,8 +16,17 @@ function AnalysisDetail() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const rightSectionRef = useRef(null);
 
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data: analysis, isLoading } = useFetchAnalysis(id);
+
+  useEffect(() => {
+    if (!id) return;
+
+    if (!isLoading && !analysis) {
+      navigate("/404", { replace: true });
+    }
+  }, [isLoading, analysis]);
 
   useEffect(() => {
     if (!analysis || analysis.status !== null) return;
@@ -50,10 +59,6 @@ function AnalysisDetail() {
     return () => element.removeEventListener("scroll", handleScroll);
   }, [rightSectionRef?.current, analysis?.content, streamingContent]);
 
-  const toggleInputVisibility = () => {
-    setInputVisible((prev) => !prev);
-  };
-
   // 스크롤 감지 핸들러
   const handleScroll = () => {
     const element = rightSectionRef.current;
@@ -69,6 +74,10 @@ function AnalysisDetail() {
       top: rightSectionRef.current.scrollHeight,
       behavior: "smooth",
     });
+  };
+
+  const toggleInputVisibility = () => {
+    setInputVisible((prev) => !prev);
   };
 
   if (isLoading) return <AnalysisDetailSkeleton />;

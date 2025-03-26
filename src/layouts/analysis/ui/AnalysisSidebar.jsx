@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AnalysisSidebar.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { useFetchAnalyses } from "api/analysisApi";
 import { mergeNewData } from "pages/analysis/utils/mergeNewData";
@@ -14,29 +14,19 @@ function AnalysisSidebar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const observerRef = useRef(null);
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const { data, isLoading: isLoadingAnalyses, fetchNextPage, hasNextPage } = useFetchAnalyses();
-
-  const handleAnalysisSelect = (analysisId) => {
-    setSelectedAnalysisId(analysisId);
-    navigate(`/analysis/${analysisId}`);
-  };
-
-  const handleDeleteClick = (analysisId) => {
-    setSelectedAnalysisId(analysisId);
-    setIsModalOpen(true);
-  };
+  const { data, isLoading, fetchNextPage, hasNextPage } = useFetchAnalyses();
+  useEffect(() => {
+    if (id) {
+      setSelectedAnalysisId(Number(id));
+    }
+  }, [id]);
 
   useEffect(() => {
     if (data?.pages) {
       const newAnalyses = data.pages.at(-1);
       setGroupedAnalyses((prevGrouped) => mergeNewData(prevGrouped, newAnalyses));
-
-      const firstAnalysis = data.pages.flat()[0];
-      if (firstAnalysis?.id) {
-        navigate(`/analysis/${firstAnalysis.id}`, { replace: true });
-        setSelectedAnalysisId(firstAnalysis.id);
-      }
     }
   }, [data]);
 
@@ -55,6 +45,16 @@ function AnalysisSidebar() {
     observer.observe(observerRef.current);
     return () => observer.disconnect();
   }, [hasNextPage, fetchNextPage]);
+
+  const handleAnalysisSelect = (analysisId) => {
+    setSelectedAnalysisId(analysisId);
+    navigate(`/analysis/${analysisId}`);
+  };
+
+  const handleDeleteClick = (analysisId) => {
+    setSelectedAnalysisId(analysisId);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className={`${styles.analysisSidebar} ${isCollapsed ? styles.collapsed : ""}`}>
@@ -94,7 +94,7 @@ function AnalysisSidebar() {
             </div>
           ))}
         <div ref={observerRef} className={styles.loader}>
-          {isLoadingAnalyses && <div className={styles.spinner}></div>}
+          {isLoading && <div className={styles.spinner}></div>}
         </div>
       </div>
       <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={selectedAnalysisId} />

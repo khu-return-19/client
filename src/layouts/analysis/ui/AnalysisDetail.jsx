@@ -50,10 +50,6 @@ function AnalysisDetail() {
     return () => element.removeEventListener("scroll", handleScroll);
   }, [rightSectionRef?.current, analysis?.content, streamingContent]);
 
-  const toggleInputVisibility = () => {
-    setInputVisible((prev) => !prev);
-  };
-
   // 스크롤 감지 핸들러
   const handleScroll = () => {
     const element = rightSectionRef.current;
@@ -69,6 +65,10 @@ function AnalysisDetail() {
       top: rightSectionRef.current.scrollHeight,
       behavior: "smooth",
     });
+  };
+
+  const toggleInputVisibility = () => {
+    setInputVisible((prev) => !prev);
   };
 
   if (isLoading) return <AnalysisDetailSkeleton />;

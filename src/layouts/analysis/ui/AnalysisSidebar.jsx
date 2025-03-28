@@ -11,12 +11,13 @@ function AnalysisSidebar() {
   const [isActive, setIsActive] = useState(false);
   const [groupedAnalyses, setGroupedAnalyses] = useState({});
   const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);
+  const [analysisToDelete, setAnalysisToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const observerRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
-
   const { data, isLoading, fetchNextPage, hasNextPage } = useFetchAnalyses();
+
   useEffect(() => {
     if (id) {
       setSelectedAnalysisId(Number(id));
@@ -52,7 +53,7 @@ function AnalysisSidebar() {
   };
 
   const handleDeleteClick = (analysisId) => {
-    setSelectedAnalysisId(analysisId);
+    setAnalysisToDelete(analysisId);
     setIsModalOpen(true);
   };
 
@@ -77,13 +78,15 @@ function AnalysisSidebar() {
                 <div
                   key={analysis.id}
                   className={`${styles.analysisItem} ${selectedAnalysisId === analysis.id ? styles.selected : ""}`}
-                  onClick={() => handleAnalysisSelect(analysis.id)}
+                  onClick={() => {
+                    handleAnalysisSelect(analysis.id);
+                  }}
                 >
                   <div className={styles.title}>{analysis.title}</div>
                   <div
                     className={styles.deleteButton}
                     onClick={(e) => {
-                      e.stopPropagation(); // 삭제 버튼 클릭 시 목록 선택 방지
+                      e.stopPropagation();
                       handleDeleteClick(analysis.id);
                     }}
                   >
@@ -97,7 +100,7 @@ function AnalysisSidebar() {
           {isLoading && <div className={styles.spinner}></div>}
         </div>
       </div>
-      <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={selectedAnalysisId} />
+      <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={analysisToDelete} />
     </div>
   );
 }

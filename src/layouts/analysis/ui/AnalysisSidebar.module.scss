@@ -47,15 +47,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #4d4d4d;
+  font-size: 16px;
 
   &:hover,
   &.selected {
-    background-color: #e0e6ed;
+    background-color: #eae8e2;
+
+    .deleteButton {
+      display: block;
+    }
+  }
+
+  &.selected {
+    color: #131313;
   }
 
   .deleteButton {
-    display: flex;
-    align-items: center;
+    display: none;
+    color: #969696;
   }
 }
 

@@ -57,8 +57,22 @@ function Analyze() {
     createAnalysis.mutate(requestBody, {
       onSuccess: (response) => {
         if (response) {
-          navigate(`/analysis/${response}`);
-          toast.success("분석을 요청했습니다.");
+          const toastId = toast.loading("분석 요청 중...");
+
+          setTimeout(() => {
+            toast.update(toastId, {
+              render: "분석 요청 완료! 잠시 후 이동합니다.",
+              type: "success",
+              isLoading: false,
+              autoClose: 1300,
+              closeOnClick: true,
+            });
+
+            setTimeout(() => {
+              navigate("/analysis", { replace: true });
+              window.location.reload();
+            }, 1500);
+          }, 1000);
         }
       },
       onError: (error) => {

@@ -9,6 +9,7 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
 import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
+import { RadarChart } from "components/analysis"; // Assuming you have a RadarChart component
 
 function AnalysisDetail() {
   const [inputVisible, setInputVisible] = useState(false);
@@ -110,21 +111,27 @@ function AnalysisDetail() {
             </div>
           </div>
           {analysis?.status === null ? (
-            <ReactMarkdown
-              className={styles.streaming}
-              remarkPlugins={[remarkGfm, remarkBreaks]}
-              rehypePlugins={[rehypeRaw]}
-            >
-              {JSON.parse(`"${streamingContent}"`) || "분석 중..."}
-            </ReactMarkdown>
+            <div className={styles.contentWrapper}>
+              <RadarChart />
+              <ReactMarkdown
+                className={styles.streaming}
+                remarkPlugins={[remarkGfm, remarkBreaks]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {JSON.parse(`"${streamingContent}"`) || "분석 중..."}
+              </ReactMarkdown>
+            </div>
           ) : (
-            <ReactMarkdown
-              className={styles.body}
-              remarkPlugins={[remarkGfm, remarkBreaks]}
-              rehypePlugins={[rehypeRaw]}
-            >
-              {JSON.parse(`"${analysis?.content}"`).replace(/\u00A0/g, " ")}
-            </ReactMarkdown>
+            <div className={styles.contentWrapper}>
+              <RadarChart />
+              <ReactMarkdown
+                className={styles.body}
+                remarkPlugins={[remarkGfm, remarkBreaks]}
+                rehypePlugins={[rehypeRaw]}
+              >
+                {JSON.parse(`"${analysis?.content}"`).replace(/\u00A0/g, " ")}
+              </ReactMarkdown>
+            </div>
           )}
         </div>
       </div>

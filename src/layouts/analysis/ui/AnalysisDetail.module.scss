@@ -107,10 +107,16 @@
     }
   }
 
-  .streaming,
-  .body {
-    width: 100%;
-    padding-bottom: 40px;
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .streaming,
+    .body {
+      width: 100%;
+      padding-bottom: 40px;
+    }
   }
 }
 

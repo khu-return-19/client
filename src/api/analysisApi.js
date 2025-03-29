@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import api from "api/axiosInstance";
 
 // NOTE: 분석 보고서 목록 무한 스크롤 조회
@@ -17,7 +17,6 @@ export const useFetchAnalyses = () => {
       // 데이터가 있으면 다음 페이지 번호를 반환
       return allPages.length + 1;
     },
-    keepPreviousData: true, // 기존 데이터 유지
   });
 };
 
@@ -33,14 +32,29 @@ export const useFetchAnalysis = (id) => {
   });
 };
 
-// NOTE: 분석 보고서 삭제
 export const useDeleteAnalyses = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (id) => {
-      const response = await api.delete("/analysis", {
-        data: { id },
-      });
+      const response = await api.delete("/analysis", { data: { id } });
       return response.data;
+    },
+    onSuccess: (_, id) => {
+      console.log(id);
+      queryClient.setQueryData(["analyses"], (oldData) => {
+        const newPagesArray = oldData.pages.map(
+          (page) => page.filter((analysis) => analysis.id !== id) // 삭제된 id 제외한 데이터
+        );
+
+        return {
+          pages: newPagesArray,
+          pageParams: oldData.pageParams,
+        };
+      });
+    },
+    onError: (error) => {
+      console.error("삭제 중 오류 발생:", error);
     },
   });
 };

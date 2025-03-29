@@ -24,10 +24,13 @@ function AnalysisSidebar() {
     }
   }, [id]);
 
+  // TODO: 삭제와 추가로 인한 데이터 업데이트에서 시간복잡도 관련 최적화 필요
   useEffect(() => {
     if (data?.pages) {
       const newAnalyses = data.pages.at(-1);
-      setGroupedAnalyses((prevGrouped) => mergeNewData(prevGrouped, newAnalyses));
+      const allAnalyses = data.pages.flat();
+
+      setGroupedAnalyses((prevGrouped) => mergeNewData(prevGrouped, newAnalyses, allAnalyses));
     }
   }, [data]);
 

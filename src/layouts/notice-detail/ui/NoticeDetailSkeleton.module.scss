@@ -1,5 +1,5 @@
 .noticeDetail {
-  background-color: #eff2f6;
+  background-color: #f4f2ed;
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -55,8 +55,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
   background-color: #990e17;
   cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
 }

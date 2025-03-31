@@ -1,5 +1,5 @@
 .noticeDetail {
-  background-color: #eff2f6;
+  background-color: #f4f2ed;
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -18,7 +18,7 @@
   gap: 20px;
 
   .notice {
-    color: #0e3270;
+    color: #990e17;
     font-size: 24px;
     font-weight: bold;
   }
@@ -114,8 +114,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 4px;
   color: white;
-  background-color: #0e3270;
+  background-color: #990e17;
   cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
 }

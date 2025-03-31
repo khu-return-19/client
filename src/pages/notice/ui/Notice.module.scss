@@ -1,6 +1,6 @@
 .notice {
   width: 100%;
-  background-color: #eff2f6;
+  background-color: #f4f2ed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@
   .title {
     font-size: 24px;
     font-weight: bold;
-    color: #0e3270;
+    color: #990e17;
   }
 
   .writeButton {
@@ -36,10 +36,11 @@
     justify-content: center;
     width: 232px;
     height: 40px;
-    background-color: #0e3270;
+    background-color: #990e17;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 4px;
     color: white;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
   }
@@ -184,7 +185,7 @@
     }
 
     .activePage {
-      color: #0e3270;
+      color: #990e17;
     }
   }
 }

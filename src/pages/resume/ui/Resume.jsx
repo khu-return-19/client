@@ -4,7 +4,6 @@ import styles from "./Resume.module.scss";
 import { useFetchResume, useUpdateResume } from "api/resumeApi";
 import { ResumeSkeleton } from "layouts/resume";
 
-// TODO: 학점 숫자만 가능하도록 유효성 검사
 function Resume() {
   const [isEditing, setIsEditing] = useState(false);
   const {

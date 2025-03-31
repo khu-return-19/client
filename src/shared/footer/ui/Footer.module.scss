@@ -39,3 +39,73 @@
   font-size: 14px;
   margin-top: 10px;
 }
+
+@media (max-width: 1024px) {
+  .policy {
+    padding: 0px 60px;
+  }
+
+  .content {
+    padding: 20px 60px;
+  }
+
+  .info {
+    display: flex;
+    gap: 25px;
+  }
+
+  .text {
+    gap: 6px;
+  }
+
+  .copyright {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .policy {
+    padding: 0px 40px;
+  }
+
+  .content {
+    padding: 30px 40px;
+  }
+
+  .info {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .text {
+    gap: 6px;
+  }
+
+  .copyright {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .policy {
+    padding: 0px 20px;
+    height: auto;
+  }
+
+  .content {
+    padding: 20px 20px;
+  }
+
+  .info {
+    flex-direction: column; /* 세로로 쌓아서 보기 */
+    gap: 15px;
+  }
+
+  .text {
+    gap: 4px;
+  }
+
+  .copyright {
+    font-size: 12px;
+  }
+}

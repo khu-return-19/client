@@ -6,11 +6,13 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { LoginModal } from "shared/loginModal";
 import { FiExternalLink } from "react-icons/fi";
 import { HeaderSkeleton } from "layouts/header";
+import { useMediaQuery } from "react-responsive";
 
 const Header = React.memo(() => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   const navigate = useNavigate();
 
@@ -19,6 +21,12 @@ const Header = React.memo(() => {
   const handleMenuClose = () => {
     setMenuOpen(false);
   };
+
+  const toggleDropdown = (menu) => {
+    setOpenDropdown(openDropdown === menu ? null : menu);
+  };
+
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   if (loading) {
     return <HeaderSkeleton />;
@@ -31,9 +39,11 @@ const Header = React.memo(() => {
           <img className={styles.logoImage} src="/logo.png" alt="로고" />
         </a>
 
-        <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FiX /> : <FiMenu />}
-        </div>
+        {isMobile && (
+          <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </div>
+        )}
 
         <div className={styles.rightSection}>
           {isLoggedIn ? (
@@ -122,6 +132,61 @@ const Header = React.memo(() => {
         </div>
       </div>
       {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
+      {isMobile && menuOpen && (
+        <div className={styles.mobileMenu}>
+          <div className={styles.mobileMenuItem} onClick={() => toggleDropdown("about")}>
+            서비스 소개
+          </div>
+          {openDropdown === "about" && (
+            <div className={styles.mobileDropdown}>
+              <span onClick={() => (window.location.href = "/about/intro")}>서비스 소개</span>
+              <span onClick={() => (window.location.href = "/about/evaluation")}>3D 역량분석이란?</span>
+              <span onClick={() => (window.location.href = "/about/team")}>구성원</span>
+              <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
+            </div>
+          )}
+          <div className={styles.mobileMenuItem} onClick={() => toggleDropdown("sitemap")}>
+            주요 사이트
+          </div>
+          {openDropdown === "sitemap" && (
+            <div className={styles.mobileDropdown}>
+              <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>
+                미래인재센터 <FiExternalLink className={styles.externalIcon} />
+              </span>
+              <span onClick={() => window.open("https://_", "_blank")}>
+                취창업스쿨 <FiExternalLink className={styles.externalIcon} />
+              </span>
+              <span onClick={() => window.open("https://_", "_blank")}>
+                상담신청 <FiExternalLink className={styles.externalIcon} />
+              </span>
+            </div>
+          )}
+          <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analyze")}>
+            자기소개서 분석
+          </div>
+          {isLoggedIn && (
+            <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analysis")}>
+              내 분석 레포트
+            </div>
+          )}
+          {isLoggedIn && (
+            <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/resume")}>
+              내 이력서
+            </div>
+          )}
+          {!isLoggedIn && (
+            <div className={styles.mobileMenuItem} onClick={() => setLoginModalOpen(true)}>
+              로그인
+            </div>
+          )}
+          {isLoggedIn && (
+            <div className={`${styles.mobileMenuItem} ${styles.logout}`} onClick={() => logout()}>
+              <span className={styles.userName}>{userInfo.name}님</span>
+              <span> 로그아웃</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 });

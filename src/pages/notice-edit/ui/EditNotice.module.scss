@@ -2,17 +2,19 @@
   background-color: #f4f2ed;
   display: flex;
   justify-content: center;
-  padding: 120px 0px;
+  padding: 40px 40px 120px 40px;
 }
 
 .wrapper {
-  width: 1040px;
+  width: 100%;
+  max-width: 1040px;
   padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 60px;
   background-color: white;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .main {
@@ -105,5 +107,27 @@
 
   .cancelButton {
     border: 1px solid #e0e6ed;
+  }
+}
+
+@media (max-width: 768px) {
+  .editNotice {
+    padding: 40px 20px 120px 20px;
+  }
+
+  .uploadButton,
+  .cancelButton {
+    width: 400px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .editNotice {
+    padding: 40px 0px 100px 0px;
+  }
+
+  .uploadButton,
+  .cancelButton {
+    width: 320px !important;
   }
 }

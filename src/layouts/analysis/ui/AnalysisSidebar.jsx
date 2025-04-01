@@ -61,50 +61,53 @@ function AnalysisSidebar() {
   };
 
   return (
-    <div className={`${styles.analysisSidebar} ${isCollapsed ? styles.collapsed : ""}`}>
-      <div className={styles.iconSection}>
-        <img
-          src={isActive ? "/sidebarIconActive.png" : "/sidebarIcon.png"}
-          alt=""
-          className={styles.sidebarIcon}
-          onMouseEnter={() => setIsActive(true)}
-          onMouseLeave={() => setIsActive(false)}
-          onClick={() => setIsCollapsed((prev) => !prev)}
-        />
-      </div>
-      <div className={`${styles.list} ${isCollapsed ? styles.collapsed : ""}`}>
-        {Object.keys(groupedAnalyses).length > 0 &&
-          Object.entries(groupedAnalyses).map(([category, analyses]) => (
-            <div key={category} className={styles.category}>
-              <div className={styles.categoryTitle}>{category}</div>
-              {analyses.map((analysis) => (
-                <div
-                  key={analysis.id}
-                  className={`${styles.analysisItem} ${selectedAnalysisId === analysis.id ? styles.selected : ""}`}
-                  onClick={() => {
-                    handleAnalysisSelect(analysis.id);
-                  }}
-                >
-                  <div className={styles.title}>{analysis.title}</div>
+    <>
+      <div className={`${styles.analysisSidebar} ${isCollapsed ? styles.collapsed : styles.expanded}`}>
+        <div className={styles.iconSection}>
+          <img
+            src={isActive ? "/sidebarIconActive.png" : "/sidebarIcon.png"}
+            alt=""
+            className={styles.sidebarIcon}
+            onMouseEnter={() => setIsActive(true)}
+            onMouseLeave={() => setIsActive(false)}
+            onClick={() => setIsCollapsed((prev) => !prev)}
+          />
+        </div>
+        <div className={`${styles.list} ${isCollapsed ? styles.collapsed : styles.expanded}`}>
+          {Object.keys(groupedAnalyses).length > 0 &&
+            Object.entries(groupedAnalyses).map(([category, analyses]) => (
+              <div key={category} className={styles.category}>
+                <div className={styles.categoryTitle}>{category}</div>
+                {analyses.map((analysis) => (
                   <div
-                    className={styles.deleteButton}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteClick(analysis.id);
+                    key={analysis.id}
+                    className={`${styles.analysisItem} ${selectedAnalysisId === analysis.id ? styles.selected : ""}`}
+                    onClick={() => {
+                      handleAnalysisSelect(analysis.id);
                     }}
                   >
-                    <AiOutlineClose />
+                    <div className={styles.title}>{analysis.title}</div>
+                    <div
+                      className={styles.deleteButton}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick(analysis.id);
+                      }}
+                    >
+                      <AiOutlineClose />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
-        <div ref={observerRef} className={styles.loader}>
-          {isLoading && <div className={styles.spinner}></div>}
+                ))}
+              </div>
+            ))}
+          <div ref={observerRef} className={styles.loader}>
+            {isLoading && <div className={styles.spinner}></div>}
+          </div>
         </div>
+        <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={analysisToDelete} />
       </div>
-      <DeleteAnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} analysisId={analysisToDelete} />
-    </div>
+      <div className={`${styles.overlay} ${!isCollapsed ? styles.visible : ""}`} onClick={() => setIsCollapsed(true)} />
+    </>
   );
 }
 

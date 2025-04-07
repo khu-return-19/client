@@ -1,0 +1,20 @@
+.zCard {
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 0px 8px 0px rgba(0, 0, 0, 0.1);
+  background-color: white;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content {
+    text-align: center;
+  }
+}

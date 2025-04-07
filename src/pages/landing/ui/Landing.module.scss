@@ -1,101 +1,71 @@
 .landing {
-  background-color: #f4f5f7; /* 무난한 색 */
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Roboto", sans-serif;
-  box-sizing: border-box;
-  text-align: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
   flex-direction: column;
-  padding: 0 2rem;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  width: 100%;
-  height: calc(100vh - 6.25rem);
-}
-
-.textSection {
-  max-width: 50%;
-}
-
-.title {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.description {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.ctaButton {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  background-color: #007bff;
-  border: none;
-  border-radius: 50px;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.ctaButton:hover {
-  background-color: #0056b3;
-}
-
-.imageSection {
-  max-width: 40%;
-}
-
-.image {
-  max-width: 100%;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  mask-image: radial-gradient(circle, rgba(255, 255, 255, 1) 72%, rgba(255, 255, 255, 0));
-}
-
-.scrollSection {
-  width: 100%;
-  height: 31.25rem;
-  max-width: 1200px;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-/* 스크롤 시 내용 애니메이션 */
-.scrollContent {
-  opacity: 0;
-  transition: opacity 1s ease-out;
+.intro {
   display: flex;
-  justify-content: space-between;
+  gap: 50px;
+  margin-top: 186px;
+
+  .leftSection {
+    display: flex;
+    flex-direction: column;
+    gap: 49px;
+  }
+
+  .rightSection {
+  }
+}
+
+.evaluation {
+  margin-top: 224px;
   width: 100%;
-  max-width: 1200px;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 190px;
 
-.show {
-  opacity: 1;
-}
+  .titleSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
 
-.scrollText {
-  margin-bottom: 3rem;
-}
+  .content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 
-.scrollText h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
+    .evaluationImage {
+      width: 452px;
+    }
 
-.scrollText p {
-  font-size: 1.2rem;
-  line-height: 1.6;
+    .xCard {
+      position: absolute;
+      top: -110px;
+    }
+    .yCard {
+      position: absolute;
+      top: 320px;
+      right: 170px;
+    }
+    .zCard {
+      position: absolute;
+      top: 320px;
+      left: 100px;
+    }
+  }
 }

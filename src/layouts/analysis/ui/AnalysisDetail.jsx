@@ -9,7 +9,7 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
 import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
-import { RadarChart } from "components/analysis"; // Assuming you have a RadarChart component
+import { RadarChart } from "components/analysis";
 
 function AnalysisDetail() {
   const [inputVisible, setInputVisible] = useState(false);

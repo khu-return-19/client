@@ -1,48 +1,119 @@
 .intro {
-  padding: 40px 60px;
-  line-height: 1.6;
-  background-color: white;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  padding-bottom: 160px;
+}
 
-  h2 {
-    font-size: 28px;
+.wrapper {
+  width: 100%;
+  max-width: 1040px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  margin-top: 80px;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  .title {
+    color: #990e17;
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 16px;
   }
 
-  section {
-    margin-bottom: 24px;
-  }
+  .content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
 
-  h3 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-
-  p {
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
+    .contentText {
       font-size: 16px;
-      margin-bottom: 8px;
+      font-weight: 400;
+      color: #4d4d4d;
+
+      .color {
+        color: #990e17;
+      }
     }
 
-    strong {
-      font-weight: bold;
-      color: #333;
+    .introImage {
+      width: 858px;
+    }
+  }
+}
+
+.keyFeatures {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  .title {
+    color: #990e17;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0px 100px;
+
+    .cardSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
 
-    ul {
-      margin-top: 6px;
-      padding-left: 20px;
-      list-style-type: disc;
+    .mainFeaturesImage {
+      width: 248px;
     }
+
+    .contentText {
+      color: #969696;
+      font-size: 12px;
+      font-weight: 400;
+      position: relative;
+
+      &::before {
+        content: "*";
+        position: absolute;
+        left: -8px;
+        color: #fc8e8e; // 원하는 색으로 설정 가능
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.applicationCases {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  .title {
+    color: #990e17;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .cardSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 }

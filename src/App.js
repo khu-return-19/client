@@ -1,20 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { AuthProvider } from "auth/authContext";
-import Landing from "./pages/landing";
-import Header from "./shared/header";
-import Resume from "./pages/resume";
-import Analysis from "./pages/analysis";
-import PrivateRoute from "./privateRoute";
-import LoginError from "pages/Error/login";
 import { ToastContainer } from "react-toastify";
-import Intro from "./pages/intro";
-import AboutLayout from "./shared/aboutLayout";
-import Evaluation3D from "./pages/evaluation3D";
-import Team from "./pages/team";
-import Analyze from "./pages/analyze";
-import Notice from "./pages/notice";
-import Footer from "./shared/footer";
+import PrivateRoute from "./privateRoute";
+import Header from "shared/header";
+import Landing from "pages/landing";
+import Resume from "pages/resume";
+import Analysis from "pages/analysis";
+import LoginError from "pages/Error/login";
+import Intro from "pages/intro";
+import Evaluation3D from "pages/evaluation3D";
+import Team from "pages/team";
+import Analyze from "pages/analyze";
+import Notice from "pages/notice";
+import Footer from "shared/footer";
 import PrivacyPolicy from "pages/privacy-policy";
 import WriteNotice from "pages/notice-write";
 import NoticeDetail from "pages/notice-detail";
@@ -34,12 +33,9 @@ function AppContent() {
         <Route path="/" element={<Landing />} />
 
         {/* 서비스 소개 */}
-        <Route path="/about" element={<AboutLayout />}>
-          <Route index element={<Navigate to="intro" replace />} />
-          <Route path="intro" element={<Intro />} />
-          <Route path="evaluation" element={<Evaluation3D />} />
-          <Route path="team" element={<Team />} />
-        </Route>
+        <Route path="intro" element={<Intro />} />
+        <Route path="evaluation" element={<Evaluation3D />} />
+        <Route path="team" element={<Team />} />
 
         {/* 공지사항 */}
         <Route path="/notice" element={<Notice />} />

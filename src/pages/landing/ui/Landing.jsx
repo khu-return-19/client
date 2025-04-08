@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Landing.module.scss";
 import { XCard, YCard, ZCard } from "components/landing";
+import { useNavigate } from "react-router-dom";
+
+// TODO: 이미지 전환 관련 로직 변경 필요!
+const images = [
+  "https://picsum.photos/id/101/586/350",
+  "https://picsum.photos/id/102/586/350",
+  "https://picsum.photos/id/103/586/350",
+  "https://picsum.photos/id/104/586/350",
+];
 
 function Landing() {
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
   // 스크롤 이벤트 핸들러
@@ -26,31 +36,61 @@ function Landing() {
     };
   }, []);
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // 자동 이미지 순환
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleClick = (index) => {
+    setCurrentIndex(index);
+  };
+
   return (
     <div className={styles.landing}>
       <div className={styles.wrapper}>
         <div className={styles.intro}>
           <div className={styles.leftSection}>
-            <div className={styles.title}>자기소개서 분석을 통해 합격 확률을 파악해요</div>
-            <div>
-              <div>정보만 입력하면 10초만에 분석</div>
-              <div>
+            <span className={styles.title}>
+              자기소개서 분석을 통해 <br />
+              <span className={styles.color}>합격 확률</span>을 파악해요
+            </span>
+            <div className={styles.description}>
+              <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
+              <span className={styles.text}>
                 내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
                 진행됩니다.
-              </div>
+              </span>
             </div>
-            <div>버튼</div>
-            <div>내 자소서 첨삭 받기</div>
+            <div className={styles.imageButtonGroup}>
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
+                  onClick={() => handleClick(idx)}
+                />
+              ))}
+            </div>
+            <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
+              내 자소서 첨삭 받기
+            </div>
           </div>
           <div className={styles.rightSection}>
-            <img src="https://picsum.photos/586/350" alt="임시 이미지" />
+            <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
           </div>
         </div>
 
         <div className={styles.evaluation}>
           <div className={styles.titleSection}>
-            <div>3D 모델을 통한 3가지 역량 평가</div>
-            <div>지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시합니다.</div>
+            <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
+            <span className={styles.description}>
+              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시합니다.
+            </span>
           </div>
           <div className={styles.content}>
             <img src="/3DEvaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
@@ -68,8 +108,8 @@ function Landing() {
 
         <div className={styles.improvement}>
           <div className={styles.titleSection}>
-            <div>개선방식 제안</div>
-            <div>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</div>
+            <span className={styles.title}>개선방식 제안</span>
+            <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>
           </div>
           <div className={styles.cardSection}>
             <img src="acceptedAnalysisCard.png" alt="" className={styles.acceptedAnalysisCard} />
@@ -81,26 +121,30 @@ function Landing() {
 
         <div className={styles.resumeFeedback}>
           <div className={styles.titleSection}>
-            <div>자기소개서 수정 및 평가</div>
-            <div>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</div>
+            <span className={styles.title}>자기소개서 수정 및 평가</span>
+            <span className={styles.description}>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</span>
           </div>
           <div className={styles.cardSection}>
             <div className={styles.beforeCard}>
-              <div>수정 전</div>
-              <div>
+              <span>수정 전</span>
+              <span>
                 00동아리에서 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움이 있었습니다.
                 <br />
                 이에 따라 내용 요약 및 불필요한 부분 정리를 통해 회의록 작성의 효율성을 개선하였습니다.
-              </div>
+              </span>
             </div>
             <div className={styles.afterCard}>
-              <div>수정 후</div>
-              <div>
+              <span className={styles.color}>수정 후</span>
+              <span>
                 00동아리 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움을 인식했습니다.
                 <br />
-                000를 활용한 실시간 협업 시스템 도입과, 핵심 내용 요약 및 불필요한 부분 정리를 통해 <br />
-                회의록 작성의 효율성을 약 20% 이상 개선하였습니다.
-              </div>
+                <span className={styles.size}>
+                  000를 활용한 <span className={styles.color}>실시간 협업 시스템 도입</span>과, 핵심 내용 요약 및
+                  불필요한 부분 정리를 통해
+                  <br />
+                  회의록 작성의 <span className={styles.color}>효율성을 약 20% 이상 개선</span>하였습니다.
+                </span>
+              </span>
             </div>
           </div>
         </div>
@@ -108,18 +152,18 @@ function Landing() {
       <div className={styles.botton}>
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
-            <div>
+            <span className={styles.title}>
               예시 레포트를 통해 <br />
               결과를 자세히 보고 싶다면?
-            </div>
+            </span>
             <div className={styles.sampleReportButton}>예시 레포트 보러 가기</div>
           </div>
 
           <div className={styles.partnership}>
-            <div className={styles.title}>
+            <span className={styles.title}>
               이 프로그램은 <br />
               00 연구와 함께합니다
-            </div>
+            </span>
             <div className={styles.partnershipLogos}>
               <img src="https://picsum.photos/200/200" alt="임시 이미지" />
               <img src="https://picsum.photos/200/200" alt="임시 이미지" />

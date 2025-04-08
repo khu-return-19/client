@@ -108,8 +108,8 @@ function Landing() {
 
         <div className={styles.improvement}>
           <div className={styles.titleSection}>
-            <div>개선방식 제안</div>
-            <div>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</div>
+            <span className={styles.title}>개선방식 제안</span>
+            <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>
           </div>
           <div className={styles.cardSection}>
             <img src="acceptedAnalysisCard.png" alt="" className={styles.acceptedAnalysisCard} />
@@ -121,26 +121,30 @@ function Landing() {
 
         <div className={styles.resumeFeedback}>
           <div className={styles.titleSection}>
-            <div>자기소개서 수정 및 평가</div>
-            <div>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</div>
+            <span className={styles.title}>자기소개서 수정 및 평가</span>
+            <span className={styles.description}>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</span>
           </div>
           <div className={styles.cardSection}>
             <div className={styles.beforeCard}>
-              <div>수정 전</div>
-              <div>
+              <span>수정 전</span>
+              <span>
                 00동아리에서 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움이 있었습니다.
                 <br />
                 이에 따라 내용 요약 및 불필요한 부분 정리를 통해 회의록 작성의 효율성을 개선하였습니다.
-              </div>
+              </span>
             </div>
             <div className={styles.afterCard}>
-              <div>수정 후</div>
-              <div>
+              <span className={styles.color}>수정 후</span>
+              <span>
                 00동아리 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움을 인식했습니다.
                 <br />
-                000를 활용한 실시간 협업 시스템 도입과, 핵심 내용 요약 및 불필요한 부분 정리를 통해 <br />
-                회의록 작성의 효율성을 약 20% 이상 개선하였습니다.
-              </div>
+                <span className={styles.size}>
+                  000를 활용한 <span className={styles.color}>실시간 협업 시스템 도입</span>과, 핵심 내용 요약 및
+                  불필요한 부분 정리를 통해
+                  <br />
+                  회의록 작성의 <span className={styles.color}>효율성을 약 20% 이상 개선</span>하였습니다.
+                </span>
+              </span>
             </div>
           </div>
         </div>
@@ -148,18 +152,18 @@ function Landing() {
       <div className={styles.botton}>
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
-            <div>
+            <span className={styles.title}>
               예시 레포트를 통해 <br />
               결과를 자세히 보고 싶다면?
-            </div>
+            </span>
             <div className={styles.sampleReportButton}>예시 레포트 보러 가기</div>
           </div>
 
           <div className={styles.partnership}>
-            <div className={styles.title}>
+            <span className={styles.title}>
               이 프로그램은 <br />
               00 연구와 함께합니다
-            </div>
+            </span>
             <div className={styles.partnershipLogos}>
               <img src="https://picsum.photos/200/200" alt="임시 이미지" />
               <img src="https://picsum.photos/200/200" alt="임시 이미지" />

@@ -46,6 +46,7 @@ function Landing() {
             <img src="https://picsum.photos/586/350" alt="임시 이미지" />
           </div>
         </div>
+
         <div className={styles.evaluation}>
           <div className={styles.titleSection}>
             <div>3D 모델을 통한 3가지 역량 평가</div>
@@ -61,6 +62,68 @@ function Landing() {
             </div>
             <div className={styles.zCard}>
               <ZCard />
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.improvement}>
+          <div className={styles.titleSection}>
+            <div>개선방식 제안</div>
+            <div>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</div>
+          </div>
+          <div className={styles.cardSection}>
+            <img src="acceptedAnalysisCard.png" alt="" className={styles.acceptedAnalysisCard} />
+            <img src="strengthsCard.png" alt="" className={styles.strengthsCard} />
+            <img src="strategyCard.png" alt="" className={styles.strategyCard} />
+            <img src="finalScoreCard.png" alt="" className={styles.finalScoreCard} />
+          </div>
+        </div>
+
+        <div className={styles.resumeFeedback}>
+          <div className={styles.titleSection}>
+            <div>자기소개서 수정 및 평가</div>
+            <div>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</div>
+          </div>
+          <div className={styles.cardSection}>
+            <div className={styles.beforeCard}>
+              <div>수정 전</div>
+              <div>
+                00동아리에서 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움이 있었습니다.
+                <br />
+                이에 따라 내용 요약 및 불필요한 부분 정리를 통해 회의록 작성의 효율성을 개선하였습니다.
+              </div>
+            </div>
+            <div className={styles.afterCard}>
+              <div>수정 후</div>
+              <div>
+                00동아리 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움을 인식했습니다.
+                <br />
+                000를 활용한 실시간 협업 시스템 도입과, 핵심 내용 요약 및 불필요한 부분 정리를 통해 <br />
+                회의록 작성의 효율성을 약 20% 이상 개선하였습니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.botton}>
+        <div className={styles.wrapper}>
+          <div className={styles.sampleReport}>
+            <div>
+              예시 레포트를 통해 <br />
+              결과를 자세히 보고 싶다면?
+            </div>
+            <div className={styles.sampleReportButton}>예시 레포트 보러 가기</div>
+          </div>
+
+          <div className={styles.partnership}>
+            <div className={styles.title}>
+              이 프로그램은 <br />
+              00 연구와 함께합니다
+            </div>
+            <div className={styles.partnershipLogos}>
+              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
+              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
+              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
             </div>
           </div>
         </div>

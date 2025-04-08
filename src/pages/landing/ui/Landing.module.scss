@@ -1,6 +1,6 @@
 .landing {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -66,6 +66,137 @@
       position: absolute;
       top: 320px;
       left: 100px;
+    }
+  }
+}
+
+.improvement {
+  margin-top: 324px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 88px;
+
+  .titleSection {
+    text-align: center;
+  }
+
+  .cardSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .acceptedAnalysisCard {
+      width: 581px;
+    }
+
+    .strengthsCard {
+      width: 581px;
+    }
+
+    .strategyCard {
+      width: 581px;
+    }
+
+    .finalScoreCard {
+      width: 581px;
+    }
+  }
+}
+
+.resumeFeedback {
+  margin-top: 240px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+
+  .titleSection {
+    text-align: center;
+  }
+
+  .cardSection {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    .beforeCard,
+    .afterCard {
+      height: 177px;
+      padding: 10px 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    .afterCard {
+      border: 1px solid #e75959;
+      box-shadow: 0px 0px 30px 0px #ffc8c8;
+    }
+  }
+}
+
+.botton {
+  margin-top: 384px;
+  background: linear-gradient(to bottom, #ffffff 0%, #ffc8c8 100%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .wrapper {
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sampleReport {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    align-items: center;
+    text-align: center;
+    margin-top: 256px;
+    width: 100%;
+
+    .sampleReportButton {
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #990e17;
+      color: white;
+      width: 600px;
+      height: 60px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .partnership {
+    margin-top: 382px;
+    margin-bottom: 432px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+
+    .title {
+      text-align: center;
+    }
+
+    .partnershipLogos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
   }
 }

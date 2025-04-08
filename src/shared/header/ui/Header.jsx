@@ -87,14 +87,14 @@ const Header = React.memo(() => {
             >
               <span
                 className={`${styles.menu} ${hoveredMenu === "about" ? styles.activeAbout : ""}`}
-                onClick={() => (window.location.href = "/about/intro")}
+                onClick={() => (window.location.href = "/intro")}
               >
                 서비스 소개
               </span>
               <div className={`${styles.dropdown} ${hoveredMenu === "about" ? styles.activeAbout : ""}`}>
-                <span onClick={() => (window.location.href = "/about/intro")}>서비스 소개</span>
-                <span onClick={() => (window.location.href = "/about/evaluation")}>3D 역량분석이란?</span>
-                <span onClick={() => (window.location.href = "/about/team")}>구성원</span>
+                <span onClick={() => (window.location.href = "/intro")}>서비스 소개</span>
+                <span onClick={() => (window.location.href = "/evaluation")}>3D 역량분석이란?</span>
+                <span onClick={() => (window.location.href = "/team")}>구성원</span>
                 <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
               </div>
             </div>
@@ -139,9 +139,9 @@ const Header = React.memo(() => {
           </div>
           {openDropdown === "about" && (
             <div className={styles.mobileDropdown}>
-              <span onClick={() => (window.location.href = "/about/intro")}>서비스 소개</span>
-              <span onClick={() => (window.location.href = "/about/evaluation")}>3D 역량분석이란?</span>
-              <span onClick={() => (window.location.href = "/about/team")}>구성원</span>
+              <span onClick={() => (window.location.href = "/intro")}>서비스 소개</span>
+              <span onClick={() => (window.location.href = "/evaluation")}>3D 역량분석이란?</span>
+              <span onClick={() => (window.location.href = "/team")}>구성원</span>
               <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
             </div>
           )}

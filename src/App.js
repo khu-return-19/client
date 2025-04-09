@@ -19,6 +19,7 @@ import WriteNotice from "pages/notice-write";
 import NoticeDetail from "pages/notice-detail";
 import EditNotice from "pages/notice-edit";
 import NotFound from "pages/Error/notFound";
+import Terms from "pages/terms";
 
 function AppContent() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function AppContent() {
           <Route path="/analyze" element={<Analyze />} />
         </Route>
 
+        <Route path="/terms" element={<Terms />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/error" element={<LoginError />} />
         <Route path="*" element={<NotFound />} />

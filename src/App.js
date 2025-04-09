@@ -24,12 +24,14 @@ import Terms from "pages/terms";
 function AppContent() {
   const location = useLocation();
 
+  const noHeaderPages = ["/terms"];
   const noFooterPages = ["/resume", "/error"];
+  const isNoHeaderPage = noHeaderPages.includes(location.pathname);
   const isNoFooterPage = noFooterPages.includes(location.pathname) || location.pathname.startsWith("/analysis");
 
   return (
     <>
-      <Header />
+      {!isNoHeaderPage && <Header />}
       <Routes>
         <Route path="/" element={<Landing />} />
 

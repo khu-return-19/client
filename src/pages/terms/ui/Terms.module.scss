@@ -1,0 +1,93 @@
+.terms {
+  background-color: #f4f2ed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 0px 160px 0px;
+}
+
+.wrapper {
+  background-color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 686px;
+
+  .title {
+    color: #990e17;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .agreement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      border-radius: 6px;
+      appearance: none; // 브라우저 기본 스타일 제거
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border: 2px solid #ccc;
+      background-color: #fff;
+      position: relative;
+
+      &:checked {
+        background-color: #990e17;
+        border-color: #990e17;
+      }
+
+      &:checked::after {
+        content: "✔";
+        color: white;
+        font-size: 14px;
+        position: absolute;
+        top: 2px;
+        left: 5px;
+      }
+    }
+
+    .checkboxLabel {
+      font-size: 16px;
+      font-weight: 400;
+      color: #969696;
+      position: relative;
+      cursor: pointer;
+
+      &::after {
+        content: " *";
+        color: #990e17;
+      }
+    }
+  }
+}
+
+.button {
+  width: 600px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.active {
+    background-color: #990e17;
+    cursor: pointer;
+  }
+
+  &.disabled {
+    background-color: #969696;
+    cursor: not-allowed;
+  }
+}

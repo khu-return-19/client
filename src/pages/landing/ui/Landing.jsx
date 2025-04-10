@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Landing.module.scss";
 import { XCard, YCard, ZCard } from "components/landing";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 // TODO: 이미지 전환 관련 로직 변경 필요!
 const images = [
@@ -51,6 +53,11 @@ function Landing() {
     setCurrentIndex(index);
   };
 
+  const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
   return (
     <div className={styles.landing}>
       <div className={styles.wrapper}>
@@ -85,7 +92,13 @@ function Landing() {
           </div>
         </div>
 
-        <div className={styles.evaluation}>
+        <motion.div
+          ref={evalRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={evalInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className={styles.evaluation}
+        >
           <div className={styles.titleSection}>
             <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
             <span className={styles.description}>
@@ -104,9 +117,16 @@ function Landing() {
               <ZCard />
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className={styles.improvement}>
+        <motion.div
+          ref={impRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={impInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className={styles.improvement}
+        >
+          {" "}
           <div className={styles.titleSection}>
             <span className={styles.title}>개선방식 제안</span>
             <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>
@@ -117,9 +137,16 @@ function Landing() {
             <img src="strategyCard.png" alt="" className={styles.strategyCard} />
             <img src="finalScoreCard.png" alt="" className={styles.finalScoreCard} />
           </div>
-        </div>
+        </motion.div>
 
-        <div className={styles.resumeFeedback}>
+        <motion.div
+          ref={feedRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={feedInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className={styles.resumeFeedback}
+        >
+          {" "}
           <div className={styles.titleSection}>
             <span className={styles.title}>자기소개서 수정 및 평가</span>
             <span className={styles.description}>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</span>
@@ -147,9 +174,17 @@ function Landing() {
               </span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-      <div className={styles.botton}>
+
+      <motion.div
+        ref={bottomRef}
+        initial={{ opacity: 0, y: 50 }}
+        animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className={styles.botton}
+      >
+        {" "}
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
             <span className={styles.title}>
@@ -171,7 +206,7 @@ function Landing() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

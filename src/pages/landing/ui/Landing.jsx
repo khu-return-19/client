@@ -53,10 +53,10 @@ function Landing() {
     setCurrentIndex(index);
   };
 
-  const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.2 });
-  const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.2 });
-  const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.2 });
-  const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.3 });
 
   return (
     <div className={styles.landing}>
@@ -94,7 +94,7 @@ function Landing() {
 
         <motion.div
           ref={evalRef}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           animate={evalInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className={styles.evaluation}
@@ -121,7 +121,7 @@ function Landing() {
 
         <motion.div
           ref={impRef}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           animate={impInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className={styles.improvement}
@@ -141,7 +141,7 @@ function Landing() {
 
         <motion.div
           ref={feedRef}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           animate={feedInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className={styles.resumeFeedback}
@@ -179,7 +179,7 @@ function Landing() {
 
       <motion.div
         ref={bottomRef}
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 100 }}
         animate={bottomInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
         className={styles.botton}

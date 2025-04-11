@@ -182,7 +182,7 @@ const Header = React.memo(() => {
           {isLoggedIn && (
             <div className={`${styles.mobileMenuItem} ${styles.logout}`} onClick={() => logout()}>
               <span className={styles.userName}>{userInfo.name}님</span>
-              <span> 로그아웃</span>
+              <span>로그아웃</span>
             </div>
           )}
         </div>

@@ -37,6 +37,7 @@ export function AuthProvider({ children }) {
     onSuccess: () => {
       queryClient.invalidateQueries(["authStatus"]);
       queryClient.removeQueries(["userInfo"]);
+      window.location.replace("/");
     },
   });
 

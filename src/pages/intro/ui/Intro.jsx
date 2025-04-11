@@ -10,13 +10,21 @@ import {
   CompetencyManagementCard,
 } from "components/intro";
 import GoToMainButton from "components/shared/goToMainButton";
+import { useNavigate } from "react-router-dom";
 
 function Intro() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.intro}>
+      <div className={styles.breadcrumb}>
+        <span>서비스 소개</span>
+        <div>></div>
+        <span>3D 역량분석이란?</span>
+      </div>
       <div className={styles.wrapper}>
         <div className={styles.titleSection}>
-          <div className={styles.title}>자기소개서 역량평가 AI 챗봇</div>
+          <div className={styles.title}>자기소개서 역량평가 AI</div>
           <div className={styles.content}>
             <span className={styles.contentText}>
               지원자의 자기소개서, 포트폴리오, 영상 데이터 등 다양한 자료를 AI 챗봇이 분석하여, <br />
@@ -60,7 +68,34 @@ function Intro() {
           </div>
         </div>
       </div>
-      <GoToMainButton />
+      <div className={styles.bottom}>
+        <div className={styles.content}>
+          <div className={styles.title}>다른 글 더보기</div>
+          <div className={styles.button}>
+            <div
+              className={styles.card}
+              onClick={() => {
+                navigate("/evaluation");
+                window.scrollTo(0, 0);
+              }}
+            >
+              <span className={styles.title}>3D 역량분석이란?</span>
+              <span className={styles.description}>자기소개서 평가 모델의 세부적인 이론과 배경에 대한 설명</span>
+            </div>
+            <div
+              className={styles.card}
+              onClick={() => {
+                navigate("/team");
+                window.scrollTo(0, 0);
+              }}
+            >
+              <span className={styles.title}>구성원</span>
+              <span className={styles.description}>pertineo 제작 구성원을 소개</span>
+            </div>
+          </div>
+        </div>
+        <GoToMainButton />
+      </div>
     </div>
   );
 }

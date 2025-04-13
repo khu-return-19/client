@@ -16,6 +16,7 @@ function AnalysisDetail() {
   const [streamingContent, setStreamingContent] = useState("");
   const [showScrollButton, setShowScrollButton] = useState(false);
   const rightSectionRef = useRef(null);
+  const [currentPhaseText, setCurrentPhaseText] = useState("분석 준비 중...");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -37,7 +38,26 @@ function AnalysisDetail() {
     });
 
     eventSource.onmessage = (event) => {
-      setStreamingContent((prev) => prev + event.data.replace(/\u00A0/g, " "));
+      console.log("SSE Message:", event.data);
+      try {
+        const parsed = JSON.parse(event.data);
+
+        if (parsed.event === "final_report") {
+          setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
+        } else if (parsed.event === "phase_change") {
+          const phaseMap = {
+            scheme_phase: "정보 추출 중...",
+            plan_phase: "에이전트 준비 중...",
+            tool_use_phase: "인터넷/데이터베이스 검색 중...",
+            analysis_phase: "보고서 작성 시작...",
+            complete_phase: "분석 완료!",
+          };
+          const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
+          setCurrentPhaseText(newPhaseText);
+        }
+      } catch (err) {
+        console.error("Failed to parse SSE message:", err);
+      }
     };
 
     eventSource.onerror = (error) => {
@@ -118,7 +138,7 @@ function AnalysisDetail() {
                 remarkPlugins={[remarkGfm, remarkBreaks]}
                 rehypePlugins={[rehypeRaw]}
               >
-                {JSON.parse(`"${streamingContent}"`) || "분석 중..."}
+                {streamingContent || currentPhaseText}
               </ReactMarkdown>
             </div>
           ) : (

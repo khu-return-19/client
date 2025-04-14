@@ -38,12 +38,13 @@ function AnalysisDetail() {
     });
 
     eventSource.onmessage = (event) => {
-      console.log("SSE Message:", event.data);
       try {
         const parsed = JSON.parse(event.data);
 
         if (parsed.event === "final_report") {
           setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
+        } else if (parsed.event === "created_report") {
+          setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
         } else if (parsed.event === "phase_change") {
           const phaseMap = {
             scheme_phase: "정보 추출 중...",

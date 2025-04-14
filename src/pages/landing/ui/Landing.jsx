@@ -4,6 +4,7 @@ import { XCard, YCard, ZCard } from "components/landing";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useMediaQuery } from "react-responsive";
 
 // TODO: 이미지 전환 관련 로직 변경 필요!
 const images = [
@@ -58,39 +59,73 @@ function Landing() {
   const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.3 });
 
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
+
   return (
     <div className={styles.landing}>
       <div className={styles.wrapper}>
-        <div className={styles.intro}>
-          <div className={styles.leftSection}>
-            <span className={styles.title}>
-              자기소개서 분석을 통해 <br />
-              <span className={styles.color}>합격 확률</span>을 파악해요
-            </span>
-            <div className={styles.description}>
-              <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
-              <span className={styles.text}>
-                내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
-                진행됩니다.
+        {isMobile || isTablet ? (
+          <div className={styles.intro}>
+            <div className={styles.leftSection}>
+              <span className={styles.title}>
+                자기소개서 분석을 통해 <br />
+                <span className={styles.color}>합격 확률</span>을 파악해요
               </span>
-            </div>
-            <div className={styles.imageButtonGroup}>
-              {images.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
-                  onClick={() => handleClick(idx)}
-                />
-              ))}
-            </div>
-            <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
-              내 자소서 첨삭 받기
+              <div className={styles.description}>
+                <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
+                <span className={styles.text}>
+                  내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
+                  진행됩니다.
+                </span>
+              </div>
+              <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
+              <div className={styles.imageButtonGroup}>
+                {images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
+                    onClick={() => handleClick(idx)}
+                  />
+                ))}
+              </div>
+              <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
+                내 자소서 첨삭 받기
+              </div>
             </div>
           </div>
-          <div className={styles.rightSection}>
-            <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
+        ) : (
+          <div className={styles.intro}>
+            <div className={styles.leftSection}>
+              <span className={styles.title}>
+                자기소개서 분석을 통해 <br />
+                <span className={styles.color}>합격 확률</span>을 파악해요
+              </span>
+              <div className={styles.description}>
+                <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
+                <span className={styles.text}>
+                  내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
+                  진행됩니다.
+                </span>
+              </div>
+              <div className={styles.imageButtonGroup}>
+                {images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
+                    onClick={() => handleClick(idx)}
+                  />
+                ))}
+              </div>
+              <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
+                내 자소서 첨삭 받기
+              </div>
+            </div>
+            <div className={styles.rightSection}>
+              <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
+            </div>
           </div>
-        </div>
+        )}
 
         <motion.div
           ref={evalRef}
@@ -199,11 +234,6 @@ function Landing() {
               이 프로그램은 <br />
               00 연구와 함께합니다
             </span>
-            <div className={styles.partnershipLogos}>
-              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
-              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
-              <img src="https://picsum.photos/200/200" alt="임시 이미지" />
-            </div>
           </div>
         </div>
       </motion.div>

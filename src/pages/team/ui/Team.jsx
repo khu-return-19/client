@@ -42,6 +42,17 @@ function Team() {
             </div>
           </div>
           <div className={styles.card}>
+            <img src="/team/seungpyo-hong.jpeg" alt="" />
+            <div className={styles.description}>
+              <span className={styles.name}>홍승표</span>
+              <span className={styles.info}>
+                컴퓨터공학과 <br />
+                Back-end <br />
+                zackinthebox@khu.ac.kr
+              </span>
+            </div>
+          </div>
+          <div className={styles.card}>
             <img src="/team/wonjin-kim.jpeg" alt="" />
             <div className={styles.description}>
               <span className={styles.name}>김원진</span>
@@ -53,13 +64,12 @@ function Team() {
             </div>
           </div>
           <div className={styles.card}>
-            <img src="/team/seungpyo-hong.jpeg" alt="" />
+            <img src="/team/yeongrae-noh.jpeg" alt="" />
             <div className={styles.description}>
-              <span className={styles.name}>홍승표</span>
+              <span className={styles.name}>노영래</span>
               <span className={styles.info}>
-                컴퓨터공학과 <br />
-                Back-end <br />
-                zackinthebox@khu.ac.kr
+                AI <br />
+                kireo0893@gmail.com
               </span>
             </div>
           </div>

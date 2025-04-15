@@ -6,13 +6,16 @@
 }
 
 .breadcrumb {
-  width: 858px;
+  width: 100%;
+  max-width: 858px;
   display: flex;
   gap: 4px;
   color: #969696;
   font-size: 16px;
   font-weight: 400;
   margin-top: 40px;
+  padding-left: 12px;
+  box-sizing: border-box;
 }
 
 .wrapper {
@@ -58,7 +61,8 @@
         position: relative;
 
         .evaluationImage {
-          width: 452px;
+          width: 100%;
+          max-width: 452px;
         }
 
         .xCard {
@@ -84,6 +88,7 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    padding: 0px 12px;
 
     .title {
       color: #990e17;
@@ -104,6 +109,7 @@
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    padding: 0px 12px;
 
     .titleSection {
       display: flex;
@@ -148,7 +154,10 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 860px;
+    max-width: 860px;
+    width: 100%;
+    padding: 0px 12px;
+    box-sizing: border-box;
 
     .title {
       color: #969696;
@@ -183,6 +192,45 @@
           color: #969696;
           font-size: 14px;
           font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .titleSection {
+    .body {
+      .content {
+        .xCard {
+          top: -110px;
+        }
+        .yCard {
+          right: 8px !important;
+        }
+        .zCard {
+          left: 8px !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .titleSection {
+    .body {
+      gap: 48px !important;
+      .content {
+        flex-direction: column;
+        padding: 0px 12px;
+        box-sizing: border-box;
+
+        .xCard,
+        .yCard,
+        .zCard {
+          position: static !important;
+          width: 100%;
+          margin-top: 20px;
         }
       }
     }

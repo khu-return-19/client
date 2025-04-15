@@ -11,7 +11,7 @@ function Team() {
       <div className={styles.breadcrumb}>
         <span>서비스 소개</span>
         <div>></div>
-        <span>3D 역량분석이란?</span>
+        <span>구성원</span>
       </div>
       <div className={styles.wrapper}>
         <div className={styles.title}>서비스 제작 구성원 소개</div>

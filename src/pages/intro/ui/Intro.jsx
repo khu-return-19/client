@@ -20,7 +20,6 @@ function Intro() {
       <div className={styles.breadcrumb}>
         <span>서비스 소개</span>
         <div>></div>
-        <span>3D 역량분석이란?</span>
       </div>
       <div className={styles.wrapper}>
         <div className={styles.titleSection}>

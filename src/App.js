@@ -20,6 +20,7 @@ import NoticeDetail from "pages/notice-detail";
 import EditNotice from "pages/notice-edit";
 import NotFound from "pages/Error/notFound";
 import Terms from "pages/terms";
+import UniversityEmailOnly from "pages/Error/university-email-only";
 
 function AppContent() {
   const location = useLocation();
@@ -57,6 +58,7 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/error" element={<LoginError />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/university-email-only" element={<UniversityEmailOnly />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

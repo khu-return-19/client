@@ -1,0 +1,49 @@
+.universityEmailOnly {
+  background-color: #eae8e2;
+  height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #990e17;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  .subTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #4d4d4d;
+  }
+
+  .text {
+    text-align: center;
+    font-size: 16px;
+    color: #969696;
+  }
+}

@@ -70,10 +70,10 @@ function Landing() {
             <div className={styles.leftSection}>
               <span className={styles.title}>
                 자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 확률</span>을 파악해요
+                <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
+                <span className={styles.subTitle}>정보만 입력하면 1분 안에 분석</span>
                 <span className={styles.text}>
                   내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
                   진행됩니다.
@@ -99,10 +99,10 @@ function Landing() {
             <div className={styles.leftSection}>
               <span className={styles.title}>
                 자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 확률</span>을 파악해요
+                <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>정보만 입력하면 10초만에 분석</span>
+                <span className={styles.subTitle}>정보만 입력하면 1분 안에 분석</span>
                 <span className={styles.text}>
                   내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
                   진행됩니다.

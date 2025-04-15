@@ -7,7 +7,7 @@ import { mergeNewData } from "pages/analysis/utils/mergeNewData";
 import { DeleteAnalysisModal } from "layouts/analysis";
 
 function AnalysisSidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => window.innerWidth < 768);
   const [isActive, setIsActive] = useState(false);
   const [groupedAnalyses, setGroupedAnalyses] = useState({});
   const [selectedAnalysisId, setSelectedAnalysisId] = useState(null);

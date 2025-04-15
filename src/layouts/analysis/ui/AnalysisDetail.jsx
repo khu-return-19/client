@@ -17,6 +17,9 @@ function AnalysisDetail() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const rightSectionRef = useRef(null);
   const [currentPhaseText, setCurrentPhaseText] = useState("분석 준비 중...");
+  const [scoreX, setScoreX] = useState(0);
+  const [scoreY, setScoreY] = useState(0);
+  const [scoreZ, setScoreZ] = useState(0);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -55,6 +58,11 @@ function AnalysisDetail() {
           };
           const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
           setCurrentPhaseText(newPhaseText);
+        } else if (parsed.event === "current_stats") {
+          const { score_x_axis, score_y_axis, score_z_axis } = parsed;
+          setScoreX(score_x_axis);
+          setScoreY(score_y_axis);
+          setScoreZ(score_z_axis);
         }
       } catch (err) {
         console.error("Failed to parse SSE message:", err);
@@ -133,7 +141,7 @@ function AnalysisDetail() {
           </div>
           {analysis?.status === null ? (
             <div className={styles.contentWrapper}>
-              <RadarChart />
+              <RadarChart x={scoreX} y={scoreY} z={scoreZ} />
               <ReactMarkdown
                 className={styles.streaming}
                 remarkPlugins={[remarkGfm, remarkBreaks]}
@@ -144,7 +152,7 @@ function AnalysisDetail() {
             </div>
           ) : (
             <div className={styles.contentWrapper}>
-              <RadarChart />
+              <RadarChart x={scoreX} y={scoreY} z={scoreZ} />
               <ReactMarkdown
                 className={styles.body}
                 remarkPlugins={[remarkGfm, remarkBreaks]}

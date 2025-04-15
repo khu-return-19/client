@@ -6,13 +6,16 @@
 }
 
 .breadcrumb {
-  width: 858px;
+  width: 100%;
+  max-width: 858px;
   display: flex;
   gap: 4px;
   color: #969696;
   font-size: 16px;
   font-weight: 400;
   margin-top: 40px;
+  padding-left: 12px;
+  box-sizing: border-box;
 }
 
 .wrapper {
@@ -35,8 +38,27 @@
     font-weight: bold;
   }
 
-  .teamImage {
-    width: 100%;
+  .professor {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 12px;
+    box-sizing: border-box;
+
+    .teamImage {
+      width: 100%;
+    }
+
+    span {
+      .title {
+        color: #131313;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      color: #969696;
+      font-size: 16px;
+      font-weight: 400;
+    }
   }
 
   .content {
@@ -44,11 +66,20 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 24px;
+    padding: 0px 12px;
+    box-sizing: border-box;
 
     .card {
       display: flex;
       align-items: center;
       gap: 32px;
+
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
       .description {
         display: flex;
@@ -85,7 +116,10 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 860px;
+    max-width: 860px;
+    width: 100%;
+    padding: 0px 12px;
+    box-sizing: border-box;
 
     .title {
       color: #969696;
@@ -120,6 +154,37 @@
           color: #969696;
           font-size: 14px;
           font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .wrapper {
+    .content {
+      gap: 20px 12px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .wrapper {
+    .content {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .wrapper {
+    .content {
+      .card {
+        gap: 8px;
+
+        img {
+          width: 120px;
+          height: 120px;
         }
       }
     }

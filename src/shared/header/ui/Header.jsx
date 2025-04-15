@@ -98,7 +98,6 @@ const Header = React.memo(() => {
                 <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
               </div>
             </div>
-
             {/* 주요 사이트 */}
             <div
               className={styles.menuItem}
@@ -112,14 +111,17 @@ const Header = React.memo(() => {
                 주요 사이트
               </span>
               <div className={`${styles.dropdown} ${hoveredMenu === "sitemap" ? styles.activeSitemap : ""}`}>
-                <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>
+                <span onClick={() => window.open("https://goodjob.khu.ac.kr/")}>
                   미래인재센터 <FiExternalLink className={styles.externalIcon} />
                 </span>
-                <span onClick={() => window.open("https://_", "_blank")}>
+                <span onClick={() => window.open("https://goodjob.khu.ac.kr/s2/s2_2_2.php")}>
                   취창업스쿨 <FiExternalLink className={styles.externalIcon} />
                 </span>
-                <span onClick={() => window.open("https://_", "_blank")}>
+                <span onClick={() => window.open("https://aladdin.khu.ac.kr/portfolio/ptfol/cusl/main/index.do")}>
                   상담신청 <FiExternalLink className={styles.externalIcon} />
+                </span>
+                <span onClick={() => window.open("https://info21.khu.ac.kr/")}>
+                  인포21 <FiExternalLink className={styles.externalIcon} />
                 </span>
               </div>
             </div>
@@ -153,11 +155,14 @@ const Header = React.memo(() => {
               <span onClick={() => window.open("https://goodjob.khu.ac.kr/", "_blank")}>
                 미래인재센터 <FiExternalLink className={styles.externalIcon} />
               </span>
-              <span onClick={() => window.open("https://_", "_blank")}>
+              <span onClick={() => window.open("https://goodjob.khu.ac.kr/s2/s2_2_2.php")}>
                 취창업스쿨 <FiExternalLink className={styles.externalIcon} />
               </span>
-              <span onClick={() => window.open("https://_", "_blank")}>
+              <span onClick={() => window.open("https://aladdin.khu.ac.kr/portfolio/ptfol/cusl/main/index.do")}>
                 상담신청 <FiExternalLink className={styles.externalIcon} />
+              </span>
+              <span onClick={() => window.open("https://info21.khu.ac.kr/")}>
+                인포21 <FiExternalLink className={styles.externalIcon} />
               </span>
             </div>
           )}

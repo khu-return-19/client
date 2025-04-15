@@ -1,5 +1,6 @@
 .goToMainButton {
-  width: 600px;
+  width: 88%;
+  max-width: 600px;
   height: 60px;
   box-sizing: border-box;
   background-color: #990e17;
@@ -10,16 +11,4 @@
   cursor: pointer;
   font-size: 20px;
   font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .goToMainButton {
-    width: 400px;
-  }
-}
-
-@media (max-width: 480px) {
-  .goToMainButton {
-    width: 320px;
-  }
 }

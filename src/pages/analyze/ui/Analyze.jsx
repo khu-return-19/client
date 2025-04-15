@@ -44,6 +44,7 @@ function Analyze() {
       company: formData.company,
       position: formData.position,
       input: formData.input,
+      url: formData.url,
       resume: {
         major: formData.major,
         universityName: formData.universityName,
@@ -183,6 +184,10 @@ function Analyze() {
                 <span className={styles.inputLabel}>지원 직무</span>
                 <input {...register("position")} />
               </div>
+            </div>
+            <div className={styles.urlInputGroup}>
+              <span className={styles.inputLabel}>지원 공고 사이트 url</span>
+              <input {...register("url")} />
             </div>
           </div>
 

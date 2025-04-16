@@ -70,7 +70,7 @@ function Landing() {
             <div className={styles.leftSection}>
               <span className={styles.title}>
                 자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 역량</span>을 파악해요
+                <span className={styles.color}>합격 역량</span>을 파악해요 테스트!!!
               </span>
               <div className={styles.description}>
                 <span className={styles.subTitle}>정보만 입력하면 1분 안에 분석</span>

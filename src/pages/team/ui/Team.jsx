@@ -15,18 +15,25 @@ function Team() {
       </div>
       <div className={styles.wrapper}>
         <div className={styles.title}>서비스 제작 구성원 소개</div>
-        <div className={styles.subtitle}>자기소개서 분석</div>
         <div className={styles.professor}>
-          <img src="/team/team.png" alt="team" className={styles.teamImage} />
-          <span>
+          <div className={styles.nameSection}>
+            <span className={styles.name}>김양수</span> 교육학 박사
+          </div>
+          <div className={styles.description}>
+            <img src="/team/professor.png" alt="" className={styles.professorImage} />
+            <br />
             <span className={styles.title}>연혁</span> <br />
             TTS커리어그룹 대표 및 경희대학교 미래인재센터 겸임교수
             <br /> 2004년~현재 경희대학교 미래인재센터 취창업 컨설팅 담당교수 <br />
             2018년~현재 경희대학교 메이커스페이스 Open Lab 담당교수 <br />
             2023년~현재 경희대학교 KHU Careers Editor 지도교수
+            <br /> <br />
+            <span className={styles.title}> 저서</span>
             <br />
-            저서) 마이포트폴리오, 에잇블락협상모델
-          </span>
+            마이 포트폴리오 (역)
+            <br />
+            에잇 블록 협상 모델
+          </div>
         </div>
         <div className={styles.subtitle}>웹서비스 구축</div>
         <div className={styles.content}>

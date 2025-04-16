@@ -217,9 +217,8 @@ function Landing() {
         initial={{ opacity: 0, y: 100 }}
         animate={bottomInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className={styles.botton}
+        className={styles.bottom}
       >
-        {" "}
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
             <span className={styles.title}>
@@ -227,13 +226,6 @@ function Landing() {
               결과를 자세히 보고 싶다면?
             </span>
             <div className={styles.sampleReportButton}>예시 레포트 보러 가기</div>
-          </div>
-
-          <div className={styles.partnership}>
-            <span className={styles.title}>
-              이 프로그램은 <br />
-              00 연구와 함께합니다
-            </span>
           </div>
         </div>
       </motion.div>

@@ -261,12 +261,13 @@
   }
 }
 
-.botton {
+.bottom {
   margin-top: 384px;
   background: linear-gradient(to bottom, #ffffff 0%, #ffc8c8 100%);
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 500px;
 
   .wrapper {
     width: 100%;
@@ -303,22 +304,6 @@
       justify-content: center;
       align-items: center;
       font-size: 20px;
-      font-weight: bold;
-    }
-  }
-
-  .partnership {
-    margin-top: 382px;
-    margin-bottom: 432px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    align-items: center;
-
-    .title {
-      text-align: center;
-      color: #131313;
-      font-size: 32px;
       font-weight: bold;
     }
   }
@@ -475,29 +460,13 @@
     }
   }
 
-  .botton {
+  .bottom {
     .sampleReport {
       padding: 0px 10px;
       box-sizing: border-box;
 
       .sampleReportButton {
         width: 100%;
-      }
-    }
-
-    .partnership {
-      margin-top: 382px;
-      margin-bottom: 432px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      align-items: center;
-
-      .title {
-        text-align: center;
-        color: #131313;
-        font-size: 32px;
-        font-weight: bold;
       }
     }
   }

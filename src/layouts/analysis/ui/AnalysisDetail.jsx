@@ -127,7 +127,7 @@ function AnalysisDetail() {
           </div>
           <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
             <div className={styles.resumeTitle}>자기소개서</div>
-            <div className={styles.input}>{analysis?.input}</div>
+            <div className={styles.input}> {JSON.parse(`"${analysis?.input}"`)}</div>
             <div className={styles.companyAndPosition}>
               <div className={styles.companyWrapper}>
                 <div className={styles.subTitle}>지원 회사명</div>

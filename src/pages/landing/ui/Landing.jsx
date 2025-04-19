@@ -51,10 +51,10 @@ function Landing() {
                 <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>정보만 입력하면 1분 안에 분석</span>
+                <span className={styles.subTitle}>1분 안에 무료 AI 분석</span>
                 <span className={styles.text}>
-                  내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
-                  진행됩니다.
+                  컨설팅 전문 교수님 데이터 기반의 분석을 통해, <br />
+                  필요한 역량과 개선된 자기소개서를 받아보세요.
                 </span>
               </div>
               <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
@@ -80,10 +80,10 @@ function Landing() {
                 <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>정보만 입력하면 1분 안에 분석</span>
+                <span className={styles.subTitle}>1분 안에 무료 AI 분석</span>
                 <span className={styles.text}>
-                  내 이력과 자기소개서 작성을 입력하면 첨삭 N년의 컨설팅 전문 교수님의 데이터를 기반으로 한 분석이
-                  진행됩니다.
+                  컨설팅 전문 교수님 데이터 기반의 분석을 통해, <br />
+                  필요한 역량과 개선된 자기소개서를 받아보세요.
                 </span>
               </div>
               <div className={styles.imageButtonGroup}>

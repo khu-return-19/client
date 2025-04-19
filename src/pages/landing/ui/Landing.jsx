@@ -115,7 +115,7 @@ function Landing() {
           <div className={styles.titleSection}>
             <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
             <span className={styles.description}>
-              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시합니다.
+              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시
             </span>
           </div>
           <div className={styles.content}>

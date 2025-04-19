@@ -6,7 +6,6 @@ import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useFetchNotices } from "api/noticeApi";
 import { DeleteNoticeModal, NoticeSkeleton } from "layouts/notice";
-import { dataTagSymbol } from "@tanstack/react-query";
 
 function Notice() {
   const itemsPerPage = 8;
@@ -17,7 +16,6 @@ function Notice() {
 
   const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
 
-  const totalNotice = data?.total || 0;
   const totalPages = data?.page || 1;
 
   const [menuOpen, setMenuOpen] = useState(null);

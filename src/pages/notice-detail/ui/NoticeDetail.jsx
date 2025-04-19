@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./NoticeDetail.module.scss";
 import { useParams, useNavigate } from "react-router-dom";
-import { useFetchNotice, useDeleteNotice } from "api/noticeApi";
+import { useFetchNotice } from "api/noticeApi";
 import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { DeleteNoticeModal, NoticeDetailSkeleton } from "layouts/notice-detail";
@@ -15,8 +15,6 @@ function NoticeDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: notice, isLoading } = useFetchNotice(id);
-  const { mutate: deleteNotice } = useDeleteNotice();
-
   const { userInfo } = useAuth();
 
   useEffect(() => {
@@ -108,7 +106,8 @@ function NoticeDetail() {
               )}
             </div>
           </div>
-          <div className={styles.body}>{notice.content}</div>
+          {/* <div className={styles.body}>{notice.content}</div> */}
+          <div dangerouslySetInnerHTML={{ __html: notice.content }} />
         </div>
       </div>
       <div className={styles.listButton} onClick={handleClick}>

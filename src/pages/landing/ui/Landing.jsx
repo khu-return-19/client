@@ -16,28 +16,6 @@ const images = [
 
 function Landing() {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
-
-  // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (window.scrollY > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  const handleAuth = () => {
-    window.location.href = "https://zackinthebox.shop/oauth2/authorization/google";
-  };
-
-  // 스크롤 이벤트 리스너 등록
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

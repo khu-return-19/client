@@ -10,7 +10,7 @@ function Resume() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitted },
+    formState: { errors },
   } = useForm();
   const { data: resumeData, isLoading } = useFetchResume();
   const { mutate: updateResume } = useUpdateResume();

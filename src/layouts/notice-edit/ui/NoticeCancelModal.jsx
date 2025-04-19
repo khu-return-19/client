@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./NoticeCancelModal.module.scss";
 import Modal from "shared/modal";
-import { useDeleteNotice } from "api/noticeApi";
 import { useNavigate } from "react-router-dom";
 
 function NoticeCancelModal({ isOpen, onClose, noticeId }) {

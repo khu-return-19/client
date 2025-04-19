@@ -16,28 +16,6 @@ const images = [
 
 function Landing() {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
-
-  // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (window.scrollY > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  const handleAuth = () => {
-    window.location.href = "https://zackinthebox.shop/oauth2/authorization/google";
-  };
-
-  // 스크롤 이벤트 리스너 등록
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -137,7 +115,7 @@ function Landing() {
           <div className={styles.titleSection}>
             <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
             <span className={styles.description}>
-              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시합니다.
+              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시
             </span>
           </div>
           <div className={styles.content}>

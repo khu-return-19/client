@@ -152,7 +152,7 @@ function AnalysisDetail() {
             </div>
           ) : (
             <div className={styles.contentWrapper}>
-              <RadarChart x={analysis.x} y={analysis.y} z={analysis.z} />
+              <RadarChart x={analysis?.x} y={analysis?.y} z={analysis?.z} />
               <ReactMarkdown
                 className={styles.body}
                 remarkPlugins={[remarkGfm, remarkBreaks]}

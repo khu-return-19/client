@@ -6,31 +6,8 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 
-// TODO: 이미지 전환 관련 로직 변경 필요!
-const images = [
-  "https://picsum.photos/id/101/586/350",
-  "https://picsum.photos/id/102/586/350",
-  "https://picsum.photos/id/103/586/350",
-  "https://picsum.photos/id/104/586/350",
-];
-
 function Landing() {
   const navigate = useNavigate();
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // 자동 이미지 순환
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleClick = (index) => {
-    setCurrentIndex(index);
-  };
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -57,15 +34,9 @@ function Landing() {
                   필요한 역량과 개선된 자기소개서를 받아보세요.
                 </span>
               </div>
-              <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
+              <img src="/main.png" alt="" className={styles.image} />
               <div className={styles.imageButtonGroup}>
-                {images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
-                    onClick={() => handleClick(idx)}
-                  />
-                ))}
+                <button className={`${styles.imageButton} `} />
               </div>
               <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
                 내 자소서 첨삭 받기
@@ -87,20 +58,14 @@ function Landing() {
                 </span>
               </div>
               <div className={styles.imageButtonGroup}>
-                {images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`${styles.imageButton} ${currentIndex === idx ? styles.active : ""}`}
-                    onClick={() => handleClick(idx)}
-                  />
-                ))}
+                <button className={`${styles.imageButton} `} />
               </div>
               <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
                 내 자소서 첨삭 받기
               </div>
             </div>
             <div className={styles.rightSection}>
-              <img src={images[currentIndex]} alt={`이미지 ${currentIndex + 1}`} className={styles.image} />
+              <img src="/main.png" alt="" className={styles.image} />
             </div>
           </div>
         )}

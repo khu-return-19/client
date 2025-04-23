@@ -34,7 +34,7 @@ function Landing() {
                   필요한 역량과 개선된 자기소개서를 받아보세요.
                 </span>
               </div>
-              <img src="/main.png" alt="" className={styles.image} />
+              <img src="/landing/main.png" alt="" className={styles.image} />
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
@@ -65,7 +65,7 @@ function Landing() {
               </div>
             </div>
             <div className={styles.rightSection}>
-              <img src="/main.png" alt="" className={styles.image} />
+              <img src="/landing/main.png" alt="" className={styles.image} />
             </div>
           </div>
         )}
@@ -80,11 +80,11 @@ function Landing() {
           <div className={styles.titleSection}>
             <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
             <span className={styles.description}>
-              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 제시
+              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 통해 제시
             </span>
           </div>
           <div className={styles.content}>
-            <img src="/3DEvaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
+            <img src="/shared/3D-evaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
             <div className={styles.xCard}>
               <XCard />
             </div>
@@ -110,10 +110,18 @@ function Landing() {
             <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>
           </div>
           <div className={styles.cardSection}>
-            <img src="acceptedAnalysisCard.png" alt="" className={styles.acceptedAnalysisCard} />
-            <img src="strengthsCard.png" alt="" className={styles.strengthsCard} />
-            <img src="strategyCard.png" alt="" className={styles.strategyCard} />
-            <img src="finalScoreCard.png" alt="" className={styles.finalScoreCard} />
+            <img
+              src="/landing/accepted-analysis-card.png"
+              alt="합격자 비교분석"
+              className={styles.acceptedAnalysisCard}
+            />
+            <img src="/landing/strengths-card.png" alt="구직자의 장단점 평가" className={styles.strengthsCard} />
+            <img src="/landing/strategy-card.png" alt="개선전략" className={styles.strategyCard} />
+            <img
+              src="/landing/final-score-card.png"
+              alt="종합 평가/ 합격 가능성 평가"
+              className={styles.finalScoreCard}
+            />
           </div>
         </motion.div>
 

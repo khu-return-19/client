@@ -65,7 +65,7 @@ function AnalysisSidebar() {
       <div className={`${styles.analysisSidebar} ${isCollapsed ? styles.collapsed : styles.expanded}`}>
         <div className={styles.iconSection}>
           <img
-            src={isActive ? "/sidebarIconActive.png" : "/sidebarIcon.png"}
+            src={isActive ? "/analysis/sidebar-icon-active.png" : "/analysis/sidebar-icon.png"}
             alt=""
             className={styles.sidebarIcon}
             onMouseEnter={() => setIsActive(true)}

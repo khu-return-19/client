@@ -8,7 +8,7 @@ function Modal({ children, isOpen, onClose, onConfirm }) {
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <img src="/warningIcon.png" alt="" className={styles.warningIcon} />
+          <img src="/shared/warning-icon.png" alt="" className={styles.warningIcon} />
         </div>
         <div className={styles.body}>{children}</div>
         <div className={styles.footer}>

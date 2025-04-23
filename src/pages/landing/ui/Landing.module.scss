@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -16,6 +17,9 @@
   display: flex;
   gap: 50px;
   margin-top: 186px;
+  width: 100%;
+  padding-left: 60px;
+  box-sizing: border-box;
 
   .leftSection {
     display: flex;
@@ -87,10 +91,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-shrink: 0;
+    width: 1060px;
 
     .image {
       width: 100%;
-      max-width: 740px;
     }
   }
 }
@@ -305,16 +310,6 @@
 }
 
 @media (max-width: 1279px) {
-  .intro {
-    gap: 8px;
-
-    .rightSection {
-      .image {
-        width: 600px;
-      }
-    }
-  }
-
   .improvement {
     .cardSection {
       img {

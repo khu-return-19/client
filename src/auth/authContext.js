@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
   } = useQuery({
     queryKey: ["userInfo"],
     queryFn: fetchUserInfo,
-    enabled: isAuthSuccess && isAuthenticated, // 로그인 상태일 때만 요청
+    enabled: () => !!isAuthSuccess && !!isAuthenticated,
     retry: false,
   });
 

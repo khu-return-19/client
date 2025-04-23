@@ -44,7 +44,7 @@ function Resume() {
         <div className={styles.myResume}>
           <span className={styles.title}>내 이력서</span>
           <div className={styles.info}>
-            <img src="/shared-info.png" alt="" className={styles.infoImage} />
+            <img src="/shared/info.png" alt="" className={styles.infoImage} />
             <div className={styles.infoText}>
               <span>입력 안내사항</span>
               <ul>

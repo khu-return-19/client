@@ -100,7 +100,7 @@ function Analyze() {
             </div>
           </div>
           <div className={styles.notice}>
-            <img src="/shared-info.png" alt="" className={styles.infoImage} />
+            <img src="/shared/info.png" alt="" className={styles.infoImage} />
             <div>
               <span className={styles.highlight}>이용 방법 안내</span> <br />
               <span>분석할 나의 자기소개서를 붙여넣습니다.</span> <br />

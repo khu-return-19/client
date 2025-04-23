@@ -10,7 +10,7 @@ function ResumeSkeleton() {
         <div className={styles.myResume}>
           <div className={styles.title}>내 이력서</div>
           <div className={styles.notice}>
-            <img src="/shared-info.png" alt="" className={styles.infoImage} />
+            <img src="/shared/info.png" alt="" className={styles.infoImage} />
             <div>
               <div>입력 안내사항</div>
               <li>구체적인 경험과 성과를 담아 작성해 주세요.</li>

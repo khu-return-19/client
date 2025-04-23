@@ -30,7 +30,7 @@ function Evaluation3D() {
           <div className={styles.body}>
             <div className={styles.subtitle}>3D 모델의 구성</div>
             <div className={styles.content}>
-              <img src="/3DEvaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
+              <img src="/shared/3D-evaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
               <div className={styles.xCard}>
                 <XCard />
               </div>

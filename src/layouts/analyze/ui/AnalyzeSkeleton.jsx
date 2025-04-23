@@ -16,7 +16,7 @@ function AnalyzeSkeleton() {
             </div>
           </div>
           <div className={styles.notice}>
-            <img src="/infoImage.png" alt="" className={styles.infoImage} />
+            <img src="/shared-info.png" alt="" className={styles.infoImage} />
             <div>
               <div>이용 방법 안내</div>
               <span>분석할 나의 자기소개서를 붙여넣습니다.</span>

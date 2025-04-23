@@ -2,7 +2,7 @@ import api from "api/axiosInstance";
 
 // NOTE: 로그인
 export const login = () => {
-  window.location.href = "https://zackinthebox.shop/oauth2/authorization/google";
+  window.location.href = process.env.REACT_APP_GOOGLE_LOGIN_URL;
 };
 
 // NOTE: 로그아웃

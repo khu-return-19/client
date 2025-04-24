@@ -13,11 +13,17 @@
   justify-content: space-between;
   align-items: center;
   max-width: 80rem;
+  padding: 0rem 2.5rem;
+  box-sizing: border-box;
 }
 
 .logo {
   display: flex;
   align-items: center;
+
+  .logoImage {
+    width: 17.5rem;
+  }
 }
 
 .menuIcon {

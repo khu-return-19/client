@@ -120,7 +120,7 @@ const Header = React.memo(() => {
                 <span onClick={() => window.open("https://aladdin.khu.ac.kr/portfolio/ptfol/cusl/main/index.do")}>
                   상담신청 <FiExternalLink className={styles.externalIcon} />
                 </span>
-                <span onClick={() => window.open("https://info21.khu.ac.kr/")}>
+                <span onClick={() => window.open("https://portal.khu.ac.kr/")}>
                   인포21 <FiExternalLink className={styles.externalIcon} />
                 </span>
               </div>
@@ -161,7 +161,7 @@ const Header = React.memo(() => {
               <span onClick={() => window.open("https://aladdin.khu.ac.kr/portfolio/ptfol/cusl/main/index.do")}>
                 상담신청 <FiExternalLink className={styles.externalIcon} />
               </span>
-              <span onClick={() => window.open("https://info21.khu.ac.kr/")}>
+              <span onClick={() => window.open("https://portal.khu.ac.kr/")}>
                 인포21 <FiExternalLink className={styles.externalIcon} />
               </span>
             </div>

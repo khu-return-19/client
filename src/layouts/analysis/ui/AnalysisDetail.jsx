@@ -10,6 +10,7 @@ import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
 import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
 import { RadarChart } from "components/analysis";
+import AnalysisError from "./AnalysisError";
 
 function AnalysisDetail() {
   const [inputVisible, setInputVisible] = useState(false);
@@ -35,7 +36,6 @@ function AnalysisDetail() {
 
   useEffect(() => {
     if (!analysis || analysis.status !== null) return;
-
     const eventSource = new EventSource(`${process.env.REACT_APP_BASE_URL}/stream/analysis/${id}`, {
       withCredentials: true,
     });
@@ -111,6 +111,10 @@ function AnalysisDetail() {
   };
 
   if (isLoading) return <AnalysisDetailSkeleton />;
+
+  if (analysis.status === "error" || analysis.content === null) {
+    return <AnalysisError />;
+  }
 
   return (
     <div className={styles.analysisDetail} ref={rightSectionRef}>

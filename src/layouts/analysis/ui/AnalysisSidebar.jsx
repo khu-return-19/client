@@ -20,7 +20,7 @@ function AnalysisSidebar() {
 
   useEffect(() => {
     if (id) {
-      setSelectedAnalysisId(Number(id));
+      setSelectedAnalysisId(id);
     }
   }, [id]);
 

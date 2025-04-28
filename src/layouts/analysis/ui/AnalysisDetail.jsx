@@ -112,7 +112,7 @@ function AnalysisDetail() {
 
   if (isLoading) return <AnalysisDetailSkeleton />;
 
-  if (analysis?.status === "error") {
+  if (analysis?.status === "ERROR") {
     return <AnalysisError />;
   }
 

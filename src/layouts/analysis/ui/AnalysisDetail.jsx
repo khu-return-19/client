@@ -61,8 +61,10 @@ function AnalysisDetail() {
           setCurrentPhaseText(newPhaseText);
         } else if (parsed.event === "error_detection") {
           setError(parsed.value);
+          if (parsed.value) eventSource.close();
         } else if (parsed.event === "validation_error") {
           setError(true);
+          eventSource.close();
         } else if (parsed.event === "current_stats") {
           const { score_x_axis, score_y_axis, score_z_axis } = parsed;
           setScoreX(score_x_axis);

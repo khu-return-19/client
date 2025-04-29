@@ -21,7 +21,6 @@ function AnalysisDetail() {
   const [scoreX, setScoreX] = useState(0);
   const [scoreY, setScoreY] = useState(0);
   const [scoreZ, setScoreZ] = useState(0);
-  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -59,8 +58,6 @@ function AnalysisDetail() {
           };
           const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
           setCurrentPhaseText(newPhaseText);
-        } else if (parsed.event === "error_detection") {
-          setError(parsed.value);
         } else if (parsed.event === "current_stats") {
           const { score_x_axis, score_y_axis, score_z_axis } = parsed;
           setScoreX(score_x_axis);
@@ -115,7 +112,7 @@ function AnalysisDetail() {
 
   if (isLoading) return <AnalysisDetailSkeleton />;
 
-  if (analysis?.status === "ERROR" || error) {
+  if (analysis?.status === "ERROR") {
     return <AnalysisError />;
   }
 

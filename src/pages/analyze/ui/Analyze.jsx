@@ -173,10 +173,6 @@ function Analyze() {
           </div>
 
           <div className={styles.introduction}>
-            <div className={styles.inputGroup}>
-              <span className={styles.introductionTitle}>자기소개서</span>
-              <textarea className={styles.introductionContent} {...register("input")} />
-            </div>
             <div className={styles.companyAndJob}>
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>지원회사명</span>
@@ -190,6 +186,10 @@ function Analyze() {
             <div className={styles.urlInputGroup}>
               <span className={styles.inputLabel}>지원 공고 사이트 url</span>
               <input {...register("url")} />
+            </div>
+            <div className={styles.inputGroup}>
+              <span className={styles.introductionTitle}>자기소개서</span>
+              <textarea className={styles.introductionContent} {...register("input")} />
             </div>
           </div>
 

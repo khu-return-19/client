@@ -95,7 +95,7 @@ function Team() {
       </div>
       <div className={styles.bottom}>
         <div className={styles.content}>
-          <div className={styles.title}>다른 글 더보기</div>
+          <div className={styles.title}>서비스에 대해 더 구체적으로 알아보고 싶다면?</div>
           <div className={styles.button}>
             <div
               className={styles.card}

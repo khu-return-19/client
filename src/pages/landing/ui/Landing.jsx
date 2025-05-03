@@ -34,13 +34,12 @@ function Landing() {
                   필요한 역량과 개선된 자기소개서를 받아보세요.
                 </span>
               </div>
-              <img src="/landing/main.png" alt="" className={styles.image} />
+              <img src="/landing/main.png" alt="" className={styles.mainImage} />
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
-                내 자소서 첨삭 받기
-              </div>
+              {/* <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}> */}
+              <div className={styles.analyzeButton}>예시 레포트 보러가기</div>
             </div>
           </div>
         ) : (
@@ -60,12 +59,11 @@ function Landing() {
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}>
-                내 자소서 첨삭 받기
-              </div>
+              {/* <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}> */}
+              <div className={styles.analyzeButton}>예시 레포트 보러가기</div>
             </div>
             <div className={styles.rightSection}>
-              <img src="/landing/main.png" alt="" className={styles.image} />
+              <img src="/landing/main.png" alt="" className={styles.mainImage} />
             </div>
           </div>
         )}
@@ -173,10 +171,18 @@ function Landing() {
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
             <span className={styles.title}>
-              예시 레포트를 통해 <br />
-              결과를 자세히 보고 싶다면?
+              지금 당장 작성해둔 <br />
+              자기소개서를 첨삭받고 싶다면?
             </span>
-            <div className={styles.sampleReportButton}>예시 레포트 보러 가기</div>
+            <div
+              className={styles.sampleReportButton}
+              onClick={() => {
+                navigate("/analyze");
+                window.scrollTo({ top: 0, behavior: "auto" });
+              }}
+            >
+              자기소개서 첨삭 받기
+            </div>
           </div>
         </div>
       </motion.div>

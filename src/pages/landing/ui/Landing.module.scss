@@ -16,10 +16,10 @@
 .intro {
   display: flex;
   gap: 50px;
-  margin-top: 186px;
+  margin-top: 120px;
   width: 100%;
-  padding-left: 60px;
   box-sizing: border-box;
+  padding: 0px 40px;
 
   .leftSection {
     display: flex;
@@ -83,7 +83,8 @@
       box-sizing: border-box;
       font-size: 20px;
       font-weight: bold;
-      cursor: pointer;
+      // cursor: pointer;
+      cursor: not-allowed;
     }
   }
 
@@ -94,8 +95,8 @@
     flex-shrink: 0;
     width: 1060px;
 
-    .image {
-      width: 100%;
+    .mainImage {
+      width: 800px;
     }
   }
 }
@@ -304,7 +305,7 @@
       align-items: center;
       font-size: 20px;
       font-weight: bold;
-      cursor: not-allowed;
+      cursor: pointer;
     }
   }
 }
@@ -371,7 +372,7 @@
     .leftSection {
       padding: 0px 10px;
       box-sizing: border-box;
-      .image {
+      .mainImage {
         width: 100%;
       }
       .analyzeButton {

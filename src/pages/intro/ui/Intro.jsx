@@ -34,7 +34,6 @@ function Intro() {
               전통적인 2D 평가(지식 또는 기술 중심)에서 확장된 3D 평가 모델을 사용함으로써 <br />
               마인드셋, 직무 요구 역량, 프로젝트 수행 능력 등을 파악할 수 있습니다.
             </span>
-            <img src="/intro/intro.png" alt="" className={styles.introImage} />
           </div>
         </div>
 
@@ -69,7 +68,7 @@ function Intro() {
       </div>
       <div className={styles.bottom}>
         <div className={styles.content}>
-          <div className={styles.title}>다른 글 더보기</div>
+          <div className={styles.title}>서비스에 대해 더 구체적으로 알아보고 싶다면?</div>
           <div className={styles.button}>
             <div
               className={styles.card}

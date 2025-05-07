@@ -86,7 +86,6 @@ function Analyze() {
   };
 
   if (isLoading) return <AnalyzeSkeleton />;
-  // return <AnalyzeSkeleton />;
 
   return (
     <div className={styles.analyze}>
@@ -157,17 +156,41 @@ function Analyze() {
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>경력 및 수상 실적</span>
-                <input {...register("career")} />
+                <textarea
+                  {...register("career", {
+                    onChange: (e) => {
+                      const textarea = e.target;
+                      textarea.style.height = "3.5rem";
+                      textarea.style.height = textarea.scrollHeight + "px";
+                    },
+                  })}
+                />
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>어학 성적</span>
-                <input {...register("languageScore")} />
+                <textarea
+                  {...register("languageScore", {
+                    onChange: (e) => {
+                      const textarea = e.target;
+                      textarea.style.height = "3.5rem";
+                      textarea.style.height = textarea.scrollHeight + "px";
+                    },
+                  })}
+                />
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>자격증</span>
-                <input {...register("certificate")} />
+                <textarea
+                  {...register("certificate", {
+                    onChange: (e) => {
+                      const textarea = e.target;
+                      textarea.style.height = "3.5rem";
+                      textarea.style.height = textarea.scrollHeight + "px";
+                    },
+                  })}
+                />
               </div>
             </div>
           </div>

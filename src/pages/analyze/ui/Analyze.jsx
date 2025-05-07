@@ -172,6 +172,7 @@ function Analyze() {
                       textarea.style.height = textarea.scrollHeight + "px";
                     },
                   })}
+                  placeholder="예시) 2023.01 ~ 2023.02: 삼성전자 인턴십, 2022.03 ~ 2022.12: LG디스플레이 연구개발팀"
                 />
               </div>
 
@@ -185,6 +186,7 @@ function Analyze() {
                       textarea.style.height = textarea.scrollHeight + "px";
                     },
                   })}
+                  placeholder="예시) 토익 900점, 오픽 IH"
                 />
               </div>
 
@@ -198,6 +200,7 @@ function Analyze() {
                       textarea.style.height = textarea.scrollHeight + "px";
                     },
                   })}
+                  placeholder="예시) 정보처리기사, 컴퓨터활용능력 1급"
                 />
               </div>
             </div>
@@ -207,11 +210,11 @@ function Analyze() {
             <div className={styles.companyAndJob}>
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>지원회사명</span>
-                <input {...register("company")} />
+                <input {...register("company")} placeholder="예시) 삼성전자" />
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>지원 직무</span>
-                <input {...register("position")} />
+                <input {...register("position")} placeholder="예시) 네트워크 사업부 sw 개발" />
               </div>
             </div>
             <div className={styles.urlInputGroup}>
@@ -220,7 +223,12 @@ function Analyze() {
             </div>
             <div className={styles.inputGroup}>
               <span className={styles.introductionTitle}>자기소개서</span>
-              <textarea className={styles.introductionContent} {...register("input")} />
+              <textarea
+                className={styles.introductionContent}
+                {...register("input")}
+                placeholder={`자기소개서의 질문 문항과 대답 문항을 같이 작성해주세요.
+                \n\n예시)\n1. 삼성전자를 지원한 이유와 입사 후 회사에서 이루고 싶은 꿈을 기술하십시오. 700자 (영문작성 시 1400자) 이내\n\n삼성전자의 네트워크 사업부에서 차세대 네트워크 기술 개발에 기여하며, 글로벌 시장에서 경쟁력 있는 소프트웨어 솔루션을 제공하고 싶습니다...`}
+              />
             </div>
           </div>
 

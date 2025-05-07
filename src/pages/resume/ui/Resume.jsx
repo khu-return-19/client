@@ -126,6 +126,7 @@ function Resume() {
               })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
+              placeholder="예시) 2023.01 ~ 2023.02: 삼성전자 인턴십, 2022.03 ~ 2022.12: LG디스플레이 연구개발팀"
             />
           </div>
 
@@ -141,6 +142,7 @@ function Resume() {
               })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
+              placeholder="예시) 토익 900점, 오픽 IH"
             />
           </div>
 
@@ -156,6 +158,7 @@ function Resume() {
               })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
+              placeholder="예시) 정보처리기사, 컴퓨터활용능력 1급"
             />
           </div>
 

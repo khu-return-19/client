@@ -29,6 +29,14 @@ function Analyze() {
       Object.entries(resumeData).forEach(([key, value]) => {
         setValue(key, value ?? "");
       });
+
+      setTimeout(() => {
+        const textareas = document.querySelectorAll("textarea");
+        textareas.forEach((textarea) => {
+          textarea.style.height = "3.5rem";
+          textarea.style.height = textarea.scrollHeight + "px";
+        });
+      }, 0);
     }
   }, [resumeData]);
 

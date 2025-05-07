@@ -20,6 +20,14 @@ function Resume() {
       Object.entries(resumeData).forEach(([key, value]) => {
         setValue(key, value ?? "");
       });
+
+      setTimeout(() => {
+        const textareas = document.querySelectorAll("textarea");
+        textareas.forEach((textarea) => {
+          textarea.style.height = "3.5rem";
+          textarea.style.height = textarea.scrollHeight + "px";
+        });
+      }, 0);
     }
   }, [resumeData]);
 
@@ -108,8 +116,14 @@ function Resume() {
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>경력 및 수상 실적</span>
-            <input
-              {...register("career")}
+            <textarea
+              {...register("career", {
+                onChange: (e) => {
+                  const textarea = e.target;
+                  textarea.style.height = "3.5rem";
+                  textarea.style.height = textarea.scrollHeight + "px";
+                },
+              })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
             />
@@ -117,8 +131,14 @@ function Resume() {
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>어학 성적</span>
-            <input
-              {...register("languageScore")}
+            <textarea
+              {...register("languageScore", {
+                onChange: (e) => {
+                  const textarea = e.target;
+                  textarea.style.height = "3.5rem";
+                  textarea.style.height = textarea.scrollHeight + "px";
+                },
+              })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
             />
@@ -126,8 +146,14 @@ function Resume() {
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>자격증</span>
-            <input
-              {...register("certificate")}
+            <textarea
+              {...register("certificate", {
+                onChange: (e) => {
+                  const textarea = e.target;
+                  textarea.style.height = "3.5rem";
+                  textarea.style.height = textarea.scrollHeight + "px";
+                },
+              })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
             />

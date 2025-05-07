@@ -132,6 +132,9 @@
     &:focus {
       outline: 1px solid #4d4d4d;
     }
+    &::placeholder {
+      color: #969696;
+    }
   }
 
   textarea {
@@ -150,20 +153,19 @@
     &:focus {
       outline: 1px solid #4d4d4d;
     }
+    &::placeholder {
+      color: #969696;
+    }
   }
 
   .inactiveInput {
-    color: #4d4d4d;
+    color: #131313;
   }
 
   .activeInput {
-    color: #969696;
+    color: #131313;
     background-color: white;
     border: 1px solid #eae8e2;
-
-    &:focus {
-      color: black;
-    }
   }
 
   .errorText {

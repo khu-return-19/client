@@ -134,6 +134,24 @@
     }
   }
 
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: 3.5rem;
+    font-size: 1rem;
+    background-color: #f6f5ef;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.75rem;
+    padding-top: 1.15rem;
+    overflow: hidden;
+    resize: none;
+
+    &:focus {
+      outline: 1px solid #4d4d4d;
+    }
+  }
+
   .inactiveInput {
     color: #4d4d4d;
   }

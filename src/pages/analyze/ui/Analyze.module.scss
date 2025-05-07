@@ -151,6 +151,26 @@
           color: black;
         }
       }
+
+      textarea {
+        width: 100%;
+        height: 3.5rem;
+        overflow: hidden;
+        color: #969696;
+        background-color: #f4f2ed;
+        padding: 0.75rem;
+        padding-top: 1.2rem;
+        resize: none;
+        border-radius: 0.5rem;
+        border: none;
+        font-size: 1rem;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: 1px solid #4d4d4d;
+          color: black;
+        }
+      }
       .errorText {
         color: #e75959;
         font-size: 14px;
@@ -184,7 +204,7 @@
 
       .introductionContent {
         width: 100%;
-        height: 24rem;
+        height: 24rem !important;
         color: #969696;
         background-color: #f4f2ed;
         padding: 0.75rem;

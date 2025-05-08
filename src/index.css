@@ -36,6 +36,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+input,
+textarea {
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

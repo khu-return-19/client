@@ -123,6 +123,10 @@ function AnalysisDetail() {
     return <AnalysisError />;
   }
 
+  if (!id) {
+    return <div>예시 분석 레포트</div>;
+  }
+
   return (
     <div className={styles.analysisDetail} ref={rightSectionRef}>
       <div className={styles.rightWraaper}>

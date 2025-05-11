@@ -74,7 +74,7 @@ function AnalysisSidebar() {
           />
         </div>
         <div className={`${styles.list} ${isCollapsed ? styles.collapsed : styles.expanded}`}>
-          {Object.keys(groupedAnalyses).length > 0 &&
+          {Object.keys(groupedAnalyses).length > 0 ? (
             Object.entries(groupedAnalyses).map(([category, analyses]) => (
               <div key={category} className={styles.category}>
                 <div className={styles.categoryTitle}>{category}</div>
@@ -99,7 +99,12 @@ function AnalysisSidebar() {
                   </div>
                 ))}
               </div>
-            ))}
+            ))
+          ) : (
+            <div className={styles.exampleItem}>
+              <div className={styles.emptyText}>예시) 분석 레포트</div>
+            </div>
+          )}
           <div ref={observerRef} className={styles.loader}>
             {isLoading && <div className={styles.spinner}></div>}
           </div>

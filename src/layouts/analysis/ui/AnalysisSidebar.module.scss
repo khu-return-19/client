@@ -71,6 +71,17 @@
   }
 }
 
+.exampleItem {
+  padding: 12px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4d4d4d;
+  font-size: 16px;
+  background-color: #eae8e2;
+}
+
 .loader {
   display: flex;
   justify-content: center;

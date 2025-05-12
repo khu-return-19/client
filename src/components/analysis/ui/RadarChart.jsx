@@ -27,15 +27,22 @@ ChartJS.register(
   ChartDataLabels
 );
 
-function RadarChart({ x, y, z }) {
+function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
   const data = {
     labels: ["X축", "Y축", "Z축"], // 각 축 이름
     datasets: [
       {
-        label: "XYZ", // 데이터 이름
+        label: "내 점수", // 데이터 이름
         data: [x, y, z], // 데이터 값
         backgroundColor: "rgba(34, 202, 236, 0.2)", // 배경색
         borderColor: "rgba(34, 202, 236, 1)", // 테두리 색
+        borderWidth: 1,
+      },
+      {
+        label: "기존 합격자 점수", // 데이터 이름
+        data: [benchmarkX, benchmarkY, benchmarkZ], // 데이터 값
+        backgroundColor: "rgba(215, 26, 26, 0.2)", // 배경색
+        borderColor: "rgb(255, 0, 0)", // 테두리 색
         borderWidth: 1,
       },
     ],

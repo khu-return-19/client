@@ -18,9 +18,13 @@ function AnalysisDetail() {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const rightSectionRef = useRef(null);
   const [currentPhaseText, setCurrentPhaseText] = useState("분석 준비 중...");
+  const [agentWebSearch, setAgentWebSearch] = useState({ title: "", url: "" });
   const [scoreX, setScoreX] = useState(0);
   const [scoreY, setScoreY] = useState(0);
   const [scoreZ, setScoreZ] = useState(0);
+  const [benchmarkX, setBenchmarkX] = useState(0);
+  const [benchmarkY, setBenchmarkY] = useState(0);
+  const [benchmarkZ, setBenchmarkZ] = useState(0);
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -49,6 +53,9 @@ function AnalysisDetail() {
           setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
         } else if (parsed.event === "created_report") {
           setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
+        } else if (parsed.event === "agent_web_search") {
+          const { title, url } = parsed;
+          setAgentWebSearch({ title, url });
         } else if (parsed.event === "phase_change") {
           const phaseMap = {
             scheme_phase: "정보 추출 중...",
@@ -59,6 +66,7 @@ function AnalysisDetail() {
           };
           const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
           setCurrentPhaseText(newPhaseText);
+          setAgentWebSearch({ title: "", url: "" });
         } else if (parsed.event === "error_detection") {
           setError(parsed.value);
           if (parsed.value) eventSource.close();
@@ -70,6 +78,11 @@ function AnalysisDetail() {
           setScoreX(score_x_axis);
           setScoreY(score_y_axis);
           setScoreZ(score_z_axis);
+        } else if (parsed.event === "past_stats") {
+          const { score_x_axis, score_y_axis, score_z_axis } = parsed;
+          setBenchmarkX(score_x_axis);
+          setBenchmarkY(score_y_axis);
+          setBenchmarkZ(score_z_axis);
         }
       } catch (err) {
         console.error("Failed to parse SSE message:", err);
@@ -156,18 +169,44 @@ function AnalysisDetail() {
           </div>
           {analysis?.status === null ? (
             <div className={styles.contentWrapper}>
-              <RadarChart x={scoreX} y={scoreY} z={scoreZ} />
-              <ReactMarkdown
-                className={styles.streaming}
-                remarkPlugins={[remarkGfm, remarkBreaks]}
-                rehypePlugins={[rehypeRaw]}
-              >
-                {streamingContent || currentPhaseText}
-              </ReactMarkdown>
+              <RadarChart
+                x={scoreX}
+                y={scoreY}
+                z={scoreZ}
+                benchmarkX={benchmarkX}
+                benchmarkY={benchmarkY}
+                benchmarkZ={benchmarkZ}
+              />
+              {streamingContent ? (
+                <ReactMarkdown
+                  className={styles.streaming}
+                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {streamingContent}
+                </ReactMarkdown>
+              ) : (
+                <div className={styles.description}>
+                  {currentPhaseText}
+                  {agentWebSearch.title && (
+                    <div className={styles.agentWebSearch}>
+                      <img src={`http://www.google.com/s2/favicons?domain=${agentWebSearch.url}`} alt="" />
+                      {agentWebSearch && <span>{agentWebSearch.title}</span>}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             <div className={styles.contentWrapper}>
-              <RadarChart x={analysis?.x} y={analysis?.y} z={analysis?.z} />
+              <RadarChart
+                x={analysis?.x}
+                y={analysis?.y}
+                z={analysis?.z}
+                benchmarkX={analysis?.px}
+                benchmarkY={analysis?.py}
+                benchmarkZ={analysis?.pz}
+              />
               <ReactMarkdown
                 className={styles.body}
                 remarkPlugins={[remarkGfm, remarkBreaks]}

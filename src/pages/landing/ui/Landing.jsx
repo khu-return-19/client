@@ -28,10 +28,10 @@ function Landing() {
                 <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>1분 안에 무료 AI 분석</span>
+                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
                 <span className={styles.text}>
-                  컨설팅 전문 교수님 데이터 기반의 분석을 통해, <br />
-                  필요한 역량과 개선된 자기소개서를 받아보세요.
+                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
+                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
                 </span>
               </div>
               <img src="/landing/main.png" alt="" className={styles.mainImage} />
@@ -50,10 +50,10 @@ function Landing() {
                 <span className={styles.color}>합격 역량</span>을 파악해요
               </span>
               <div className={styles.description}>
-                <span className={styles.subTitle}>1분 안에 무료 AI 분석</span>
+                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
                 <span className={styles.text}>
-                  컨설팅 전문 교수님 데이터 기반의 분석을 통해, <br />
-                  필요한 역량과 개선된 자기소개서를 받아보세요.
+                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
+                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
                 </span>
               </div>
               <div className={styles.imageButtonGroup}>
@@ -76,9 +76,9 @@ function Landing() {
           className={styles.evaluation}
         >
           <div className={styles.titleSection}>
-            <span className={styles.title}>3D 모델을 통한 3가지 역량 평가</span>
+            <span className={styles.title}>3D 역량평가 모델로 보는 세 가지 핵심 지표</span>
             <span className={styles.description}>
-              지원자의 역량이 X, Y, Z 축의 3가지 평가 기준에 부합하는지 확인하고, 3D 그래프를 통해 제시
+              당신의 학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z)을 정량 분석하여, 인터랙티브 3D 그래프로 시각화
             </span>
           </div>
           <div className={styles.content}>
@@ -130,10 +130,9 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.resumeFeedback}
         >
-          {" "}
           <div className={styles.titleSection}>
-            <span className={styles.title}>자기소개서 수정 및 평가</span>
-            <span className={styles.description}>개선제안을 반영한 자기소개서 및 3d 기반 합격률 재평가</span>
+            <span className={styles.title}>자기소개서 평가 및 수정</span>
+            <span className={styles.description}>개선전략을 반영한 자기소개서 수정 및 수정 후 합격가능성 재평가</span>
           </div>
           <div className={styles.cardSection}>
             <div className={styles.beforeCard}>
@@ -171,8 +170,8 @@ function Landing() {
         <div className={styles.wrapper}>
           <div className={styles.sampleReport}>
             <span className={styles.title}>
-              지금 당장 작성해둔 <br />
-              자기소개서를 첨삭받고 싶다면?
+              지금 바로 (Here & Now) <br />
+              당신의 자기소개서를 평가받고 수정하고 싶다면?
             </span>
             <div
               className={styles.sampleReportButton}
@@ -181,7 +180,7 @@ function Landing() {
                 window.scrollTo({ top: 0, behavior: "auto" });
               }}
             >
-              자기소개서 첨삭 받기
+              자기소개서 평가 및 첨삭 받기
             </div>
           </div>
         </div>

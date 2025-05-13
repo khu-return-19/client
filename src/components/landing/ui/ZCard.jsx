@@ -6,11 +6,10 @@ function ZCard() {
     <div className={styles.zCard}>
       <div className={styles.titleSection}>
         <span className={styles.axis}>Z축</span>
-        <span className={styles.title}>수행 역량</span>
+        <span className={styles.title}>수행역량 수준 (Performance Competency Level)</span>
       </div>
       <span className={styles.content}>
-        프로젝트 경험, 문제 해결 사례, 팀 내 협업 등 <br />
-        실제 직무 배치 시 적절한 수행 역량을 지니고 있는지 평가
+        <strong>KPI · OKR 달성능력</strong>의 문제해결력 · 실행력 평가
       </span>
     </div>
   );

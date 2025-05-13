@@ -169,14 +169,16 @@ function AnalysisDetail() {
           </div>
           {analysis?.status === null ? (
             <div className={styles.contentWrapper}>
-              <RadarChart
-                x={scoreX}
-                y={scoreY}
-                z={scoreZ}
-                benchmarkX={benchmarkX}
-                benchmarkY={benchmarkY}
-                benchmarkZ={benchmarkZ}
-              />
+              {benchmarkX !== 0 && (
+                <RadarChart
+                  x={scoreX}
+                  y={scoreY}
+                  z={scoreZ}
+                  benchmarkX={benchmarkX}
+                  benchmarkY={benchmarkY}
+                  benchmarkZ={benchmarkZ}
+                />
+              )}
               {streamingContent ? (
                 <ReactMarkdown
                   className={styles.streaming}

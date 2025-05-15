@@ -283,45 +283,47 @@ function Analyze() {
           </div>
 
           <div className={styles.introduction}>
-            <div className={styles.companyAndJob}>
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>지원회사명</span>
+            <div>
+              <div className={styles.companyAndJob}>
+                <div className={styles.inputGroup}>
+                  <span className={styles.inputLabel}>지원 회사명</span>
+                  <input
+                    maxLength={100}
+                    {...register("company", {
+                      onChange: (e) => {
+                        setCompanyLength(e.target.value.length);
+                      },
+                    })}
+                    placeholder="예시) 삼성전자"
+                  />
+                  <div className={styles.charCount}>{companyLength}/100</div>
+                </div>
+                <div className={styles.inputGroup}>
+                  <span className={styles.inputLabel}>지원 직무</span>
+                  <input
+                    maxLength={100}
+                    {...register("position", {
+                      onChange: (e) => {
+                        setPositionLength(e.target.value.length);
+                      },
+                    })}
+                    placeholder="예시) 네트워크 사업부 sw 개발"
+                  />
+                  <div className={styles.charCount}>{positionLength}/100</div>
+                </div>
+              </div>
+              <div className={styles.urlInputGroup}>
+                <span className={styles.inputLabel}>지원 공고 사이트 url</span>
                 <input
                   maxLength={100}
-                  {...register("company", {
+                  {...register("url", {
                     onChange: (e) => {
-                      setCompanyLength(e.target.value.length);
+                      setUrlLength(e.target.value.length);
                     },
                   })}
-                  placeholder="예시) 삼성전자"
                 />
-                <div className={styles.charCount}>{companyLength}/100</div>
+                <div className={styles.charCount}>{urlLength}/100</div>
               </div>
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>지원 직무</span>
-                <input
-                  maxLength={100}
-                  {...register("position", {
-                    onChange: (e) => {
-                      setPositionLength(e.target.value.length);
-                    },
-                  })}
-                  placeholder="예시) 네트워크 사업부 sw 개발"
-                />
-                <div className={styles.charCount}>{positionLength}/100</div>
-              </div>
-            </div>
-            <div className={styles.urlInputGroup}>
-              <span className={styles.inputLabel}>지원 공고 사이트 url</span>
-              <input
-                maxLength={100}
-                {...register("url", {
-                  onChange: (e) => {
-                    setUrlLength(e.target.value.length);
-                  },
-                })}
-              />
-              <div className={styles.charCount}>{urlLength}/100</div>
             </div>
             <div className={styles.inputGroup}>
               <span className={styles.introductionTitle}>자기소개서</span>

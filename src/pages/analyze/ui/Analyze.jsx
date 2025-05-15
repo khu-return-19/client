@@ -12,6 +12,17 @@ function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(null);
 
+  const [universityNameLength, setUniversityNameLength] = useState(0);
+  const [majorLength, setMajorLength] = useState(0);
+  const [gpaLength, setGpaLength] = useState(0);
+  const [careerLength, setCareerLength] = useState(0);
+  const [languageScoreLength, setLanguageScoreLength] = useState(0);
+  const [certificateLength, setCertificateLength] = useState(0);
+  const [companyLength, setCompanyLength] = useState(0);
+  const [positionLength, setPositionLength] = useState(0);
+  const [urlLength, setUrlLength] = useState(0);
+  const [inputLength, setInputLength] = useState(0);
+
   const {
     register,
     handleSubmit,
@@ -28,6 +39,41 @@ function Analyze() {
     if (resumeData) {
       Object.entries(resumeData).forEach(([key, value]) => {
         setValue(key, value ?? "");
+
+        switch (key) {
+          case "career":
+            setCareerLength(value.length);
+            break;
+          case "languageScore":
+            setLanguageScoreLength(value.length);
+            break;
+          case "certificate":
+            setCertificateLength(value.length);
+            break;
+          case "company":
+            setCompanyLength(value.length);
+            break;
+          case "position":
+            setPositionLength(value.length);
+            break;
+          case "url":
+            setUrlLength(value.length);
+            break;
+          case "input":
+            setInputLength(value.length);
+            break;
+          case "universityName":
+            setUniversityNameLength(value.length);
+            break;
+          case "major":
+            setMajorLength(value.length);
+            break;
+          case "gpa":
+            setGpaLength(value?.toString().length ?? 0);
+            break;
+          default:
+            break;
+        }
       });
 
       setTimeout(() => {
@@ -136,7 +182,15 @@ function Analyze() {
               <div className={styles.school}>
                 <div className={styles.inputGroup}>
                   <span className={styles.inputLabel}>학교 이름</span>
-                  <input {...register("universityName")} />
+                  <input
+                    maxLength={100}
+                    {...register("universityName", {
+                      onChange: (e) => {
+                        setUniversityNameLength(e.target.value.length);
+                      },
+                    })}
+                  />
+                  <div className={styles.charCount}>{universityNameLength}/100</div>
                 </div>
                 <div className={styles.inputGroup}>
                   <span className={styles.inputLabel}>
@@ -144,29 +198,46 @@ function Analyze() {
                   </span>
                   <div>
                     <input
+                      maxLength={100}
                       {...register("gpa", {
                         pattern: {
                           value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
                           message: "숫자만 입력해야 합니다.",
                         },
+                        onChange: (e) => {
+                          setGpaLength(e.target.value.length);
+                        },
                       })}
                       className={`${errors.gpa ? styles.errorInput : ""}`}
                     />
+                  </div>
+                  <div className={styles.charCountContainer}>
                     {errors.gpa && <span className={styles.errorText}>{errors.gpa.message}</span>}
+                    <span className={styles.charCount}>{gpaLength}/100</span>
                   </div>
                 </div>
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>전공</span>
-                <input {...register("major")} />
+                <input
+                  maxLength={100}
+                  {...register("major", {
+                    onChange: (e) => {
+                      setMajorLength(e.target.value.length);
+                    },
+                  })}
+                />
+                <div className={styles.charCount}>{majorLength}/100</div>
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>경력 및 수상 실적</span>
                 <textarea
+                  maxLength={100}
                   {...register("career", {
                     onChange: (e) => {
+                      setCareerLength(e.target.value.length);
                       const textarea = e.target;
                       textarea.style.height = "3.5rem";
                       textarea.style.height = textarea.scrollHeight + "px";
@@ -174,13 +245,16 @@ function Analyze() {
                   })}
                   placeholder="예시) 2023.01 ~ 2023.02: 삼성전자 인턴십, 2022.03 ~ 2022.12: LG디스플레이 연구개발팀"
                 />
+                <div className={styles.charCount}>{careerLength}/100</div>
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>어학 성적</span>
                 <textarea
+                  maxLength={100}
                   {...register("languageScore", {
                     onChange: (e) => {
+                      setLanguageScoreLength(e.target.value.length);
                       const textarea = e.target;
                       textarea.style.height = "3.5rem";
                       textarea.style.height = textarea.scrollHeight + "px";
@@ -188,13 +262,16 @@ function Analyze() {
                   })}
                   placeholder="예시) 토익 900점, 오픽 IH"
                 />
+                <div className={styles.charCount}>{languageScoreLength}/100</div>
               </div>
 
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>자격증</span>
                 <textarea
+                  maxLength={100}
                   {...register("certificate", {
                     onChange: (e) => {
+                      setCertificateLength(e.target.value.length);
                       const textarea = e.target;
                       textarea.style.height = "3.5rem";
                       textarea.style.height = textarea.scrollHeight + "px";
@@ -202,6 +279,7 @@ function Analyze() {
                   })}
                   placeholder="예시) 정보처리기사, 컴퓨터활용능력 1급"
                 />
+                <div className={styles.charCount}>{certificateLength}/100</div>
               </div>
             </div>
           </div>
@@ -210,25 +288,59 @@ function Analyze() {
             <div className={styles.companyAndJob}>
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>지원회사명</span>
-                <input {...register("company")} placeholder="예시) 삼성전자" />
+                <input
+                  maxLength={100}
+                  {...register("company", {
+                    onChange: (e) => {
+                      setCompanyLength(e.target.value.length);
+                    },
+                  })}
+                  placeholder="예시) 삼성전자"
+                />
+                <div className={styles.charCount}>{companyLength}/100</div>
               </div>
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>지원 직무</span>
-                <input {...register("position")} placeholder="예시) 네트워크 사업부 sw 개발" />
+                <input
+                  maxLength={100}
+                  {...register("position", {
+                    onChange: (e) => {
+                      setPositionLength(e.target.value.length);
+                    },
+                  })}
+                  placeholder="예시) 네트워크 사업부 sw 개발"
+                />
+                <div className={styles.charCount}>{positionLength}/100</div>
               </div>
             </div>
             <div className={styles.urlInputGroup}>
               <span className={styles.inputLabel}>지원 공고 사이트 url</span>
-              <input {...register("url")} />
+              <input
+                maxLength={100}
+                {...register("url", {
+                  onChange: (e) => {
+                    setUrlLength(e.target.value.length);
+                  },
+                })}
+              />
+              <div className={styles.charCount}>{urlLength}/100</div>
             </div>
             <div className={styles.inputGroup}>
               <span className={styles.introductionTitle}>자기소개서</span>
-              <textarea
-                className={styles.introductionContent}
-                {...register("input")}
-                placeholder={`자기소개서의 질문 문항과 대답 문항을 같이 작성해주세요.
+              <div className={styles.introductionContentWrapper}>
+                <textarea
+                  className={styles.introductionContent}
+                  maxLength={10000}
+                  {...register("input", {
+                    onChange: (e) => {
+                      setInputLength(e.target.value.length);
+                    },
+                  })}
+                  placeholder={`자기소개서의 질문 문항과 대답 문항을 같이 작성해주세요.
                 \n\n예시)\n1. 삼성전자를 지원한 이유와 입사 후 회사에서 이루고 싶은 꿈을 기술하십시오. 700자 (영문작성 시 1400자) 이내\n\n삼성전자의 네트워크 사업부에서 차세대 네트워크 기술 개발에 기여하며, 글로벌 시장에서 경쟁력 있는 소프트웨어 솔루션을 제공하고 싶습니다...`}
-              />
+                />
+                <div className={styles.charCount}>{inputLength}/10000</div>
+              </div>
             </div>
           </div>
 

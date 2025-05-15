@@ -5,6 +5,13 @@ import { useFetchResume, useUpdateResume } from "api/resumeApi";
 import { ResumeSkeleton } from "layouts/resume";
 
 function Resume() {
+  const [universityNameLength, setUniversityNameLength] = useState(0);
+  const [majorLength, setMajorLength] = useState(0);
+  const [gpaLength, setGpaLength] = useState(0);
+  const [careerLength, setCareerLength] = useState(0);
+  const [languageScoreLength, setLanguageScoreLength] = useState(0);
+  const [certificateLength, setCertificateLength] = useState(0);
+
   const [isEditing, setIsEditing] = useState(false);
   const {
     register,
@@ -19,6 +26,29 @@ function Resume() {
     if (resumeData) {
       Object.entries(resumeData).forEach(([key, value]) => {
         setValue(key, value ?? "");
+
+        switch (key) {
+          case "career":
+            setCareerLength(value.length);
+            break;
+          case "languageScore":
+            setLanguageScoreLength(value.length);
+            break;
+          case "certificate":
+            setCertificateLength(value.length);
+            break;
+          case "universityName":
+            setUniversityNameLength(value.length);
+            break;
+          case "major":
+            setMajorLength(value.length);
+            break;
+          case "gpa":
+            setGpaLength(value?.toString().length ?? 0);
+            break;
+          default:
+            break;
+        }
       });
 
       setTimeout(() => {
@@ -78,29 +108,40 @@ function Resume() {
             <div className={styles.inputGroup}>
               <span className={styles.inputLabel}>학교 이름</span>
               <input
-                {...register("universityName")}
+                maxLength={100}
+                {...register("universityName", {
+                  onChange: (e) => {
+                    setUniversityNameLength(e.target.value.length);
+                  },
+                })}
                 disabled={!isEditing}
                 className={isEditing ? styles.activeInput : styles.inactiveInput}
               />
+              <div className={styles.charCount}>{universityNameLength}/100</div>
             </div>
             <div className={styles.inputGroup}>
               <span className={styles.inputLabel}>
                 학점 <span className={styles.hint}>(4.5 기준)</span>
               </span>
-              <div>
-                <input
-                  {...register("gpa", {
-                    pattern: {
-                      value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
-                      message: "숫자만 입력해야 합니다.",
-                    },
-                  })}
-                  disabled={!isEditing}
-                  className={`${isEditing ? styles.activeInput : styles.inactiveInput} ${
-                    errors.gpa ? styles.errorInput : ""
-                  }`}
-                />
+              <input
+                maxLength={100}
+                {...register("gpa", {
+                  pattern: {
+                    value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
+                    message: "숫자만 입력해야 합니다.",
+                  },
+                  onChange: (e) => {
+                    setGpaLength(e.target.value.length);
+                  },
+                })}
+                disabled={!isEditing}
+                className={`${isEditing ? styles.activeInput : styles.inactiveInput} ${
+                  errors.gpa ? styles.errorInput : ""
+                }`}
+              />
+              <div className={styles.charCountContainer}>
                 {errors.gpa && <span className={styles.errorText}>{errors.gpa.message}</span>}
+                <span className={styles.charCount}>{gpaLength}/100</span>
               </div>
             </div>
           </div>
@@ -108,17 +149,25 @@ function Resume() {
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>전공</span>
             <input
-              {...register("major")}
+              maxLength={100}
+              {...register("major", {
+                onChange: (e) => {
+                  setMajorLength(e.target.value.length);
+                },
+              })}
               disabled={!isEditing}
               className={isEditing ? styles.activeInput : styles.inactiveInput}
             />
+            <div className={styles.charCount}>{majorLength}/100</div>
           </div>
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>경력 및 수상 실적</span>
             <textarea
+              maxLength={100}
               {...register("career", {
                 onChange: (e) => {
+                  setCareerLength(e.target.value.length);
                   const textarea = e.target;
                   textarea.style.height = "3.5rem";
                   textarea.style.height = textarea.scrollHeight + "px";
@@ -128,13 +177,16 @@ function Resume() {
               className={isEditing ? styles.activeInput : styles.inactiveInput}
               placeholder="예시) 2023.01 ~ 2023.02: 삼성전자 인턴십, 2022.03 ~ 2022.12: LG디스플레이 연구개발팀"
             />
+            <div className={styles.charCount}>{careerLength}/100</div>
           </div>
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>어학 성적</span>
             <textarea
+              maxLength={100}
               {...register("languageScore", {
                 onChange: (e) => {
+                  setLanguageScoreLength(e.target.value.length);
                   const textarea = e.target;
                   textarea.style.height = "3.5rem";
                   textarea.style.height = textarea.scrollHeight + "px";
@@ -144,13 +196,16 @@ function Resume() {
               className={isEditing ? styles.activeInput : styles.inactiveInput}
               placeholder="예시) 토익 900점, 오픽 IH"
             />
+            <div className={styles.charCount}>{languageScoreLength}/100</div>
           </div>
 
           <div className={styles.inputGroup}>
             <span className={styles.inputLabel}>자격증</span>
             <textarea
+              maxLength={100}
               {...register("certificate", {
                 onChange: (e) => {
+                  setCertificateLength(e.target.value.length);
                   const textarea = e.target;
                   textarea.style.height = "3.5rem";
                   textarea.style.height = textarea.scrollHeight + "px";
@@ -160,6 +215,7 @@ function Resume() {
               className={isEditing ? styles.activeInput : styles.inactiveInput}
               placeholder="예시) 정보처리기사, 컴퓨터활용능력 1급"
             />
+            <div className={styles.charCount}>{certificateLength}/100</div>
           </div>
 
           <div className={styles.save}>

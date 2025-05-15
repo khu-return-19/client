@@ -196,21 +196,19 @@ function Analyze() {
                   <span className={styles.inputLabel}>
                     학점 <span className={styles.hint}>(4.5 기준)</span>
                   </span>
-                  <div>
-                    <input
-                      maxLength={100}
-                      {...register("gpa", {
-                        pattern: {
-                          value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
-                          message: "숫자만 입력해야 합니다.",
-                        },
-                        onChange: (e) => {
-                          setGpaLength(e.target.value.length);
-                        },
-                      })}
-                      className={`${errors.gpa ? styles.errorInput : ""}`}
-                    />
-                  </div>
+                  <input
+                    maxLength={100}
+                    {...register("gpa", {
+                      pattern: {
+                        value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
+                        message: "숫자만 입력해야 합니다.",
+                      },
+                      onChange: (e) => {
+                        setGpaLength(e.target.value.length);
+                      },
+                    })}
+                    className={`${errors.gpa ? styles.errorInput : ""}`}
+                  />
                   <div className={styles.charCountContainer}>
                     {errors.gpa && <span className={styles.errorText}>{errors.gpa.message}</span>}
                     <span className={styles.charCount}>{gpaLength}/100</span>

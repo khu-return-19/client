@@ -177,12 +177,20 @@
           color: #969696;
         }
       }
+
+      .charCountContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
       .errorText {
         color: #e75959;
         font-size: 14px;
         display: block;
         animation: invalid-feedback-shake 0.35s linear;
-        margin-top: 0.25rem;
+        width: 100%;
+        flex: 2;
       }
 
       .errorInput {
@@ -208,23 +216,30 @@
         font-weight: bold;
       }
 
-      .introductionContent {
+      .introductionContentWrapper {
         width: 100%;
-        height: 24rem !important;
-        color: #131313;
-        background-color: #f4f2ed;
-        padding: 0.75rem;
-        resize: none;
-        border-radius: 0.5rem;
-        border: none;
-        font-size: 1rem;
-        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
 
-        &:focus {
-          outline: 1px solid #4d4d4d;
-        }
-        &::placeholder {
-          color: #969696;
+        .introductionContent {
+          width: 100%;
+          height: 24rem !important;
+          color: #131313;
+          background-color: #f4f2ed;
+          padding: 0.75rem;
+          resize: none;
+          border-radius: 0.5rem;
+          border: none;
+          font-size: 1rem;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: 1px solid #4d4d4d;
+          }
+          &::placeholder {
+            color: #969696;
+          }
         }
       }
     }
@@ -321,6 +336,14 @@
       cursor: pointer;
       font-weight: bold;
     }
+  }
+
+  .charCount {
+    color: #969696;
+    font-size: 12px;
+    text-align: right;
+    width: 100%;
+    flex: 1;
   }
 }
 

@@ -58,7 +58,7 @@ const Header = React.memo(() => {
                 </Link>
               </div>
               <div className={styles.authSection}>
-                <span className={styles.userName}>{userInfo.name}님</span>
+                <span className={styles.userName}>{userInfo?.name}님</span>
                 <div
                   className={styles.logout}
                   onClick={() => {
@@ -186,7 +186,7 @@ const Header = React.memo(() => {
           )}
           {isLoggedIn && (
             <div className={`${styles.mobileMenuItem} ${styles.logout}`} onClick={() => logout()}>
-              <span className={styles.userName}>{userInfo.name}님</span>
+              <span className={styles.userName}>{userInfo?.name}님</span>
               <span>로그아웃</span>
             </div>
           )}

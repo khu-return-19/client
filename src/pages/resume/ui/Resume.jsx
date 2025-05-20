@@ -29,19 +29,19 @@ function Resume() {
 
         switch (key) {
           case "career":
-            setCareerLength(value.length);
+            setCareerLength(value?.length ?? 0);
             break;
           case "languageScore":
-            setLanguageScoreLength(value.length);
+            setLanguageScoreLength(value?.length ?? 0);
             break;
           case "certificate":
-            setCertificateLength(value.length);
+            setCertificateLength(value?.length ?? 0);
             break;
           case "universityName":
-            setUniversityNameLength(value.length);
+            setUniversityNameLength(value?.length ?? 0);
             break;
           case "major":
-            setMajorLength(value.length);
+            setMajorLength(value?.length ?? 0);
             break;
           case "gpa":
             setGpaLength(value?.toString().length ?? 0);

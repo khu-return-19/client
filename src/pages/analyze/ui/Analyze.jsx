@@ -42,31 +42,31 @@ function Analyze() {
 
         switch (key) {
           case "career":
-            setCareerLength(value.length);
+            setCareerLength(value?.length ?? 0);
             break;
           case "languageScore":
-            setLanguageScoreLength(value.length);
+            setLanguageScoreLength(value?.length ?? 0);
             break;
           case "certificate":
-            setCertificateLength(value.length);
+            setCertificateLength(value?.length ?? 0);
             break;
           case "company":
-            setCompanyLength(value.length);
+            setCompanyLength(value?.length ?? 0);
             break;
           case "position":
-            setPositionLength(value.length);
+            setPositionLength(value?.length ?? 0);
             break;
           case "url":
-            setUrlLength(value.length);
+            setUrlLength(value?.length ?? 0);
             break;
           case "input":
-            setInputLength(value.length);
+            setInputLength(value?.length ?? 0);
             break;
           case "universityName":
-            setUniversityNameLength(value.length);
+            setUniversityNameLength(value?.length ?? 0);
             break;
           case "major":
-            setMajorLength(value.length);
+            setMajorLength(value?.length ?? 0);
             break;
           case "gpa":
             setGpaLength(value?.toString().length ?? 0);

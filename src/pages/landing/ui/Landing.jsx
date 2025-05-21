@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Landing.module.scss";
-import { XCard, YCard, ZCard } from "components/landing";
+import { XCard, YCard, ZCard, SampleReport } from "components/landing";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -8,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 
 function Landing() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -16,6 +17,9 @@ function Landing() {
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={styles.landing}>
@@ -38,8 +42,9 @@ function Landing() {
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              {/* <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}> */}
-              <div className={styles.analyzeButton}>예시 레포트 보러가기</div>
+              <div className={styles.analyzeButton} onClick={openModal}>
+                예시 레포트 보러가기
+              </div>
             </div>
           </div>
         ) : (
@@ -59,8 +64,9 @@ function Landing() {
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              {/* <div className={styles.analyzeButton} onClick={() => navigate("/analyze")}> */}
-              <div className={styles.analyzeButton}>예시 레포트 보러가기</div>
+              <div className={styles.analyzeButton} onClick={openModal}>
+                예시 레포트 보러가기
+              </div>
             </div>
             <div className={styles.rightSection}>
               <img src="/landing/main.png" alt="" className={styles.mainImage} />
@@ -185,6 +191,7 @@ function Landing() {
           </div>
         </div>
       </motion.div>
+      {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

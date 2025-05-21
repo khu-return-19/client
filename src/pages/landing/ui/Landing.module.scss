@@ -83,8 +83,7 @@
       box-sizing: border-box;
       font-size: 20px;
       font-weight: bold;
-      // cursor: pointer;
-      cursor: not-allowed;
+      cursor: pointer;
     }
   }
 
@@ -369,6 +368,7 @@
 
 @media (max-width: 767px) {
   .intro {
+    padding: 0px;
     .leftSection {
       padding: 0px 10px;
       box-sizing: border-box;

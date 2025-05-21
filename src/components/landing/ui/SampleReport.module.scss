@@ -1,0 +1,52 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  padding-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.scrollContainer {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalImage {
+  width: 100%;
+  height: auto;
+  max-width: 1040px;
+  user-select: none;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background-color: white;
+  color: #969696;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}

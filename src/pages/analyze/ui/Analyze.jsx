@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
-import { useFetchResume } from "api/resumeApi";
 import { useCreateAnalysis } from "api/analysisApi";
 import { useNavigate } from "react-router-dom";
-import { AnalysisConfirmModal, AnalyzeSkeleton } from "layouts/analyze";
-import { useAuth } from "auth/authContext";
+import { AnalysisConfirmModal } from "layouts/analyze";
+
 import { toast } from "react-toastify";
 
 function Analyze() {
@@ -26,65 +25,11 @@ function Analyze() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
-  const { data: resumeData, isLoading } = useFetchResume();
   const createAnalysis = useCreateAnalysis();
-  const { userInfo } = useAuth();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (resumeData) {
-      Object.entries(resumeData).forEach(([key, value]) => {
-        setValue(key, value ?? "");
-
-        switch (key) {
-          case "career":
-            setCareerLength(value?.length ?? 0);
-            break;
-          case "languageScore":
-            setLanguageScoreLength(value?.length ?? 0);
-            break;
-          case "certificate":
-            setCertificateLength(value?.length ?? 0);
-            break;
-          case "company":
-            setCompanyLength(value?.length ?? 0);
-            break;
-          case "position":
-            setPositionLength(value?.length ?? 0);
-            break;
-          case "url":
-            setUrlLength(value?.length ?? 0);
-            break;
-          case "input":
-            setInputLength(value?.length ?? 0);
-            break;
-          case "universityName":
-            setUniversityNameLength(value?.length ?? 0);
-            break;
-          case "major":
-            setMajorLength(value?.length ?? 0);
-            break;
-          case "gpa":
-            setGpaLength(value?.toString().length ?? 0);
-            break;
-          default:
-            break;
-        }
-      });
-
-      setTimeout(() => {
-        const textareas = document.querySelectorAll("textarea");
-        textareas.forEach((textarea) => {
-          textarea.style.height = "3.5rem";
-          textarea.style.height = textarea.scrollHeight + "px";
-        });
-      }, 0);
-    }
-  }, [resumeData]);
 
   const onSubmit = (data) => {
     setFormData(data);
@@ -139,8 +84,6 @@ function Analyze() {
     setIsModalOpen(false);
   };
 
-  if (isLoading) return <AnalyzeSkeleton />;
-
   return (
     <div className={styles.analyze}>
       <div className={styles.wrapper}>
@@ -151,7 +94,7 @@ function Analyze() {
               <span className={styles.subTitleText}>
                 자기소개서 분석을 통해 원하는 기업에 합격하기 위해 필요한 역량을 알아볼 수 있습니다.
               </span>
-              <span className={styles.count}>오늘 남은 이용 횟수 : {userInfo.count}/3</span>
+              <span className={styles.count}>오늘 남은 이용 횟수 : ??? /3</span>
             </div>
           </div>
           <div className={styles.notice}>

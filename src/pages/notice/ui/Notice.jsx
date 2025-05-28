@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import styles from "./Notice.module.scss";
 import GoToMainButton from "components/shared/goToMainButton";
-import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useFetchNotices } from "api/noticeApi";
@@ -23,7 +22,6 @@ function Notice() {
   const buttonRef = useRef(null);
 
   const navigate = useNavigate();
-  const { userInfo } = useAuth();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -127,11 +125,11 @@ function Notice() {
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <span className={styles.title}>공지사항</span>
-          {userInfo?.role === "admin" && (
+          {/* {userInfo?.role === "admin" && (
             <div className={styles.writeButton} onClick={handleWriteClick}>
               글 작성하기
             </div>
-          )}
+          )} */}
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.table}>
@@ -145,7 +143,7 @@ function Notice() {
                       <td>{notice.title}</td>
                       <td className={styles.modifiedAt}>
                         <div>{formatDate(notice.modifiedAt)}</div>
-                        {userInfo?.role === "admin" ? (
+                        {/* {userInfo?.role === "admin" ? (
                           <div className={styles.menuContainer}>
                             <div
                               className={styles.menuButton}
@@ -165,7 +163,7 @@ function Notice() {
                           </div>
                         ) : (
                           <div> &gt;</div>
-                        )}
+                        )} */}
                       </td>
                     </tr>
                   ))}

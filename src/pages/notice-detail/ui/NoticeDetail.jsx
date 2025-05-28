@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./NoticeDetail.module.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice } from "api/noticeApi";
-import { useAuth } from "auth/authContext";
 import { AiOutlineMore } from "react-icons/ai";
 import { DeleteNoticeModal, NoticeDetailSkeleton } from "layouts/notice-detail";
 
@@ -15,7 +14,6 @@ function NoticeDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: notice, isLoading } = useFetchNotice(id);
-  const { userInfo } = useAuth();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -85,7 +83,7 @@ function NoticeDetail() {
             <div className={styles.title}>{notice.title}</div>
             <div className={styles.dateAndMenu}>
               <div className={styles.date}>{formatDate(notice.modifiedAt)}</div>
-              {userInfo?.role === "admin" && (
+              {/* {userInfo?.role === "admin" && (
                 <div className={styles.menuContainer}>
                   <div
                     className={styles.menuButton}
@@ -103,7 +101,7 @@ function NoticeDetail() {
                     </div>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
           {/* <div className={styles.body}>{notice.content}</div> */}

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
-import { useAuth } from "auth/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import { LoginModal } from "shared/loginModal";
 import { FiExternalLink } from "react-icons/fi";
 import { HeaderSkeleton } from "layouts/header";
 import { useMediaQuery } from "react-responsive";
@@ -16,8 +14,6 @@ const Header = React.memo(() => {
 
   const navigate = useNavigate();
 
-  const { isLoggedIn, userInfo, logout, loading } = useAuth();
-
   const handleMenuClose = () => {
     setMenuOpen(false);
   };
@@ -27,10 +23,6 @@ const Header = React.memo(() => {
   };
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
-  if (loading) {
-    return <HeaderSkeleton />;
-  }
 
   return (
     <div className={styles.header}>
@@ -46,7 +38,7 @@ const Header = React.memo(() => {
         )}
 
         <div className={styles.rightSection}>
-          {isLoggedIn ? (
+          {/* {isLoggedIn ? (
             <div className={styles.rightTopSection}>
               <div className={styles.mySection}>
                 <a href="/analysis" className={styles.report}>
@@ -58,7 +50,7 @@ const Header = React.memo(() => {
                 </Link>
               </div>
               <div className={styles.authSection}>
-                <span className={styles.userName}>{userInfo?.name}님</span>
+                <span className={styles.userName}> ??? 님</span>
                 <div
                   className={styles.logout}
                   onClick={() => {
@@ -76,7 +68,7 @@ const Header = React.memo(() => {
                 로그인
               </div>
             </div>
-          )}
+          )} */}
 
           <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
             {/* 서비스 소개 */}
@@ -133,7 +125,7 @@ const Header = React.memo(() => {
           </div>
         </div>
       </div>
-      {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />}
+      {/* {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />} */}
       {isMobile && menuOpen && (
         <div className={styles.mobileMenu}>
           <div className={styles.mobileMenuItem} onClick={() => toggleDropdown("about")}>
@@ -169,27 +161,27 @@ const Header = React.memo(() => {
           <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analyze")}>
             자기소개서 분석
           </div>
-          {isLoggedIn && (
+          {/* {isLoggedIn && (
             <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analysis")}>
               내 분석 레포트
             </div>
-          )}
-          {isLoggedIn && (
+          )} */}
+          {/* {isLoggedIn && (
             <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/resume")}>
               내 이력서
             </div>
-          )}
-          {!isLoggedIn && (
+          )} */}
+          {/* {!isLoggedIn && (
             <div className={styles.mobileMenuItem} onClick={() => setLoginModalOpen(true)}>
               로그인
             </div>
-          )}
-          {isLoggedIn && (
+          )} */}
+          {/* {isLoggedIn && (
             <div className={`${styles.mobileMenuItem} ${styles.logout}`} onClick={() => logout()}>
-              <span className={styles.userName}>{userInfo?.name}님</span>
+              <span className={styles.userName}> ??? 님</span>
               <span>로그아웃</span>
             </div>
-          )}
+          )} */}
         </div>
       )}
     </div>

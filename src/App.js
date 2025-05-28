@@ -1,13 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
-import { AuthProvider } from "auth/authContext";
 import { ToastContainer } from "react-toastify";
-import PrivateRoute from "./privateRoute";
 import Header from "shared/header";
 import Landing from "pages/landing";
 import Resume from "pages/resume";
 import Analysis from "pages/analysis";
-import LoginError from "pages/Error/login";
 import Intro from "pages/intro";
 import Evaluation3D from "pages/evaluation3D";
 import Team from "pages/team";
@@ -47,16 +44,13 @@ function AppContent() {
         <Route path="/notice/write" element={<WriteNotice />} />
         <Route path="/notice/:id/edit" element={<EditNotice />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/analysis" element={<Analysis />} />
-          <Route path="/analysis/:id" element={<Analysis />} />
-          <Route path="/analyze" element={<Analyze />} />
-        </Route>
+        <Route path="/resume" element={<Resume />} />
+        <Route path="/analysis" element={<Analysis />} />
+        <Route path="/analysis/:id" element={<Analysis />} />
+        <Route path="/analyze" element={<Analyze />} />
 
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/error" element={<LoginError />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/university-email-only" element={<UniversityEmailOnly />} />
       </Routes>
@@ -68,12 +62,10 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AppContent />
-      </Router>
+    <Router>
+      <AppContent />
       <ToastContainer position="top-right" autoClose={2000} />
-    </AuthProvider>
+    </Router>
   );
 }
 

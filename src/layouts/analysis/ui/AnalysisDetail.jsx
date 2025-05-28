@@ -11,6 +11,7 @@ import { MdOutlineArrowDownward } from "react-icons/md";
 import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
 import { RadarChart } from "components/analysis";
 import AnalysisError from "./AnalysisError";
+import ShinyText from "components/shared/shiny-text";
 
 function AnalysisDetail() {
   const [inputVisible, setInputVisible] = useState(false);
@@ -189,7 +190,7 @@ function AnalysisDetail() {
                 </ReactMarkdown>
               ) : (
                 <div className={styles.description}>
-                  {currentPhaseText}
+                  <ShinyText text={currentPhaseText} speed={3} />
                   {agentWebSearch.title && (
                     <div className={styles.agentWebSearch}>
                       <img src={`http://www.google.com/s2/favicons?domain=${agentWebSearch.url}`} alt="" />

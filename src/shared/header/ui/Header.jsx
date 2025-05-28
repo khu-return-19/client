@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FiExternalLink } from "react-icons/fi";
-import { HeaderSkeleton } from "layouts/header";
 import { useMediaQuery } from "react-responsive";
 
 const Header = React.memo(() => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -32,7 +30,7 @@ const Header = React.memo(() => {
         </a>
 
         {isMobile && (
-          <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
+          <div className={styles.menuIcon} onClick={() => handleMenuClose()}>
             {menuOpen ? <FiX /> : <FiMenu />}
           </div>
         )}

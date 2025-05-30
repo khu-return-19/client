@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
-import { useCreateAnalysis } from "api/analysisApi";
 import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal } from "layouts/analyze";
 
@@ -27,7 +26,6 @@ function Analyze() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const createAnalysis = useCreateAnalysis();
 
   const navigate = useNavigate();
 
@@ -54,31 +52,35 @@ function Analyze() {
       },
     };
 
-    createAnalysis.mutate(requestBody, {
-      onSuccess: (response) => {
-        if (response) {
-          const toastId = toast.loading("분석 요청 중...");
+    // createAnalysis.mutate(requestBody, {
+    //   onSuccess: (response) => {
+    //     if (response) {
+    //       const toastId = toast.loading("분석 요청 중...");
 
-          setTimeout(() => {
-            toast.update(toastId, {
-              render: "분석 요청 완료! 잠시 후 이동합니다.",
-              type: "success",
-              isLoading: false,
-              autoClose: 1300,
-              closeOnClick: true,
-            });
+    //       setTimeout(() => {
+    //         toast.update(toastId, {
+    //           render: "분석 요청 완료! 잠시 후 이동합니다.",
+    //           type: "success",
+    //           isLoading: false,
+    //           autoClose: 1300,
+    //           closeOnClick: true,
+    //         });
 
-            setTimeout(() => {
-              navigate("/analysis", { replace: true });
-              window.location.reload();
-            }, 1500);
-          }, 1000);
-        }
-      },
-      onError: (error) => {
-        console.error("분석 실패:", error);
-        toast.error("분석 요청 중 오류가 발생했습니다.");
-      },
+    //         setTimeout(() => {
+    //           navigate("/analysis", { replace: true });
+    //           window.location.reload();
+    //         }, 1500);
+    //       }, 1000);
+    //     }
+    //   },
+    //   onError: (error) => {
+    //     console.error("분석 실패:", error);
+    //     toast.error("분석 요청 중 오류가 발생했습니다.");
+    //   },
+    // });
+
+    navigate("/analysis", {
+      state: { requestBody },
     });
 
     setIsModalOpen(false);

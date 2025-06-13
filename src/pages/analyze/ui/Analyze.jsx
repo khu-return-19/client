@@ -3,8 +3,8 @@ import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal } from "layouts/analyze";
-
 import { toast } from "react-toastify";
+import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,11 +20,50 @@ function Analyze() {
   const [positionLength, setPositionLength] = useState(0);
   const [urlLength, setUrlLength] = useState(0);
   const [inputLength, setInputLength] = useState(0);
+  const [isCodeSent, setIsCodeSent] = useState(false);
+
+  const { mutate: sendVerifyEmail, isLoading, isSuccess } = useSendVerifyEmail();
+  const { mutate: verifyEmailCode } = useVerifyEmailCode();
+
+  const handleSendCode = () => {
+    const email = getValues("email");
+
+    if (!email) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    sendVerifyEmail(email);
+    setIsCodeSent(true);
+  };
+
+  const handleVerifyCode = () => {
+    const email = getValues("email");
+    const accessCode = getValues("verificationCode");
+
+    if (!email || !accessCode) {
+      alert("이메일과 인증번호를 모두 입력해주세요.");
+      return;
+    }
+
+    verifyEmailCode(
+      { email, accessCode },
+      {
+        onSuccess: () => {
+          alert("이메일 인증이 완료되었습니다.");
+        },
+        onError: () => {
+          alert("인증번호가 올바르지 않습니다.");
+        },
+      }
+    );
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
   const navigate = useNavigate();
@@ -42,6 +81,8 @@ function Analyze() {
       position: formData.position,
       input: formData.input,
       url: formData.url,
+      email: formData.email,
+      verificationCode: formData.verificationCode,
       resume: {
         major: formData.major,
         universityName: formData.universityName,
@@ -287,6 +328,33 @@ function Analyze() {
                 <div className={styles.charCount}>{inputLength}/10000</div>
               </div>
             </div>
+          </div>
+
+          <div className={styles.emailVerification}>
+            <div className={styles.inputWithButton}>
+              <input
+                className={styles.emailInput}
+                maxLength={100}
+                {...register("email")}
+                placeholder="example.khu.ac.kr"
+              />
+              <div className={styles.sendCodeButton} onClick={handleSendCode}>
+                인증번호 받기
+              </div>
+            </div>
+            {isCodeSent && (
+              <div className={styles.inputWithButton}>
+                <input
+                  className={styles.codeInput}
+                  {...register("verificationCode")}
+                  maxLength={6}
+                  placeholder="인증번호 입력"
+                />
+                <div className={styles.verifyCodeButton} onClick={handleVerifyCode}>
+                  인증번호 확인
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.save}>

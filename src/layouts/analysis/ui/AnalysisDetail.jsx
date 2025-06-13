@@ -58,54 +58,55 @@ function AnalysisDetail() {
         const { done, value } = await reader.read();
         if (done) break;
 
-        buffer += decoder.decode(value, { stream: true });
+        buffer = decoder.decode(value, { stream: true });
 
-        try {
-          // 서버가 한 번에 하나의 JSON만 주므로, 버퍼에 전체가 들어온 시점에 파싱 시도
-          const parsed = JSON.parse(buffer);
-          console.log("Parsed event:", parsed);
+        console.log("Received chunk: buffer", buffer);
 
-          if (parsed.event === "final_report") {
-            setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
-          } else if (parsed.event === "created_report") {
-            setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
-          } else if (parsed.event === "agent_web_search") {
-            const { title, url } = parsed;
-            setAgentWebSearch({ title, url });
-          } else if (parsed.event === "phase_change") {
-            const phaseMap = {
-              scheme_phase: "정보 추출 중...",
-              plan_phase: "에이전트 준비 중...",
-              tool_use_phase: "인터넷/데이터베이스 검색 중...",
-              analysis_phase: "보고서 작성 시작...",
-              complete_phase: "분석 완료!",
-            };
-            const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
-            setCurrentPhaseText(newPhaseText);
-            setAgentWebSearch({ title: "", url: "" });
-          } else if (parsed.event === "error_detection") {
-            setError(parsed.value);
-            if (parsed.value) reader.cancel();
-          } else if (parsed.event === "validation_error") {
-            setError(true);
-            reader.cancel();
-          } else if (parsed.event === "current_stats") {
-            const { score_x_axis, score_y_axis, score_z_axis } = parsed;
-            setScoreX(score_x_axis);
-            setScoreY(score_y_axis);
-            setScoreZ(score_z_axis);
-          } else if (parsed.event === "past_stats") {
-            const { score_x_axis, score_y_axis, score_z_axis } = parsed;
-            setBenchmarkX(score_x_axis);
-            setBenchmarkY(score_y_axis);
-            setBenchmarkZ(score_z_axis);
-          }
+        const lines = buffer.split("\n");
 
-          // 다음 JSON 수신을 위해 버퍼 비움
-          buffer = "";
-        } catch (err) {
-          // 아직 JSON이 완성되지 않았거나 잘못된 경우: 다음 chunk를 기다림
-          // console.log("JSON incomplete, waiting for more data...");
+        for (const line of lines) {
+          const trimmed = line.trim();
+          const jsonStr = trimmed.slice("data:".length).trim();
+          try {
+            const parsed = JSON.parse(jsonStr);
+            console.log("Parsed event:", parsed);
+
+            if (parsed.event === "final_report") {
+              setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
+            } else if (parsed.event === "created_report") {
+              setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
+            } else if (parsed.event === "agent_web_search") {
+              const { title, url } = parsed;
+              setAgentWebSearch({ title, url });
+            } else if (parsed.event === "phase_change") {
+              const phaseMap = {
+                scheme_phase: "정보 추출 중...",
+                plan_phase: "에이전트 준비 중...",
+                tool_use_phase: "인터넷/데이터베이스 검색 중...",
+                analysis_phase: "보고서 작성 시작...",
+                complete_phase: "분석 완료!",
+              };
+              const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
+              setCurrentPhaseText(newPhaseText);
+              setAgentWebSearch({ title: "", url: "" });
+            } else if (parsed.event === "error_detection") {
+              setError(parsed.value);
+              if (parsed.value) reader.cancel();
+            } else if (parsed.event === "validation_error") {
+              setError(true);
+              reader.cancel();
+            } else if (parsed.event === "current_stats") {
+              const { score_x_axis, score_y_axis, score_z_axis } = parsed;
+              setScoreX(score_x_axis);
+              setScoreY(score_y_axis);
+              setScoreZ(score_z_axis);
+            } else if (parsed.event === "past_stats") {
+              const { score_x_axis, score_y_axis, score_z_axis } = parsed;
+              setBenchmarkX(score_x_axis);
+              setBenchmarkY(score_y_axis);
+              setBenchmarkZ(score_z_axis);
+            }
+          } catch (err) {}
         }
       }
     };
@@ -218,7 +219,7 @@ function AnalysisDetail() {
           </div>
           <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
             <div className={styles.resumeTitle}>자기소개서</div>
-            <div className={styles.input}> {JSON.parse(`"${requestBody?.input}"`)}</div>
+            {/* <div className={styles.input}> {JSON.parse(`"${requestBody?.input}"`)}</div> */}
             <div className={styles.companyAndPosition}>
               <div className={styles.companyWrapper}>
                 <div className={styles.subTitle}>지원 회사명</div>

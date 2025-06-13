@@ -304,6 +304,53 @@
     }
   }
 
+  .emailVerification {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .inputWithButton {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+
+      input {
+        width: 300px;
+        box-sizing: border-box;
+        height: 3.5rem;
+        font-size: 1rem;
+        background-color: #f6f5ef;
+        border-radius: 0.5rem;
+        border: none;
+        padding: 0rem 0.75rem;
+        color: #131313;
+
+        &:focus {
+          outline: 1px solid #4d4d4d;
+        }
+        &::placeholder {
+          color: #969696;
+        }
+      }
+
+      .sendCodeButton,
+      .verifyCodeButton {
+        width: 120px;
+        height: 3.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #990e17;
+        color: white;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+
   .save {
     display: flex;
     flex-direction: column;

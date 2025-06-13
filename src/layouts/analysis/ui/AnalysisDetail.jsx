@@ -45,11 +45,6 @@ function AnalysisDetail() {
         body: JSON.stringify(requestBody),
       });
 
-      // if (!response.ok || !response.body) {
-      //   console.error("응답 실패 또는 body 없음");
-      //   return;
-      // }
-
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
@@ -60,8 +55,6 @@ function AnalysisDetail() {
 
         buffer = decoder.decode(value, { stream: true });
 
-        console.log("Received chunk: buffer", buffer);
-
         const lines = buffer.split("\n");
 
         for (const line of lines) {
@@ -69,7 +62,6 @@ function AnalysisDetail() {
           const jsonStr = trimmed.slice("data:".length).trim();
           try {
             const parsed = JSON.parse(jsonStr);
-            console.log("Parsed event:", parsed);
 
             if (parsed.event === "final_report") {
               setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
@@ -113,65 +105,6 @@ function AnalysisDetail() {
 
     fetchStream();
   }, [requestBody]);
-
-  // useEffect(() => {
-  //   const eventSource = new EventSource(`${process.env.REACT_APP_BASE_URL}/stream/analysis`, {
-  //     withCredentials: true,
-  //   });
-
-  //   eventSource.onmessage = (event) => {
-  //     try {
-  //       const parsed = JSON.parse(event.data);
-
-  //       if (parsed.event === "final_report") {
-  //         setStreamingContent((prev) => (prev || "") + parsed.content.replace(/\u00A0/g, " "));
-  //       } else if (parsed.event === "created_report") {
-  //         setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
-  //       } else if (parsed.event === "agent_web_search") {
-  //         const { title, url } = parsed;
-  //         setAgentWebSearch({ title, url });
-  //       } else if (parsed.event === "phase_change") {
-  //         const phaseMap = {
-  //           scheme_phase: "정보 추출 중...",
-  //           plan_phase: "에이전트 준비 중...",
-  //           tool_use_phase: "인터넷/데이터베이스 검색 중...",
-  //           analysis_phase: "보고서 작성 시작...",
-  //           complete_phase: "분석 완료!",
-  //         };
-  //         const newPhaseText = phaseMap[parsed.current_phase] || "처리 중...";
-  //         setCurrentPhaseText(newPhaseText);
-  //         setAgentWebSearch({ title: "", url: "" });
-  //       } else if (parsed.event === "error_detection") {
-  //         setError(parsed.value);
-  //         if (parsed.value) eventSource.close();
-  //       } else if (parsed.event === "validation_error") {
-  //         setError(true);
-  //         eventSource.close();
-  //       } else if (parsed.event === "current_stats") {
-  //         const { score_x_axis, score_y_axis, score_z_axis } = parsed;
-  //         setScoreX(score_x_axis);
-  //         setScoreY(score_y_axis);
-  //         setScoreZ(score_z_axis);
-  //       } else if (parsed.event === "past_stats") {
-  //         const { score_x_axis, score_y_axis, score_z_axis } = parsed;
-  //         setBenchmarkX(score_x_axis);
-  //         setBenchmarkY(score_y_axis);
-  //         setBenchmarkZ(score_z_axis);
-  //       }
-  //     } catch (err) {
-  //       console.error("Failed to parse SSE message:", err);
-  //     }
-  //   };
-
-  //   eventSource.onerror = (error) => {
-  //     console.error("SSE Error:", error);
-  //     eventSource.close();
-  //   };
-
-  //   return () => {
-  //     eventSource.close(); // 컴포넌트 언마운트 시 해제
-  //   };
-  // });
 
   useEffect(() => {
     const element = rightSectionRef.current;
@@ -219,7 +152,7 @@ function AnalysisDetail() {
           </div>
           <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
             <div className={styles.resumeTitle}>자기소개서</div>
-            {/* <div className={styles.input}> {JSON.parse(`"${requestBody?.input}"`)}</div> */}
+            <div className={styles.input}> {requestBody?.input}</div>
             <div className={styles.companyAndPosition}>
               <div className={styles.companyWrapper}>
                 <div className={styles.subTitle}>지원 회사명</div>

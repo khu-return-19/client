@@ -40,7 +40,7 @@ function AnalysisDetail() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/stream+json",
+          Accept: "text/event-stream",
         },
         body: JSON.stringify(requestBody),
       });

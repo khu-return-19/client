@@ -39,7 +39,7 @@ function Analyze() {
 
   const handleVerifyCode = () => {
     const email = getValues("email");
-    const accessCode = getValues("verificationCode");
+    const accessCode = getValues("accessCode");
 
     if (!email || !accessCode) {
       alert("이메일과 인증번호를 모두 입력해주세요.");
@@ -82,7 +82,7 @@ function Analyze() {
       input: formData.input,
       url: formData.url,
       email: formData.email,
-      verificationCode: formData.verificationCode,
+      accessCode: parseInt(formData.accessCode, 10),
       resume: {
         major: formData.major,
         universityName: formData.universityName,
@@ -346,7 +346,7 @@ function Analyze() {
               <div className={styles.inputWithButton}>
                 <input
                   className={styles.codeInput}
-                  {...register("verificationCode")}
+                  {...register("accessCode")}
                   maxLength={6}
                   placeholder="인증번호 입력"
                 />

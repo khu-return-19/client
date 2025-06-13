@@ -36,7 +36,7 @@ function AnalysisDetail() {
     if (!requestBody) return;
 
     const fetchStream = async () => {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/analyze`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/analysis`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

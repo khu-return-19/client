@@ -21,6 +21,8 @@ function Analyze() {
   const [urlLength, setUrlLength] = useState(0);
   const [inputLength, setInputLength] = useState(0);
   const [isCodeSent, setIsCodeSent] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [count, setCount] = useState(0);
 
   const { mutate: sendVerifyEmail, isLoading, isSuccess } = useSendVerifyEmail();
   const { mutate: verifyEmailCode } = useVerifyEmailCode();
@@ -29,12 +31,24 @@ function Analyze() {
     const email = getValues("email");
 
     if (!email) {
-      alert("이메일을 입력해주세요.");
+      toast.info("이메일을 입력해주세요.");
       return;
     }
 
-    sendVerifyEmail(email);
-    setIsCodeSent(true);
+    sendVerifyEmail(email, {
+      onSuccess: (data) => {
+        if (data.success) {
+          toast.success("인증번호가 이메일로 전송되었습니다.");
+          setIsCodeSent(true);
+        } else {
+          toast.error("이메일 전송에 실패했습니다. 경희대학교 구성원이 아닙니다.");
+          return;
+        }
+      },
+      onError: () => {
+        toast.error("이메일 전송에 실패했습니다. 다시 시도해주세요.");
+      },
+    });
   };
 
   const handleVerifyCode = () => {
@@ -42,18 +56,25 @@ function Analyze() {
     const accessCode = getValues("accessCode");
 
     if (!email || !accessCode) {
-      alert("이메일과 인증번호를 모두 입력해주세요.");
+      toast.info("이메일과 인증번호를 모두 입력해주세요.");
       return;
     }
 
     verifyEmailCode(
       { email, accessCode },
       {
-        onSuccess: () => {
-          alert("이메일 인증이 완료되었습니다.");
+        onSuccess: (data) => {
+          if (data.valid) {
+            toast.success("이메일 인증이 완료되었습니다.");
+            setIsVerified(true);
+            setCount(data.count);
+            console.log("남은 이용 횟수:", data.count);
+          } else {
+            toast.error("인증번호가 올바르지 않습니다.");
+          }
         },
-        onError: () => {
-          alert("인증번호가 올바르지 않습니다.");
+        onError: (error) => {
+          toast.error("인증에 실패했습니다.");
         },
       }
     );
@@ -137,7 +158,6 @@ function Analyze() {
               <span className={styles.subTitleText}>
                 자기소개서 분석을 통해 원하는 기업에 합격하기 위해 필요한 역량을 알아볼 수 있습니다.
               </span>
-              <span className={styles.count}>오늘 남은 이용 횟수 : ??? /3</span>
             </div>
           </div>
           <div className={styles.notice}>
@@ -157,7 +177,7 @@ function Analyze() {
               </span>
               <br />
               <span>4. AI는 실수할 수 있습니다.</span> <br />
-              <span>5. 기타 발생한 버그는 abcdfg@khu.ac.kr로 제보 부탁드립니다.</span> <br />
+              <span>5. 기타 발생한 버그는 bqudmals@khu.ac.kr로 제보 부탁드립니다.</span> <br />
             </div>
           </div>
         </div>
@@ -336,7 +356,7 @@ function Analyze() {
                 className={styles.emailInput}
                 maxLength={100}
                 {...register("email")}
-                placeholder="example.khu.ac.kr"
+                placeholder="example@khu.ac.kr"
               />
               <div className={styles.sendCodeButton} onClick={handleSendCode}>
                 인증번호 받기
@@ -359,13 +379,18 @@ function Analyze() {
 
           <div className={styles.save}>
             <span className={styles.text}>위 자기소개서를 기반으로 분석을 진행합니다.</span>
-            <button type="submit" className={styles.saveButton}>
+            <button type="submit" className={styles.saveButton} disabled={!isVerified}>
               AI 분석 시작하기
             </button>
           </div>
         </form>
       </div>
-      <AnalysisConfirmModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onConfirm={handleConfirm} />
+      <AnalysisConfirmModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+        count={count}
+      />
     </div>
   );
 }

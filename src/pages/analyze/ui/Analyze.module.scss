@@ -383,6 +383,11 @@
       cursor: pointer;
       font-weight: bold;
     }
+
+    .saveButton:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
   }
 
   .charCount {

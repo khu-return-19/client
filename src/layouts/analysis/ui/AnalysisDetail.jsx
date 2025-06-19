@@ -33,7 +33,7 @@ function AnalysisDetail() {
   const requestBody = location.state?.requestBody;
 
   useEffect(() => {
-    if (!requestBody) return;
+    if (!requestBody) return setError(true);
 
     const fetchStream = async () => {
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/analysis`, {
@@ -44,6 +44,11 @@ function AnalysisDetail() {
         },
         body: JSON.stringify(requestBody),
       });
+
+      console.log(response);
+      if (!response.ok || !response.body) {
+        return setError(true);
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -136,6 +141,10 @@ function AnalysisDetail() {
   const toggleInputVisibility = () => {
     setInputVisible((prev) => !prev);
   };
+
+  if (error) {
+    return <AnalysisError />;
+  }
 
   return (
     <div className={styles.analysisDetail} ref={rightSectionRef}>

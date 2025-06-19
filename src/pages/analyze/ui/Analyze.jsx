@@ -196,6 +196,7 @@ function Analyze() {
                 <div className={styles.inputGroup}>
                   <span className={styles.inputLabel}>학교 이름</span>
                   <input
+                    placeholder="예시) 경희대학교"
                     maxLength={100}
                     {...register("universityName", {
                       onChange: (e) => {
@@ -210,6 +211,7 @@ function Analyze() {
                     학점 <span className={styles.hint}>(4.5 기준)</span>
                   </span>
                   <input
+                    placeholder="예시) 4.1"
                     maxLength={100}
                     {...register("gpa", {
                       pattern: {
@@ -232,6 +234,7 @@ function Analyze() {
               <div className={styles.inputGroup}>
                 <span className={styles.inputLabel}>전공</span>
                 <input
+                  placeholder="예시) 컴퓨터공학과"
                   maxLength={100}
                   {...register("major", {
                     onChange: (e) => {
@@ -303,26 +306,34 @@ function Analyze() {
                   <input
                     maxLength={100}
                     {...register("company", {
+                      required: "지원 회사명을 입력해주세요.",
                       onChange: (e) => {
                         setCompanyLength(e.target.value.length);
                       },
                     })}
                     placeholder="예시) 삼성전자"
                   />
-                  <div className={styles.charCount}>{companyLength}/100</div>
+                  <div className={styles.infoRow}>
+                    {errors.company && <div className={styles.errorText}>{errors.company.message}</div>}
+                    <div className={styles.charCount}>{companyLength}/100</div>
+                  </div>
                 </div>
                 <div className={styles.inputGroup}>
                   <span className={styles.inputLabel}>지원 직무</span>
                   <input
                     maxLength={100}
                     {...register("position", {
+                      required: "지원 직무를 입력해주세요.",
                       onChange: (e) => {
                         setPositionLength(e.target.value.length);
                       },
                     })}
                     placeholder="예시) 네트워크 사업부 sw 개발"
                   />
-                  <div className={styles.charCount}>{positionLength}/100</div>
+                  <div className={styles.infoRow}>
+                    {errors.position && <div className={styles.errorText}>{errors.position.message}</div>}
+                    <div className={styles.charCount}>{positionLength}/100</div>
+                  </div>
                 </div>
               </div>
               <div className={styles.urlInputGroup}>
@@ -345,6 +356,7 @@ function Analyze() {
                   className={styles.introductionContent}
                   maxLength={10000}
                   {...register("input", {
+                    required: "자기소개서를 입력해주세요.",
                     onChange: (e) => {
                       setInputLength(e.target.value.length);
                     },
@@ -352,7 +364,10 @@ function Analyze() {
                   placeholder={`자기소개서의 질문 문항과 대답 문항을 같이 작성해주세요.
                 \n\n예시)\n1. 삼성전자를 지원한 이유와 입사 후 회사에서 이루고 싶은 꿈을 기술하십시오. 700자 (영문작성 시 1400자) 이내\n\n삼성전자의 네트워크 사업부에서 차세대 네트워크 기술 개발에 기여하며, 글로벌 시장에서 경쟁력 있는 소프트웨어 솔루션을 제공하고 싶습니다...`}
                 />
-                <div className={styles.charCount}>{inputLength}/10000</div>
+                <div className={styles.infoRow}>
+                  {errors.input && <div className={styles.errorText}>{errors.input.message}</div>}
+                  <div className={styles.charCount}>{inputLength}/10000</div>
+                </div>
               </div>
             </div>
           </div>

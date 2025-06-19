@@ -370,7 +370,12 @@
     gap: 1.25rem;
     align-items: center;
     width: 37.5rem;
-    margin-top: 2.5rem;
+
+    .timerText {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #990e17;
+    }
 
     @media (max-width: 768px) {
       width: 25rem;

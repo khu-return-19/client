@@ -282,6 +282,7 @@
       flex-direction: column;
       gap: 0.75rem;
       align-items: baseline;
+      margin-top: 12px;
 
       input {
         width: 100%;
@@ -414,6 +415,26 @@
     text-align: right;
     width: 100%;
     flex: 1;
+  }
+
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    width: 100%;
+  }
+
+  .charCount {
+    font-size: 0.75rem;
+    color: #888;
+  }
+
+  .errorText {
+    font-size: 0.75rem;
+    color: #e74c3c;
+    white-space: nowrap;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,14 @@ function Analyze() {
   const [count, setCount] = useState(0);
   const [emailSuccess, setEmailSuccess] = useState(false);
   const [codeSuccess, setCodeSuccess] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(null);
+  const timerRef = useRef(null);
+
+  const formatTime = (seconds) => {
+    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  };
 
   const { mutate: sendVerifyEmail, isPending: emailPending } = useSendVerifyEmail();
 
@@ -32,6 +40,12 @@ function Analyze() {
 
   const isDisabledEmail = emailPending || emailSuccess;
   const isDisabledCode = codePending || codeSuccess;
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   const handleSendCode = () => {
     const email = getValues("email");
@@ -47,9 +61,22 @@ function Analyze() {
           toast.success("인증번호가 이메일로 전송되었습니다.");
           setIsCodeSent(true);
           setEmailSuccess(true);
+
+          // ⏱ 10분 타이머 시작
+          setRemainingTime(600);
+          if (timerRef.current) clearInterval(timerRef.current);
+
+          timerRef.current = setInterval(() => {
+            setRemainingTime((prev) => {
+              if (!prev || prev <= 1) {
+                clearInterval(timerRef.current);
+                return 0;
+              }
+              return prev - 1;
+            });
+          }, 1000);
         } else {
           toast.error("이메일 전송에 실패했습니다. 경희대학교 구성원이 아닙니다.");
-          return;
         }
       },
       onError: () => {
@@ -369,6 +396,9 @@ function Analyze() {
           </div>
 
           <div className={styles.save}>
+            {remainingTime !== null && remainingTime > 0 && (
+              <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>
+            )}
             <span className={styles.text}>위 자기소개서를 기반으로 분석을 진행합니다.</span>
             <button type="submit" className={styles.saveButton} disabled={!isVerified}>
               AI 분석 시작하기

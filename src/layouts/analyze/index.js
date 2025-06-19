@@ -1,4 +1,6 @@
 import AnalysisConfirmModal from "./ui/AnalysisConfirmModal";
 import AnalyzeSkeleton from "./ui/AnalyzeSkeleton";
+import EmailSendModal from "./ui/EmailSendModal";
+import VerifyCodeModal from "./ui/VerifyCodeModal";
 
-export { AnalysisConfirmModal, AnalyzeSkeleton };
+export { AnalysisConfirmModal, AnalyzeSkeleton, EmailSendModal, VerifyCodeModal };

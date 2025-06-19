@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AnalysisConfirmModal } from "layouts/analyze";
+import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal } from "layouts/analyze";
 import { toast } from "react-toastify";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 
@@ -23,9 +23,15 @@ function Analyze() {
   const [isCodeSent, setIsCodeSent] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [count, setCount] = useState(0);
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [codeSuccess, setCodeSuccess] = useState(false);
 
-  const { mutate: sendVerifyEmail, isLoading, isSuccess } = useSendVerifyEmail();
-  const { mutate: verifyEmailCode } = useVerifyEmailCode();
+  const { mutate: sendVerifyEmail, isPending: emailPending } = useSendVerifyEmail();
+
+  const { mutate: verifyEmailCode, isPending: codePending } = useVerifyEmailCode();
+
+  const isDisabledEmail = emailPending || emailSuccess;
+  const isDisabledCode = codePending || codeSuccess;
 
   const handleSendCode = () => {
     const email = getValues("email");
@@ -40,6 +46,7 @@ function Analyze() {
         if (data.success) {
           toast.success("인증번호가 이메일로 전송되었습니다.");
           setIsCodeSent(true);
+          setEmailSuccess(true);
         } else {
           toast.error("이메일 전송에 실패했습니다. 경희대학교 구성원이 아닙니다.");
           return;
@@ -68,7 +75,7 @@ function Analyze() {
             toast.success("이메일 인증이 완료되었습니다.");
             setIsVerified(true);
             setCount(data.count);
-            console.log("남은 이용 횟수:", data.count);
+            setCodeSuccess(true);
           } else {
             toast.error("인증번호가 올바르지 않습니다.");
           }
@@ -113,33 +120,6 @@ function Analyze() {
         certificate: formData.certificate,
       },
     };
-
-    // createAnalysis.mutate(requestBody, {
-    //   onSuccess: (response) => {
-    //     if (response) {
-    //       const toastId = toast.loading("분석 요청 중...");
-
-    //       setTimeout(() => {
-    //         toast.update(toastId, {
-    //           render: "분석 요청 완료! 잠시 후 이동합니다.",
-    //           type: "success",
-    //           isLoading: false,
-    //           autoClose: 1300,
-    //           closeOnClick: true,
-    //         });
-
-    //         setTimeout(() => {
-    //           navigate("/analysis", { replace: true });
-    //           window.location.reload();
-    //         }, 1500);
-    //       }, 1000);
-    //     }
-    //   },
-    //   onError: (error) => {
-    //     console.error("분석 실패:", error);
-    //     toast.error("분석 요청 중 오류가 발생했습니다.");
-    //   },
-    // });
 
     navigate("/analysis", {
       state: { requestBody },
@@ -353,26 +333,37 @@ function Analyze() {
           <div className={styles.emailVerification}>
             <div className={styles.inputWithButton}>
               <input
-                className={styles.emailInput}
+                className={`${styles.emailInput} ${isDisabledEmail ? styles.disabledInput : ""}`}
                 maxLength={100}
                 {...register("email")}
                 placeholder="example@khu.ac.kr"
+                disabled={isDisabledEmail}
               />
-              <div className={styles.sendCodeButton} onClick={handleSendCode}>
-                인증번호 받기
-              </div>
+              <button
+                type="button"
+                onClick={handleSendCode}
+                disabled={isDisabledEmail}
+                className={`${styles.sendCodeButton} ${isDisabledEmail ? styles.disabled : ""}`}
+              >
+                인증번호 전송
+              </button>
             </div>
             {isCodeSent && (
               <div className={styles.inputWithButton}>
                 <input
-                  className={styles.codeInput}
+                  className={`${styles.codeInput} ${isDisabledCode ? styles.disabledInput : ""}`}
                   {...register("accessCode")}
                   maxLength={6}
                   placeholder="인증번호 입력"
                 />
-                <div className={styles.verifyCodeButton} onClick={handleVerifyCode}>
+                <button
+                  type="button"
+                  className={`${styles.verifyCodeButton} ${isDisabledCode ? styles.disabled : ""}`}
+                  onClick={handleVerifyCode}
+                  disabled={isDisabledCode}
+                >
                   인증번호 확인
-                </div>
+                </button>
               </div>
             )}
           </div>
@@ -391,6 +382,8 @@ function Analyze() {
         onConfirm={handleConfirm}
         count={count}
       />
+      {emailPending && <EmailSendModal />}
+      {codePending && <VerifyCodeModal />}
     </div>
   );
 }

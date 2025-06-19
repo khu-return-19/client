@@ -335,8 +335,15 @@
         }
       }
 
+      .disabledInput {
+        background-color: #f5f5f5;
+        border-color: #ddd;
+        color: #888;
+      }
+
       .sendCodeButton,
       .verifyCodeButton {
+        font-size: medium;
         width: 120px;
         height: 3.5rem;
         display: flex;
@@ -347,6 +354,12 @@
         border-radius: 0.5rem;
         border: none;
         cursor: pointer;
+      }
+
+      .sendCodeButton.disabled,
+      .verifyCodeButton.disabled {
+        background-color: #6b1e2354;
+        cursor: not-allowed;
       }
     }
   }
@@ -385,7 +398,7 @@
     }
 
     .saveButton:disabled {
-      background-color: #ccc;
+      background-color: #6b1e2354;
       cursor: not-allowed;
     }
   }

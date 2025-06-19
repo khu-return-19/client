@@ -9,7 +9,7 @@ import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
 import AnalysisDetailSkeleton from "./AnalysisDetailSkeleton";
-import { RadarChart } from "components/analysis";
+import { RadarChart, Notification } from "components/analysis";
 import AnalysisError from "./AnalysisError";
 import ShinyText from "components/shared/shiny-text";
 
@@ -212,6 +212,8 @@ function AnalysisDetail() {
       >
         <MdOutlineArrowDownward />
       </button>
+
+      <Notification />
     </div>
   );
 }

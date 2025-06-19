@@ -121,6 +121,18 @@ function AnalysisDetail() {
     return () => element.removeEventListener("scroll", handleScroll);
   }, [rightSectionRef?.current, streamingContent]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   // 스크롤 감지 핸들러
   const handleScroll = () => {
     const element = rightSectionRef.current;

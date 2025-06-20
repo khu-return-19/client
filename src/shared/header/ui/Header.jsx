@@ -12,10 +12,6 @@ const Header = React.memo(() => {
 
   const navigate = useNavigate();
 
-  const handleMenuClose = () => {
-    setMenuOpen(false);
-  };
-
   const toggleDropdown = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
@@ -30,44 +26,12 @@ const Header = React.memo(() => {
         </a>
 
         {isMobile && (
-          <div className={styles.menuIcon} onClick={() => handleMenuClose()}>
+          <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FiX /> : <FiMenu />}
           </div>
         )}
 
         <div className={styles.rightSection}>
-          {/* {isLoggedIn ? (
-            <div className={styles.rightTopSection}>
-              <div className={styles.mySection}>
-                <a href="/analysis" className={styles.report}>
-                  내 분석 레포트
-                </a>
-                <div>|</div>
-                <Link to="/resume" className={styles.resume}>
-                  내 이력서
-                </Link>
-              </div>
-              <div className={styles.authSection}>
-                <span className={styles.userName}> ??? 님</span>
-                <div
-                  className={styles.logout}
-                  onClick={() => {
-                    logout();
-                    handleMenuClose();
-                  }}
-                >
-                  로그아웃
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className={styles.rightTopSection}>
-              <div className={styles.login} onClick={() => setLoginModalOpen(true)}>
-                로그인
-              </div>
-            </div>
-          )} */}
-
           <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
             {/* 서비스 소개 */}
             <div
@@ -159,27 +123,6 @@ const Header = React.memo(() => {
           <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analyze")}>
             자기소개서 분석
           </div>
-          {/* {isLoggedIn && (
-            <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/analysis")}>
-              내 분석 레포트
-            </div>
-          )} */}
-          {/* {isLoggedIn && (
-            <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/resume")}>
-              내 이력서
-            </div>
-          )} */}
-          {/* {!isLoggedIn && (
-            <div className={styles.mobileMenuItem} onClick={() => setLoginModalOpen(true)}>
-              로그인
-            </div>
-          )} */}
-          {/* {isLoggedIn && (
-            <div className={`${styles.mobileMenuItem} ${styles.logout}`} onClick={() => logout()}>
-              <span className={styles.userName}> ??? 님</span>
-              <span>로그아웃</span>
-            </div>
-          )} */}
         </div>
       )}
     </div>

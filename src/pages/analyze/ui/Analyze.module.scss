@@ -310,6 +310,10 @@
     flex-direction: column;
     gap: 1.25rem;
 
+    @media (max-width: 480px) {
+      width: 312px;
+    }
+
     .inputWithButton {
       width: 100%;
       display: flex;

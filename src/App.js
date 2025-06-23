@@ -44,15 +44,11 @@ function AppContent() {
         <Route path="/notice/write" element={<WriteNotice />} />
         <Route path="/notice/:id/edit" element={<EditNotice />} />
 
-        <Route path="/resume" element={<Resume />} />
         <Route path="/analysis" element={<Analysis />} />
-        <Route path="/analysis/:id" element={<Analysis />} />
         <Route path="/analyze" element={<Analyze />} />
 
-        <Route path="/terms" element={<Terms />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/university-email-only" element={<UniversityEmailOnly />} />
       </Routes>
 
       {!isNoFooterPage && <Footer />}

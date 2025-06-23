@@ -369,12 +369,12 @@
     }
   }
 
-  .agreement {
+  .agreementItem {
     display: flex;
     gap: 1.25rem;
     align-items: center;
 
-    .checkboxContainer {
+    .checkboxWrapper {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -405,7 +405,7 @@
         }
       }
 
-      .checkboxLabel {
+      .label {
         font-size: 15px;
         font-weight: 500;
         color: #444;
@@ -418,7 +418,7 @@
       }
     }
 
-    .viewTermsButton {
+    .viewButton {
       cursor: pointer;
       color: #969696;
     }

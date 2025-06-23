@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal } from "layouts/analyze";
 import { toast } from "react-toastify";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
+import { TermsModal } from "components/analyze";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +27,9 @@ function Analyze() {
   const [emailSuccess, setEmailSuccess] = useState(false);
   const [codeSuccess, setCodeSuccess] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [checked, setChecked] = useState(false);
   const timerRef = useRef(null);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -62,7 +65,7 @@ function Analyze() {
           setIsCodeSent(true);
           setEmailSuccess(true);
 
-          // ⏱ 10분 타이머 시작
+          // 10분 타이머 시작
           setRemainingTime(600);
           if (timerRef.current) clearInterval(timerRef.current);
 
@@ -100,7 +103,6 @@ function Analyze() {
         onSuccess: (data) => {
           if (data.valid) {
             toast.success("이메일 인증이 완료되었습니다.");
-            setIsVerified(true);
             setCount(data.count);
             setCodeSuccess(true);
           } else {
@@ -154,6 +156,18 @@ function Analyze() {
 
     setIsModalOpen(false);
   };
+
+  const handleCheckboxChange = () => {
+    setChecked((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (codeSuccess && checked) {
+      setIsVerified(true);
+    } else {
+      setIsVerified(false);
+    }
+  }, [codeSuccess, checked]);
 
   return (
     <div className={styles.analyze}>
@@ -414,6 +428,23 @@ function Analyze() {
             {remainingTime !== null && remainingTime > 0 && (
               <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>
             )}
+            <div className={styles.agreement}>
+              <div className={styles.checkboxContainer}>
+                <input
+                  type="checkbox"
+                  id="termsCheck"
+                  checked={checked}
+                  onChange={handleCheckboxChange}
+                  className={styles.checkbox}
+                />
+                <label htmlFor="termsCheck" className={styles.checkboxLabel}>
+                  이용약관 내용에 동의합니다.
+                </label>
+              </div>
+              <span className={styles.viewTermsButton} onClick={() => setShowTermsModal(true)}>
+                &gt;
+              </span>
+            </div>
             <span className={styles.text}>위 자기소개서를 기반으로 분석을 진행합니다.</span>
             <button type="submit" className={styles.saveButton} disabled={!isVerified}>
               AI 분석 시작하기
@@ -429,6 +460,7 @@ function Analyze() {
       />
       {emailPending && <EmailSendModal />}
       {codePending && <VerifyCodeModal />}
+      {showTermsModal && <TermsModal onClose={() => setShowTermsModal(false)} />}
     </div>
   );
 }

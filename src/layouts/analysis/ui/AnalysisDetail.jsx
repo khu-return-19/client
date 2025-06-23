@@ -161,7 +161,7 @@ function AnalysisDetail() {
   return (
     <div className={styles.analysisDetail} ref={rightSectionRef}>
       <div className={styles.rightWraaper}>
-        <div className={styles.title}>내 분석 레포트</div>
+        <div className={styles.title}>분석 레포트</div>
         <div className={styles.content}>
           <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
             <div>자소서 원본 보기</div>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal } from "layouts/analyze";
 import { toast } from "react-toastify";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
-import { TermsModal } from "components/analyze";
+import { TermsModal, PrivacyModal } from "components/analyze";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,9 +27,11 @@ function Analyze() {
   const [emailSuccess, setEmailSuccess] = useState(false);
   const [codeSuccess, setCodeSuccess] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
-  const [checked, setChecked] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
   const timerRef = useRef(null);
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -157,17 +159,13 @@ function Analyze() {
     setIsModalOpen(false);
   };
 
-  const handleCheckboxChange = () => {
-    setChecked((prev) => !prev);
-  };
-
   useEffect(() => {
-    if (codeSuccess && checked) {
+    if (codeSuccess && termsChecked && privacyChecked) {
       setIsVerified(true);
     } else {
       setIsVerified(false);
     }
-  }, [codeSuccess, checked]);
+  }, [codeSuccess, termsChecked, privacyChecked]);
 
   return (
     <div className={styles.analyze}>
@@ -429,21 +427,40 @@ function Analyze() {
               <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>
             )}
             <div className={styles.agreement}>
-              <div className={styles.checkboxContainer}>
-                <input
-                  type="checkbox"
-                  id="termsCheck"
-                  checked={checked}
-                  onChange={handleCheckboxChange}
-                  className={styles.checkbox}
-                />
-                <label htmlFor="termsCheck" className={styles.checkboxLabel}>
-                  이용약관 내용에 동의합니다.
-                </label>
+              <div className={styles.agreementItem}>
+                <div className={styles.checkboxWrapper}>
+                  <input
+                    type="checkbox"
+                    id="termsCheck"
+                    checked={termsChecked}
+                    onChange={(e) => setTermsChecked(e.target.checked)}
+                    className={styles.checkbox}
+                  />
+                  <label htmlFor="termsCheck" className={styles.label}>
+                    이용약관에 동의합니다.
+                  </label>
+                </div>
+                <span className={styles.viewButton} onClick={() => setShowTermsModal(true)}>
+                  &gt;
+                </span>
               </div>
-              <span className={styles.viewTermsButton} onClick={() => setShowTermsModal(true)}>
-                &gt;
-              </span>
+              <div className={styles.agreementItem}>
+                <div className={styles.checkboxWrapper}>
+                  <input
+                    type="checkbox"
+                    id="privacyCheck"
+                    checked={privacyChecked}
+                    onChange={(e) => setPrivacyChecked(e.target.checked)}
+                    className={styles.checkbox}
+                  />
+                  <label htmlFor="privacyCheck" className={styles.label}>
+                    개인정보처리방침에 동의합니다.
+                  </label>
+                </div>
+                <span className={styles.viewButton} onClick={() => setShowPrivacyModal(true)}>
+                  &gt;
+                </span>
+              </div>
             </div>
             <span className={styles.text}>위 자기소개서를 기반으로 분석을 진행합니다.</span>
             <button type="submit" className={styles.saveButton} disabled={!isVerified}>
@@ -461,6 +478,7 @@ function Analyze() {
       {emailPending && <EmailSendModal />}
       {codePending && <VerifyCodeModal />}
       {showTermsModal && <TermsModal onClose={() => setShowTermsModal(false)} />}
+      {showPrivacyModal && <PrivacyModal onClose={() => setShowPrivacyModal(false)} isPrivacy />}
     </div>
   );
 }

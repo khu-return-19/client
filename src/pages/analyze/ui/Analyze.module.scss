@@ -369,6 +369,61 @@
     }
   }
 
+  .agreement {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+
+    .checkboxContainer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+
+      .checkbox {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border-radius: 6px;
+        appearance: none;
+        border: 2px solid #ccc;
+        background-color: #fff;
+        position: relative;
+
+        &:checked {
+          background-color: #990e17;
+          border-color: #990e17;
+        }
+
+        &:checked::after {
+          content: "✔";
+          color: white;
+          font-size: 14px;
+          position: absolute;
+          top: 2px;
+          left: 5px;
+        }
+      }
+
+      .checkboxLabel {
+        font-size: 15px;
+        font-weight: 500;
+        color: #444;
+        cursor: pointer;
+
+        &::after {
+          content: " *";
+          color: #990e17;
+        }
+      }
+    }
+
+    .viewTermsButton {
+      cursor: pointer;
+      color: #969696;
+    }
+  }
+
   .save {
     display: flex;
     flex-direction: column;

@@ -1,0 +1,103 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal {
+  background-color: white;
+  width: 90%;
+  max-width: 720px;
+  max-height: 80vh;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  position: relative;
+}
+
+.header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #990e17;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    color: #333;
+  }
+}
+
+.content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+  white-space: pre-line;
+  border-radius: 8px;
+
+  // 스크롤바 스타일 개선
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+  }
+
+  h2 {
+    margin-bottom: 0px;
+  }
+
+  ul {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .date {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  p {
+    text-indent: -1rem; /* 번호 부분 앞으로 끌어당기기 */
+    padding-left: 2rem; /* 전체 들여쓰기 */
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+}

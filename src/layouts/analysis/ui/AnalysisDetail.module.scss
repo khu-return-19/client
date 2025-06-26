@@ -34,6 +34,7 @@
     gap: 20px;
     height: 100%;
     box-sizing: border-box;
+    position: relative;
   }
 
   .originalResumeButton {
@@ -127,21 +128,66 @@
     }
 
     .description {
+      position: absolute;
+      top: 32%;
+      z-index: 1000;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: 16px 20px;
+      width: 360px;
+      min-height: 150px;
+      transition: opacity 0.3s ease;
+      animation: fadeIn 0.5s ease-in-out;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
-      height: 50vh;
+      gap: 16px;
+      box-sizing: border-box;
+      padding-top: 32px;
+    }
 
-      .agentWebSearch {
-        display: flex;
-        gap: 8px;
-        align-items: center;
+    .spinner {
+      width: 30px;
+      height: 30px;
+      border: 4px solid #ccc;
+      border-top: 4px solid #990e17;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
 
-        img {
-          width: 16px;
-          height: 16px;
-        }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .agentWebSearch {
+      display: flex;
+      margin-top: 10px;
+
+      img {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        margin-top: 5px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   }

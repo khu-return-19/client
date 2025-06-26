@@ -69,17 +69,17 @@
 
         .xCard {
           position: absolute;
-          top: -110px;
+          top: 320px;
+          left: 30px;
         }
         .yCard {
           position: absolute;
           top: 320px;
-          right: 170px;
+          right: 100px;
         }
         .zCard {
           position: absolute;
-          top: 320px;
-          left: 100px;
+          top: -110px;
         }
       }
     }
@@ -205,13 +205,13 @@
     .body {
       .content {
         .xCard {
-          top: -110px;
+          left: 8px !important;
         }
         .yCard {
           right: 8px !important;
         }
         .zCard {
-          left: 8px !important;
+          top: -110px;
         }
       }
     }

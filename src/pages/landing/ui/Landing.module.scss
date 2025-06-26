@@ -140,7 +140,8 @@
 
     .xCard {
       position: absolute;
-      top: -110px;
+      top: 320px;
+      left: 88px;
     }
     .yCard {
       position: absolute;
@@ -149,8 +150,7 @@
     }
     .zCard {
       position: absolute;
-      top: 320px;
-      left: 88px;
+      top: -110px;
     }
   }
 }
@@ -347,10 +347,13 @@
   }
 
   .evaluation {
+    text-align: center;
+    padding: 0px 10px;
     .content {
       .xCard {
         position: absolute;
-        top: -110px;
+        top: 320px;
+        left: 0px;
       }
       .yCard {
         position: absolute;
@@ -359,8 +362,7 @@
       }
       .zCard {
         position: absolute;
-        top: 320px;
-        left: 0px;
+        top: -110px;
       }
     }
   }
@@ -388,7 +390,8 @@
     .content {
       .xCard {
         position: absolute;
-        top: -110px;
+        top: 320px;
+        left: 0px;
       }
       .yCard {
         position: absolute;
@@ -397,8 +400,7 @@
       }
       .zCard {
         position: absolute;
-        top: 320px;
-        left: 0px;
+        top: -110px;
       }
     }
   }

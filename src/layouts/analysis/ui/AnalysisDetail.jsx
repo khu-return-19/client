@@ -90,7 +90,10 @@ function AnalysisDetail() {
                   <div>
                     <strong>분석이 완료되었습니다!</strong>
                     <div style={{ marginTop: "4px" }}>분석보고서는 이메일로 전송됩니다.</div>
-                  </div>
+                  </div>,
+                  {
+                    autoClose: 5000,
+                  }
                 );
               }
             } else if (parsed.event === "error_detection") {

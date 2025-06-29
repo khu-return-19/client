@@ -28,6 +28,8 @@ ChartJS.register(
 );
 
 function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
+  const isLoading = x === 0 && y === 0 && z === 0;
+
   const data = {
     labels: ["Z축", "Y축", "X축"], // 각 축 이름
     datasets: [
@@ -76,8 +78,13 @@ function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
   };
 
   return (
-    <div className={styles.RadarChart}>
+    <div className={`${styles.RadarChart} ${isLoading ? styles.loading : ""}`}>
       <Radar data={data} options={options} />
+      {isLoading && (
+        <div className={styles.spinnerOverlay}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
     </div>
   );
 }

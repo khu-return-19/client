@@ -108,7 +108,6 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.improvement}
         >
-          {" "}
           <div className={styles.titleSection}>
             <span className={styles.title}>개선방식 제안</span>
             <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>

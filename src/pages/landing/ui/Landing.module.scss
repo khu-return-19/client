@@ -49,134 +49,25 @@
   padding-bottom: 500px;
 }
 
-@media (max-width: 1279px) {
-  .improvement {
-    .cardSection {
-      img {
-        width: 500px;
-      }
-    }
-  }
-}
-
 @media (max-width: 1023px) {
-  .intro {
-    flex-direction: column;
-    gap: 30px;
-
-    .leftSection {
-      width: 100%;
-      align-items: center;
-      text-align: center;
-      padding: 0px 12px;
-      box-sizing: border-box;
-      img {
-        width: 100%;
-      }
-    }
-  }
-
-  .improvement {
-    .cardSection {
-      grid-template-columns: repeat(1, 1fr);
-
-      img {
-        width: 640px;
-      }
-    }
-  }
-
   .evaluation {
     text-align: center;
     padding: 0px 10px;
-    .content {
-      .xCard {
-        position: absolute;
-        top: 320px;
-        left: 0px;
-      }
-      .yCard {
-        position: absolute;
-        top: 320px;
-        right: 0px;
-      }
-      .zCard {
-        position: absolute;
-        top: -110px;
-      }
-    }
   }
 }
 
 @media (max-width: 767px) {
-  .intro {
-    padding: 0px;
-    .leftSection {
-      padding: 0px 10px;
-      box-sizing: border-box;
-      .mainImage {
-        width: 100%;
-      }
-      .analyzeButton {
-        width: 100%;
-      }
-    }
-  }
-
   .evaluation {
     text-align: center;
     padding: 0px 10px;
     box-sizing: border-box;
-    .content {
-      .xCard {
-        position: absolute;
-        top: 320px;
-        left: 0px;
-      }
-      .yCard {
-        position: absolute;
-        top: 320px;
-        right: 0px;
-      }
-      .zCard {
-        position: absolute;
-        top: -110px;
-      }
-    }
-  }
-
-  .evaluation {
     gap: 60px;
-    .content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-
-      .evaluationImage {
-        width: 100%;
-        position: static;
-      }
-
-      .xCard,
-      .yCard,
-      .zCard {
-        position: static;
-        width: 100%;
-        margin-top: 20px;
-      }
-    }
   }
 
   .improvement {
     text-align: center;
     padding: 0px 10px;
     box-sizing: border-box;
-
-    .cardSection {
-      img {
-        width: 100%;
-      }
-    }
   }
 
   .resumeFeedback {
@@ -184,24 +75,5 @@
     text-align: center;
     padding: 0px 10px;
     box-sizing: border-box;
-
-    .cardSection {
-      .beforeCard,
-      .afterCard {
-        height: 100%;
-        padding: 10px 20px;
-      }
-    }
-  }
-
-  .bottom {
-    .sampleReport {
-      padding: 0px 10px;
-      box-sizing: border-box;
-
-      .sampleReportButton {
-        width: 100%;
-      }
-    }
   }
 }

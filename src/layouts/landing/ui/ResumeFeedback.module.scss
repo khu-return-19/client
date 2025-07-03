@@ -57,3 +57,13 @@
     }
   }
 }
+
+@media (max-width: 767px) {
+  .cardSection {
+    .beforeCard,
+    .afterCard {
+      height: 100%;
+      padding: 10px 20px;
+    }
+  }
+}

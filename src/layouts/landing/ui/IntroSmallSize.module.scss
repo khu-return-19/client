@@ -84,3 +84,37 @@
     }
   }
 }
+
+@media (max-width: 1023px) {
+  .intro {
+    flex-direction: column;
+    gap: 30px;
+
+    .leftSection {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+      padding: 0px 12px;
+      box-sizing: border-box;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .intro {
+    padding: 0px;
+    .leftSection {
+      padding: 0px 10px;
+      box-sizing: border-box;
+      .mainImage {
+        width: 100%;
+      }
+      .analyzeButton {
+        width: 100%;
+      }
+    }
+  }
+}

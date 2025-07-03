@@ -24,3 +24,29 @@
     width: 580px;
   }
 }
+
+@media (max-width: 1279px) {
+  .cardSection {
+    img {
+      width: 500px;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .cardSection {
+    grid-template-columns: repeat(1, 1fr);
+
+    img {
+      width: 640px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .cardSection {
+    img {
+      width: 100%;
+    }
+  }
+}

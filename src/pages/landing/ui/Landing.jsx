@@ -4,7 +4,7 @@ import { SampleReport } from "components/landing";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
-import { Evaluation, Improvement, ResumeFeedback, Bottom } from "layouts/landing";
+import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
 
 function Landing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,58 +17,14 @@ function Landing() {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.landing}>
       <div className={styles.wrapper}>
-        {isMobile || isTablet ? (
-          <div className={styles.intro}>
-            <div className={styles.leftSection}>
-              <span className={styles.title}>
-                자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 역량</span>을 파악해요
-              </span>
-              <div className={styles.description}>
-                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
-                <span className={styles.text}>
-                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
-                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
-                </span>
-              </div>
-              <img src="/landing/main.png" alt="" className={styles.mainImage} />
-              <div className={styles.imageButtonGroup}>
-                <button className={`${styles.imageButton} `} />
-              </div>
-              <div className={styles.analyzeButton} onClick={() => setIsModalOpen(true)}>
-                예시 레포트 보러가기
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.intro}>
-            <div className={styles.leftSection}>
-              <span className={styles.title}>
-                자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 역량</span>을 파악해요
-              </span>
-              <div className={styles.description}>
-                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
-                <span className={styles.text}>
-                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
-                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
-                </span>
-              </div>
-              <div className={styles.imageButtonGroup}>
-                <button className={`${styles.imageButton} `} />
-              </div>
-              <div className={styles.analyzeButton} onClick={() => setIsModalOpen(true)}>
-                예시 레포트 보러가기
-              </div>
-            </div>
-            <div className={styles.rightSection}>
-              <img src="/landing/main.png" alt="" className={styles.mainImage} />
-            </div>
-          </div>
-        )}
+        {isMobile || isTablet ? <IntroSmallSize onOpenModal={openModal} /> : <IntroBigSize onOpenModal={openModal} />}
 
         <motion.div
           ref={evalRef}

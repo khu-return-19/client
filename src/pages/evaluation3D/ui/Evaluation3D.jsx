@@ -13,17 +13,14 @@ import {
 } from "components/evaluation3D";
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
+import { Breadcrumb } from "components/shared/breadcrumb";
 
 function Evaluation3D() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.evaluation3D}>
-      <div className={styles.breadcrumb}>
-        <span>서비스 소개</span>
-        <div>></div>
-        <span>3D 역량분석이란?</span>
-      </div>
+      <Breadcrumb paths={["서비스 소개", "3D 역량분석이란?"]} />
       <div className={styles.wrapper}>
         <div className={styles.titleSection}>
           <span className={styles.title}>3D 역량분석이란?</span>

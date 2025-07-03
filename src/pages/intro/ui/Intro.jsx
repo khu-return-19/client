@@ -11,16 +11,14 @@ import {
 } from "components/intro";
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
+import { Breadcrumb } from "components/shared/breadcrumb";
 
 function Intro() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.intro}>
-      <div className={styles.breadcrumb}>
-        <span>서비스 소개</span>
-        <div>></div>
-      </div>
+      <Breadcrumb paths={["서비스 소개"]} />
       <div className={styles.wrapper}>
         <div className={styles.titleSection}>
           <div className={styles.title}>자기소개서 역량평가 AI</div>

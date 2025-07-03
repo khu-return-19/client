@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./Intro.module.scss";
-import { CompanyRecruitCard, ConsultingCard, CompetencyManagementCard } from "components/intro";
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { TitleSection, KeyFeatures } from "layouts/intro";
+import { TitleSection, KeyFeatures, ApplicationCases } from "layouts/intro";
 
 function Intro() {
   const navigate = useNavigate();
@@ -15,14 +14,7 @@ function Intro() {
       <div className={styles.wrapper}>
         <TitleSection />
         <KeyFeatures />
-        <div className={styles.applicationCases}>
-          <span className={styles.title}>적용 사례</span>
-          <div className={styles.cardSection}>
-            <CompanyRecruitCard />
-            <ConsultingCard />
-            <CompetencyManagementCard />
-          </div>
-        </div>
+        <ApplicationCases />
       </div>
       <div className={styles.bottom}>
         <div className={styles.content}>

@@ -14,27 +14,6 @@
   gap: 80px;
 }
 
-.applicationCases {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 0px 12px;
-
-  .title {
-    color: #990e17;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .cardSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-}
-
 .bottom {
   background-color: #f4f2ed;
   padding: 40px 0px 80px 0px;

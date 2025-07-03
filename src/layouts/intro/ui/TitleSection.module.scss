@@ -1,0 +1,37 @@
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0px 12px;
+  text-align: center;
+
+  .title {
+    color: #990e17;
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  .content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    .contentText {
+      font-size: 16px;
+      font-weight: 400;
+      color: #4d4d4d;
+
+      .color {
+        color: #990e17;
+      }
+    }
+
+    .introImage {
+      width: 100%;
+      max-width: 648px;
+    }
+  }
+}

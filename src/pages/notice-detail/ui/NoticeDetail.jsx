@@ -1,16 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import styles from "./NoticeDetail.module.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice } from "api/noticeApi";
-import { AiOutlineMore } from "react-icons/ai";
 import { NoticeDetailSkeleton } from "layouts/notice-detail";
 
 function NoticeDetail() {
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
-  const [menuOpen, setMenuOpen] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: notice, isLoading } = useFetchNotice(id);

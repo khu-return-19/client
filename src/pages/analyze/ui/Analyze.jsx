@@ -1,121 +1,37 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal, Info } from "layouts/analyze";
-import { toast } from "react-toastify";
-import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
+import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal, Info, ResumeSection } from "layouts/analyze";
 import { TermsModal, PrivacyModal } from "components/analyze";
+import { useAnalyzeForm } from "../hooks/useAnalyzeForm";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(null);
-
-  const [universityNameLength, setUniversityNameLength] = useState(0);
-  const [majorLength, setMajorLength] = useState(0);
-  const [gpaLength, setGpaLength] = useState(0);
-  const [careerLength, setCareerLength] = useState(0);
-  const [languageScoreLength, setLanguageScoreLength] = useState(0);
-  const [certificateLength, setCertificateLength] = useState(0);
   const [companyLength, setCompanyLength] = useState(0);
   const [positionLength, setPositionLength] = useState(0);
   const [urlLength, setUrlLength] = useState(0);
   const [inputLength, setInputLength] = useState(0);
-  const [isCodeSent, setIsCodeSent] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [count, setCount] = useState(0);
-  const [emailSuccess, setEmailSuccess] = useState(false);
-  const [codeSuccess, setCodeSuccess] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(null);
   const [termsChecked, setTermsChecked] = useState(false);
   const [privacyChecked, setPrivacyChecked] = useState(false);
-  const timerRef = useRef(null);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [lengths, setLengths] = useState({
+    universityName: 0,
+    major: 0,
+    gpa: 0,
+    career: 0,
+    languageScore: 0,
+    certificate: 0,
+  });
 
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
     const s = String(seconds % 60).padStart(2, "0");
     return `${m}:${s}`;
-  };
-
-  const { mutate: sendVerifyEmail, isPending: emailPending } = useSendVerifyEmail();
-
-  const { mutate: verifyEmailCode, isPending: codePending } = useVerifyEmailCode();
-
-  const isDisabledEmail = emailPending || emailSuccess;
-  const isDisabledCode = codePending || codeSuccess;
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
-
-  const handleSendCode = () => {
-    const email = getValues("email");
-
-    if (!email) {
-      toast.info("이메일을 입력해주세요.");
-      return;
-    }
-
-    sendVerifyEmail(email, {
-      onSuccess: (data) => {
-        if (data.success) {
-          toast.success("인증번호가 이메일로 전송되었습니다.");
-          setIsCodeSent(true);
-          setEmailSuccess(true);
-
-          // 10분 타이머 시작
-          setRemainingTime(600);
-          if (timerRef.current) clearInterval(timerRef.current);
-
-          timerRef.current = setInterval(() => {
-            setRemainingTime((prev) => {
-              if (!prev || prev <= 1) {
-                clearInterval(timerRef.current);
-                return 0;
-              }
-              return prev - 1;
-            });
-          }, 1000);
-        } else {
-          toast.error("이메일 전송에 실패했습니다. 경희대학교 구성원이 아닙니다.");
-        }
-      },
-      onError: () => {
-        toast.error("이메일 전송에 실패했습니다. 다시 시도해주세요.");
-      },
-    });
-  };
-
-  const handleVerifyCode = () => {
-    const email = getValues("email");
-    const accessCode = getValues("accessCode");
-
-    if (!email || !accessCode) {
-      toast.info("이메일과 인증번호를 모두 입력해주세요.");
-      return;
-    }
-
-    verifyEmailCode(
-      { email, accessCode },
-      {
-        onSuccess: (data) => {
-          if (data.valid) {
-            toast.success("이메일 인증이 완료되었습니다.");
-            setCount(data.count);
-            setCodeSuccess(true);
-          } else {
-            toast.error("인증번호가 올바르지 않습니다.");
-          }
-        },
-        onError: (error) => {
-          toast.error("인증에 실패했습니다.");
-        },
-      }
-    );
   };
 
   const {
@@ -124,6 +40,20 @@ function Analyze() {
     formState: { errors },
     getValues,
   } = useForm();
+
+  const {
+    isCodeSent,
+    emailSuccess,
+    codeSuccess,
+    remainingTime,
+    emailPending,
+    codePending,
+    handleSendCode,
+    handleVerifyCode,
+  } = useAnalyzeForm(getValues, setCount);
+
+  const isDisabledEmail = emailPending || emailSuccess;
+  const isDisabledCode = codePending || codeSuccess;
 
   const navigate = useNavigate();
 
@@ -172,115 +102,7 @@ function Analyze() {
       <div className={styles.wrapper}>
         <Info />
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <div className={styles.resume}>
-            <span className={styles.title}>내 이력서</span>
-            <div className={styles.resumeContent}>
-              <div className={styles.school}>
-                <div className={styles.inputGroup}>
-                  <span className={styles.inputLabel}>학교 이름</span>
-                  <input
-                    placeholder="예시) 경희대학교"
-                    maxLength={100}
-                    {...register("universityName", {
-                      onChange: (e) => {
-                        setUniversityNameLength(e.target.value.length);
-                      },
-                    })}
-                  />
-                  <div className={styles.charCount}>{universityNameLength}/100</div>
-                </div>
-                <div className={styles.inputGroup}>
-                  <span className={styles.inputLabel}>
-                    학점 <span className={styles.hint}>(4.5 기준)</span>
-                  </span>
-                  <input
-                    placeholder="예시) 4.1"
-                    maxLength={100}
-                    {...register("gpa", {
-                      pattern: {
-                        value: /^(?:\d+|\d*\.\d+)$/, // 숫자 또는 숫자.숫자 형태만 허용
-                        message: "숫자만 입력해야 합니다.",
-                      },
-                      onChange: (e) => {
-                        setGpaLength(e.target.value.length);
-                      },
-                    })}
-                    className={`${errors.gpa ? styles.errorInput : ""}`}
-                  />
-                  <div className={styles.charCountContainer}>
-                    {errors.gpa && <span className={styles.errorText}>{errors.gpa.message}</span>}
-                    <span className={styles.charCount}>{gpaLength}/100</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>전공</span>
-                <input
-                  placeholder="예시) 컴퓨터공학과"
-                  maxLength={100}
-                  {...register("major", {
-                    onChange: (e) => {
-                      setMajorLength(e.target.value.length);
-                    },
-                  })}
-                />
-                <div className={styles.charCount}>{majorLength}/100</div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>경력 및 수상 실적</span>
-                <textarea
-                  maxLength={100}
-                  {...register("career", {
-                    onChange: (e) => {
-                      setCareerLength(e.target.value.length);
-                      const textarea = e.target;
-                      textarea.style.height = "3.5rem";
-                      textarea.style.height = textarea.scrollHeight + "px";
-                    },
-                  })}
-                  placeholder="예시) 2023.01 ~ 2023.02: 삼성전자 인턴십, 2022.03 ~ 2022.12: LG디스플레이 연구개발팀"
-                />
-                <div className={styles.charCount}>{careerLength}/100</div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>어학 성적</span>
-                <textarea
-                  maxLength={100}
-                  {...register("languageScore", {
-                    onChange: (e) => {
-                      setLanguageScoreLength(e.target.value.length);
-                      const textarea = e.target;
-                      textarea.style.height = "3.5rem";
-                      textarea.style.height = textarea.scrollHeight + "px";
-                    },
-                  })}
-                  placeholder="예시) 토익 900점, 오픽 IH"
-                />
-                <div className={styles.charCount}>{languageScoreLength}/100</div>
-              </div>
-
-              <div className={styles.inputGroup}>
-                <span className={styles.inputLabel}>자격증</span>
-                <textarea
-                  maxLength={100}
-                  {...register("certificate", {
-                    onChange: (e) => {
-                      setCertificateLength(e.target.value.length);
-                      const textarea = e.target;
-                      textarea.style.height = "3.5rem";
-                      textarea.style.height = textarea.scrollHeight + "px";
-                    },
-                  })}
-                  placeholder="예시) 정보처리기사, 컴퓨터활용능력 1급"
-                />
-                <div className={styles.charCount}>{certificateLength}/100</div>
-              </div>
-            </div>
-          </div>
-
+          <ResumeSection register={register} errors={errors} lengths={lengths} setLengths={setLengths} />
           <div className={styles.introduction}>
             <div>
               <div className={styles.companyAndJob}>
@@ -354,7 +176,6 @@ function Analyze() {
               </div>
             </div>
           </div>
-
           <div className={styles.emailVerification}>
             <div className={styles.inputWithButton}>
               <input
@@ -392,7 +213,6 @@ function Analyze() {
               </div>
             )}
           </div>
-
           <div className={styles.save}>
             {remainingTime !== null && remainingTime > 0 && (
               <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Landing.module.scss";
-import { XCard, YCard, ZCard, SampleReport } from "components/landing";
+import { SampleReport } from "components/landing";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
+import { Evaluation } from "layouts/landing";
 
 function Landing() {
   const navigate = useNavigate();
@@ -17,9 +18,6 @@ function Landing() {
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={styles.landing}>
@@ -42,7 +40,7 @@ function Landing() {
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              <div className={styles.analyzeButton} onClick={openModal}>
+              <div className={styles.analyzeButton} onClick={() => setIsModalOpen(true)}>
                 예시 레포트 보러가기
               </div>
             </div>
@@ -64,7 +62,7 @@ function Landing() {
               <div className={styles.imageButtonGroup}>
                 <button className={`${styles.imageButton} `} />
               </div>
-              <div className={styles.analyzeButton} onClick={openModal}>
+              <div className={styles.analyzeButton} onClick={() => setIsModalOpen(true)}>
                 예시 레포트 보러가기
               </div>
             </div>
@@ -81,24 +79,7 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.evaluation}
         >
-          <div className={styles.titleSection}>
-            <span className={styles.title}>3D 역량평가 모델로 보는 세 가지 핵심 지표</span>
-            <span className={styles.description}>
-              당신의 학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z)을 정량 분석하여, 인터랙티브 3D 그래프로 시각화
-            </span>
-          </div>
-          <div className={styles.content}>
-            <img src="/shared/3D-evaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
-            <div className={styles.xCard}>
-              <XCard />
-            </div>
-            <div className={styles.yCard}>
-              <YCard />
-            </div>
-            <div className={styles.zCard}>
-              <ZCard />
-            </div>
-          </div>
+          <Evaluation />
         </motion.div>
 
         <motion.div

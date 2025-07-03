@@ -107,52 +107,6 @@
   flex-direction: column;
   align-items: center;
   gap: 190px;
-
-  .titleSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-
-    .title {
-      color: #131313;
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .description {
-      color: #969696;
-      font-size: 20px;
-      font-weight: 500;
-    }
-  }
-
-  .content {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    .evaluationImage {
-      width: 452px;
-    }
-
-    .xCard {
-      position: absolute;
-      top: 320px;
-      left: 88px;
-    }
-    .yCard {
-      position: absolute;
-      top: 320px;
-      right: 100px;
-    }
-    .zCard {
-      position: absolute;
-      top: -110px;
-    }
-  }
 }
 
 .improvement {

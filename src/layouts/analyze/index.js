@@ -6,6 +6,7 @@ import Info from "./ui/Info";
 import ResumeSection from "./ui/ResumeSection";
 import IntroductionSection from "./ui/IntroductionSection";
 import EmailVerificationSection from "./ui/EmailVerificationSection";
+import AgreementSection from "./ui/AgreementSection";
 
 export {
   AnalysisConfirmModal,
@@ -16,4 +17,5 @@ export {
   ResumeSection,
   IntroductionSection,
   EmailVerificationSection,
+  AgreementSection,
 };

@@ -10,6 +10,7 @@ import {
   ResumeSection,
   IntroductionSection,
   EmailVerificationSection,
+  AgreementSection,
 } from "layouts/analyze";
 import { TermsModal, PrivacyModal } from "components/analyze";
 import { useAnalyzeForm } from "../hooks/useAnalyzeForm";
@@ -113,51 +114,18 @@ function Analyze() {
             handleSendCode={handleSendCode}
             handleVerifyCode={handleVerifyCode}
           />
-          <div className={styles.save}>
-            {remainingTime !== null && remainingTime > 0 && (
-              <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>
-            )}
-            <div className={styles.agreement}>
-              <div className={styles.agreementItem}>
-                <div className={styles.checkboxWrapper}>
-                  <input
-                    type="checkbox"
-                    id="termsCheck"
-                    checked={termsChecked}
-                    onChange={(e) => setTermsChecked(e.target.checked)}
-                    className={styles.checkbox}
-                  />
-                  <label htmlFor="termsCheck" className={styles.label}>
-                    이용약관에 동의합니다.
-                  </label>
-                </div>
-                <span className={styles.viewButton} onClick={() => setShowTermsModal(true)}>
-                  &gt;
-                </span>
-              </div>
-              <div className={styles.agreementItem}>
-                <div className={styles.checkboxWrapper}>
-                  <input
-                    type="checkbox"
-                    id="privacyCheck"
-                    checked={privacyChecked}
-                    onChange={(e) => setPrivacyChecked(e.target.checked)}
-                    className={styles.checkbox}
-                  />
-                  <label htmlFor="privacyCheck" className={styles.label}>
-                    개인정보처리방침에 동의합니다.
-                  </label>
-                </div>
-                <span className={styles.viewButton} onClick={() => setShowPrivacyModal(true)}>
-                  &gt;
-                </span>
-              </div>
-            </div>
-            <span className={styles.text}>위 자기소개서를 기반으로 분석을 진행합니다.</span>
-            <button type="submit" className={styles.saveButton} disabled={!isVerified}>
-              AI 분석 시작하기
-            </button>
-          </div>
+          <AgreementSection
+            termsChecked={termsChecked}
+            privacyChecked={privacyChecked}
+            onTermsChange={(e) => setTermsChecked(e.target.checked)}
+            onPrivacyChange={(e) => setPrivacyChecked(e.target.checked)}
+            onShowTermsModal={() => setShowTermsModal(true)}
+            onShowPrivacyModal={() => setShowPrivacyModal(true)}
+            onSubmit={handleSubmit(onSubmit)}
+            isVerified={isVerified}
+            remainingTime={remainingTime}
+            formatTime={formatTime}
+          />
         </form>
       </div>
       <AnalysisConfirmModal

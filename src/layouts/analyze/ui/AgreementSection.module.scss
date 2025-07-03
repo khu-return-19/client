@@ -1,0 +1,98 @@
+.save {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  width: 37.5rem;
+
+  .timerText {
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #990e17;
+  }
+
+  @media (max-width: 768px) {
+    width: 25rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 20rem;
+  }
+
+  .agreementItem {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+
+    .checkboxWrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+
+      .checkbox {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        border-radius: 6px;
+        appearance: none;
+        border: 2px solid #ccc;
+        background-color: #fff;
+        position: relative;
+
+        &:checked {
+          background-color: #990e17;
+          border-color: #990e17;
+        }
+
+        &:checked::after {
+          content: "✔";
+          color: white;
+          font-size: 14px;
+          position: absolute;
+          top: 2px;
+          left: 5px;
+        }
+      }
+
+      .label {
+        font-size: 15px;
+        font-weight: 500;
+        color: #444;
+        cursor: pointer;
+
+        &::after {
+          content: " *";
+          color: #990e17;
+        }
+      }
+    }
+
+    .viewButton {
+      cursor: pointer;
+      color: #969696;
+    }
+  }
+
+  .text {
+    color: #4d4d4d;
+    font-size: 1rem;
+  }
+
+  .saveButton {
+    width: 100%;
+    height: 3.5rem;
+    background-color: #990e17;
+    color: white;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .saveButton:disabled {
+    background-color: #6b1e2354;
+    cursor: not-allowed;
+  }
+}

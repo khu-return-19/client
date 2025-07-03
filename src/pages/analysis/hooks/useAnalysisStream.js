@@ -96,6 +96,9 @@ export const useAnalysisStream = (requestBody) => {
                 setError(true);
                 reader.cancel();
                 break;
+
+              default:
+                break;
             }
           } catch (_) {}
         }

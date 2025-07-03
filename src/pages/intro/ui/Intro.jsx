@@ -1,18 +1,10 @@
 import React from "react";
 import styles from "./Intro.module.scss";
-import {
-  FeedbackLoopCard,
-  AIAutoAnalysisCard,
-  CareerTrendCard,
-  PersonalizedFeedbackCard,
-  CompanyRecruitCard,
-  ConsultingCard,
-  CompetencyManagementCard,
-} from "components/intro";
+import { CompanyRecruitCard, ConsultingCard, CompetencyManagementCard } from "components/intro";
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { TitleSection } from "layouts/intro";
+import { TitleSection, KeyFeatures } from "layouts/intro";
 
 function Intro() {
   const navigate = useNavigate();
@@ -22,26 +14,7 @@ function Intro() {
       <Breadcrumb paths={["서비스 소개"]} />
       <div className={styles.wrapper}>
         <TitleSection />
-        <div className={styles.keyFeatures}>
-          <span className={styles.title}>주요기능</span>
-          <div className={styles.content}>
-            <div className={styles.cardSection}>
-              <FeedbackLoopCard />
-              <AIAutoAnalysisCard />
-            </div>
-            <img src="/intro/main-features.png" alt="" className={styles.mainFeaturesImage} />
-            <div className={styles.cardSection}>
-              <CareerTrendCard />
-              <PersonalizedFeedbackCard />
-            </div>
-            <span className={styles.contentText}>
-              X축(학습 능력): 추천 강의, 학습 플랫폼 안내(Coursera, edX 등)
-              <br /> Y축(직무 적합성): 직무 맞춤형 프로젝트나 멘토링 프로그램 연결
-              <br /> Z축(수행 역량): Kaggle, 해커톤, 실무 프로젝트 참여 기회 제안
-            </span>
-          </div>
-        </div>
-
+        <KeyFeatures />
         <div className={styles.applicationCases}>
           <span className={styles.title}>적용 사례</span>
           <div className={styles.cardSection}>

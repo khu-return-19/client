@@ -14,53 +14,6 @@
   gap: 80px;
 }
 
-.keyFeatures {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-
-  .title {
-    color: #990e17;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 0px 12px;
-
-    .cardSection {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mainFeaturesImage {
-      width: 248px;
-    }
-
-    .contentText {
-      color: #969696;
-      font-size: 12px;
-      font-weight: 400;
-      position: relative;
-
-      &::before {
-        content: "*";
-        position: absolute;
-        left: -8px;
-        color: #fc8e8e; // 원하는 색으로 설정 가능
-        font-weight: bold;
-      }
-    }
-  }
-}
-
 .applicationCases {
   display: flex;
   flex-direction: column;

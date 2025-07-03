@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Landing.module.scss";
 import { SampleReport } from "components/landing";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
-import { Evaluation, Improvement, ResumeFeedback } from "layouts/landing";
+import { Evaluation, Improvement, ResumeFeedback, Bottom } from "layouts/landing";
 
 function Landing() {
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -110,23 +108,7 @@ function Landing() {
         transition={{ duration: 0.6 }}
         className={styles.bottom}
       >
-        <div className={styles.wrapper}>
-          <div className={styles.sampleReport}>
-            <span className={styles.title}>
-              지금 바로 (Here & Now) <br />
-              당신의 자기소개서를 평가받고 수정하고 싶다면?
-            </span>
-            <div
-              className={styles.sampleReportButton}
-              onClick={() => {
-                navigate("/analyze");
-                window.scrollTo({ top: 0, behavior: "auto" });
-              }}
-            >
-              자기소개서 평가 및 첨삭 받기
-            </div>
-          </div>
-        </div>
+        <Bottom />
       </motion.div>
       {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
     </div>

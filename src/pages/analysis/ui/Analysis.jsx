@@ -8,13 +8,12 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
-import { AnalysisError } from "layouts/analysis";
+import { AnalysisError, OriginalResumeSection } from "layouts/analysis";
 import { RadarChart, Notification } from "components/analysis";
 import ShinyText from "components/shared/shiny-text";
 import { toast } from "react-toastify";
 
 function Analysis() {
-  const [inputVisible, setInputVisible] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const [showScrollButton, setShowScrollButton] = useState(false);
   const rightSectionRef = useRef(null);
@@ -159,41 +158,16 @@ function Analysis() {
     });
   };
 
-  const toggleInputVisibility = () => {
-    setInputVisible((prev) => !prev);
-  };
-
-  if (error) {
-    return <AnalysisError />;
-  }
+  // if (error) {
+  //   return <AnalysisError />;
+  // }
 
   return (
     <div className={styles.analysis} ref={rightSectionRef}>
       <div className={styles.rightWraaper}>
         <div className={styles.title}>분석 레포트</div>
         <div className={styles.content}>
-          <div className={styles.originalResumeButton} onClick={toggleInputVisibility}>
-            <div>자소서 원본 보기</div>
-            {inputVisible ? (
-              <AiOutlineUp className={styles.toggleIcon} />
-            ) : (
-              <AiOutlineDown className={styles.toggleIcon} />
-            )}
-          </div>
-          <div className={`${styles.originalResume} ${inputVisible ? styles.open : ""}`}>
-            <div className={styles.resumeTitle}>자기소개서</div>
-            <div className={styles.input}> {requestBody?.input}</div>
-            <div className={styles.companyAndPosition}>
-              <div className={styles.companyWrapper}>
-                <div className={styles.subTitle}>지원 회사명</div>
-                <div className={styles.input}>{requestBody?.company}</div>
-              </div>
-              <div className={styles.positionWrapper}>
-                <div className={styles.subTitle}>지원 직무</div>
-                <div className={styles.input}>{requestBody?.position}</div>
-              </div>
-            </div>
-          </div>
+          <OriginalResumeSection requestBody={requestBody} />
           <div className={styles.contentWrapper}>
             {benchmarkX !== 0 && (
               <RadarChart

@@ -1,0 +1,156 @@
+.introduction {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+
+    .introductionTitle {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .introductionContentWrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .introductionContent {
+        width: 100% !important;
+        height: 24rem !important;
+        color: #131313;
+        background-color: #f4f2ed;
+        padding: 0.75rem;
+        resize: none;
+        border-radius: 0.5rem;
+        border: none;
+        font-size: 1rem;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: 1px solid #4d4d4d;
+        }
+        &::placeholder {
+          color: #969696;
+        }
+      }
+    }
+  }
+
+  .companyAndJob {
+    display: flex;
+    gap: 1.25rem;
+    width: 100%;
+
+    .inputGroup {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: baseline;
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        height: 3.5rem;
+        font-size: 1rem;
+        background-color: #f6f5ef;
+        border-radius: 0.5rem;
+        border: none;
+        padding: 0rem 0.75rem;
+        color: #131313;
+
+        &:focus {
+          outline: 1px solid #4d4d4d;
+        }
+        &::placeholder {
+          color: #969696;
+        }
+      }
+    }
+  }
+  .urlInputGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: baseline;
+    margin-top: 12px;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      height: 3.5rem;
+      font-size: 1rem;
+      background-color: #f6f5ef;
+      border-radius: 0.5rem;
+      border: none;
+      padding: 0rem 0.75rem;
+      color: #131313;
+
+      &:focus {
+        outline: 1px solid #4d4d4d;
+      }
+      &::placeholder {
+        color: #969696;
+      }
+    }
+  }
+
+  .charCount {
+    color: #969696;
+    font-size: 12px;
+    text-align: right;
+    width: 100%;
+    flex: 1;
+  }
+
+  .infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    width: 100%;
+  }
+
+  .errorText {
+    color: #e75959;
+    font-size: 14px;
+    display: block;
+    animation: invalid-feedback-shake 0.35s linear;
+    width: 100%;
+    flex: 2;
+  }
+}
+
+@keyframes invalid-feedback-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  8%,
+  41% {
+    transform: translateX(-0.625rem);
+  }
+
+  25%,
+  58% {
+    transform: translateX(0.625rem);
+  }
+
+  75% {
+    transform: translateX(-0.3125rem);
+  }
+
+  92% {
+    transform: translateX(0.3125rem);
+  }
+}

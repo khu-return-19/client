@@ -1,9 +1,6 @@
 import React from "react";
 import styles from "./Evaluation3D.module.scss";
 import {
-  XCard,
-  YCard,
-  ZCard,
   MultiModalAnalysisCard,
   DatabaseCard,
   VisualizationCard,
@@ -14,6 +11,7 @@ import {
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "components/shared/breadcrumb";
+import { TitleSection } from "layouts/evaluation3D";
 
 function Evaluation3D() {
   const navigate = useNavigate();
@@ -22,25 +20,7 @@ function Evaluation3D() {
     <div className={styles.evaluation3D}>
       <Breadcrumb paths={["서비스 소개", "3D 역량분석이란?"]} />
       <div className={styles.wrapper}>
-        <div className={styles.titleSection}>
-          <span className={styles.title}>3D 역량분석이란?</span>
-          <div className={styles.body}>
-            <div className={styles.subtitle}>3D 모델의 구성</div>
-            <div className={styles.content}>
-              <img src="/shared/3D-evaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
-              <div className={styles.xCard}>
-                <XCard />
-              </div>
-              <div className={styles.yCard}>
-                <YCard />
-              </div>
-              <div className={styles.zCard}>
-                <ZCard />
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <TitleSection />
         <div className={styles.evaluationMethod}>
           <div className={styles.title}>평가 방식</div>
           <div className={styles.content}>

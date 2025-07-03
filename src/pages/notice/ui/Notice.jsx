@@ -1,48 +1,20 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import styles from "./Notice.module.scss";
 import GoToMainButton from "components/shared/goToMainButton";
-import { AiOutlineMore } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useFetchNotices } from "api/noticeApi";
-import { DeleteNoticeModal, NoticeSkeleton } from "layouts/notice";
+import { NoticeSkeleton } from "layouts/notice";
 
 function Notice() {
   const itemsPerPage = 8;
   const [pageGroup, setPageGroup] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedNoticeId, setSelectedNoticeId] = useState(null);
 
   const { data, isLoading } = useFetchNotices(currentPage, itemsPerPage);
 
   const totalPages = data?.page || 1;
 
-  const [menuOpen, setMenuOpen] = useState(null);
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target) && // 드롭다운 바깥 클릭
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) // 버튼 바깥 클릭
-      ) {
-        setMenuOpen(null);
-      }
-    }
-
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuOpen]);
 
   const handleRowClick = (noticeId) => {
     navigate(`/notice/${noticeId}`);
@@ -53,25 +25,7 @@ function Notice() {
       const prevGroupPage = (pageGroup - 1) * 5 + 5;
       setPageGroup((prev) => prev - 1);
       setCurrentPage(prevGroupPage);
-      // refetch();
     }
-  };
-
-  const handleMenuToggle = (event, id) => {
-    event.stopPropagation();
-    setMenuOpen((prev) => (prev === id ? null : id));
-  };
-
-  const handleEdit = (event, id) => {
-    event.stopPropagation();
-    navigate(`/notice/${id}/edit`);
-  };
-
-  const handleDelete = (event, id) => {
-    event.stopPropagation();
-    setSelectedNoticeId(id);
-    setMenuOpen(null);
-    setIsModalOpen(true);
   };
 
   const handleNextGroup = () => {
@@ -79,14 +33,12 @@ function Notice() {
       const nextGroupPage = (pageGroup + 1) * 5 + 1;
       setPageGroup((prev) => prev + 1);
       setCurrentPage(nextGroupPage);
-      // refetch();
     }
   };
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
     setCurrentPage(newPage);
-    // refetch();
   };
 
   const visiblePageNumbers = useMemo(() => {
@@ -94,10 +46,6 @@ function Notice() {
     const end = Math.min(totalPages, start + 4);
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }, [pageGroup, totalPages]);
-
-  const handleWriteClick = () => {
-    navigate("/notice/write");
-  };
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -125,11 +73,6 @@ function Notice() {
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <span className={styles.title}>공지사항</span>
-          {/* {userInfo?.role === "admin" && (
-            <div className={styles.writeButton} onClick={handleWriteClick}>
-              글 작성하기
-            </div>
-          )} */}
         </div>
         <div className={styles.tableContainer}>
           <div className={styles.table}>
@@ -143,27 +86,6 @@ function Notice() {
                       <td>{notice.title}</td>
                       <td className={styles.modifiedAt}>
                         <div>{formatDate(notice.modifiedAt)}</div>
-                        {/* {userInfo?.role === "admin" ? (
-                          <div className={styles.menuContainer}>
-                            <div
-                              className={styles.menuButton}
-                              onClick={(event) => handleMenuToggle(event, notice.id)}
-                              ref={buttonRef}
-                            >
-                              <AiOutlineMore />
-                            </div>
-                            {menuOpen === notice.id && (
-                              <div className={styles.menuDropdown} ref={menuRef}>
-                                <div onClick={(event) => handleEdit(event, notice.id)}>수정</div>
-                                <div onClick={(event) => handleDelete(event, notice.id)} className={styles.delete}>
-                                  삭제
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <div> &gt;</div>
-                        )} */}
                       </td>
                     </tr>
                   ))}
@@ -203,7 +125,6 @@ function Notice() {
         </div>
       </div>
       <GoToMainButton />
-      <DeleteNoticeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} noticeId={selectedNoticeId} />
     </div>
   );
 }

@@ -55,3 +55,21 @@
     }
   }
 }
+
+@media (max-width: 767px) {
+  .professor {
+    .description {
+      .professorImage {
+        position: static;
+      }
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .professor {
+    .description {
+      padding: 0px 24px 24px 24px;
+    }
+  }
+}

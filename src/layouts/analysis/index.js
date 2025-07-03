@@ -1,5 +1,5 @@
 import DeleteAnalysisModal from "./ui/DeleteAnalysisModal";
-import AnalysisDetail from "./ui/AnalysisDetail";
-import AnalysisSidebar from "./ui/AnalysisSidebar";
+import AnalysisDetailSkeleton from "./ui/AnalysisDetailSkeleton";
+import AnalysisError from "./ui/AnalysisError";
 
-export { DeleteAnalysisModal, AnalysisDetail, AnalysisSidebar };
+export { DeleteAnalysisModal, AnalysisDetailSkeleton, AnalysisError };

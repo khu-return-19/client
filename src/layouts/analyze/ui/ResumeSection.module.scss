@@ -114,3 +114,28 @@
     }
   }
 }
+
+@keyframes invalid-feedback-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  8%,
+  41% {
+    transform: translateX(-0.625rem);
+  }
+
+  25%,
+  58% {
+    transform: translateX(0.625rem);
+  }
+
+  75% {
+    transform: translateX(-0.3125rem);
+  }
+
+  92% {
+    transform: translateX(0.3125rem);
+  }
+}

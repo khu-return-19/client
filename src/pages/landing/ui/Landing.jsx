@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Landing.module.scss";
-import { XCard, YCard, ZCard, SampleReport } from "components/landing";
-import { useNavigate } from "react-router-dom";
+import { SampleReport } from "components/landing";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
+import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
 
 function Landing() {
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -18,61 +17,14 @@ function Landing() {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <div className={styles.landing}>
       <div className={styles.wrapper}>
-        {isMobile || isTablet ? (
-          <div className={styles.intro}>
-            <div className={styles.leftSection}>
-              <span className={styles.title}>
-                자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 역량</span>을 파악해요
-              </span>
-              <div className={styles.description}>
-                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
-                <span className={styles.text}>
-                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
-                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
-                </span>
-              </div>
-              <img src="/landing/main.png" alt="" className={styles.mainImage} />
-              <div className={styles.imageButtonGroup}>
-                <button className={`${styles.imageButton} `} />
-              </div>
-              <div className={styles.analyzeButton} onClick={openModal}>
-                예시 레포트 보러가기
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.intro}>
-            <div className={styles.leftSection}>
-              <span className={styles.title}>
-                자기소개서 분석을 통해 <br />
-                <span className={styles.color}>합격 역량</span>을 파악해요
-              </span>
-              <div className={styles.description}>
-                <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
-                <span className={styles.text}>
-                  합격자 빅데이터 기반의 3D역량평가를 통해 <br />
-                  <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
-                </span>
-              </div>
-              <div className={styles.imageButtonGroup}>
-                <button className={`${styles.imageButton} `} />
-              </div>
-              <div className={styles.analyzeButton} onClick={openModal}>
-                예시 레포트 보러가기
-              </div>
-            </div>
-            <div className={styles.rightSection}>
-              <img src="/landing/main.png" alt="" className={styles.mainImage} />
-            </div>
-          </div>
-        )}
+        {isMobile || isTablet ? <IntroSmallSize onOpenModal={openModal} /> : <IntroBigSize onOpenModal={openModal} />}
 
         <motion.div
           ref={evalRef}
@@ -81,24 +33,7 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.evaluation}
         >
-          <div className={styles.titleSection}>
-            <span className={styles.title}>3D 역량평가 모델로 보는 세 가지 핵심 지표</span>
-            <span className={styles.description}>
-              당신의 학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z)을 정량 분석하여, 인터랙티브 3D 그래프로 시각화
-            </span>
-          </div>
-          <div className={styles.content}>
-            <img src="/shared/3D-evaluation.png" alt="3D 역량 평가 이미지" className={styles.evaluationImage} />
-            <div className={styles.xCard}>
-              <XCard />
-            </div>
-            <div className={styles.yCard}>
-              <YCard />
-            </div>
-            <div className={styles.zCard}>
-              <ZCard />
-            </div>
-          </div>
+          <Evaluation />
         </motion.div>
 
         <motion.div
@@ -108,24 +43,7 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.improvement}
         >
-          <div className={styles.titleSection}>
-            <span className={styles.title}>개선방식 제안</span>
-            <span className={styles.description}>합격자 비교분석 구직자의 장단점 소개 및 개선 전략 제공</span>
-          </div>
-          <div className={styles.cardSection}>
-            <img
-              src="/landing/accepted-analysis-card.png"
-              alt="합격자 비교분석"
-              className={styles.acceptedAnalysisCard}
-            />
-            <img src="/landing/strengths-card.png" alt="구직자의 장단점 평가" className={styles.strengthsCard} />
-            <img src="/landing/strategy-card.png" alt="개선전략" className={styles.strategyCard} />
-            <img
-              src="/landing/final-score-card.png"
-              alt="종합 평가/ 합격 가능성 평가"
-              className={styles.finalScoreCard}
-            />
-          </div>
+          <Improvement />
         </motion.div>
 
         <motion.div
@@ -135,33 +53,7 @@ function Landing() {
           transition={{ duration: 0.6 }}
           className={styles.resumeFeedback}
         >
-          <div className={styles.titleSection}>
-            <span className={styles.title}>자기소개서 평가 및 수정</span>
-            <span className={styles.description}>개선전략을 반영한 자기소개서 수정 및 수정 후 합격가능성 재평가</span>
-          </div>
-          <div className={styles.cardSection}>
-            <div className={styles.beforeCard}>
-              <span>수정 전</span>
-              <span>
-                00동아리에서 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움이 있었습니다.
-                <br />
-                이에 따라 내용 요약 및 불필요한 부분 정리를 통해 회의록 작성의 효율성을 개선하였습니다.
-              </span>
-            </div>
-            <div className={styles.afterCard}>
-              <span className={styles.color}>수정 후</span>
-              <span>
-                00동아리 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서 팀원 간 소통의 어려움을 인식했습니다.
-                <br />
-                <span className={styles.size}>
-                  000를 활용한 <span className={styles.color}>실시간 협업 시스템 도입</span>과, 핵심 내용 요약 및
-                  불필요한 부분 정리를 통해
-                  <br />
-                  회의록 작성의 <span className={styles.color}>효율성을 약 20% 이상 개선</span>하였습니다.
-                </span>
-              </span>
-            </div>
-          </div>
+          <ResumeFeedback />
         </motion.div>
       </div>
 
@@ -172,23 +64,7 @@ function Landing() {
         transition={{ duration: 0.6 }}
         className={styles.bottom}
       >
-        <div className={styles.wrapper}>
-          <div className={styles.sampleReport}>
-            <span className={styles.title}>
-              지금 바로 (Here & Now) <br />
-              당신의 자기소개서를 평가받고 수정하고 싶다면?
-            </span>
-            <div
-              className={styles.sampleReportButton}
-              onClick={() => {
-                navigate("/analyze");
-                window.scrollTo({ top: 0, behavior: "auto" });
-              }}
-            >
-              자기소개서 평가 및 첨삭 받기
-            </div>
-          </div>
-        </div>
+        <Bottom />
       </motion.div>
       {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
     </div>

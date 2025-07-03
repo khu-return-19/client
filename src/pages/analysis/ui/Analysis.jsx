@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Analysis.module.scss";
 import { useLocation } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
-import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
-import { AnalysisError, OriginalResumeSection } from "layouts/analysis";
-import { RadarChart, Notification } from "components/analysis";
-import ShinyText from "components/shared/shiny-text";
+import { AnalysisError, OriginalResumeSection, AnalysisContentWrapper } from "layouts/analysis";
+import { Notification } from "components/analysis";
 import { useAnalysisStream } from "../hooks/useAnalysisStream";
 
 function Analysis() {
@@ -29,7 +24,7 @@ function Analysis() {
 
     element.addEventListener("scroll", handleScroll);
     return () => element.removeEventListener("scroll", handleScroll);
-  }, [rightSectionRef?.current, streamingContent]);
+  }, [streamingContent]);
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
@@ -60,48 +55,23 @@ function Analysis() {
     });
   };
 
-  // if (error) {
-  //   return <AnalysisError />;
-  // }
+  if (error) {
+    return <AnalysisError />;
+  }
 
   return (
     <div className={styles.analysis} ref={rightSectionRef}>
-      <div className={styles.rightWraaper}>
+      <div className={styles.wraaper}>
         <div className={styles.title}>분석 레포트</div>
         <div className={styles.content}>
           <OriginalResumeSection requestBody={requestBody} />
-          <div className={styles.contentWrapper}>
-            {benchmark.x !== 0 && (
-              <RadarChart
-                x={score.x}
-                y={score.y}
-                z={score.z}
-                benchmarkX={benchmark.x}
-                benchmarkY={benchmark.y}
-                benchmarkZ={benchmark.z}
-              />
-            )}
-            {streamingContent ? (
-              <ReactMarkdown
-                className={styles.streaming}
-                remarkPlugins={[remarkGfm, remarkBreaks]}
-                rehypePlugins={[rehypeRaw]}
-              >
-                {streamingContent}
-              </ReactMarkdown>
-            ) : (
-              <div className={styles.description}>
-                <div className={styles.spinner} />
-                <ShinyText text={currentPhaseText} speed={3} />
-                {agentWebSearch.title && (
-                  <div className={styles.agentWebSearch}>
-                    <img src={`http://www.google.com/s2/favicons?domain=${agentWebSearch.url}`} alt="" />
-                    {agentWebSearch && <span>{agentWebSearch.title}</span>}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          <AnalysisContentWrapper
+            score={score}
+            benchmark={benchmark}
+            streamingContent={streamingContent}
+            currentPhaseText={currentPhaseText}
+            agentWebSearch={agentWebSearch}
+          />
         </div>
       </div>
       <button

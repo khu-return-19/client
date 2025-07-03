@@ -1,0 +1,57 @@
+.professor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0px 12px;
+  box-sizing: border-box;
+  width: 100%;
+
+  .nameSection {
+    color: #969696;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 24px;
+
+    &::before {
+      content: "";
+      width: 4px;
+      height: 40px;
+      background-color: #990e17;
+      display: inline-block;
+      border-radius: 2px;
+    }
+
+    .name {
+      color: #4d4d4d;
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
+
+  .description {
+    background-color: #f0ece8;
+    width: 100%;
+    padding: 0px 48px 24px 48px;
+    box-sizing: border-box;
+    position: relative;
+    color: #4d4d4d;
+    font-size: 16px;
+
+    .title {
+      color: #4d4d4d;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .professorImage {
+      width: 100%;
+      max-width: 390px;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+  }
+}

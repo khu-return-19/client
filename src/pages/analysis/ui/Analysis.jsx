@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import { MdOutlineArrowDownward } from "react-icons/md";
-import { AnalysisDetailSkeleton, AnalysisError } from "layouts/analysis";
+import { AnalysisError } from "layouts/analysis";
 import { RadarChart, Notification } from "components/analysis";
 import ShinyText from "components/shared/shiny-text";
 import { toast } from "react-toastify";

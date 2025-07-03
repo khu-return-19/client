@@ -1,0 +1,94 @@
+.titleSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  .title {
+    color: #990e17;
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  .body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 140px;
+
+    .subtitle {
+      color: #990e17;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      .evaluationImage {
+        width: 100%;
+        max-width: 452px;
+      }
+
+      .xCard {
+        position: absolute;
+        top: 320px;
+        left: 30px;
+      }
+      .yCard {
+        position: absolute;
+        top: 320px;
+        right: 100px;
+      }
+      .zCard {
+        position: absolute;
+        top: -110px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .titleSection {
+    .body {
+      .content {
+        .xCard {
+          left: 8px !important;
+        }
+        .yCard {
+          right: 8px !important;
+        }
+        .zCard {
+          top: -110px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .titleSection {
+    .body {
+      gap: 48px !important;
+      .content {
+        flex-direction: column;
+        padding: 0px 12px;
+        box-sizing: border-box;
+
+        .xCard,
+        .yCard,
+        .zCard {
+          position: static !important;
+          width: 100%;
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@ import styles from "./Team.module.scss";
 import { useNavigate } from "react-router-dom";
 import GoToMainButton from "components/shared/goToMainButton";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { Professor } from "layouts/team";
+import { Professor, Member } from "layouts/team";
 
 function Team() {
   const navigate = useNavigate();
@@ -15,62 +15,7 @@ function Team() {
         <div className={styles.title}>서비스 제작 구성원 소개</div>
         <Professor />
         <div className={styles.subtitle}>웹서비스 구축</div>
-        <div className={styles.content}>
-          <div className={styles.card}>
-            <img src="/team/byeongmin-kwak.jpg" alt="" />
-            <div className={styles.description}>
-              <span className={styles.name}>곽병민</span>
-              <span className={styles.info}>
-                컴퓨터공학과 <br />
-                Front-end <br />
-                bqudmals@khu.ac.kr
-              </span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <img src="/team/seungpyo-hong.jpeg" alt="" />
-            <div className={styles.description}>
-              <span className={styles.name}>홍승표</span>
-              <span className={styles.info}>
-                컴퓨터공학과 <br />
-                Back-end <br />
-                zackinthebox@khu.ac.kr
-              </span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <img src="/team/wonjin-kim.jpeg" alt="" />
-            <div className={styles.description}>
-              <span className={styles.name}>김원진</span>
-              <span className={styles.info}>
-                컴퓨터공학과 <br />
-                AI <br />
-                wjkim9653@gmail.com
-              </span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <img src="/team/yeongrae-noh.jpeg" alt="" />
-            <div className={styles.description}>
-              <span className={styles.name}>노영래</span>
-              <span className={styles.info}>
-                AI <br />
-                kireo0893@gmail.com
-              </span>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <img src="/team/hyorim-kim.jpeg" alt="" />
-            <div className={styles.description}>
-              <span className={styles.name}>김효림</span>
-              <span className={styles.info}>
-                디지털콘텐츠학과 <br />
-                Design <br />
-                kimyohada226@gmail.com
-              </span>
-            </div>
-          </div>
-        </div>
+        <Member />
       </div>
       <div className={styles.bottom}>
         <div className={styles.content}>

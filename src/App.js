@@ -11,9 +11,7 @@ import Analyze from "pages/analyze";
 import Notice from "pages/notice";
 import Footer from "shared/footer";
 import PrivacyPolicy from "pages/privacy-policy";
-import WriteNotice from "pages/notice-write";
 import NoticeDetail from "pages/notice-detail";
-import EditNotice from "pages/notice-edit";
 import NotFound from "pages/Error/notFound";
 
 function AppContent() {
@@ -36,8 +34,6 @@ function AppContent() {
         {/* 공지사항 */}
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:id" element={<NoticeDetail />} />
-        <Route path="/notice/write" element={<WriteNotice />} />
-        <Route path="/notice/:id/edit" element={<EditNotice />} />
 
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/analyze" element={<Analyze />} />

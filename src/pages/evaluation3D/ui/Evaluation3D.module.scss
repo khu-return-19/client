@@ -16,27 +16,6 @@
   box-sizing: border-box;
   text-align: center;
 
-  .evaluationMethod {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 0px 12px;
-
-    .title {
-      color: #990e17;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-  }
-
   .utilizationValue {
     display: flex;
     flex-direction: column;
@@ -125,45 +104,6 @@
           color: #969696;
           font-size: 14px;
           font-weight: 400;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 1023px) {
-  .titleSection {
-    .body {
-      .content {
-        .xCard {
-          left: 8px !important;
-        }
-        .yCard {
-          right: 8px !important;
-        }
-        .zCard {
-          top: -110px;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  .titleSection {
-    .body {
-      gap: 48px !important;
-      .content {
-        flex-direction: column;
-        padding: 0px 12px;
-        box-sizing: border-box;
-
-        .xCard,
-        .yCard,
-        .zCard {
-          position: static !important;
-          width: 100%;
-          margin-top: 20px;
         }
       }
     }

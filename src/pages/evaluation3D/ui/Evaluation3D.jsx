@@ -1,17 +1,10 @@
 import React from "react";
 import styles from "./Evaluation3D.module.scss";
-import {
-  MultiModalAnalysisCard,
-  DatabaseCard,
-  VisualizationCard,
-  CompetencyInsightCard,
-  DXOptimizationCard,
-  MotivationRiskCard,
-} from "components/evaluation3D";
+import { CompetencyInsightCard, DXOptimizationCard, MotivationRiskCard } from "components/evaluation3D";
 import GoToMainButton from "components/shared/goToMainButton";
 import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { TitleSection } from "layouts/evaluation3D";
+import { TitleSection, EvaluationMethod } from "layouts/evaluation3D";
 
 function Evaluation3D() {
   const navigate = useNavigate();
@@ -21,14 +14,7 @@ function Evaluation3D() {
       <Breadcrumb paths={["서비스 소개", "3D 역량분석이란?"]} />
       <div className={styles.wrapper}>
         <TitleSection />
-        <div className={styles.evaluationMethod}>
-          <div className={styles.title}>평가 방식</div>
-          <div className={styles.content}>
-            <MultiModalAnalysisCard />
-            <DatabaseCard />
-            <VisualizationCard />
-          </div>
-        </div>
+        <EvaluationMethod />
         <div className={styles.utilizationValue}>
           <div className={styles.titleSection}>
             <div className={styles.title}>활용 가치</div>

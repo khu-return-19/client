@@ -9,6 +9,7 @@ import {
   Info,
   ResumeSection,
   IntroductionSection,
+  EmailVerificationSection,
 } from "layouts/analyze";
 import { TermsModal, PrivacyModal } from "components/analyze";
 import { useAnalyzeForm } from "../hooks/useAnalyzeForm";
@@ -54,9 +55,6 @@ function Analyze() {
     handleSendCode,
     handleVerifyCode,
   } = useAnalyzeForm(getValues, setCount);
-
-  const isDisabledEmail = emailPending || emailSuccess;
-  const isDisabledCode = codePending || codeSuccess;
 
   const navigate = useNavigate();
 
@@ -107,43 +105,14 @@ function Analyze() {
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <ResumeSection register={register} errors={errors} lengths={lengths} setLengths={setLengths} />
           <IntroductionSection register={register} errors={errors} lengths={lengths} setLengths={setLengths} />
-          <div className={styles.emailVerification}>
-            <div className={styles.inputWithButton}>
-              <input
-                className={`${styles.emailInput} ${isDisabledEmail ? styles.disabledInput : ""}`}
-                maxLength={100}
-                {...register("email")}
-                placeholder="example@khu.ac.kr"
-                disabled={isDisabledEmail}
-              />
-              <button
-                type="button"
-                onClick={handleSendCode}
-                disabled={isDisabledEmail}
-                className={`${styles.sendCodeButton} ${isDisabledEmail ? styles.disabled : ""}`}
-              >
-                인증번호 전송
-              </button>
-            </div>
-            {isCodeSent && (
-              <div className={styles.inputWithButton}>
-                <input
-                  className={`${styles.codeInput} ${isDisabledCode ? styles.disabledInput : ""}`}
-                  {...register("accessCode")}
-                  maxLength={6}
-                  placeholder="인증번호 입력"
-                />
-                <button
-                  type="button"
-                  className={`${styles.verifyCodeButton} ${isDisabledCode ? styles.disabled : ""}`}
-                  onClick={handleVerifyCode}
-                  disabled={isDisabledCode}
-                >
-                  인증번호 확인
-                </button>
-              </div>
-            )}
-          </div>
+          <EmailVerificationSection
+            register={register}
+            isCodeSent={isCodeSent}
+            isDisabledEmail={emailPending || emailSuccess}
+            isDisabledCode={codePending || codeSuccess}
+            handleSendCode={handleSendCode}
+            handleVerifyCode={handleVerifyCode}
+          />
           <div className={styles.save}>
             {remainingTime !== null && remainingTime > 0 && (
               <div className={styles.timerText}>인증 및 분석 남은 시간: {formatTime(remainingTime)}</div>

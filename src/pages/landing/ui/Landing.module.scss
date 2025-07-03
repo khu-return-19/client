@@ -116,33 +116,6 @@
   flex-direction: column;
   align-items: center;
   gap: 88px;
-
-  .titleSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-
-    .title {
-      color: #131313;
-      font-size: 32px;
-      font-weight: bold;
-    }
-    .description {
-      color: #969696;
-      font-size: 20px;
-      font-weight: 500;
-    }
-  }
-
-  .cardSection {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-    img {
-      width: 580px;
-    }
-  }
 }
 
 .resumeFeedback {

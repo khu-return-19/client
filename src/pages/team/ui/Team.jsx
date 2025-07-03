@@ -2,17 +2,14 @@ import React from "react";
 import styles from "./Team.module.scss";
 import { useNavigate } from "react-router-dom";
 import GoToMainButton from "components/shared/goToMainButton";
+import { Breadcrumb } from "components/shared/breadcrumb";
 
 function Team() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.team}>
-      <div className={styles.breadcrumb}>
-        <span>서비스 소개</span>
-        <div>></div>
-        <span>구성원</span>
-      </div>
+      <Breadcrumb paths={["서비스 소개", "구성원"]} />
       <div className={styles.wrapper}>
         <div className={styles.title}>서비스 제작 구성원 소개</div>
         <div className={styles.professor}>

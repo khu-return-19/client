@@ -2,17 +2,20 @@ import React, { useState, useEffect } from "react";
 import styles from "./Analyze.module.scss";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AnalysisConfirmModal, EmailSendModal, VerifyCodeModal, Info, ResumeSection } from "layouts/analyze";
+import {
+  AnalysisConfirmModal,
+  EmailSendModal,
+  VerifyCodeModal,
+  Info,
+  ResumeSection,
+  IntroductionSection,
+} from "layouts/analyze";
 import { TermsModal, PrivacyModal } from "components/analyze";
 import { useAnalyzeForm } from "../hooks/useAnalyzeForm";
 
 function Analyze() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [companyLength, setCompanyLength] = useState(0);
-  const [positionLength, setPositionLength] = useState(0);
-  const [urlLength, setUrlLength] = useState(0);
-  const [inputLength, setInputLength] = useState(0);
   const [isVerified, setIsVerified] = useState(false);
   const [count, setCount] = useState(0);
   const [termsChecked, setTermsChecked] = useState(false);
@@ -103,79 +106,7 @@ function Analyze() {
         <Info />
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <ResumeSection register={register} errors={errors} lengths={lengths} setLengths={setLengths} />
-          <div className={styles.introduction}>
-            <div>
-              <div className={styles.companyAndJob}>
-                <div className={styles.inputGroup}>
-                  <span className={styles.inputLabel}>지원 회사명</span>
-                  <input
-                    maxLength={100}
-                    {...register("company", {
-                      required: "지원 회사명을 입력해주세요.",
-                      onChange: (e) => {
-                        setCompanyLength(e.target.value.length);
-                      },
-                    })}
-                    placeholder="예시) 삼성전자"
-                  />
-                  <div className={styles.infoRow}>
-                    {errors.company && <div className={styles.errorText}>{errors.company.message}</div>}
-                    <div className={styles.charCount}>{companyLength}/100</div>
-                  </div>
-                </div>
-                <div className={styles.inputGroup}>
-                  <span className={styles.inputLabel}>지원 직무</span>
-                  <input
-                    maxLength={100}
-                    {...register("position", {
-                      required: "지원 직무를 입력해주세요.",
-                      onChange: (e) => {
-                        setPositionLength(e.target.value.length);
-                      },
-                    })}
-                    placeholder="예시) 네트워크 사업부 sw 개발"
-                  />
-                  <div className={styles.infoRow}>
-                    {errors.position && <div className={styles.errorText}>{errors.position.message}</div>}
-                    <div className={styles.charCount}>{positionLength}/100</div>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.urlInputGroup}>
-                <span className={styles.inputLabel}>지원 공고 사이트 url</span>
-                <input
-                  maxLength={100}
-                  {...register("url", {
-                    onChange: (e) => {
-                      setUrlLength(e.target.value.length);
-                    },
-                  })}
-                />
-                <div className={styles.charCount}>{urlLength}/100</div>
-              </div>
-            </div>
-            <div className={styles.inputGroup}>
-              <span className={styles.introductionTitle}>자기소개서</span>
-              <div className={styles.introductionContentWrapper}>
-                <textarea
-                  className={styles.introductionContent}
-                  maxLength={10000}
-                  {...register("input", {
-                    required: "자기소개서를 입력해주세요.",
-                    onChange: (e) => {
-                      setInputLength(e.target.value.length);
-                    },
-                  })}
-                  placeholder={`자기소개서의 질문 문항과 대답 문항을 같이 작성해주세요.
-                \n\n예시)\n1. 삼성전자를 지원한 이유와 입사 후 회사에서 이루고 싶은 꿈을 기술하십시오. 700자 (영문작성 시 1400자) 이내\n\n삼성전자의 네트워크 사업부에서 차세대 네트워크 기술 개발에 기여하며, 글로벌 시장에서 경쟁력 있는 소프트웨어 솔루션을 제공하고 싶습니다...`}
-                />
-                <div className={styles.infoRow}>
-                  {errors.input && <div className={styles.errorText}>{errors.input.message}</div>}
-                  <div className={styles.charCount}>{inputLength}/10000</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <IntroductionSection register={register} errors={errors} lengths={lengths} setLengths={setLengths} />
           <div className={styles.emailVerification}>
             <div className={styles.inputWithButton}>
               <input

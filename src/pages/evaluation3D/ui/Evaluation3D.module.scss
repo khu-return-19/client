@@ -15,41 +15,6 @@
   padding-top: 40px;
   box-sizing: border-box;
   text-align: center;
-
-  .utilizationValue {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    padding: 0px 12px;
-
-    .titleSection {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-
-      .title {
-        color: #990e17;
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-    }
-
-    .description {
-      color: #969696;
-      font-size: 12px;
-      font-weight: 400;
-      text-align: center;
-    }
-  }
 }
 
 .bottom {

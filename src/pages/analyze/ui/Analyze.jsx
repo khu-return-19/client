@@ -31,6 +31,10 @@ function Analyze() {
     career: 0,
     languageScore: 0,
     certificate: 0,
+    company: 0,
+    position: 0,
+    input: 0,
+    url: 0,
   });
 
   const formatTime = (seconds) => {

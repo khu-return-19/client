@@ -8,9 +8,8 @@ function Team() {
     <div className={styles.team}>
       <Breadcrumb paths={["서비스 소개", "구성원"]} />
       <div className={styles.wrapper}>
-        <div className={styles.title}>서비스 제작 구성원 소개</div>
+        <div className={styles.title}>Pertineo 구성원</div>
         <Professor />
-        <div className={styles.subtitle}>웹서비스 구축</div>
         <Member />
       </div>
       <Bottom />

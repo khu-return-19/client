@@ -26,6 +26,11 @@ function Landing() {
       <div className={styles.wrapper}>
         {isMobile || isTablet ? <IntroSmallSize onOpenModal={openModal} /> : <IntroBigSize onOpenModal={openModal} />}
 
+        <div className={styles.videoContainer}>
+          <video src="/landing/resume-writing.mp4" autoPlay loop muted playsInline />
+          <video src="/landing/report-generation.mp4" autoPlay loop muted playsInline />
+        </div>
+
         <motion.div
           ref={evalRef}
           initial={{ opacity: 0, y: 100 }}

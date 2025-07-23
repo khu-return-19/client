@@ -6,14 +6,16 @@ function IntroBigSize({ onOpenModal }) {
     <div className={styles.intro}>
       <div className={styles.leftSection}>
         <span className={styles.title}>
-          자기소개서 분석을 통해 <br />
-          <span className={styles.color}>합격 역량</span>을 파악해요
+          AI Pertineo가 해주는 <br />
+          <span className={styles.color}>자기소개서 컨설팅</span>
         </span>
         <div className={styles.description}>
-          <span className={styles.subTitle}>1분 컷 무료 AI 3D역량평가 & 분석</span>
+          <span className={styles.subTitle}>3D 역량 분석 보고서 제공</span>
           <span className={styles.text}>
-            합격자 빅데이터 기반의 3D역량평가를 통해 <br />
-            <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
+            <strong>합격자 데이터</strong>로 학습된 인공지능 Pertineo를 통해 <br />
+            3차원 역량 분석 결과를 확인하세요
+            <br /> <br />
+            <strong>경희대학교 웹메일</strong>로 보고서를 전송해요
           </span>
         </div>
         <div className={styles.analyzeButton} onClick={onOpenModal}>

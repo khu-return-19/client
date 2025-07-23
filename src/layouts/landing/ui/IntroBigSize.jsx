@@ -16,9 +16,6 @@ function IntroBigSize({ onOpenModal }) {
             <strong>직무역량분석</strong>과 <strong>개선된 자기소개서</strong>를 확인하세요
           </span>
         </div>
-        <div className={styles.imageButtonGroup}>
-          <button className={`${styles.imageButton} `} />
-        </div>
         <div className={styles.analyzeButton} onClick={onOpenModal}>
           예시 레포트 보러가기
         </div>

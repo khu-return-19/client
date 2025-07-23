@@ -17,9 +17,6 @@ function IntroSmallSize({ onOpenModal }) {
           </span>
         </div>
         <img src="/landing/main.png" alt="" className={styles.mainImage} />
-        <div className={styles.imageButtonGroup}>
-          <button className={`${styles.imageButton} `} />
-        </div>
         <div className={styles.analyzeButton} onClick={onOpenModal}>
           예시 레포트 보러가기
         </div>

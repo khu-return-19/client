@@ -40,21 +40,6 @@
       }
     }
 
-    .imageButtonGroup {
-      display: flex;
-      gap: 12px;
-
-      .imageButton {
-        width: 46px;
-        height: 16px;
-        border-radius: 30px;
-        background-color: #f4f2ed;
-        border: none;
-        transition: background-color 0.3s ease;
-        background-color: #fc8e8e;
-      }
-    }
-
     .analyzeButton {
       padding: 10px;
       background-color: #990e17;

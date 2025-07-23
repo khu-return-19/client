@@ -33,14 +33,6 @@
       font-size: 12px;
       font-weight: 400;
       position: relative;
-
-      &::before {
-        content: "*";
-        position: absolute;
-        left: -8px;
-        color: #fc8e8e;
-        font-weight: bold;
-      }
     }
   }
 }

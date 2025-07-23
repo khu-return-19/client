@@ -10,8 +10,7 @@ function Bottom() {
       <div className={styles.wrapper}>
         <div className={styles.sampleReport}>
           <span className={styles.title}>
-            지금 바로 (Here & Now) <br />
-            당신의 자기소개서를 평가받고 수정하고 싶다면?
+            지금 바로 Pertineo에게 <br /> 커리어 컨설팅을 받고싶다면?
           </span>
           <div
             className={styles.sampleReportButton}
@@ -20,7 +19,7 @@ function Bottom() {
               window.scrollTo({ top: 0, behavior: "auto" });
             }}
           >
-            자기소개서 평가 및 첨삭 받기
+            자기소개서 입력하러 가기
           </div>
         </div>
       </div>

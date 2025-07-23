@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   gap: 80px;
+  background-color: #f4f2ed;
+  padding: 40px 40px 120px 40px;
 }
 
 .wrapper {
@@ -12,4 +14,18 @@
   flex-direction: column;
   align-items: center;
   gap: 80px;
+  background-color: white;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .intro {
+    padding: 40px 20px 120px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro {
+    padding: 40px 0px 100px 0px;
+  }
 }

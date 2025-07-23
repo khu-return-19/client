@@ -9,8 +9,6 @@ function Breadcrumb({ paths = [] }) {
           <span>{path}</span>
           {/* 마지막 항목이 아니면 > 표시 */}
           {index < paths.length - 1 && <div className={styles.separator}>&gt;</div>}
-          {/* 항목이 하나뿐이면도 > 표시 */}
-          {paths.length === 1 && <div className={styles.separator}>&gt;</div>}
         </React.Fragment>
       ))}
     </div>

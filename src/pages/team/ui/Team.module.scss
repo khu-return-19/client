@@ -2,22 +2,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 80px;
+  background-color: #f4f2ed;
+  padding: 40px 40px 120px 40px;
 }
 
 .wrapper {
-  padding: 40px 0px;
+  padding: 0px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
   width: 100%;
-  max-width: 864px;
+  max-width: 1040px;
+  background-color: white;
+  box-sizing: border-box;
+  padding-bottom: 80px;
 
   .title {
     color: #990e17;
     font-size: 36px;
     font-weight: bold;
     text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .team {
+    padding: 40px 20px 120px 20px;
+
+    .wrapper {
+      padding: 0px 20px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .team {
+    padding: 40px 0px 100px 0px;
+
+    .wrapper {
+      padding: 0px 12px;
+    }
   }
 }

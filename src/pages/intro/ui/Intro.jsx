@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Intro.module.scss";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { TitleSection, KeyFeatures, ApplicationCases, Bottom } from "layouts/intro";
+import { TitleSection, KeyFeatures, ApplicationCases } from "layouts/intro";
 import GoToMainButton from "components/shared/goToMainButton";
 
 function Intro() {

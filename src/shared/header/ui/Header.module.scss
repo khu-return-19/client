@@ -95,6 +95,11 @@
       font-size: 1rem;
       font-weight: bold;
       text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: #eae8e2;
+      }
     }
 
     .menu.activeAbout,
@@ -140,7 +145,7 @@
     }
 
     .dropdown.activeAbout {
-      height: 13.5rem;
+      height: 10rem;
       visibility: visible;
     }
 
@@ -164,6 +169,24 @@
       &:hover {
         background-color: #eae8e2;
       }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .rightSection {
+    .menuSection {
+      gap: 0.8rem;
+
+      .menuItem {
+        padding: 0px 10px;
+      }
+    }
+  }
+
+  .logo {
+    .logoImage {
+      width: 240px;
     }
   }
 }

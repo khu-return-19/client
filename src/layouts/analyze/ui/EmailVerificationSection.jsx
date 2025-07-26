@@ -29,7 +29,7 @@ function EmailVerificationSection({
         </button>
       </div>
 
-      {isCodeSent && (
+      {isCodeSent ? (
         <div className={styles.inputWithButton}>
           <input
             className={`${styles.codeInput} ${isDisabledCode ? styles.disabledInput : ""}`}
@@ -46,6 +46,8 @@ function EmailVerificationSection({
             인증번호 확인
           </button>
         </div>
+      ) : (
+        <div className={styles.info}>경희대학교 메일만 가능합니다.</div>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Evaluation3D.module.scss";
 import { Breadcrumb } from "components/shared/breadcrumb";
-import { TitleSection, EvaluationMethod, UtilizationValue, Bottom } from "layouts/evaluation3D";
+import { TitleSection, EvaluationMethod, UtilizationValue } from "layouts/evaluation3D";
 import GoToMainButton from "components/shared/goToMainButton";
 
 function Evaluation3D() {

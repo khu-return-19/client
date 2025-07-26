@@ -33,6 +33,9 @@ const Header = React.memo(() => {
 
         <div className={styles.rightSection}>
           <div className={`${styles.menuSection} ${menuOpen ? styles.active : ""}`}>
+            <div className={`${styles.menu} ${styles.menuItem}`} onClick={() => (window.location.href = "/notice")}>
+              공지사항
+            </div>
             {/* 서비스 소개 */}
             <div
               className={styles.menuItem}
@@ -49,7 +52,6 @@ const Header = React.memo(() => {
                 <span onClick={() => (window.location.href = "/intro")}>서비스 소개</span>
                 <span onClick={() => (window.location.href = "/evaluation")}>3D 역량분석이란?</span>
                 <span onClick={() => (window.location.href = "/team")}>구성원</span>
-                <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
               </div>
             </div>
             {/* 주요 사이트 */}
@@ -90,6 +92,9 @@ const Header = React.memo(() => {
       {/* {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />} */}
       {isMobile && menuOpen && (
         <div className={styles.mobileMenu}>
+          <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/notice")}>
+            공지사항
+          </div>
           <div className={styles.mobileMenuItem} onClick={() => toggleDropdown("about")}>
             서비스 소개
           </div>
@@ -98,7 +103,6 @@ const Header = React.memo(() => {
               <span onClick={() => (window.location.href = "/intro")}>서비스 소개</span>
               <span onClick={() => (window.location.href = "/evaluation")}>3D 역량분석이란?</span>
               <span onClick={() => (window.location.href = "/team")}>구성원</span>
-              <span onClick={() => (window.location.href = "/notice")}>공지사항</span>
             </div>
           )}
           <div className={styles.mobileMenuItem} onClick={() => toggleDropdown("sitemap")}>

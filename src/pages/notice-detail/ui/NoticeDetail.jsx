@@ -3,6 +3,10 @@ import styles from "./NoticeDetail.module.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFetchNotice } from "api/noticeApi";
 import { NoticeDetailSkeleton } from "layouts/notice-detail";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import rehypeRaw from "rehype-raw";
 
 function NoticeDetail() {
   const navigate = useNavigate();
@@ -44,7 +48,9 @@ function NoticeDetail() {
               <div className={styles.date}>{formatDate(notice.modifiedAt)}</div>
             </div>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: notice.content }} />
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} rehypePlugins={[rehypeRaw]}>
+            {notice.content}
+          </ReactMarkdown>
         </div>
       </div>
       <div className={styles.listButton} onClick={handleClick}>

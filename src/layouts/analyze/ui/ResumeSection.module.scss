@@ -147,3 +147,9 @@
     transform: translateX(0.3125rem);
   }
 }
+
+@media (max-width: 768px) {
+  .resume {
+    padding: 1rem;
+  }
+}

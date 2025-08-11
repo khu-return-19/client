@@ -31,6 +31,10 @@
       &::placeholder {
         color: #969696;
       }
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
     }
 
     .disabledInput {

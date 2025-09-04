@@ -8,6 +8,10 @@
     color: #131313;
     font-size: 32px;
     font-weight: bold;
+
+    .mobileBr {
+      display: none;
+    }
   }
 
   .description {
@@ -70,7 +74,7 @@
     flex-direction: column;
 
     .evaluationImage {
-      width: 100%;
+      width: 90%;
       position: static;
     }
 
@@ -95,6 +99,21 @@
       position: static;
       width: 100%;
       margin-top: 20px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .titleSection {
+    .title {
+      font-size: 28px;
+      .mobileBr {
+        display: inline;
+      }
+    }
+
+    .description {
+      font-size: 18px;
     }
   }
 }

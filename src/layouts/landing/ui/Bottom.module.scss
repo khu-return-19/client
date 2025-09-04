@@ -48,3 +48,12 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .sampleReport {
+    margin-top: 128px;
+    .title {
+      font-size: 28px;
+    }
+  }
+}

@@ -33,3 +33,15 @@
     font-weight: 500;
   }
 }
+
+@media (max-width: 480px) {
+  .xCard {
+    padding: 15px 20px;
+
+    .titleSection {
+      .title {
+        font-size: 18px;
+      }
+    }
+  }
+}

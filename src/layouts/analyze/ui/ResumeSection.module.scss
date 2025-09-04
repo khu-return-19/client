@@ -155,8 +155,8 @@
 }
 
 @media (max-width: 480px) {
-  textarea,
-  input {
+  textarea::placeholder,
+  input::placeholder {
     font-size: 14px !important;
   }
 }

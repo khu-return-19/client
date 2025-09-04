@@ -29,7 +29,7 @@ function IntroductionSection({ register, errors, lengths, setLengths }) {
                 required: "지원 직무를 입력해주세요.",
                 onChange: (e) => setLengths((prev) => ({ ...prev, position: e.target.value.length })),
               })}
-              placeholder="예시) 네트워크 사업부 sw 개발"
+              placeholder={window.innerWidth < 480 ? "예시) 네트워크 사업부" : "예시) 네트워크 사업부 sw 개발"}
             />
             <div className={styles.infoRow}>
               {errors.position && <div className={styles.errorText}>{errors.position.message}</div>}

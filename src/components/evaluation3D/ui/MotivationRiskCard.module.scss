@@ -24,3 +24,9 @@
     text-align: center;
   }
 }
+
+@media (max-width: 480px) {
+  .motivationRiskCard {
+    gap: 8px;
+  }
+}

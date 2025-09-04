@@ -13,8 +13,8 @@ function KeyFeatures() {
         </div>
         <img src="/intro/main-features.png" alt="" className={styles.mainFeaturesImage} />
         <div className={styles.cardSection}>
-          <CareerTrendCard />
           <PersonalizedFeedbackCard />
+          <CareerTrendCard />
         </div>
         <span className={styles.contentText}>
           X축(학습 능력): 추천 강의, 학습 플랫폼 안내(Coursera, edX 등)

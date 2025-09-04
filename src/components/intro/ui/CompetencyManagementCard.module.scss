@@ -24,3 +24,10 @@
     text-align: center;
   }
 }
+
+@media (max-width: 480px) {
+  .competencyManagementCard {
+    padding: 20px;
+    gap: 10px;
+  }
+}

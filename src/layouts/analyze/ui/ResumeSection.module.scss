@@ -153,3 +153,10 @@
     padding: 1rem;
   }
 }
+
+@media (max-width: 480px) {
+  textarea,
+  input {
+    font-size: 14px !important;
+  }
+}

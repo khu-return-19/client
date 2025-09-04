@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -9,8 +9,29 @@ const Header = React.memo(() => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
-
+  const menuRef = useRef(null);
+  const menuIconRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        menuIconRef.current &&
+        !menuIconRef.current.contains(e.target)
+      ) {
+        setMenuOpen(false);
+        setOpenDropdown(null);
+      }
+    }
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   const toggleDropdown = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
@@ -26,7 +47,7 @@ const Header = React.memo(() => {
         </a>
 
         {isMobile && (
-          <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
+          <div ref={menuIconRef} className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FiX /> : <FiMenu />}
           </div>
         )}
@@ -91,7 +112,7 @@ const Header = React.memo(() => {
       </div>
       {/* {isLoginModalOpen && <LoginModal onClose={() => setLoginModalOpen(false)} />} */}
       {isMobile && menuOpen && (
-        <div className={styles.mobileMenu}>
+        <div ref={menuRef} className={styles.mobileMenu}>
           <div className={styles.mobileMenuItem} onClick={() => (window.location.href = "/notice")}>
             공지사항
           </div>

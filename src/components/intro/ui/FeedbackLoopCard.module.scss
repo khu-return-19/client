@@ -14,3 +14,9 @@
     font-weight: bold;
   }
 }
+
+@media (max-width: 480px) {
+  .feedbackLoopCard {
+    padding: 12px;
+  }
+}

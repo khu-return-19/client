@@ -14,3 +14,9 @@
     font-weight: bold;
   }
 }
+
+@media (max-width: 480px) {
+  .personalizedFeedbackCard {
+    padding: 12px;
+  }
+}

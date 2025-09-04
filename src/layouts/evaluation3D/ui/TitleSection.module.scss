@@ -92,3 +92,20 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .titleSection {
+    .title {
+      font-size: 28px;
+    }
+    gap: 24px;
+
+    .body {
+      .content {
+        .evaluationImage {
+          width: 90%;
+        }
+      }
+    }
+  }
+}

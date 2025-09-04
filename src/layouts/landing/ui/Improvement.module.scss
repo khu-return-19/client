@@ -50,3 +50,18 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .titleSection {
+    .title {
+      font-size: 28px;
+      .mobileBr {
+        display: inline;
+      }
+    }
+
+    .description {
+      font-size: 18px;
+    }
+  }
+}

@@ -14,3 +14,9 @@
     font-weight: bold;
   }
 }
+
+@media (max-width: 480px) {
+  .aIAutoAnalysisCard {
+    padding: 12px;
+  }
+}

@@ -34,6 +34,7 @@ body {
   font-family: "Pretendard", "Noto Sans KR", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;
 }
 
 input,

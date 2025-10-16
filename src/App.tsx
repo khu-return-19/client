@@ -14,7 +14,7 @@ import PrivacyPolicy from "pages/privacy-policy";
 import NoticeDetail from "pages/notice-detail";
 import NotFound from "pages/Error/notFound";
 
-function AppContent() {
+const AppContent: React.FC = () => {
   const location = useLocation();
 
   const noFooterPages = ["/error"];
@@ -45,15 +45,15 @@ function AppContent() {
       {!isNoFooterPage && <Footer />}
     </>
   );
-}
+};
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <AppContent />
       <ToastContainer position="top-right" autoClose={2000} />
     </Router>
   );
-}
+};
 
 export default App;

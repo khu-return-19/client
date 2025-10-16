@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./XCard.module.scss";
 
-function XCard() {
+const XCard: React.FC = () => {
   return (
     <div className={styles.xCard}>
       <div className={styles.titleSection}>
@@ -13,6 +13,6 @@ function XCard() {
       </span>
     </div>
   );
-}
+};
 
 export default XCard;

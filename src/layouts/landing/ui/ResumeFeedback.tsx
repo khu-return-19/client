@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ResumeFeedback.module.scss";
 
-function ResumeFeedback() {
+const ResumeFeedback: React.FC = () => {
   return (
     <>
       <div className={styles.titleSection}>
@@ -33,6 +33,6 @@ function ResumeFeedback() {
       </div>
     </>
   );
-}
+};
 
 export default ResumeFeedback;

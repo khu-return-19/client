@@ -1,7 +1,11 @@
 import React from "react";
-import styles from "./IntroSmallSize.module.scss";
+import styles from "./IntroBigSize.module.scss";
 
-function IntroSmallSize({ onOpenModal }) {
+interface IntroBigSizeProps {
+  onOpenModal: () => void;
+}
+
+const IntroBigSize: React.FC<IntroBigSizeProps> = ({ onOpenModal }) => {
   return (
     <div className={styles.intro}>
       <div className={styles.leftSection}>
@@ -18,13 +22,15 @@ function IntroSmallSize({ onOpenModal }) {
             <strong>경희대학교 웹메일</strong>로 보고서를 전송해요
           </span>
         </div>
-        <img src="/landing/main.png" alt="" className={styles.mainImage} />
         <div className={styles.analyzeButton} onClick={onOpenModal}>
           예시 레포트 보러가기
         </div>
       </div>
+      <div className={styles.rightSection}>
+        <img src="/landing/main.png" alt="" className={styles.mainImage} />
+      </div>
     </div>
   );
-}
+};
 
-export default IntroSmallSize;
+export default IntroBigSize;

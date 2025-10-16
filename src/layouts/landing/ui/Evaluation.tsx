@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Evaluation.module.scss";
 import { XCard, YCard, ZCard } from "components/landing";
 
-function Evaluation() {
+const Evaluation: React.FC = () => {
   return (
     <>
       <div className={styles.titleSection}>
@@ -27,6 +27,6 @@ function Evaluation() {
       </div>
     </>
   );
-}
+};
 
 export default Evaluation;

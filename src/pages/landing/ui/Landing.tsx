@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
 
-function Landing() {
+const Landing: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -74,6 +74,6 @@ function Landing() {
       {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
     </div>
   );
-}
+};
 
 export default Landing;

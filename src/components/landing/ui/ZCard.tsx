@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ZCard.module.scss";
 
-function ZCard() {
+const ZCard: React.FC = () => {
   return (
     <div className={styles.zCard}>
       <div className={styles.titleSection}>
@@ -13,6 +13,6 @@ function ZCard() {
       </span>
     </div>
   );
-}
+};
 
 export default ZCard;

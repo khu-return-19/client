@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Improvement.module.scss";
 
-function Improvement() {
+const Improvement: React.FC = () => {
   return (
     <>
       <div className={styles.titleSection}>
@@ -16,6 +16,6 @@ function Improvement() {
       </div>
     </>
   );
-}
+};
 
 export default Improvement;

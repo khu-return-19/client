@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./YCard.module.scss";
 
-function YCard() {
+const YCard: React.FC = () => {
   return (
     <div className={styles.yCard}>
       <div className={styles.titleSection}>
@@ -13,6 +13,6 @@ function YCard() {
       </div>
     </div>
   );
-}
+};
 
 export default YCard;

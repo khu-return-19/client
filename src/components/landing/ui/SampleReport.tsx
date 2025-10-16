@@ -1,12 +1,16 @@
 import React from "react";
 import styles from "./SampleReport.module.scss";
 
-function SampleReport({ onClose }) {
+interface SampleReportProps {
+  onClose: () => void;
+}
+
+const SampleReport: React.FC<SampleReportProps> = ({ onClose }) => {
   const handleOverlayClick = () => {
     onClose();
   };
 
-  const handleContentClick = (e) => {
+  const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
@@ -22,6 +26,6 @@ function SampleReport({ onClose }) {
       </div>
     </div>
   );
-}
+};
 
 export default SampleReport;

@@ -41,7 +41,6 @@ export const useDeleteAnalyses = () => {
       return response.data;
     },
     onSuccess: (_, id) => {
-      console.log(id);
       queryClient.setQueryData(["analyses"], (oldData) => {
         const newPagesArray = oldData.pages.map(
           (page) => page.filter((analysis) => analysis.id !== id) // 삭제된 id 제외한 데이터

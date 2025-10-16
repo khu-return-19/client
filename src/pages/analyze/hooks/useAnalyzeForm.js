@@ -50,7 +50,6 @@ export const useAnalyzeForm = (getValues, setCount) => {
       { email, accessCode },
       {
         onSuccess: (data) => {
-          console.log("Verification response:", data);
           if (data.valid) {
             toast.success("이메일 인증이 완료되었습니다.");
             setCount(data.count);

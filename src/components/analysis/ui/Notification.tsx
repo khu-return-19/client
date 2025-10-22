@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Notification.module.scss";
 import { AiOutlineBell, AiOutlineClose } from "react-icons/ai";
 
-function Notification() {
+const Notification: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,6 +30,6 @@ function Notification() {
       )}
     </div>
   );
-}
+};
 
 export default Notification;

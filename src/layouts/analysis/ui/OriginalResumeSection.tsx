@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import styles from "./OriginalResumeSection.module.scss";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import type { RequestBody } from "types/analysis";
 
-function OriginalResumeSection({ requestBody }) {
+interface OriginalResumeSectionProps {
+  requestBody: RequestBody | undefined;
+}
+
+const OriginalResumeSection: React.FC<OriginalResumeSectionProps> = ({ requestBody }) => {
   const [inputVisible, setInputVisible] = useState(false);
 
   if (!requestBody?.input) return null;
@@ -30,6 +35,6 @@ function OriginalResumeSection({ requestBody }) {
       </div>
     </>
   );
-}
+};
 
 export default OriginalResumeSection;

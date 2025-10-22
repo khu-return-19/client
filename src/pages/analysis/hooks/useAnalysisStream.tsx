@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import type { RequestBody, AgentWebSearch, Score, StreamEvent, UseAnalysisStreamReturn } from "types/analysis";
 
-export const useAnalysisStream = (requestBody) => {
-  const [streamingContent, setStreamingContent] = useState("");
-  const [currentPhaseText, setCurrentPhaseText] = useState("분석 준비 중입니다.");
-  const [agentWebSearch, setAgentWebSearch] = useState({ title: "", url: "" });
-  const [score, setScore] = useState({ x: 0, y: 0, z: 0 });
-  const [benchmark, setBenchmark] = useState({ x: 0, y: 0, z: 0 });
-  const [error, setError] = useState(false);
+export const useAnalysisStream = (requestBody: RequestBody | undefined): UseAnalysisStreamReturn => {
+  const [streamingContent, setStreamingContent] = useState<string>("");
+  const [currentPhaseText, setCurrentPhaseText] = useState<string>("분석 준비 중입니다.");
+  const [agentWebSearch, setAgentWebSearch] = useState<AgentWebSearch>({ title: "", url: "" });
+  const [score, setScore] = useState<Score>({ x: 0, y: 0, z: 0 });
+  const [benchmark, setBenchmark] = useState<Score>({ x: 0, y: 0, z: 0 });
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!requestBody) return setError(true);
+    if (!requestBody) {
+      setError(true);
+      return;
+    }
 
     const fetchStream = async () => {
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/analysis`, {
@@ -22,7 +26,10 @@ export const useAnalysisStream = (requestBody) => {
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok || !response.body) return setError(true);
+      if (!response.ok || !response.body) {
+        setError(true);
+        return;
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -40,10 +47,9 @@ export const useAnalysisStream = (requestBody) => {
           const jsonStr = trimmed.slice("data:".length).trim();
 
           try {
-            const parsed = JSON.parse(jsonStr);
-            const { event } = parsed;
+            const parsed = JSON.parse(jsonStr) as StreamEvent;
 
-            switch (event) {
+            switch (parsed.event) {
               case "created_report":
                 setStreamingContent(parsed.content.replace(/\u00A0/g, " "));
                 break;
@@ -54,7 +60,7 @@ export const useAnalysisStream = (requestBody) => {
                 setAgentWebSearch({ title: parsed.title, url: parsed.url });
                 break;
               case "phase_change": {
-                const phaseMap = {
+                const phaseMap: { [key: string]: string } = {
                   scheme_phase: "정보 추출 중입니다.",
                   plan_phase: "에이전트에 연결 중입니다.",
                   tool_use_phase: "웹 페이지와 데이터베이스를 조회하고 있습니다.",

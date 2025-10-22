@@ -10,6 +10,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
+  ChartOptions,
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "./RadarChart.module.scss";
@@ -27,10 +29,19 @@ ChartJS.register(
   ChartDataLabels
 );
 
-function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
+interface RadarChartProps {
+  x: number;
+  y: number;
+  z: number;
+  benchmarkX: number;
+  benchmarkY: number;
+  benchmarkZ: number;
+}
+
+const RadarChart: React.FC<RadarChartProps> = ({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) => {
   const isLoading = x === 0 && y === 0 && z === 0;
 
-  const data = {
+  const data: ChartData<"radar"> = {
     labels: ["Z축", "Y축", "X축"], // 각 축 이름
     datasets: [
       {
@@ -50,7 +61,7 @@ function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"radar"> = {
     scales: {
       r: {
         min: 0,
@@ -87,6 +98,6 @@ function RadarChart({ x, y, z, benchmarkX, benchmarkY, benchmarkZ }) {
       )}
     </div>
   );
-}
+};
 
 export default RadarChart;

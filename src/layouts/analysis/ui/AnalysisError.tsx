@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./AnalysisError.module.scss";
 
-function AnalysisError() {
+const AnalysisError: React.FC = () => {
   return (
     <div className={styles.analysisError}>
       <div className={styles.wrapper}>
@@ -20,6 +20,6 @@ function AnalysisError() {
       </div>
     </div>
   );
-}
+};
 
 export default AnalysisError;

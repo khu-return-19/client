@@ -6,8 +6,23 @@ import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeRaw from "rehype-raw";
 import ShinyText from "components/shared/shiny-text";
+import type { Score, AgentWebSearch } from "types/analysis";
 
-function AnalysisContentWrapper({ score, benchmark, streamingContent, currentPhaseText, agentWebSearch }) {
+interface AnalysisContentWrapperProps {
+  score: Score;
+  benchmark: Score;
+  streamingContent: string;
+  currentPhaseText: string;
+  agentWebSearch: AgentWebSearch;
+}
+
+const AnalysisContentWrapper: React.FC<AnalysisContentWrapperProps> = ({
+  score,
+  benchmark,
+  streamingContent,
+  currentPhaseText,
+  agentWebSearch,
+}) => {
   return (
     <div className={styles.contentWrapper}>
       {benchmark.x !== 0 && (
@@ -44,6 +59,6 @@ function AnalysisContentWrapper({ score, benchmark, streamingContent, currentPha
       )}
     </div>
   );
-}
+};
 
 export default AnalysisContentWrapper;

@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
+import { Popup } from "shared/popup";
 
 function Landing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -72,6 +74,7 @@ function Landing() {
         <Bottom />
       </motion.div>
       {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
+      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
     </div>
   );
 }

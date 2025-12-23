@@ -1,6 +1,19 @@
 import React from "react";
 import styles from "./AgreementSection.module.scss";
 
+interface AgreementSectionProps {
+  termsChecked: boolean;
+  privacyChecked: boolean;
+  onTermsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPrivacyChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onShowTermsModal: () => void;
+  onShowPrivacyModal: () => void;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  isVerified: boolean;
+  remainingTime: number | null;
+  formatTime: (seconds: number) => string;
+}
+
 function AgreementSection({
   termsChecked,
   privacyChecked,
@@ -12,7 +25,7 @@ function AgreementSection({
   isVerified,
   remainingTime,
   formatTime,
-}) {
+}: AgreementSectionProps) {
   return (
     <div className={styles.save}>
       {remainingTime !== null && remainingTime > 0 && (

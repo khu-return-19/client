@@ -2,7 +2,14 @@ import React from "react";
 import styles from "./AnalysisConfirmModal.module.scss";
 import Modal from "shared/modal";
 
-function AnalysisConfirmModal({ isOpen, onClose, onConfirm, count }) {
+interface AnalysisConfirmModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  count: number;
+}
+
+function AnalysisConfirmModal({ isOpen, onClose, onConfirm, count }: AnalysisConfirmModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} onConfirm={onConfirm}>
       <div className={styles.content}>

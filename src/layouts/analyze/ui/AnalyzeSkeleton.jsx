@@ -3,6 +3,7 @@ import styles from "./AnalyzeSkeleton.module.scss";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+//NOTE: 지금은 사용하지 않는 파일
 function AnalyzeSkeleton() {
   return (
     <div className={styles.analyze}>

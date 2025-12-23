@@ -1,5 +1,16 @@
 import React from "react";
 import styles from "./EmailVerificationSection.module.scss";
+import { UseFormRegister } from "react-hook-form";
+import { FormInput } from "pages/analyze/ui/Analyze";
+
+interface EmailVerificationSectionProps {
+  register: UseFormRegister<FormInput>;
+  isCodeSent: boolean;
+  isDisabledEmail: boolean;
+  isDisabledCode: boolean;
+  handleSendCode: () => void;
+  handleVerifyCode: () => void;
+}
 
 function EmailVerificationSection({
   register,
@@ -8,7 +19,7 @@ function EmailVerificationSection({
   isDisabledCode,
   handleSendCode,
   handleVerifyCode,
-}) {
+}: EmailVerificationSectionProps) {
   return (
     <div className={styles.emailVerification}>
       <div className={styles.inputWithButton}>

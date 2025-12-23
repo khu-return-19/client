@@ -1,8 +1,17 @@
 import React from "react";
 import styles from "./ResumeSection.module.scss";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FormInput, Lengths } from "pages/analyze/ui/Analyze";
 
-function ResumeSection({ register, errors, lengths, setLengths }) {
-  const handleAutoResize = (e, key) => {
+interface ResumeSectionProps {
+  register: UseFormRegister<FormInput>;
+  errors: FieldErrors<FormInput>;
+  lengths: Lengths;
+  setLengths: React.Dispatch<React.SetStateAction<Lengths>>;
+}
+
+function ResumeSection({ register, errors, lengths, setLengths }: ResumeSectionProps) {
+  const handleAutoResize = (e: React.ChangeEvent<HTMLTextAreaElement>, key: keyof Lengths) => {
     setLengths((prev) => ({ ...prev, [key]: e.target.value.length }));
     e.target.style.height = "3.5rem";
     e.target.style.height = e.target.scrollHeight + "px";

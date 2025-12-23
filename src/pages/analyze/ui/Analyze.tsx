@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Analyze.module.scss";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
   AnalysisConfirmModal,
@@ -15,16 +15,44 @@ import {
 import { TermsModal, PrivacyModal } from "components/analyze";
 import { useAnalyzeForm } from "../hooks/useAnalyzeForm";
 
+export interface FormInput {
+  company: string;
+  position: string;
+  input: string;
+  url: string;
+  email: string;
+  accessCode: string;
+  universityName: string;
+  major: string;
+  gpa: string;
+  career: string;
+  languageScore: string;
+  certificate: string;
+}
+
+export interface Lengths {
+  universityName: number;
+  major: number;
+  gpa: number;
+  career: number;
+  languageScore: number;
+  certificate: number;
+  company: number;
+  position: number;
+  input: number;
+  url: number;
+}
+
 function Analyze() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState(null);
-  const [isVerified, setIsVerified] = useState(false);
-  const [count, setCount] = useState(0);
-  const [termsChecked, setTermsChecked] = useState(false);
-  const [privacyChecked, setPrivacyChecked] = useState(false);
-  const [showTermsModal, setShowTermsModal] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
-  const [lengths, setLengths] = useState({
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormInput | null>(null);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
+  const [termsChecked, setTermsChecked] = useState<boolean>(false);
+  const [privacyChecked, setPrivacyChecked] = useState<boolean>(false);
+  const [showTermsModal, setShowTermsModal] = useState<boolean>(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
+  const [lengths, setLengths] = useState<Lengths>({
     universityName: 0,
     major: 0,
     gpa: 0,
@@ -37,7 +65,7 @@ function Analyze() {
     url: 0,
   });
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
     const s = String(seconds % 60).padStart(2, "0");
     return `${m}:${s}`;
@@ -48,7 +76,7 @@ function Analyze() {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+  } = useForm<FormInput>();
 
   const {
     isCodeSent,
@@ -63,7 +91,7 @@ function Analyze() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
     setFormData(data);
     setIsModalOpen(true);
   };
@@ -103,6 +131,14 @@ function Analyze() {
     }
   }, [codeSuccess, termsChecked, privacyChecked]);
 
+  const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTermsChecked(e.target.checked);
+  };
+
+  const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrivacyChecked(e.target.checked);
+  };
+
   return (
     <div className={styles.analyze}>
       <div className={styles.wrapper}>
@@ -121,8 +157,8 @@ function Analyze() {
           <AgreementSection
             termsChecked={termsChecked}
             privacyChecked={privacyChecked}
-            onTermsChange={(e) => setTermsChecked(e.target.checked)}
-            onPrivacyChange={(e) => setPrivacyChecked(e.target.checked)}
+            onTermsChange={handleTermsChange}
+            onPrivacyChange={handlePrivacyChange}
             onShowTermsModal={() => setShowTermsModal(true)}
             onShowPrivacyModal={() => setShowPrivacyModal(true)}
             onSubmit={handleSubmit(onSubmit)}
@@ -141,7 +177,7 @@ function Analyze() {
       {emailPending && <EmailSendModal />}
       {codePending && <VerifyCodeModal />}
       {showTermsModal && <TermsModal onClose={() => setShowTermsModal(false)} />}
-      {showPrivacyModal && <PrivacyModal onClose={() => setShowPrivacyModal(false)} isPrivacy />}
+      {showPrivacyModal && <PrivacyModal onClose={() => setShowPrivacyModal(false)} />}
     </div>
   );
 }

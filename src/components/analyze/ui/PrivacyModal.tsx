@@ -1,11 +1,15 @@
 import React from "react";
 import styles from "./PrivacyModal.module.scss";
 
-function PrivacyModal({ onClose }) {
+interface PrivacyModalProps {
+  onClose: () => void;
+}
+
+function PrivacyModal({ onClose }: PrivacyModalProps) {
   return (
     <div
       className={styles.overlay}
-      onClick={(e) => {
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
           onClose();
         }

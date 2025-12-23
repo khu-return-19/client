@@ -1,7 +1,16 @@
 import React from "react";
 import styles from "./IntroductionSection.module.scss";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FormInput, Lengths } from "pages/analyze/ui/Analyze";
 
-function IntroductionSection({ register, errors, lengths, setLengths }) {
+interface IntroductionSectionProps {
+  register: UseFormRegister<FormInput>;
+  errors: FieldErrors<FormInput>;
+  lengths: Lengths;
+  setLengths: React.Dispatch<React.SetStateAction<Lengths>>;
+}
+
+function IntroductionSection({ register, errors, lengths, setLengths }: IntroductionSectionProps) {
   return (
     <div className={styles.introduction}>
       <div>

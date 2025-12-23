@@ -1,13 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 import { toast } from "react-toastify";
+import { FormInput } from "../ui/Analyze";
+import { UseFormGetValues } from "react-hook-form";
 
-export const useAnalyzeForm = (getValues, setCount) => {
-  const [isCodeSent, setIsCodeSent] = useState(false);
-  const [emailSuccess, setEmailSuccess] = useState(false);
-  const [codeSuccess, setCodeSuccess] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(null);
-  const timerRef = useRef(null);
+export const useAnalyzeForm = (
+  getValues: UseFormGetValues<FormInput>,
+  setCount: React.Dispatch<React.SetStateAction<number>>
+) => {
+  const [isCodeSent, setIsCodeSent] = useState<boolean>(false);
+  const [emailSuccess, setEmailSuccess] = useState<boolean>(false);
+  const [codeSuccess, setCodeSuccess] = useState<boolean>(false);
+  const [remainingTime, setRemainingTime] = useState<number | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const { mutate: sendVerifyEmail, isPending: emailPending } = useSendVerifyEmail();
   const { mutate: verifyEmailCode, isPending: codePending } = useVerifyEmailCode();
@@ -17,20 +22,21 @@ export const useAnalyzeForm = (getValues, setCount) => {
     if (!email) return toast.info("이메일을 입력해주세요.");
 
     sendVerifyEmail(email, {
-      onSuccess: (data) => {
+      onSuccess: (data: any) => {
         if (data.success) {
           toast.success("인증번호가 이메일로 전송되었습니다.");
           setIsCodeSent(true);
           setEmailSuccess(true);
           setRemainingTime(600);
           if (timerRef.current) clearInterval(timerRef.current);
+
           timerRef.current = setInterval(() => {
             setRemainingTime((prev) => {
-              if (prev <= 1) {
-                clearInterval(timerRef.current);
+              if (prev !== null && prev <= 1) {
+                if (timerRef.current) clearInterval(timerRef.current);
                 return 0;
               }
-              return prev - 1;
+              return prev !== null ? prev - 1 : 0;
             });
           }, 1000);
         } else {
@@ -63,7 +69,11 @@ export const useAnalyzeForm = (getValues, setCount) => {
     );
   };
 
-  useEffect(() => () => clearInterval(timerRef.current), []);
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   return {
     isCodeSent,

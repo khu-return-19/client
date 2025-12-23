@@ -39,7 +39,7 @@ export type StreamEvent =
   | { event: "created_report"; content: string }
   | { event: "final_report"; content: string }
   | { event: "agent_web_search"; title: string; url: string }
-  | { event: "phase_change"; current_phase: string }
+  | { event: "phase_change"; current_phase: string; error?: number | string | null }
   | { event: "current_stats"; score_x_axis: number; score_y_axis: number; score_z_axis: number }
   | { event: "past_stats"; score_x_axis: number; score_y_axis: number; score_z_axis: number }
   | { event: "error_detection"; value: boolean }

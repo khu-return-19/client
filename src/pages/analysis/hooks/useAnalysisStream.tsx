@@ -69,7 +69,7 @@ export const useAnalysisStream = (requestBody: RequestBody | undefined): UseAnal
                 setCurrentPhaseText(phaseMap[parsed.current_phase] || "처리 중입니다.");
                 setAgentWebSearch({ title: "", url: "" });
 
-                if (parsed.current_phase === "complete_phase") {
+                if (parsed.current_phase === "complete_phase" && !parsed.error) {
                   toast.success(
                     <div>
                       <strong>분석이 완료되었습니다!</strong>

@@ -9,7 +9,11 @@ import { Popup } from "shared/popup";
 
 function Landing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showPopup, setShowPopup] = useState(true);
+
+  const [showPopup, setShowPopup] = useState(() => {
+    const hasSeenPopup = localStorage.getItem("hasSeenNoticePopup");
+    return !hasSeenPopup;
+  });
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -21,6 +25,11 @@ function Landing() {
 
   const openModal = () => {
     setIsModalOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    localStorage.setItem("hasSeenNoticePopup", "true");
   };
 
   return (
@@ -74,7 +83,7 @@ function Landing() {
         <Bottom />
       </motion.div>
       {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
-      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
+      {showPopup && <Popup onClose={handleClosePopup} />}
     </div>
   );
 }

@@ -5,9 +5,10 @@ function Popup({ onClose }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.popup}>
-        <h2>⚠️ 서버 점검 안내</h2>
+        <h2>📢 공지사항</h2>
         <p>
-          현재 서버 점검으로 인해 서비스 이용이 일시 중단되었습니다. <br /> 빠른 시간 내 복구하겠습니다.
+          2026년 1월 14일 하루 동안 발생한 장애에 대해 조치가 
+          <br /> 완료되었으며, 불편을 드려 죄송합니다.
         </p>
         <button onClick={onClose}>확인</button>
       </div>

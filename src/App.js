@@ -18,6 +18,41 @@ import Inspection from "pages/inspection";
 // import NoticeDetail from "pages/notice-detail";
 // import NotFound from "pages/Error/notFound";
 
+
+// function AppContent() {
+//   const location = useLocation();
+//
+//   const noFooterPages = ["/error"];
+//   const isNoFooterPage = noFooterPages.includes(location.pathname) || location.pathname.startsWith("/analysis");
+//
+//   return (
+//     <>
+//       <Header />
+//       <Routes>
+//         <Route path="/" element={<Landing />} />
+//
+//         {/* 서비스 소개 */}
+//         <Route path="intro" element={<Intro />} />
+//         <Route path="evaluation" element={<Evaluation3D />} />
+//         <Route path="team" element={<Team />} />
+//
+//         {/* 공지사항 */}
+//         <Route path="/notice" element={<Notice />} />
+//         <Route path="/notice/:id" element={<NoticeDetail />} />
+//
+//         <Route path="/analysis" element={<Analysis />} />
+//         <Route path="/analyze" element={<Analyze />} />
+//
+//         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+//         <Route path="*" element={<NotFound />} />
+//       </Routes>
+//
+//       {!isNoFooterPage && <Footer />}
+//     </>
+//   );
+// }
+
+// ===== 점검 모드 라우팅 =====
 function App() {
   return (
     <Router>
@@ -27,5 +62,15 @@ function App() {
     </Router>
   );
 }
+
+// ===== 점검 해제 시 아래 코드로 교체 =====
+// function App() {
+//   return (
+//     <Router>
+//       <AppContent />
+//       <ToastContainer position="top-right" autoClose={2000} />
+//     </Router>
+//   );
+// }
 
 export default App;

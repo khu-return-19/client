@@ -1,0 +1,42 @@
+name: '버그 리포트'
+description: '깃허브 이슈와 지라 버그(Bug)를 생성합니다'
+labels: [bug]
+title: '버그 내용을 간단히 작성해주세요'
+body:
+  - type: input
+    id: templateTag
+    attributes:
+      label: '템플릿 태그 (Template Tag)'
+      description: 'bug를 기입해주세요 (! 태그가 잘못되면 지라에 버그가 생성되지 않습니다 !)'
+      value: 'bug'
+    validations:
+      required: true
+
+  - type: input
+    id: branch
+    attributes:
+      label: '브랜치명 (Branch)'
+      description: '영어로 컨벤션/브랜치명을 작성해주세요. ex) fix/login-error'
+      placeholder: '예) fix/login-error'
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: '버그 상세 (Details)'
+      description: '재현 방법/기대 결과/실제 결과/환경 정보를 작성해주세요'
+      value: |
+        ### 재현 방법 (Steps to Reproduce)
+        1.
+
+        ### 기대 결과 (Expected)
+
+        ### 실제 결과 (Actual)
+
+        ### 환경 (Environment)
+        - OS:
+        - Browser/App:
+        - Version:
+    validations:
+      required: true

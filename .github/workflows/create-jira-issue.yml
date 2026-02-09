@@ -1,4 +1,4 @@
-name: Create Jira Issue (Epic or Task)
+name: Create Jira Issue (Epic, Task, or Bug)
 on:
   issues:
     types:
@@ -35,6 +35,8 @@ jobs:
             echo "type=Epic" >> $GITHUB_OUTPUT
           elif [ "${{ steps.template-issue-parser.outputs.issueparser_templateTag }}" = "task" ]; then
             echo "type=Task" >> $GITHUB_OUTPUT
+          elif [ "${{ steps.template-issue-parser.outputs.issueparser_templateTag }}" = "bug" ]; then
+            echo "type=Bug" >> $GITHUB_OUTPUT
           else
             echo "type=Unknown" >> $GITHUB_OUTPUT
           fi
@@ -43,7 +45,7 @@ jobs:
         uses: stefanbuck/github-issue-praser@v3
         id: issue-parser
         with:
-          template-path: ${{ steps.issue-type.outputs.type == 'Epic' && '.github/ISSUE_TEMPLATE/epic-issue-form.yml' || steps.issue-type.outputs.type == 'Task' && '.github/ISSUE_TEMPLATE/task-issue-form.yml' || '' }}
+          template-path: ${{ steps.issue-type.outputs.type == 'Epic' && '.github/ISSUE_TEMPLATE/epic-issue-form.yml' || steps.issue-type.outputs.type == 'Task' && '.github/ISSUE_TEMPLATE/task-issue-form.yml' || steps.issue-type.outputs.type == 'Bug' && '.github/ISSUE_TEMPLATE/bug-issue-form.yml' || '' }}
 
       - name: Log Issue Parser
         run: |
@@ -66,7 +68,12 @@ jobs:
         id: prepare-fields
         run: |
           if [ '${{ steps.issue-type.outputs.type }}' = "Task" ]; then
-            echo "json={\"parent\": {\"key\": \"${{ steps.issue-parser.outputs.issueparser_parentKey }}\"}}" >> $GITHUB_OUTPUT
+            PARENT_KEY="${{ steps.issue-parser.outputs.issueparser_parentKey }}"
+            if [ -n "$PARENT_KEY" ]; then
+              echo "json={\"parent\": {\"key\": \"$PARENT_KEY\"}}" >> $GITHUB_OUTPUT
+            else
+              echo "json=" >> $GITHUB_OUTPUT
+            fi
           else
             echo "json=" >> $GITHUB_OUTPUT
           fi
@@ -74,7 +81,7 @@ jobs:
       - name: Create Jira Issue
         id: create
         uses: atlassian/gajira-create@v3
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task'
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         with:
           project: KAN
           issuetype: ${{ steps.issue-type.outputs.type }}
@@ -83,10 +90,11 @@ jobs:
           fields: ${{ steps.prepare-fields.outputs.json }}
 
       - name: Log created issue
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task'
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         run: echo "Jira Issue ${{ steps.create.outputs.issue }} was created"
 
       - name: Create branch with Ticket number
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         run: |
           ISSUE_NUMBER="${{ steps.create.outputs.issue }}"
           ISSUE_TITLE="${{ steps.issue-parser.outputs.issueparser_branch}}"
@@ -95,7 +103,7 @@ jobs:
           git push origin "${BRANCH_NAME}"
 
       - name: Update GitHub Issue title
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task'
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'update-issue'
@@ -103,7 +111,7 @@ jobs:
           title: '[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}'
 
       - name: Link JIRA Issue with Branch
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task'
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
@@ -126,7 +134,7 @@ jobs:
             "${JIRA_BASE_URL}/rest/dev-status/1.0/issue/detail?issueId=${ISSUE_KEY}&type=branch"
 
       - name: Add comment with Jira issue link
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task'
+        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
         uses: actions-cool/issues-helper@v3
         with:
           actions: 'create-comment'

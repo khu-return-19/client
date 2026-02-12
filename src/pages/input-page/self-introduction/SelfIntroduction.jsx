@@ -1,5 +1,12 @@
+import InputPageLayout from "../layouts/InputPageLayout";
+
 function SelfIntroduction() {
-  return <div>Self Introduction Page</div>;
+  return (
+    <InputPageLayout>
+     
+    </InputPageLayout>
+  );
 }
 
 export default SelfIntroduction;
+

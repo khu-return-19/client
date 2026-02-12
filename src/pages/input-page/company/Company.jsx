@@ -1,5 +1,9 @@
+import InputPageLayout from "../layouts/InputPageLayout";
+
 function Company() {
-  return <div>Company Page</div>;
+  return( <InputPageLayout>
+       
+      </InputPageLayout>)
 }
 
 export default Company;

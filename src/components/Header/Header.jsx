@@ -37,7 +37,7 @@ function Header({ theme = "light" }) {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-[14px] font-['Pretendard'] transition-colors pb-[2px] ${
+                className={`text-[16px] font-['Pretendard'] transition-colors pb-[2px] ${
                   isActive
                     ? isDark
                       ? "text-[#B3E5FF] border-b-[2px] border-[#B3E5FF]"

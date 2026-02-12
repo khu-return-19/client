@@ -11,14 +11,14 @@ function NavigationBar() {
   const location = useLocation();
 
   return (
-    <nav className="w-full max-w-[1200px] mx-auto flex mt-[60px]">
+    <nav className="w-full px-[120px] flex mt-[60px]">
       {TAB_ITEMS.map((item) => {
         const isActive = location.pathname === item.path;
         return (
           <Link
             key={item.path}
             to={item.path}
-            className={`w-[300px] h-[68px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors ${
+            className={`flex-1 h-[68px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors ${
               isActive
                 ? "text-[#2876F1] border-b-[3px] border-[#2876F1]"
                 : "text-[#717171] border-b-[1px] border-[#717171] hover:text-[#2876F1]"

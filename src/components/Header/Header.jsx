@@ -22,17 +22,15 @@ function Header({ theme = "light" }) {
       }`}
       style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.06)" }}
     >
-      <div className="w-full max-w-[1200px] h-full mx-auto flex items-center">
-        {/* LOGO 영역 */}
-        <div className="w-[146px] flex items-center">
+      <div className="w-full h-full px-[120px] flex items-center">
+        <div className="flex items-center gap-[160px]">
+          {/* 로고 영역 나중에 구현 예정 */}
           <Link to="/" className="text-[18px] font-bold">
             로고
           </Link>
-        </div>
-        <div className="w-[60px]" />
 
-        {/* Navigation 영역 */}
-        <nav className="w-[397px] flex items-center gap-[20px]">
+          {/* Navigation 탭 영역 */}
+          <nav className="flex items-center gap-[30px]">
           {NAV_ITEMS.map((item) => {
             const isActive = location.pathname.startsWith(item.path);
             return (
@@ -53,8 +51,8 @@ function Header({ theme = "light" }) {
               </Link>
             );
           })}
-        </nav>
-        <div className="w-[597px]" />
+          </nav>
+        </div>
       </div>
     </header>
   );

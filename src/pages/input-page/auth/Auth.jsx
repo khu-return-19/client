@@ -1,5 +1,11 @@
+import InputPageLayout from "../layouts/InputPageLayout";
+
 function Auth() {
-  return <div>Auth Page</div>;
+  return (
+    <InputPageLayout>
+     
+    </InputPageLayout>
+  );
 }
 
 export default Auth;

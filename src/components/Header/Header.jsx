@@ -22,8 +22,8 @@ function Header({ theme = "light" }) {
       }`}
       style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.06)" }}
     >
-      <div className="w-full h-full px-[120px] flex items-center">
-        <div className="flex items-center gap-[160px]">
+      <div className="max-w-[1200px] h-full mx-auto flex items-center">
+        <div className="flex items-center gap-[180px]">
           {/* 로고 영역 나중에 구현 예정 */}
           <Link to="/" className="text-[18px] font-bold">
             로고

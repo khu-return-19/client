@@ -11,7 +11,7 @@ function NavigationBar() {
   const location = useLocation();
 
   return (
-    <nav className="w-full px-[120px] flex mt-[60px]">
+    <nav className="max-w-[1200px] mx-auto flex mt-[60px]">
       {TAB_ITEMS.map((item) => {
         const isActive = location.pathname === item.path;
         return (

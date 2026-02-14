@@ -1,6 +1,6 @@
 function GuideBox() {
   return (
-    <div className="w-[1000px] mx-auto bg-[#F5F5F5] rounded-md px-[40px] py-[52px]">
+    <div className="w-[1080px] mx-auto bg-[#F5F5F5] rounded-md px-[40px] py-[52px]">
       <div>
         <div>
           <h3 className="text-[16px] font-medium leading-[150%] text-black">

@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import errorIcon from "assets/icons/Frame 283.png";
 import successIcon from "assets/icons/Frame 286.png";
 
-function EmailVerification() {
+function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [email, setEmail] = useState("");
   const [isSent, setIsSent] = useState(false);
   const [showCodeSection, setShowCodeSection] = useState(false);
@@ -32,6 +32,7 @@ function EmailVerification() {
     setTimeLeft(600);
     setCode("");
     setCodeError(false);
+    onEmailSent?.();
   };
 
   useEffect(() => {
@@ -87,7 +88,14 @@ function EmailVerification() {
 
   const handleVerify = () => {
     if (!hasCodeInput) return;
-    // 인증번호 확인 API 구현 후 수정 예정
+    // TODO: 인증번호 확인 API 구현 후 수정 예정
+    // 성공 시:
+    // setIsVerified(true);
+    // setCodeError(false);
+    // clearInterval(timerRef.current);
+    // onCodeVerified?.();
+    // 실패 시:
+    // setCodeError(true);
   };
 
   return (
@@ -116,7 +124,10 @@ function EmailVerification() {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              if (isSent) setIsSent(false);
+              if (isSent) {
+                setIsSent(false);
+                onEmailChanged?.();
+              }
               if (emailError) setEmailError(false);
             }}
             onFocus={() => setIsEmailFocused(true)}

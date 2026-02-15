@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import uncheckedIcon from "assets/icons/Rectangle 219.png";
 import checkedIcon from "assets/icons/Component 33.png";
 import arrowIcon from "assets/icons/Frame 228.png";
@@ -13,7 +14,8 @@ const AGREEMENT_ITEMS = [
 
 const REQUIRED_IDS = ["terms", "privacy", "policy"];
 
-function Agreement() {
+function Agreement({ isEmailVerified = false }) {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState({
     terms: false,
     privacy: false,
@@ -24,6 +26,7 @@ function Agreement() {
 
   const allChecked = Object.values(checked).every(Boolean);
   const allRequiredChecked = REQUIRED_IDS.every((id) => checked[id]);
+  const canStart = isEmailVerified && allRequiredChecked;
   const showError = hasInteracted && !allRequiredChecked;
 
   const handleAllToggle = () => {
@@ -43,8 +46,8 @@ function Agreement() {
   };
 
   const handleStart = () => {
-    if (!allRequiredChecked) return;
-    // 기업/직무로 이동
+    if (!canStart) return;
+    navigate("/input-page/company");
   };
 
   return (
@@ -111,7 +114,7 @@ function Agreement() {
       <div className="mt-[120px]">
         <Button
           size="L"
-          status={allRequiredChecked ? "default" : "disabled"}
+          status={canStart ? "default" : "disabled"}
           onClick={handleStart}
         >
           시작하기

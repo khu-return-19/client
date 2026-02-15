@@ -13,7 +13,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [code, setCode] = useState("");
   const [isCodeFocused, setIsCodeFocused] = useState(false);
   const [codeError, setCodeError] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(false); // eslint-disable-line no-unused-vars
   const [timeLeft, setTimeLeft] = useState(600);
   const timerRef = useRef(null);
 

@@ -88,14 +88,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const handleVerify = () => {
     if (!hasCodeInput) return;
-    // TODO: 인증번호 확인 API 구현 후 수정 예정
-    // 성공 시:
-    // setIsVerified(true);
-    // setCodeError(false);
-    // clearInterval(timerRef.current);
-    // onCodeVerified?.();
-    // 실패 시:
-    // setCodeError(true);
+    // 인증번호 확인 API 구현 후 수정 예정
   };
 
   return (

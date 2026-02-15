@@ -1,6 +1,25 @@
+import { useState } from "react";
 import Button from "../../components/Button";
 
 function EmailVerification() {
+  const [email, setEmail] = useState("");
+  const [isSent, setIsSent] = useState(false);
+
+  const hasInput = email.trim().length > 0;
+  const isValidEmail = email.endsWith("@khu.ac.kr") && email.split("@")[0].length > 0;
+
+  const handleSend = () => {
+    if (!isValidEmail) return;
+    setIsSent(true);
+    // TODO: 인증번호 전송 API 호출
+  };
+
+  const getButtonStatus = () => {
+    if (isSent) return "completed";
+    if (hasInput) return "default";
+    return "disabled";
+  };
+
   return (
     <div className="w-[600px]">
       <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
@@ -24,9 +43,18 @@ function EmailVerification() {
           <input
             type="email"
             placeholder="  이메일 입력"
-            className="w-[384px] h-[52px] border-b border-[#858585] text-[16px] font-normal text-silver placeholder-silver outline-none bg-transparent"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (isSent) setIsSent(false);
+            }}
+            className="w-[384px] h-[52px] border-b border-[#858585] text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent"
           />
-          <Button size="s2" status="disabled">
+          <Button
+            size="s2"
+            status={getButtonStatus()}
+            onClick={handleSend}
+          >
             인증번호 전송
           </Button>
         </div>

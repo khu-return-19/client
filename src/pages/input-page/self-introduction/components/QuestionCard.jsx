@@ -23,7 +23,7 @@ function QuestionCard({ onContentChange }) {
         onChange={handleQuestionChange}
         className="w-full h-[62px] bg-[#F5F5F5] px-[12px] rounded-[4px] text-[18px] font-normal leading-[120%] text-black placeholder-[#717171] outline-none"
       />
-      <div className="my-[12px] border-b border-[#858585]" />
+      <div className="my-[12px] border-b border-[#B5B5B5]" />
       <textarea
         placeholder="내용을 입력해주세요"
         value={content}

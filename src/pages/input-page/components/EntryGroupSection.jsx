@@ -12,7 +12,7 @@ const StepperButton = ({
     return (
         <div
             onClick={onClick}
-            className="group w-[50px] h-[50px] shrink-0 cursor-pointer rounded-[4px] border border-[#717171] hover:border-[#09469F] active:border-[#09469F] active:border-2 relative ml-[10px]"
+            className="group w-[50px] h-[50px] shrink-0 cursor-pointer rounded-[4px] border border-[#717171] hover:border-[#09469F] active:border-[#09469F] active:border-2 relative ml-[10px] hover:shadow-[0px_0px_33.6px_0px_#749ADC4D] active:shadow-[0px_0px_33.6px_0px_#749ADC4D] transition-all duration-200"
         >
             <div className="w-full h-full flex items-center justify-center absolute top-0 left-0">
                 <div className="w-[32px] h-[1px] bg-[#717171] group-hover:bg-[#09469F] group-active:bg-[#09469F] transition-colors duration-200"></div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Button from "../../components/Button";
-import errorIcon from "assets/icons/Frame 283.png";
-import successIcon from "assets/icons/Frame 286.png";
+import errorIcon from "assets/icons/인증_실패.svg";
+import successIcon from "assets/icons/인증_성공.svg";
 
 function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [email, setEmail] = useState("");

@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import uncheckedIcon from "assets/icons/Rectangle 219.png";
-import checkedIcon from "assets/icons/Component 33.png";
-import arrowIcon from "assets/icons/Frame 228.png";
 import Button from "../../components/Button";
+import Checkbox from "./Checkbox";
 
 const AGREEMENT_ITEMS = [
   { id: "terms", type: "필수", label: "이용약관에 동의합니다." },
@@ -57,17 +55,13 @@ function Agreement({ isEmailVerified = false }) {
       </h2>
 
       <div className="w-[600px] h-[200px] mt-[40px]">
-        <div
-          className="w-[600px] pb-[12px] flex items-center border-b border-[#858585] cursor-pointer"
-          onClick={handleAllToggle}
-        >
+        <div className="w-[600px] pb-[12px] flex items-center border-b border-[#858585]">
           <div className="flex items-center gap-[20px]">
-            <img
-              src={allChecked ? checkedIcon : uncheckedIcon}
-              alt="checkbox"
-              className="w-[24px] h-[24px]"
-            />
-            <span className="text-[16px] font-normal leading-[150%] text-black">
+            <Checkbox checked={allChecked} onChange={handleAllToggle} />
+            <span
+              className="text-[16px] font-normal leading-[150%] text-black cursor-pointer"
+              onClick={handleAllToggle}
+            >
               전체 동의
             </span>
           </div>
@@ -76,15 +70,8 @@ function Agreement({ isEmailVerified = false }) {
         <div className="flex flex-col gap-[16px] mt-[20px]">
           {AGREEMENT_ITEMS.map((item) => (
             <div key={item.id} className="w-[592px] flex items-center justify-between">
-              <div
-                className="flex items-center gap-[20px] cursor-pointer"
-                onClick={() => handleToggle(item.id)}
-              >
-                <img
-                  src={checked[item.id] ? checkedIcon : uncheckedIcon}
-                  alt="checkbox"
-                  className="w-[24px] h-[24px]"
-                />
+              <div className="flex items-center gap-[20px] cursor-pointer" onClick={() => handleToggle(item.id)}>
+                <Checkbox checked={checked[item.id]} onChange={() => handleToggle(item.id)} />
                 <span className={`text-[16px] font-normal leading-[150%] ${item.type === "선택" ? "text-[#717171]" : "text-black"}`}>
                   {item.type}
                 </span>
@@ -92,14 +79,19 @@ function Agreement({ isEmailVerified = false }) {
                   {item.label}
                 </span>
               </div>
-              <img
-                src={arrowIcon}
-                alt="detail"
-                className="w-[24px] h-[24px] cursor-pointer"
+              <div
+                className="w-[24px] h-[24px] flex items-center justify-center cursor-pointer group"
                 onClick={() => {
                   // 약관 모달 정해지면 나오게 예정
                 }}
-              />
+              >
+                <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8.59082 7.53027L1.06055 15.0605L0 14L6.46973 7.53027L0 1.06055L1.06055 0L8.59082 7.53027Z"
+                    className="fill-[#B5B5B5] group-hover:fill-[#717171] transition-colors"
+                  />
+                </svg>
+              </div>
             </div>
           ))}
         </div>

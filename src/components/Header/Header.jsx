@@ -4,7 +4,7 @@ const NAV_ITEMS = [
   { label: "공지사항", path: "#" },
   { label: "서비스 소개", path: "#" },
   { label: "주요 사이트", path: "#" },
-  { label: "자기소개서 분석", path: "/input-page" },
+  { label: "자기소개서 분석", path: "/input-page/auth" },
 ];
 
 
@@ -37,7 +37,7 @@ function Header({ theme = "light" }) {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-[16px] font-['Pretendard'] transition-colors pb-[2px] ${
+                className={`text-[16px] transition-colors pb-[2px] ${
                   isActive
                     ? isDark
                       ? "text-[#B3E5FF] border-b-[2px] border-[#B3E5FF]"

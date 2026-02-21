@@ -43,7 +43,7 @@ const EntryGroupSection = ({
     caption,
     items = [],
     onChange,
-    width = 1020,
+    width = 1080,
     placeholders = {},
     autocompleteResults = {},
     required = false,
@@ -52,7 +52,6 @@ const EntryGroupSection = ({
     ...props
 }) => {
 
-    // 행 값 변경 핸들러
     const handleRowChange = (index, key, value) => {
         if (!onChange) return;
         const newItems = [...items];
@@ -63,7 +62,6 @@ const EntryGroupSection = ({
         onChange(newItems);
     };
 
-    // 특정 셀의 자동완성 결과를 가져오는 헬퍼
     const getCellAutocompleteResults = (index, key) => {
         if (!autocompleteResults) return [];
         if (autocompleteResults[index] && autocompleteResults[index][key]) {
@@ -75,7 +73,6 @@ const EntryGroupSection = ({
         return [];
     };
 
-    // 행 추가 핸들러
     const handleAdd = () => {
         if (!onChange) return;
 
@@ -93,7 +90,6 @@ const EntryGroupSection = ({
         onChange([...items, newRow]);
     };
 
-    // 행 삭제 핸들러
     const handleRemove = (index) => {
         if (!onChange) return;
         if (items.length <= 1) return;

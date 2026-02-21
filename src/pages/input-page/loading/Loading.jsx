@@ -33,9 +33,7 @@ const ANALYSIS_SCENARIO = [
   },
 ];
 
-// 각 메시지 표시 간격 (ms)
 const MESSAGE_INTERVAL = 1500;
-// 단계 완료 후 다음 단계 시작까지 대기 (ms)
 const STAGE_COMPLETE_DELAY = 800;
 
 function Loading() {
@@ -47,13 +45,11 @@ function Loading() {
     for (let i = 0; i < ANALYSIS_SCENARIO.length; i++) {
       const scenario = ANALYSIS_SCENARIO[i];
 
-      // 새 단계 등장
       setStages((prev) => [
         ...prev,
-        { title: scenario.title, completed: false, items: [] },
+        { title: scenario.title, completed: false, items: [], progress: 0 },
       ]);
 
-      // 메시지를 하나씩 추가 (최대 2개 유지)
       for (let j = 0; j < scenario.messages.length; j++) {
         await delay(MESSAGE_INTERVAL);
 
@@ -62,12 +58,12 @@ function Loading() {
           const current = { ...updated[i] };
           const newItems = [...current.items, scenario.messages[j]];
           current.items = newItems.length > 2 ? newItems.slice(-2) : newItems;
+          current.progress = ((j + 1) / scenario.messages.length) * 100;
           updated[i] = current;
           return updated;
         });
       }
 
-      // 단계 완료
       await delay(MESSAGE_INTERVAL);
       setStages((prev) => {
         const updated = [...prev];
@@ -75,7 +71,6 @@ function Loading() {
         return updated;
       });
 
-      // 다음 단계 전 잠깐 대기
       if (i < ANALYSIS_SCENARIO.length - 1) {
         await delay(STAGE_COMPLETE_DELAY);
       }
@@ -95,6 +90,7 @@ function Loading() {
           <AnalysisStateSection
             key={index}
             completed={stage.completed}
+            progress={stage.progress}
             title={`${stage.title} ${stage.completed ? "완료" : "중"}`}
             items={stage.items}
           />

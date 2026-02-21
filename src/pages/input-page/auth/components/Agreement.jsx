@@ -5,10 +5,10 @@ import Checkbox from "./Checkbox";
 import TermsModal from "./TermsModal";
 
 const AGREEMENT_ITEMS = [
-  { id: "terms",      type: "필수", label: "이용약관에 동의합니다.",              modalTitle: "Pertineo 이용약관",         url: "/terms/이용약관.html" },
-  { id: "privacy",    type: "필수", label: "개인정보처리 수집 및 이용에 동의합니다.", modalTitle: "Pertineo 개인정보 처리 및 수집 및 이용 동의서", url: "/terms/개인정보수집이용.html" },
-  { id: "policy",     type: "필수", label: "개인정보처리방침에 동의합니다.",          modalTitle: "Pertineo 개인정보 처리방침",                  url: "/terms/개인정보처리방침.html" },
-  { id: "thirdParty", type: "선택", label: "개인정보 제3자 제공에 동의합니다.",       modalTitle: "Pertineo 개인정보 제3자 제공 동의서",          url: "/terms/개인정보제3자제공.html" },
+  { id: "terms",      type: "필수", label: "이용약관에 동의합니다.",              modalTitle: "Pertineo 이용약관",         url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/terms-of-service.html" },
+  { id: "privacy",    type: "필수", label: "개인정보처리 수집 및 이용에 동의합니다.", modalTitle: "Pertineo 개인정보 처리 및 수집 및 이용 동의서", url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-collection-and-use.html" },
+  { id: "policy",     type: "필수", label: "개인정보처리방침에 동의합니다.",          modalTitle: "Pertineo 개인정보 처리방침",                  url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-policy.html" },
+  { id: "thirdParty", type: "선택", label: "개인정보 제3자 제공에 동의합니다.",       modalTitle: "Pertineo 개인정보 제3자 제공 동의서",          url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/third-party-data-sharing.html" },
 ];
 
 const REQUIRED_IDS = ["terms", "privacy", "policy"];
@@ -22,7 +22,7 @@ function Agreement({ isEmailVerified = false }) {
     thirdParty: false,
   });
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [openModal, setOpenModal] = useState(null); // 열린 약관 item
+  const [openModal, setOpenModal] = useState(null); 
 
   const allChecked = Object.values(checked).every(Boolean);
   const allRequiredChecked = REQUIRED_IDS.every((id) => checked[id]);

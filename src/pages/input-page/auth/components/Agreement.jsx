@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Checkbox from "./Checkbox";
+import TermsModal from "./TermsModal";
 
 const AGREEMENT_ITEMS = [
-  { id: "terms", type: "필수", label: "이용약관에 동의합니다." },
-  { id: "privacy", type: "필수", label: "개인정보처리 수집 및 이용에 동의합니다." },
-  { id: "policy", type: "필수", label: "개인정보처리방침에 동의합니다." },
-  { id: "thirdParty", type: "선택", label: "개인정보 제3자 제공에 동의합니다." },
+  { id: "terms",      type: "필수", label: "이용약관에 동의합니다.",              modalTitle: "Pertineo 이용약관",         url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/terms-of-service.html" },
+  { id: "privacy",    type: "필수", label: "개인정보처리 수집 및 이용에 동의합니다.", modalTitle: "Pertineo 개인정보 처리 및 수집 및 이용 동의서", url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-collection-and-use.html" },
+  { id: "policy",     type: "필수", label: "개인정보처리방침에 동의합니다.",          modalTitle: "Pertineo 개인정보 처리방침",                  url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-policy.html" },
+  { id: "thirdParty", type: "선택", label: "개인정보 제3자 제공에 동의합니다.",       modalTitle: "Pertineo 개인정보 제3자 제공 동의서",          url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/third-party-data-sharing.html" },
 ];
 
 const REQUIRED_IDS = ["terms", "privacy", "policy"];
@@ -21,6 +22,7 @@ function Agreement({ isEmailVerified = false }) {
     thirdParty: false,
   });
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [openModal, setOpenModal] = useState(null); 
 
   const allChecked = Object.values(checked).every(Boolean);
   const allRequiredChecked = REQUIRED_IDS.every((id) => checked[id]);
@@ -81,9 +83,7 @@ function Agreement({ isEmailVerified = false }) {
               </div>
               <div
                 className="w-[24px] h-[24px] flex items-center justify-center cursor-pointer group"
-                onClick={() => {
-                  // 약관 모달 정해지면 나오게 예정
-                }}
+                onClick={() => setOpenModal(item)}
               >
                 <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -102,6 +102,14 @@ function Agreement({ isEmailVerified = false }) {
           </p>
         )}
       </div>
+
+      {openModal && (
+        <TermsModal
+          title={openModal.modalTitle}
+          url={openModal.url}
+          onClose={() => setOpenModal(null)}
+        />
+      )}
 
       <div className="mt-[120px]">
         <Button

@@ -4,6 +4,7 @@ import IntroSummary from "../components/IntroSummary"
 function IntroSectionLayout() {
     return (
         <HeroSection title="서비스 소개" titleBottom={71}>
+            <IntroSummary />
         </HeroSection>
     )
 }

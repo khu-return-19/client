@@ -1,12 +1,12 @@
-import ServiceIntroductionLayout from "./layouts/ServiceIntroductionLayout"
+import PageLayout from "./layouts/PageLayout"
 
 function ServiceIntroduction() {
     return (
-        <ServiceIntroductionLayout>
+        <PageLayout>
             <div>
 
             </div>
-        </ServiceIntroductionLayout>
+        </PageLayout>
     )
 }
 

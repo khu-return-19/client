@@ -1,6 +1,6 @@
 import Header from "components/Header/Header"
 
-function ServiceIntroductionLayout({ children }) {
+function PageLayout({ children }) {
     return (
         <div>
             <Header />
@@ -9,4 +9,4 @@ function ServiceIntroductionLayout({ children }) {
     )
 }
 
-export default ServiceIntroductionLayout
+export default PageLayout

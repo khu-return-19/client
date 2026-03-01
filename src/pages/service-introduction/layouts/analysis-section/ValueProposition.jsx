@@ -18,7 +18,7 @@ const valuePropositionData = [
 function ValueProposition() {
     return (
         <SectionContent title="활용 가치">
-            <div className="flex flex-col ml-[171px] gap-[10px]">
+            <div className="w-full flex flex-col gap-[10px] items-end">
                 {valuePropositionData.map((item, index) => (
                     <div
                         key={index}

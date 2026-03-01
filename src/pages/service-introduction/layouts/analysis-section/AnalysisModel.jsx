@@ -1,12 +1,14 @@
 import SectionContent from "../../components/SectionContent"
 import AxisInfoCard from "../../components/AxisInfoCard"
-import ThreeDGraph from "../../components/ThreeDGraph"
+import graphImg from "../../../../assets/imgs/3DModelGraph.svg"
 
 function AnalysisModel() {
     return (
         <SectionContent title="분석 모델" titleBottom={56} marginBottom={143}>
             <div className="flex gap-[62px] items-center ml-[37px]">
-                <ThreeDGraph />
+                <div className="w-[430px] h-[430px] rounded-full border border-[#2876F1] border-dashed flex items-center justify-center">
+                    <img src={graphImg} alt="3D 모델 그래프" className="w-[326px] h-[298px]" />
+                </div>
                 <div className="flex flex-col gap-[15px]">
                     <AxisInfoCard axis="X" title="학습수준" desc="성장 마인드셋, 신기술 학습 속도, 학습 이력 등을 정량적으로 측정" concept={`예) AI, 빅데이터 등 최신 기술을 얼마나 빠르게 학습하고 적용하는지,\n실패 경험에서 얼마나 학습하는지`} />
                     <AxisInfoCard axis="Y" title="직무 적합성" desc="직무의 요구 역량과 개인의 역량 간 매칭도 측정" concept={`예) 데이터 사이언티스트로서 통계 역량, 프로그래밍 능력, 도메인 이해도,\n팀 협업 성향 등`} />

@@ -1,7 +1,7 @@
 import HeroSection from "../components/HeroSection"
 import IntroSummary from "./intro-section/IntroSummary"
-import FeatureList from "../components/FeatureList"
-import ServiceCases from "../components/ServiceCases"
+import FeatureList from "./intro-section/FeatureList"
+import ServiceCases from "./intro-section/ServiceCases"
 
 function IntroSectionLayout() {
     return (

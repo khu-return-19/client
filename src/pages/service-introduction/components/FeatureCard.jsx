@@ -1,3 +1,5 @@
+import GradientCircle from "./GradientCircle"
+
 function FeatureCard({
     index,
     title,
@@ -16,15 +18,9 @@ function FeatureCard({
             backdrop-blur-sm
             h-fit
         ">
-            <div className="
-                flex items-center justify-center 
-                w-[45px] h-[45px] 
-                rounded-full 
-                bg-[linear-gradient(141deg,_#B9D4FF_19.81%,_#2876F1_53.21%,_#0057DF_82.62%)]
-                absolute top-0 left-0 translate-x-[-50%] translate-y-[-50%] z-10
-            ">
+            <GradientCircle className="absolute top-0 left-0 translate-x-[-50%] translate-y-[-50%] z-10">
                 <span className="text-white font-[600] text-[24px]">{index}</span>
-            </div>
+            </GradientCircle>
             <h4 className="text-[#000] font-[600] text-[20px] mb-[20px]">{title}</h4>
             <p className="text-[#000] font-[400] text-[16px] leading-[150%] whitespace-pre-line">{desc}</p>
             {concept && (

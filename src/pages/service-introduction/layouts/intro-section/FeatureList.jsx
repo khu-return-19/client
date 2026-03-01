@@ -1,5 +1,5 @@
-import SectionContent from "./SectionContent"
-import FeatureCard from "./FeatureCard"
+import SectionContent from "../../components/SectionContent"
+import FeatureCard from "../../components/FeatureCard"
 
 function FeatureList() {
     return (

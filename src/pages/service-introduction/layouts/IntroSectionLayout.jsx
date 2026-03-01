@@ -1,5 +1,5 @@
 import HeroSection from "../components/HeroSection"
-import IntroSummary from "../components/IntroSummary"
+import IntroSummary from "./intro-section/IntroSummary"
 import FeatureList from "../components/FeatureList"
 import ServiceCases from "../components/ServiceCases"
 

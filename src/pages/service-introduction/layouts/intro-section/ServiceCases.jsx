@@ -1,5 +1,5 @@
-import SectionContent from "./SectionContent";
-import ServiceCaseCard from "./ServiceCaseCard";
+import SectionContent from "../../components/SectionContent";
+import ServiceCaseCard from "../../components/ServiceCaseCard";
 import case1 from "../../../assets/imgs/사례1.svg";
 import case2 from "../../../assets/imgs/사례2.svg";
 import case3 from "../../../assets/imgs/사례3.svg";

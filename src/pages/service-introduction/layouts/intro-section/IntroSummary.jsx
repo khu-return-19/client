@@ -1,4 +1,4 @@
-import SectionContent from "./SectionContent"
+import SectionContent from "../../components/SectionContent"
 
 function IntroSummary() {
     return (

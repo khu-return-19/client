@@ -1,5 +1,5 @@
 import React from 'react';
-import EntryInput from './EntryInput';
+import EntryInput from '../../components/EntryInput';
 
 /**
  * EntrySection Component

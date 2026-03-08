@@ -2,35 +2,11 @@ import KHU from "assets/icons/KHU.svg";
 
 function HeroContent() {
   return (
-    <div
-      className="flex flex-col items-center"
-      style={{ width: "536px", paddingTop: "135px", paddingBottom: "148px" }}
-    >
-      <div
-        className="flex items-center justify-center"
-        style={{ width: "180px", height: "45px" }}
-      >
-        <img src={KHU} alt="KHU" style={{ width: "60px", height: "35px" }} />
-        <span
-          style={{
-            fontSize: "30px",
-            fontWeight: 200,
-            lineHeight: "150%",
-            color: "white",
-          }}
-        >
-          &nbsp;×&nbsp;
-        </span>
-        <span
-          style={{
-            fontSize: "24px",
-            fontWeight: 300,
-            lineHeight: "150%",
-            color: "white",
-          }}
-        >
-          Pertineo
-        </span>
+    <div className="flex flex-col items-center w-[536px] pt-[135px] pb-[148px]">
+      <div className="flex items-center justify-center w-[180px] h-[45px]">
+        <img src={KHU} alt="KHU" className="w-[60px] h-[35px]" />
+        <span className="text-[30px] font-[200] leading-[150%] text-white">&nbsp;×&nbsp;</span>
+        <span className="text-[24px] font-[300] leading-[150%] text-white">Pertineo</span>
       </div>
     </div>
   );

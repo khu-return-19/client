@@ -10,8 +10,6 @@ import LandingPage from "pages/landing-page/LandingPage";
 function AppContent() {
   return (
     <>
-      {/* Header */}
-
       <Routes>
         {/* 랜딩 페이지 */}
         <Route path="/landing" element={<LandingPage />} />
@@ -23,8 +21,6 @@ function AppContent() {
         <Route path="/input-page/self-introduction" element={<SelfIntroduction />} />
         <Route path="/input-page/loading" element={<Loading />} />
       </Routes>
-
-      {/* Footer */}
     </>
   );
 }

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import KHU from "assets/icons/KHU.svg";
 import TextMotion from "./TextMotion";
 
 function HeroContent() {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div className="flex flex-col items-center w-[536px] pt-[135px] pb-[148px]">
       <div className="flex items-center justify-center w-[180px] h-[45px]">
@@ -25,6 +28,29 @@ function HeroContent() {
       
       <div className="flex items-center justify-center w-[536px] h-[24px] mt-[4px]">
         <span className="text-[16px] font-[600] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
+      </div>
+
+      {/* 버튼 영역 */}
+      <div className="flex items-center justify-center gap-[16px] w-[376px] h-[52px] mt-[40px]">
+        <button className="group w-[120px] h-[52px] rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
+          <span className="text-[16px] font-[500] leading-[150%] text-[#ECF1F8] group-hover:text-white transition-colors">예시 리포트</span>
+        </button>
+
+        <button
+          className="w-[240px] h-[52px] rounded-[4px] bg-white flex items-center justify-center"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <span
+            className="text-[16px] font-[500] leading-[150%]"
+            style={hovered
+              ? { color: "#2876F1" }
+              : { background: "linear-gradient(90deg, #002983, #2876F1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }
+            }
+          >
+            자기소개서 입력하러 가기
+          </span>
+        </button>
       </div>
     </div>
   );

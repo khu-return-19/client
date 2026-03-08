@@ -5,6 +5,7 @@ import Company from "pages/input-page/company/Company";
 import Resume from "pages/input-page/resume/Resume";
 import SelfIntroduction from "pages/input-page/self-introduction/SelfIntroduction";
 import Loading from "pages/input-page/loading/Loading";
+import LandingPage from "pages/landing-page/LandingPage";
 
 function AppContent() {
   return (
@@ -12,6 +13,9 @@ function AppContent() {
       {/* Header */}
 
       <Routes>
+        {/* 랜딩 페이지 */}
+        <Route path="/landing" element={<LandingPage />} />
+
         {/* 입력 페이지 */}
         <Route path="/input-page/auth" element={<Auth />} />
         <Route path="/input-page/company" element={<Company />} />

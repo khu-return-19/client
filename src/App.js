@@ -12,7 +12,7 @@ function AppContent() {
     <>
       <Routes>
         {/* 랜딩 페이지 */}
-        <Route path="/landing" element={<LandingPage />} />
+        <Route path="*" element={<LandingPage />} />
 
         {/* 입력 페이지 */}
         <Route path="/input-page/auth" element={<Auth />} />

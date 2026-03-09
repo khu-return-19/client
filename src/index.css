@@ -54,3 +54,11 @@ textarea::placeholder {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE와 Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
+}

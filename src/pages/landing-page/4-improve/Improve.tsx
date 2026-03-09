@@ -13,6 +13,7 @@ export default function Improve() {
     triggerOnce: true,
     threshold: 0.5,
   });
+
   const cardExplain = [
     {
       color: "#226DE2",
@@ -57,8 +58,8 @@ export default function Improve() {
           cardExplain.map((i, index) =>
             <Card
               key={index}
-            index={index}
-            isVisible={inView}
+              index={index}
+              isVisible={inView}
               color={i.color} 
               title={i.title} 
               description1={i.description1} 

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { useInView } from "react-intersection-observer";
+
+// components
 import Header from "components/Header/Header";
 import MainSectionLayout from "./1-main/layouts/MainSectionLayout";
 import Landing2Layout from "./2-video/layouts/Landing2Layout";

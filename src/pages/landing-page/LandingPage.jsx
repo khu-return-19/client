@@ -2,8 +2,8 @@ import Header from "components/Header/Header";
 import MainSectionLayout from "./1-main/layouts/MainSectionLayout";
 import Landing2Layout from "./2-video/layouts/Landing2Layout";
 import Matrix from "./3-matrix/Matrix";
-import Landing4Layout from "./4-improve/layouts/Landing4Layout";
-import Landing5Layout from "./5-review/layouts/Landing5Layout";
+import Improve from "./4-improve/Improve";
+import Review from "./5-review/Review";
 
 function LandingPage() {
   return (
@@ -13,8 +13,8 @@ function LandingPage() {
       <MainSectionLayout />
       <Landing2Layout />
       <Matrix />
-      <Landing4Layout />
-      <Landing5Layout />
+      <Improve />
+      <Review />
     </div>
   );
 }

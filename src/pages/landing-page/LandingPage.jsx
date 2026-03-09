@@ -8,7 +8,7 @@ import Review from "./5-review/Review";
 function LandingPage() {
   return (
     // 배경 일단 검정으로 설정, 영역별 그라데이션 설정 나중에
-    <div className="bg-black">
+    <div className="bg-black overflow-x-hidden">
       <Header theme="dark" />
       <MainSectionLayout />
       <Landing2Layout />

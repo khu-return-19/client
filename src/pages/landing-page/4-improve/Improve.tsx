@@ -1,5 +1,6 @@
 import ExplainSectionLayout from "../layouts/ExplainSectionLayout";
 import SubTitle from "pages/landing-page/components/SubTitle";
+import { useInView } from "react-intersection-observer";
 
 // image
 import ChartReport from "../../../assets/icons/ChartReport.svg";
@@ -8,6 +9,10 @@ import Brain from "../../../assets/icons/ImproveHead.svg";
 import EstimateReport from "../../../assets/icons/EstimateReport.svg";
 
 export default function Improve() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.5,
+  });
   const cardExplain = [
     {
       color: "#226DE2",
@@ -47,11 +52,13 @@ export default function Improve() {
   return (
     <ExplainSectionLayout>
       <SubTitle title="개선방식 제안" discription="합격자를 비교분석하여 구직자의 장단점 및 개선 전략을 제공합니다." />
-      <div className="w-full flex gap-[7px] mt-[45px]">
+      <div ref={ref} className="w-full flex gap-[7px] mt-[45px]">
         {
           cardExplain.map((i, index) =>
             <Card
               key={index}
+            index={index}
+            isVisible={inView}
               color={i.color} 
               title={i.title} 
               description1={i.description1} 
@@ -67,6 +74,8 @@ export default function Improve() {
 }
 
 interface CardProps {
+  index: number;
+  isVisible: boolean;
   color: string;
   title: string;
   description1: string;
@@ -76,12 +85,14 @@ interface CardProps {
 }
 
 function Card({
-  color, title, description1, description2, image, className
+  index, isVisible, color, title, description1, description2, image, className
 }: CardProps){
   return (
     <div
-      className="flex-1 rounded-lg py-10 px-6 relative h-[498px]"
-      style={{ backgroundColor: color }}
+      className={`flex-1 rounded-lg py-10 px-6 relative h-[498px] transform transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+      style={{ backgroundColor: color, transitionDelay: `${index * 150}ms` }}
     >
       <h3 className="text-white text-[22px] font-bold mb-[32px]">{title}</h3>
       <p className="text-white text-[15px] font-medium mb-[7px]">{description1}</p>

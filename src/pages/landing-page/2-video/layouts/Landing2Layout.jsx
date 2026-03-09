@@ -1,6 +1,6 @@
 function Landing2Layout() {
   return (
-    <section className="flex items-center justify-center w-full h-[736px]">
+    <section className="flex items-center justify-center w-screen h-screen">
       
     </section>
   );

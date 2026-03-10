@@ -12,16 +12,16 @@ function FeatureList() {
                 />
                 <FeatureCard
                     index={2}
-                    title="맞춤형 피드백 및 실행 계획 제공"
-                    desc={`X(학습 능력), Y(직무 적합성), Z축(수행 역량)의 평가\n기준에 따라 지원자 준석 및 개선 방안 제공`}
-                    concept={`X축(학습 능력): 추천 강의, 학습 플랫폼 안내(Coursera, edX 등)\nY축(직무 적합성): 직무 맞춤형 프로젝트나 멘토링 프로그램 연결\nZ축(수행 역량): Kaggle, 해커톤, 실무 프로젝트 참여 기회 제안`}
+                    title="미래 직업 동향 반영"
+                    desc={`WEF 보고서, LinkedIn 등에서 수집한\n최신 채용 트렌드를 토대로 평가 기준 자동 업데이트`}
                 />
             </div>
             <div className="w-full flex justify-end items-start gap-[37px] mb-[42px]">
                 <FeatureCard
                     index={3}
-                    title="미래 직업 동향 반영"
-                    desc={`WEF 보고서, LinkedIn 등에서 수집한\n최신 채용 트렌드를 토대로 평가 기준 자동 업데이트`}
+                    title="맞춤형 피드백 및 실행 계획 제공"
+                    desc={`X(학습 능력), Y(직무 적합성), Z축(수행 역량)의 평가\n기준에 따라 지원자 준석 및 개선 방안 제공`}
+                    concept={`X축(학습 능력): 추천 강의, 학습 플랫폼 안내(Coursera, edX 등)\nY축(직무 적합성): 직무 맞춤형 프로젝트나 멘토링 프로그램 연결\nZ축(수행 역량): Kaggle, 해커톤, 실무 프로젝트 참여 기회 제안`}
                 />
                 <FeatureCard
                     index={4}

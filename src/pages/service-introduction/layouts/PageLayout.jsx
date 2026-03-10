@@ -4,7 +4,9 @@ function PageLayout({ children }) {
     return (
         <div>
             <Header />
-            {children}
+            <div className="px-[120px]">
+                {children}
+            </div>
         </div>
     )
 }

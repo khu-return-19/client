@@ -34,7 +34,7 @@ function LandingPage() {
   return (
     // 배경 일단 검정으로 설정, 영역별 그라데이션 설정 나중에
     <div className="bg-black overflow-x-hidden relative h-screen snap-y snap-mandatory overflow-y-scroll scrollbar-hide">
-      <Header theme="dark" />
+      <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
       <div className="fixed right-5 top-1/2 -translate-y-1/2 z-20">
         <SectionProgressBar index={activeIndex} total={5} />

@@ -5,7 +5,7 @@ import ValueProposition from "./analysis-section/ValueProposition"
 
 function AnalysisSectionLayout() {
     return (
-        <HeroSection title="3D 역량분석이란?">
+        <HeroSection title="3D 역량분석이란?" titleStyle="max-[768px]:text-center min-[769px]:mb-[80px] max-[768px]:mb-[50px]">
             <AnalysisModel />
             <EvaluationMethod />
             <ValueProposition />

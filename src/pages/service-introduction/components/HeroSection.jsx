@@ -1,11 +1,9 @@
-function HeroSection({ title, children, titleBottom = 80 }) {
+function HeroSection({ title, children, titleStyle = "" }) {
     return (
-        <div className="w-full flex flex-col pt-[80px] pb-[100px] items-center">
-            <div className="w-[1200px] flex flex-col items-center">
-                <h1 className="w-full text-[24px] font-[500] " style={{ marginBottom: `${titleBottom}px` }}>{title}</h1>
-                <div className="w-full pl-[60px] pr-[60px] flex flex-col">
-                    {children}
-                </div>
+        <div className="w-full flex flex-col min-[769px]:pt-[80px] min-[595px]:pt-[60px] max-[594px]:pt-[40px] min-[769px]:pb-[120px] min-[595px]:pb-[40px] max-[594px]:pb-[60px] items-center">
+            <h1 className={`w-full min-[769px]:text-[24px] max-[768px]:text-[20px] font-[500] ${titleStyle}`}>{title}</h1>
+            <div className="w-full flex flex-col">
+                {children}
             </div>
         </div>
     )

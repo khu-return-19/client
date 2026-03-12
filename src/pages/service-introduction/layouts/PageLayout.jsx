@@ -4,7 +4,7 @@ function PageLayout({ children }) {
     return (
         <div>
             <Header />
-            <div className="px-[120px]">
+            <div className="max-[1440px]:px-[120px] min-[1441px]:px-[calc((100vw-1440px)/2+120px)] max-[768px]:px-[calc((100vw-492px)/2)]">
                 {children}
             </div>
         </div>

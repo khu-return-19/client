@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function ServiceCaseCard({ img, title, desc }) {
+function EvaluationStep({ step, color, title, desc, marginBottom }) {
     const containerRef = useRef(null);
     const textRef = useRef(null);
     const [forceWrap, setForceWrap] = useState(false);
@@ -13,7 +13,6 @@ function ServiceCaseCard({ img, title, desc }) {
                 const containerWidth = entry.contentRect.width;
                 const textWidth = textRef.current.scrollWidth;
                 
-                // 5px buffer added to reliably trigger wrap before clipping
                 if (containerWidth < textWidth + 5) {
                     setForceWrap(true);
                 } else {
@@ -26,21 +25,27 @@ function ServiceCaseCard({ img, title, desc }) {
         return () => observer.disconnect();
     }, []);
 
-    // Change forced newlines to spaces for natural wrapping
     const naturalDesc = desc.replace(/\n/g, ' ');
 
     return (
-        <div className="flex items-center gap-[65px]">
-            <img src={img} alt={title} className="w-[103px] h-[103px] shrink-0" />
-            <div className="flex flex-col gap-[12px] flex-1 min-w-0 relative" ref={containerRef}>
-                <h3 className="text-[20px] max-[768px]:text-[16px] font-[500] leading-[120%]">{title}</h3>
-                
-                {/* Visible responsive text */}
-                <p className={`text-[16px] max-[768px]:text-[15px] font-[400] leading-[150%] break-keep ${forceWrap ? 'whitespace-normal' : 'whitespace-pre'}`}>
+        <div className={`flex items-start gap-[113px] ${marginBottom}`}>
+            <div className="flex items-center gap-[10px] w-[80px] shrink-0 h-[24px]">
+                <div
+                    className="w-[16px] h-[16px] max-[768px]:w-[12px] max-[768px]:h-[12px] rounded-full z-10 shrink-0"
+                    style={{ backgroundColor: color }}
+                />
+                <span className="text-[#717171] font-[400] text-[16px] max-[768px]:text-[14px] whitespace-nowrap">
+                    {step}
+                </span>
+            </div>
+
+            <div className="flex flex-col flex-1 min-w-0 relative" ref={containerRef}>
+                <h3 className="text-[#000000] text-[20px] max-[768px]:text-[16px] font-[500] mb-[12px] leading-none">
+                    {title}
+                </h3>
+                <p className={`text-[#000000] text-[16px] max-[768px]:text-[15px] font-[400] leading-[150%] break-keep ${forceWrap ? 'whitespace-normal' : 'whitespace-pre'}`}>
                     {forceWrap ? naturalDesc : desc}
                 </p>
-
-                {/* Hidden absolute text used solely for measuring original unbreakable width */}
                 <p 
                     ref={textRef} 
                     className="text-[16px] font-[400] leading-[150%] whitespace-pre absolute opacity-0 pointer-events-none w-max max-w-none left-0 top-0"
@@ -54,4 +59,4 @@ function ServiceCaseCard({ img, title, desc }) {
     );
 }
 
-export default ServiceCaseCard;
+export default EvaluationStep;

@@ -1,7 +1,7 @@
-function SectionContent({ title, children, titleBottom = 30, marginBottom = 100 }) {
+function SectionContent({ title, children, marginBottom = 100, titleStyle = "" }) {
     return (
         <div className="w-full flex flex-col" style={{ marginBottom: `${marginBottom}px` }}>
-            <h2 className="text-[24px] font-[600] text-[#002983]" style={{ marginBottom: `${titleBottom}px` }}>{title}</h2>
+            <h2 className={`text-[24px] font-[600] text-[#002983] mb-[30px] max-[768px]:text-[20px] ${titleStyle}`}>{title}</h2>
             {children}
         </div>
     )

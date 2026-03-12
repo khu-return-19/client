@@ -1,4 +1,5 @@
 import SectionContent from "../../components/SectionContent"
+import EvaluationStep from "../../components/EvaluationStep"
 
 function EvaluationMethod() {
     const evaluationData = [
@@ -27,35 +28,17 @@ function EvaluationMethod() {
 
     return (
         <SectionContent title="평가 방식">
-            <div className="relative ml-[171px]">
-                <div
-                    className="absolute left-[7px] top-[8px] w-[2px] h-[284px] bg-[linear-gradient(180deg,_#2876F1_0%,_#024FCB_50%,_#002983_100%)]"
-                />
-
+            <div className="relative" style={{ marginLeft: 'clamp(0px, calc(100vw - 1096px), 171px)' }}>
                 <div className="flex flex-col">
-                    {evaluationData.map((item, index) => (
-                        <div key={index} className={`flex items-start gap-[113px] ${item.marginBottom}`}>
-
-                            <div className="flex items-center gap-[10px] w-[80px] shrink-0 h-[24px]">
-                                <div
-                                    className="w-[16px] h-[16px] rounded-full z-10 shrink-0"
-                                    style={{ backgroundColor: item.color }}
-                                />
-                                <span className="text-[#717171] font-[400] text-[16px] whitespace-nowrap">
-                                    {item.step}
-                                </span>
-                            </div>
-
-                            <div className="flex flex-col">
-                                <h3 className="text-[#000000] text-[20px] font-[500] mb-[12px] leading-none">
-                                    {item.title}
-                                </h3>
-                                <p className="text-[#000000] text-[16px] font-[400] leading-[150%] whitespace-pre-line">
-                                    {item.desc}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                    <div className="relative">
+                        <div
+                            className="absolute left-[7px] top-[12px] h-full w-[2px] bg-[linear-gradient(180deg,_#2876F1_0%,_#024FCB_50%,_#002983_100%)]"
+                        />
+                        {evaluationData.slice(0, -1).map((item, index) => (
+                            <EvaluationStep key={index} {...item} />
+                        ))}
+                    </div>
+                    <EvaluationStep {...evaluationData[evaluationData.length - 1]} />
                 </div>
             </div>
         </SectionContent>

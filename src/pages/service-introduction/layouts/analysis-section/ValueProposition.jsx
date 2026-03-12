@@ -22,21 +22,26 @@ function ValueProposition() {
                 {valuePropositionData.map((item, index) => (
                     <div
                         key={index}
-                        className="w-[909px] 
-                    py-[28px] pl-[25px]
-                    rounded-[12px] 
-                    border border-[#C1D9FF] 
-                    bg-white/60 
-                    shadow-[0_0_12px_0_rgba(193,217,255,0.70)]
-                    backdrop-blur-sm
-                ">
-                        <h3 className="text-[#000] font-[500] text-[20px] mb-[16px]">{item.title}</h3>
-                        <p className="text-[#000] font-[400] text-[16px]">{item.desc}</p>
+                        className="w-full max-w-[909px] 
+                            py-[24px]
+                            min-[769px]:px-[24px]
+                            max-[768px]:px-[16px]
+                            rounded-[12px] 
+                            border border-[#C1D9FF] 
+                            bg-white/60 
+                            shadow-[0_0_12px_0_rgba(193,217,255,0.70)]
+                            backdrop-blur-sm
+                            flex flex-col gap-[16px]
+                        "
+                        style={{ marginLeft: 'clamp(0px, calc(100vw - 1149px), 118px)' }}
+                    >
+                        <h3 className="text-[#000] font-[500] min-[769px]:text-[20px] max-[768px]:text-[16px] max-[768px]:text-center">{item.title}</h3>
+                        <p className="text-[#000] font-[400] min-[769px]:text-[16px] max-[768px]:text-[15px] max-[768px]:text-center leading-[150%]">{item.desc}</p>
                     </div>
                 ))}
             </div>
         </SectionContent>
     );
 }
-
+ 
 export default ValueProposition;

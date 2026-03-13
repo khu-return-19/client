@@ -33,32 +33,37 @@ function LandingPage() {
 
   return (
     // 배경 일단 검정으로 설정, 영역별 그라데이션 설정 나중에
-    <div className="bg-black overflow-x-hidden relative h-screen snap-y snap-mandatory overflow-y-scroll scrollbar-hide">
+    <div className="bg-black h-screen overflow-hidden">
       <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
       <div className="fixed right-5 top-1/2 -translate-y-1/2 z-20">
         <SectionProgressBar index={activeIndex} total={5} />
       </div>
 
-      <section ref={mainRef} className="h-screen snap-start">
-        <MainSectionLayout />
-      </section>
+      <div
+        className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-[calc(100vh-var(--header-height))]"
+        style={{ marginTop: "var(--header-height)" }}
+      >
+        <section ref={mainRef} className="h-full snap-start">
+          <MainSectionLayout />
+        </section>
 
-      <section ref={videoRef} className="h-screen snap-start">
-        <Landing2Layout />
-      </section>
+        <section ref={videoRef} className="h-full snap-start">
+          <Landing2Layout />
+        </section>
 
-      <section ref={matrixRef} className="h-screen snap-start">
-        <Matrix />
-      </section>
+        <section ref={matrixRef} className="h-screen snap-start">
+          <Matrix />
+        </section>
 
-      <section ref={improveRef} className="h-screen snap-start">
-        <Improve />
-      </section>
+        <section ref={improveRef} className="h-screen snap-start">
+          <Improve />
+        </section>
 
-      <section ref={reviewRef} className="h-screen snap-start">
-        <Review />
-      </section>
+        <section ref={reviewRef} className="h-screen snap-start">
+          <Review />
+        </section>
+      </div>
     </div>
   );
 }

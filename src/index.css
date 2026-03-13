@@ -1,6 +1,10 @@
-@tailwind base;      
+@tailwind base;
 @tailwind components;
-@tailwind utilities;  
+@tailwind utilities;
+
+:root {
+  --header-height: clamp(48px, 8vh, 64px);
+}  
 
 @font-face {
   font-family: "Pretendard";

@@ -4,7 +4,7 @@ import NavigationBar from "../components/NavigationBar";
 
 function InputPageLayout({ children }) {
   return (
-    <div>
+    <div style={{ paddingTop: "var(--header-height)" }}>
       <Header />
       <TitleSection />
       <NavigationBar />

@@ -28,7 +28,7 @@ function EvaluationStep({ step, color, title, desc, marginBottom }) {
     const naturalDesc = desc.replace(/\n/g, ' ');
 
     return (
-        <div className={`flex items-start gap-[113px] ${marginBottom}`}>
+        <div className={`flex max-[768px]:flex-col items-start min-[769px]:gap-[113px] ${marginBottom}`}>
             <div className="flex items-center gap-[10px] w-[80px] shrink-0 h-[24px]">
                 <div
                     className="w-[16px] h-[16px] max-[768px]:w-[12px] max-[768px]:h-[12px] rounded-full z-10 shrink-0"
@@ -39,7 +39,7 @@ function EvaluationStep({ step, color, title, desc, marginBottom }) {
                 </span>
             </div>
 
-            <div className="flex flex-col flex-1 min-w-0 relative" ref={containerRef}>
+            <div className="flex flex-col flex-1 min-w-0 relative max-[768px]:mt-[10px] max-[768px]:ml-[20px]" ref={containerRef}>
                 <h3 className="text-[#000000] text-[20px] max-[768px]:text-[16px] font-[500] mb-[12px] leading-none">
                     {title}
                 </h3>

@@ -8,14 +8,14 @@ function EvaluationMethod() {
             color: "#2876F1",
             title: "다중 모달 데이터 분석",
             desc: "자기소개서 텍스트, 포트폴리오(코드, 디자인 시안 등), 영상(발표·인터뷰 영상) 데이터를\nNLP, 텍스트 마이닝, 컴퓨터 비전 기술로 분석해 정량적 점수를 산출",
-            marginBottom: "mb-[62px]"
+            marginBottom: "min-[769px]:mb-[62px] max-[768px]:mb-[30px]"
         },
         {
             step: "step 2",
             color: "#024FCB",
             title: "데이터베이스 연동",
             desc: "기업 · 직무별로 필요한 역량 지표와 기존 합격자의 평균치를 참조해, 지원자의 (X, Y, Z) 점수를 상대 비교",
-            marginBottom: "mb-[88px]"
+            marginBottom: "min-[769px]:mb-[88px] max-[768px]:mb-[30px]"
         },
         {
             step: "step 3",

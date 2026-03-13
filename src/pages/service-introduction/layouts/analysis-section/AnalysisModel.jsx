@@ -7,7 +7,7 @@ function AnalysisModel() {
         <SectionContent title="분석 모델" titleBottom={56} marginBottom={143}>
             <div className="w-full flex items-center max-[990px]:flex-col min-[991px]:gap-[38px] min-[991px]:justify-end max-[990px]:gap-[40px] max-[990px]:justify-center">
                 
-                <div className="w-full max-w-[430px] min-[991px]:min-w-[300px] aspect-square rounded-full border border-[#2876F1] border-dashed flex items-center justify-center shrink min-w-0">
+                <div className="w-full max-w-[430px] max-[768px]:max-w-[307px] min-[991px]:min-w-[300px] aspect-square rounded-full border border-[#2876F1] border-dashed flex items-center justify-center shrink min-w-0">
                     <img src={graphImg} alt="3D 모델 그래프" className="w-[75.81%] aspect-[326/298] object-contain" />
                 </div>
 
@@ -18,7 +18,7 @@ function AnalysisModel() {
                 </div>
             </div>
             
-            <div className="flex gap-[40px] min-[991px]:mt-[124px] max-[990px]:mt-[40px] max-[768p]:mt-[20px] max-[768px]:flex-col max-[768px]:gap-[10px]">
+            <div className="flex gap-[40px] min-[991px]:mt-[124px] max-[990px]:mt-[40px] max-[768px]:mt-[20px] max-[768px]:flex-col max-[768px]:gap-[10px]">
                 <h4 className="text-[#717171] text-[14px] font-[500] leading-[160%] whitespace-nowrap">배경이론</h4>
                 <p className="text-[#717171] text-[14px] max-[768px]:text-[13px] font-[400] leading-[160%]">
                     Kolb(1984): 경험학습 이론(Experiential Learning)을 통해 학습 경험과 반성적 사고가 개인의 역량 향상에 긴밀히 연결됨을 강조.<br />
@@ -30,4 +30,4 @@ function AnalysisModel() {
     )
 }
 
-export default AnalysisModel
+export default AnalysisModel;

@@ -5,15 +5,12 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
-import { Popup } from "shared/popup";
+
+// 임시 조치
+import Inspection from "pages/inspection";
 
 function Landing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [showPopup, setShowPopup] = useState(() => {
-    const hasSeenPopup = localStorage.getItem("hasSeenNoticePopup");
-    return !hasSeenPopup;
-  });
 
   const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
   const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -27,14 +24,9 @@ function Landing() {
     setIsModalOpen(true);
   };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-    localStorage.setItem("hasSeenNoticePopup", "true");
-  };
-
   return (
     <div className={styles.landing}>
-      <div className={styles.wrapper}>
+      {/* <div className={styles.wrapper}>
         {isMobile || isTablet ? <IntroSmallSize onOpenModal={openModal} /> : <IntroBigSize onOpenModal={openModal} />}
 
         <div className={styles.videoContainer}>
@@ -82,8 +74,8 @@ function Landing() {
       >
         <Bottom />
       </motion.div>
-      {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />}
-      {showPopup && <Popup onClose={handleClosePopup} />}
+      {isModalOpen && <SampleReport onClose={() => setIsModalOpen(false)} />} */}
+      <Inspection />
     </div>
   );
 }

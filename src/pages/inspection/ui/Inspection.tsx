@@ -2,7 +2,7 @@ import React from "react";
 
 function Inspection() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+    <div className="min-h-screen w-full bg-white flex items-center justify-center px-4 fixed">
       <div className="bg-white rounded-2xl shadow-lg p-10 max-w-lg w-full text-center">
         <h1 className="text-2xl font-bold text-blue-900 mb-8">
           시스템 점검 중입니다
@@ -13,7 +13,7 @@ function Inspection() {
           빠른 시간 내에 정상적인 서비스가 가능하도록 최선을 다하겠습니다.
           <br />
           <br />
-          2월 2일(월)에 서비스가 재개될 예정입니다.
+          3월 14일(토)에 서비스가 재개될 예정입니다.
         </p>
         <div className="border-t border-gray-200 pt-4">
           <p className="text-sm text-gray-400">

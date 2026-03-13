@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Landing.module.scss";
-import { SampleReport } from "components/landing";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useMediaQuery } from "react-responsive";
-import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
+// import { SampleReport } from "components/landing";
+// import { motion } from "framer-motion";
+// import { useInView } from "react-intersection-observer";
+// import { useMediaQuery } from "react-responsive";
+// import { Evaluation, Improvement, ResumeFeedback, Bottom, IntroSmallSize, IntroBigSize } from "layouts/landing";
 
 // 임시 조치
 import Inspection from "pages/inspection";
 
 function Landing() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
-  const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
-  const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.3 });
-  const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  // const [evalRef, evalInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  // const [impRef, impInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  // const [feedRef, feedInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+  // const [bottomRef, bottomInView] = useInView({ triggerOnce: true, threshold: 0.3 });
 
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
+  // const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  // const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  // const openModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
   return (
     <div className={styles.landing}>

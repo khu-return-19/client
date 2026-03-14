@@ -44,7 +44,7 @@ function TitleSection() {
 
           {/* 오버레이 (absolute로 아래 콘텐츠를 밀지 않음) */}
           {isOverlayOpen && (
-            <div className="absolute top-[-24px] left-[-16px] w-full bg-[#F4F6F8] rounded-[10px] z-50 flex flex-col p-[24px_16px] gap-[20px]">
+            <div className="absolute top-0 left-0 w-full bg-[#F4F6F8] rounded-[10px] z-50 flex flex-col p-[24px_16px] gap-[20px]">
               {/* 오버레이 최상단: 버튼과 동일 위치에 텍스트 + 닫기 */}
               <button
                 className="flex items-center gap-[8px] self-start"

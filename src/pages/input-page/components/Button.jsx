@@ -62,7 +62,7 @@ const Button = ({
 
     const sizeStyles = {
         s1: "w-[70px] h-[24px] rounded-[2px] font-normal text-[14px]",
-        s2: "w-[200px] h-[52px] rounded-md font-medium text-[16px]",
+        s2: "w-[200px] max-[893px]:w-[144px] h-[52px] max-[893px]:h-[44px] rounded-md font-medium text-[16px]",
         M: "w-[410px] h-[60px] rounded-md font-medium text-[20px]",
         L: "w-[600px] h-[60px] rounded-md font-medium text-[20px]",
     };

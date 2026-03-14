@@ -11,20 +11,27 @@ function NavigationBar() {
   const location = useLocation();
 
   return (
-    <nav className="max-w-[1200px] mx-auto flex mt-[60px]">
-      {TAB_ITEMS.map((item) => {
+    <nav className="max-w-[1200px] mx-auto flex mt-[60px] max-[893px]:max-w-[452px]">
+      {TAB_ITEMS.map((item, index) => {
         const isActive = location.pathname === item.path;
         return (
           <Link
             key={item.path}
             to={item.path}
-            className={`flex-1 h-[68px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors ${
+            className={`flex-1 h-[68px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors max-[893px]:text-[13px] text-center ${
               isActive
                 ? "text-[#2876F1] border-b-[3px] border-[#2876F1]"
                 : "text-[#717171] border-b-[1px] border-[#717171] hover:text-[#2876F1]"
             }`}
           >
-            {item.label}
+            {index === 0 ? (
+              <>
+                <span className="max-[893px]:hidden">{item.label}</span>
+                <span className="min-[894px]:hidden">인증 및 동의</span>
+              </>
+            ) : (
+              item.label
+            )}
           </Link>
         );
       })}

@@ -127,7 +127,7 @@ function Loading() {
 
   return (
     <LoadingPageLayout>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-[60px] max-[893px]:gap-[30px]">
         {stages.map((stage, index) => (
           <AnalysisStateSection
             key={index}

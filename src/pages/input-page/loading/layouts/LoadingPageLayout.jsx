@@ -8,20 +8,20 @@ function LoadingPageLayout({ children }) {
     return (
         <div>
             <Header />
-            <div className="w-full flex flex-col items-center mt-[40px]">
-                <div className="w-[1200px] mb-[80px] h-[24px]">
+            <div className="w-full flex flex-col items-center mt-[40px] px-[20px]">
+                <div className="w-full max-w-[1200px] max-[893px]:max-w-[452px] mb-[80px] max-[768px]:mb-[40px] h-[24px]">
                     <button className="flex h-full items-center gap-1 outline-none background-none" onClick={() => navigate("/input-page/self-introduction")}>
                         <img src={CancelIcon} alt="취소하기" />
                         <span className="text-[#717171] font-[500] text-[16px]">취소하기</span>
                     </button>
                 </div>
-                <div className="w-[468px]">
-                    <h2 className="text-[#000000] font-[500] text-[42px] leading-[140%] mb-[12px]">
+                <div className="w-full max-w-[468px] max-[893px]:max-w-[267px]">
+                    <h2 className="text-[#000000] font-[500] text-[42px] leading-[140%] mb-[12px] max-[893px]:text-[24px] max-[893px]:leading-[120%] max-[893px]:mb-[7px]">
                         자기소개서를 분석 중입니다.
                         <br />
                         잠시만 기다려 주세요!
                     </h2>
-                    <p className="text-[#717171] font-[400] text-[20px] mb-[80px]">
+                    <p className="text-[#717171] font-[400] text-[20px] mb-[80px] leading-[160%] max-[893px]:mb-[40px]">
                         최대 3분정도 소요됩니다.
                     </p>
                     {children}

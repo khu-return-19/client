@@ -85,7 +85,7 @@ function ResumeSection() {
     };
 
     return (
-        <div className="overflow-y-auto flex flex-col items-center gap-[100px] py-[60px] mt-[12px]">
+        <div className="overflow-y-auto flex flex-col items-center min-[894px]:gap-[100px] max-[893px]:gap-[40px] min-[894px]:mt-[38px] max-[893px]:mt-[34px] mb-[200px]">
             {/* 학력사항 */}
             <EntryGroupSection
                 caption="학력사항"
@@ -161,7 +161,7 @@ function ResumeSection() {
             />
 
             {/* 다음 단계 버튼 */}
-            <div className="mt-[20px] flex gap-[12px] items-center">
+            <div className="min-[894px]:mt-[20px] max-[893px]:mt-[30px] flex gap-[12px] items-center">
                 <Button
                     variant="secondary"
                     onClick={() => {

@@ -1,6 +1,6 @@
 function TitleSection() {
   return (
-    <div className="max-w-[1200px] mx-auto mt-[80px]">
+    <div className="w-full max-w-[1200px] mx-auto mt-[clamp(50px,5.56vw,80px)]">
       <h1 className="text-[24px] font-medium leading-[120%] text-black font-['Pretendard']">
         Pertineo 3D 역량 분석
       </h1>

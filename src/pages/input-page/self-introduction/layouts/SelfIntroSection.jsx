@@ -19,8 +19,8 @@ function SelfIntroSection() {
   };
 
   return (
-    <div className="w-[1080px] mx-auto mt-[72px] pb-[200px]">
-      <div className="flex flex-col gap-[60px]">
+    <div className="w-full max-w-[1080px] mx-auto mt-[clamp(45px,5vw,72px)] pb-[clamp(124px,13.89vw,200px)]">
+      <div className="flex flex-col gap-[clamp(37px,4.17vw,60px)]">
         {cards.map((card, index) => (
           <QuestionCard
             key={card.id}

@@ -51,13 +51,13 @@ function Agreement({ isEmailVerified = false }) {
   };
 
   return (
-    <div className="w-[600px]">
+    <div className="w-full max-w-[600px]">
       <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
         약관 동의
       </h2>
 
-      <div className="w-[600px] h-[200px] mt-[40px]">
-        <div className="w-[600px] pb-[12px] flex items-center border-b border-[#858585]">
+      <div className="w-full mt-[clamp(25px,2.78vw,40px)]">
+        <div className="w-full pb-[12px] flex items-center border-b border-[#858585]">
           <div className="flex items-center gap-[20px]">
             <Checkbox checked={allChecked} onChange={handleAllToggle} />
             <span
@@ -71,7 +71,7 @@ function Agreement({ isEmailVerified = false }) {
 
         <div className="flex flex-col gap-[16px] mt-[20px]">
           {AGREEMENT_ITEMS.map((item) => (
-            <div key={item.id} className="w-[592px] flex items-center justify-between">
+            <div key={item.id} className="w-full flex items-center justify-between">
               <div className="flex items-center gap-[20px] cursor-pointer" onClick={() => handleToggle(item.id)}>
                 <Checkbox checked={checked[item.id]} onChange={() => handleToggle(item.id)} />
                 <span className={`text-[16px] font-normal leading-[150%] ${item.type === "선택" ? "text-[#717171]" : "text-black"}`}>
@@ -111,11 +111,12 @@ function Agreement({ isEmailVerified = false }) {
         />
       )}
 
-      <div className="mt-[120px]">
+      <div className="mt-[clamp(74px,8.33vw,120px)]">
         <Button
           size="L"
           status={canStart ? "default" : "disabled"}
           onClick={handleStart}
+          className="!w-full"
         >
           시작하기
         </Button>

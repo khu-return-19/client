@@ -12,7 +12,7 @@ function NavigationBar() {
 
   return (
     <nav className="w-full max-w-[1200px] mx-auto flex mt-[clamp(37px,4.17vw,60px)]">
-      {TAB_ITEMS.map((item) => {
+      {TAB_ITEMS.map((item, index) => {
         const isActive = location.pathname === item.path;
         return (
           <Link

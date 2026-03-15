@@ -92,12 +92,12 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   };
 
   return (
-    <div className="w-[600px]">
+    <div className="w-full max-w-[600px]">
       <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
         이메일 인증
       </h2>
 
-      <div className="w-[600px] mt-[40px]">
+      <div className="w-full mt-[40px]">
         <div className="flex items-center gap-[4px]">
           <span className="text-[20px] font-medium leading-[150%] text-black">
             이메일
@@ -125,7 +125,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
             }}
             onFocus={() => setIsEmailFocused(true)}
             onBlur={() => setIsEmailFocused(false)}
-            className={`w-[384px] h-[52px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+            className={`flex-1 h-[52px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
           />
           <Button
             size="s2"
@@ -147,7 +147,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
       </div>
 
       {showCodeSection && (
-        <div className="w-[600px] mt-[40px]">
+        <div className="w-full mt-[40px]">
           <div className="flex items-center gap-[4px]">
             <span className="text-[20px] font-medium leading-[150%] text-black">
               인증번호

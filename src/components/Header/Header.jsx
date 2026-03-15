@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import PERTINEO from "assets/icons/PERTINEO.svg";
 
 const NAV_ITEMS = [
   { label: "공지사항", path: "#" },
@@ -15,17 +16,17 @@ function Header({ theme = "light" }) {
 
   return (
     <header
-      className={`w-full h-[64px] sticky top-0 z-50 backdrop-blur-[4px] ${isDark
+      className={`w-full fixed top-0 z-50 backdrop-blur-[4px] ${
+        isDark
           ? "bg-white/20 text-[#EEEEEE]"
           : "bg-white text-[#717171]"
-        }`}
-      style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.06)" }}
+      }`}
+      style={{ height: "var(--header-height)", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.06)" }}
     >
       <div className="max-w-[1200px] h-full mx-auto flex items-center">
         <div className="flex items-center gap-[180px]">
-          {/* 로고 영역 나중에 구현 예정 */}
-          <Link to="/" className="text-[18px] font-bold">
-            로고
+          <Link to="/">
+            <img src={PERTINEO} alt="PERTINEO" />
           </Link>
 
           {/* Navigation 탭 영역 */}

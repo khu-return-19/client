@@ -4,7 +4,7 @@ import NavigationBar from "../components/NavigationBar";
 
 function InputPageLayout({ children, showRequired = true }) {
   return (
-    <div>
+    <div style={{ paddingTop: "var(--header-height)" }}>
       <Header />
       <div className="min-[894px]:px-[40px] max-[893px]:px-[20px]">
         <TitleSection />

@@ -5,12 +5,12 @@ function TermsModal({ title, url, onClose }) {
       onClick={onClose}
     >
       <div
-        className="w-[800px] h-[620px] bg-white rounded-[8px] flex flex-col overflow-hidden"
+        className="w-full max-w-[800px] h-[clamp(400px,43.06vw,620px)] bg-white rounded-[8px] flex flex-col overflow-hidden mx-[24px]"
         onClick={e => e.stopPropagation()}
       >
-        <div className="w-[752px] mx-auto flex flex-col h-full pt-[24px] pb-[24px]">
+        <div className="w-full mx-auto flex flex-col h-full pt-[24px] pb-[24px] px-[24px]">
 
-          <div className="w-full h-[56px] flex items-center justify-between flex-shrink-0 px-[24px]">
+          <div className="w-full h-[56px] flex items-center justify-between flex-shrink-0">
             <span className="text-[20px] font-semibold leading-[120%] text-black">
               {title}
             </span>

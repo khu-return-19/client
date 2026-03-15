@@ -5,14 +5,15 @@ import Company from "pages/input-page/company/Company";
 import Resume from "pages/input-page/resume/Resume";
 import SelfIntroduction from "pages/input-page/self-introduction/SelfIntroduction";
 import Loading from "pages/input-page/loading/Loading";
+import LandingPage from "pages/landing-page/LandingPage";
 import ServiceIntroduction from "pages/service-introduction/ServiceIntroduction";
 
 function AppContent() {
   return (
     <>
-      {/* Header */}
-
-      <Routes>
+        <Routes>
+        {/* 랜딩 페이지 */}
+        <Route path="*" element={<LandingPage />} />
         {/* 서비스 소개 */}
         <Route path="/service-introduction" element={<ServiceIntroduction />} />
 
@@ -23,8 +24,6 @@ function AppContent() {
         <Route path="/input-page/self-introduction" element={<SelfIntroduction />} />
         <Route path="/input-page/loading" element={<Loading />} />
       </Routes>
-
-      {/* Footer */}
     </>
   );
 }

@@ -48,8 +48,8 @@ function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, i
   };
 
   return (
-    <div className="relative w-[1080px]">
-      <div className="w-[1020px] border border-[#717171] rounded-[6px] p-[12px]">
+    <div className="relative w-full">
+      <div className="w-[calc(100%-60px)] border border-[#717171] rounded-[6px] p-[12px]">
         <input
           type="text"
           placeholder="질문 문항을 입력해주세요"

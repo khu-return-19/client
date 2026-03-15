@@ -1,6 +1,10 @@
-@tailwind base;      
+@tailwind base;
 @tailwind components;
-@tailwind utilities;  
+@tailwind utilities;
+
+:root {
+  --header-height: clamp(48px, 8vh, 64px);
+}  
 
 @font-face {
   font-family: "Pretendard";
@@ -53,4 +57,12 @@ textarea::placeholder {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE와 Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
 }

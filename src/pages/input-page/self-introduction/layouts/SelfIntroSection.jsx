@@ -36,11 +36,8 @@ function SelfIntroSection() {
 
       <div className="flex flex-col items-center gap-[12px] mt-[120px]">
         <div className="flex gap-[12px]">
-          <Button size="s2" variant="secondary">
+          <Button size="M" variant="secondary" className="!h-[52px]">
             임시저장
-          </Button>
-          <Button size="s2" variant="secondary">
-            미리보기
           </Button>
         </div>
         <AnalysisButton status={firstFilled ? "default" : "disabled"} />

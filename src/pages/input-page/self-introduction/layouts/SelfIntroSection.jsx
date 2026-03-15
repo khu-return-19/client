@@ -2,12 +2,14 @@ import { useState } from "react";
 import QuestionCard from "../components/QuestionCard";
 import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
+import AnalysisModal from "../components/AnalysisModal";
 
 const MAX_CARDS = 5;
 
 function SelfIntroSection() {
   const [cards, setCards] = useState([{ id: 0 }]);
   const [firstFilled, setFirstFilled] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleAdd = () => {
     if (cards.length >= MAX_CARDS) return;
@@ -34,14 +36,19 @@ function SelfIntroSection() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-[12px] mt-[120px]">
+      <div className="flex flex-col items-center gap-[12px] mt-[clamp(68px,7.64vw,110px)]">
         <div className="flex gap-[12px]">
           <Button size="M" variant="secondary" className="!h-[52px]">
             임시저장
           </Button>
         </div>
-        <AnalysisButton status={firstFilled ? "default" : "disabled"} />
+        <AnalysisButton
+          status={firstFilled ? "default" : "disabled"}
+          onClick={() => { if (firstFilled) setShowModal(true); }}
+        />
       </div>
+
+      {showModal && <AnalysisModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import PERTINEO from "assets/icons/PERTINEO.svg";
 
 const NAV_ITEMS = [
   { label: "공지사항", path: "#" },
-  { label: "서비스 소개", path: "#" },
+  { label: "서비스 소개", path: "/service-introduction" },
   { label: "주요 사이트", path: "#" },
   { label: "자기소개서 분석", path: "/input-page/auth" },
 ];
@@ -31,26 +31,25 @@ function Header({ theme = "light" }) {
 
           {/* Navigation 탭 영역 */}
           <nav className="flex items-center gap-[30px]">
-          {NAV_ITEMS.map((item) => {
-            const isActive = location.pathname.startsWith(item.path);
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-[16px] transition-colors pb-[2px] ${
-                  isActive
-                    ? isDark
-                      ? "text-[#B3E5FF] border-b-[2px] border-[#B3E5FF]"
-                      : "text-[#09469F] border-b-[2px] border-[#09469F]"
-                    : isDark
-                      ? "text-[#EEEEEE] hover:text-[#B3E5FF]"
-                      : "text-[#717171] hover:text-[#09469F]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+            {NAV_ITEMS.map((item) => {
+              const isActive = location.pathname.startsWith(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`text-[16px] transition-colors pb-[2px] ${isActive
+                      ? isDark
+                        ? "text-[#B3E5FF] border-b-[2px] border-[#B3E5FF]"
+                        : "text-[#09469F] border-b-[2px] border-[#09469F]"
+                      : isDark
+                        ? "text-[#EEEEEE] hover:text-[#B3E5FF]"
+                        : "text-[#717171] hover:text-[#09469F]"
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>

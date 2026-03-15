@@ -5,14 +5,18 @@ import Company from "pages/input-page/company/Company";
 import Resume from "pages/input-page/resume/Resume";
 import SelfIntroduction from "pages/input-page/self-introduction/SelfIntroduction";
 import Loading from "pages/input-page/loading/Loading";
+KAN-55-feat/add-input-auth
 import LandingPage from "pages/landing-page/LandingPage";
+import ServiceIntroduction from "pages/service-introduction/ServiceIntroduction";
 
 function AppContent() {
   return (
     <>
-      <Routes>
+        <Routes>
         {/* 랜딩 페이지 */}
         <Route path="*" element={<LandingPage />} />
+        {/* 서비스 소개 */}
+        <Route path="/service-introduction" element={<ServiceIntroduction />} />
 
         {/* 입력 페이지 */}
         <Route path="/input-page/auth" element={<Auth />} />
@@ -29,7 +33,7 @@ function App() {
   return (
     <Router>
       <AppContent />
-      
+
     </Router>
   );
 }

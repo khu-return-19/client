@@ -35,8 +35,8 @@ function CompanySection() {
     }, [jobTitle]);
 
     return (
-        <div className="overflow-y-auto flex flex-col items-center gap-[100px] py-[60px] mt-[12px]">
-            <div className="flex w-[1080px] justify-between items-center">
+        <div className="overflow-y-auto flex flex-col items-center gap-[100px] max-[893px]:gap-[40px] mt-[38px] max-[893px]:mt-[34px]">
+            <div className="flex w-full max-w-[1080px] items-center gap-[20px] max-[893px]:flex-col max-[893px]:gap-[20px] max-[893px]:max-w-[452px]">
                 <EntrySection
                     caption="지원 회사명"
                     value={companyName}
@@ -45,6 +45,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={companyResults}
+                    className="flex-1 max-[893px]:!max-w-[452px]"
                 />
                 <EntrySection
                     caption="지원 직무"
@@ -54,6 +55,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={jobTitleResults}
+                    className="flex-1 max-[893px]:!max-w-[452px]"
                 />
             </div>
 
@@ -63,9 +65,10 @@ function CompanySection() {
                 onChange={setNoticeUrl}
                 placeholder="https://pertineo.khu.ac.kr/"
                 width={1080}
+                className="max-[893px]:!max-w-[452px]"
             />
 
-            <div className="mt-[20px] flex gap-[12px] items-center">
+            <div className="mt-[20px] max-[893px]:mt-[30px] flex gap-[12px] max-[893px]:gap-[7px] items-center">
                 <Button
                     variant="secondary"
                     onClick={() => {

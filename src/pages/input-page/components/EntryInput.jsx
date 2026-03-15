@@ -50,8 +50,10 @@ const EntryInput = forwardRef(({
                         outline-none 
                         placeholder:text-[#717171]
                         text-[#000000]
-                        pl-[10px]
+                        px-[10px]
+                        py-[14px]
                         text-[16px]
+                        max-[893px]:text-[15px]
                         font-['Pretendard']
                     "
                     {...props}

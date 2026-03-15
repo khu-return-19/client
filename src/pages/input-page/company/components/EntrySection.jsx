@@ -26,9 +26,9 @@ const EntrySection = ({
     ...props
 }) => {
     return (
-        <div className={`${className}`} style={{ width: typeof width === 'number' ? `${width}px` : width }}>
+        <div className={`w-full ${className}`} style={{ maxWidth: typeof width === 'number' ? `${width}px` : width }}>
             {caption && (
-                <div className="shrink-0 text-[24px] font-medium text-[#000000] mb-[10px]">
+                <div className="shrink-0 text-[24px] max-[893px]:text-[16px] font-normal text-[#000000] mb-[12px] max-[893px]:mb-[4px]">
                     {caption}
                     {required && <span className="ml-[4px] text-[#2876F1]">*</span>}
                 </div>

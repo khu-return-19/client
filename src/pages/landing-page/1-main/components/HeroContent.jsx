@@ -7,8 +7,8 @@ function HeroContent() {
 
   return (
     <div className="flex flex-col items-center w-[37.2vw] pt-[18.3vh] pb-[20.1vh]">
-      <div className="flex items-center justify-center w-[180px] h-[45px]">
-        <img src={KHU} alt="KHU" className="w-[60px] h-[35px]" />
+      <div className="flex items-center justify-center w-[12.5vw] h-[3.13vw]">
+        <img src={KHU} alt="KHU" className="w-[4.17vw] h-[2.43vw]" />
         <span className="text-[30px] font-[200] leading-[150%] text-white">&nbsp;×&nbsp;</span>
         <span className="text-[24px] font-[300] leading-[150%] text-white">Pertineo</span>
       </div>
@@ -16,7 +16,7 @@ function HeroContent() {
         <TextMotion />
       </div>
 
-      <div className="flex items-center justify-center w-[242px] h-[36px] mt-[6.4vh]">
+      <div className="flex items-center justify-center w-[16.8vw] h-[2.5vw] mt-[6.4vh]">
         <span className="text-[24px] font-[600] leading-[150%] text-white">3D 역량 분석 보고서 제공</span>
       </div>
 

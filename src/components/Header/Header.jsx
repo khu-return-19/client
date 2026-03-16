@@ -16,12 +16,12 @@ function Header({ theme = "light" }) {
 
   return (
     <header
-      className={`w-full fixed top-0 z-50 backdrop-blur-[4px] ${
+      className={`w-full fixed top-0 z-50 backdrop-blur-[4px] shadow-[0px_4px_12px_rgba(0,0,0,0.06)] ${
         isDark
           ? "bg-white/20 text-[#EEEEEE]"
           : "bg-white text-[#717171]"
       }`}
-      style={{ height: "var(--header-height)", boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.06)" }}
+      style={{ height: "var(--header-height)" }}
     >
       <div className="max-w-[1200px] h-full mx-auto flex items-center">
         <div className="flex items-center gap-[180px]">

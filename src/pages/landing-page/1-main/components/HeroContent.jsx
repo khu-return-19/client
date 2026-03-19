@@ -17,15 +17,15 @@ function HeroContent() {
       </div>
 
       <div className="flex items-center justify-center w-[16.8vw] h-[2.5vw] mt-[6.4vh]">
-        <span className="text-[24px] font-[600] leading-[150%] text-white">3D 역량 분석 보고서 제공</span>
+        <span className="text-[1.67vw] font-[600] leading-[150%] text-white">3D 역량 분석 보고서 제공</span>
       </div>
 
-      <div className="flex items-center justify-center w-[37.2vw] h-[24px] mt-[0.5vh]">
-        <span className="text-[16px] font-[600] leading-[150%] text-white">합격자 데이터로 학습된 인공지능 pertineo를 통해 3차원 역량분석 결과를 확인하세요</span>
+      <div className="flex items-center justify-center w-[37.2vw] h-[1.67vw] mt-[0.5vh]">
+        <span className="text-[1.11vw] font-[600] leading-[150%] text-white">합격자 데이터로 학습된 인공지능 pertineo를 통해 3차원 역량분석 결과를 확인하세요</span>
       </div>
 
-      <div className="flex items-center justify-center w-[37.2vw] h-[24px] mt-[0.5vh]">
-        <span className="text-[16px] font-[600] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
+      <div className="flex items-center justify-center w-[37.2vw] h-[1.67vw] mt-[0.5vh]">
+        <span className="text-[1.11vw] font-[600] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
       </div>
 
       {/* 버튼 영역 */}

@@ -17,21 +17,27 @@ function AnalysisStateSection({ completed, error, progress, title, items }) {
     return (
         <div
             ref={sectionRef}
-            className="w-full flex gap-5 transition-all duration-500 ease-out"
+            className="w-full flex gap-5 transition-all duration-500 ease-out items-start"
             style={{ opacity: 0, transform: "translateY(12px)" }}
         >
-            {completed ? (
-                <CompleteIcon />
-            ) : (
-                <CircularProgressBar progress={progress} error={error} />
-            )}
-            <div className="flex flex-col gap-[6px]">
-                <h3 className="text-[24px] max-[893px]:text-[16px] font-[500] mb-[6px]">{title}</h3>
+            <div className="flex items-center h-[36px] max-[893px]:h-[24px] shrink-0">
+                {completed ? (
+                    <CompleteIcon />
+                ) : (
+                    <CircularProgressBar progress={progress} error={error} />
+                )}
+            </div>
+            <div className="flex flex-col w-full">
+                <div className="flex items-center h-[36px] max-[893px]:h-[24px]">
+                    <h3 className="text-[24px] max-[893px]:text-[16px] font-[500] leading-none">
+                        {title}
+                    </h3>
+                </div>
                 {!completed &&
                     items.map((item) => (
                         <p
                             key={item}
-                            className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] animate-fade-in"
+                            className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] animate-fade-in mt-[6px]"
                         >
                             {item}
                         </p>

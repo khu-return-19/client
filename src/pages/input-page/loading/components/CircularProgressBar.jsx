@@ -50,7 +50,7 @@ function CircularProgressBar({ completed = false, error = false }) {
 
     return (
         <div 
-            className={`relative w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${isActive ? "animate-pulse-subtle" : ""}`}
+            className={`relative w-[36px] h-[36px] max-[893px]:w-[24px] max-[893px]:h-[24px] rounded-full flex items-center justify-center shrink-0 ${isActive ? "animate-pulse-subtle" : ""}`}
             role="progressbar"
             aria-valuenow={Math.round(displayProgress)}
             aria-valuemin="0"
@@ -71,9 +71,9 @@ function CircularProgressBar({ completed = false, error = false }) {
                 }}
             />
             <div className="absolute w-full h-full flex items-center justify-center">
-                <div className="inset-[3.6px] rounded-full bg-white w-[28px] h-[28px]" />
+                <div className="rounded-full bg-white w-[28px] h-[28px] max-[893px]:w-[18px] max-[893px]:h-[18px]" />
                 {error && (
-                    <span className="absolute text-[10px] font-bold text-[#FF4D4F]">!</span>
+                    <span className="absolute text-[10px] max-[893px]:text-[8px] font-bold text-[#FF4D4F]">!</span>
                 )}
             </div>
         </div>

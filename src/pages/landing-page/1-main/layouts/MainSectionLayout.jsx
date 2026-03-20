@@ -9,7 +9,7 @@ const BottomLeftLarge = () => (
       <filter id="filter0_f_1642_1324" x="-3000" y="-2000" width="6000" height="6000" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
         <feFlood floodOpacity="0" result="BackgroundImageFix"/>
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-        <feGaussianBlur stdDeviation="5" result="effect1_foregroundBlur_1642_1324"/>
+        <feGaussianBlur stdDeviation="500" result="effect1_foregroundBlur_1642_1324"/>
       </filter>
     </defs>
   </svg>
@@ -28,7 +28,7 @@ const BottomLeftSmall = () => (
       </filter>
       <radialGradient id="paint0_radial_1642_1325" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25.8191 684.815) rotate(154.29) scale(283.533 221.693)">
         <stop stopColor="#002983"/>
-        <stop offset="1" stopColor="#266CDA"/>
+        <stop offset="100" stopColor="#266CDA"/>
       </radialGradient>
     </defs>
   </svg>
@@ -43,7 +43,7 @@ const TopRightLarge = () => (
       <filter id="filter0_f_1642_1327" x="-3000" y="-2000" width="6000" height="6000" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
         <feFlood floodOpacity="0" result="BackgroundImageFix"/>
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-        <feGaussianBlur stdDeviation="5" result="effect1_foregroundBlur_1642_1327"/>
+        <feGaussianBlur stdDeviation="500" result="effect1_foregroundBlur_1642_1327"/>
       </filter>
     </defs>
   </svg>
@@ -58,11 +58,11 @@ const TopRightSmall = () => (
       <filter id="filter0_f_1642_1328" x="-3000" y="-2000" width="6000" height="6000" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
         <feFlood floodOpacity="0" result="BackgroundImageFix"/>
         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-        <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_1642_1328"/>
+        <feGaussianBlur stdDeviation="150" result="effect1_foregroundBlur_1642_1328"/>
       </filter>
       <radialGradient id="paint0_radial_1642_1328" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(465.861 -79.9758) rotate(-55.7099) scale(143.92 112.53)">
         <stop stopColor="#002983"/>
-        <stop offset="1" stopColor="#C1D9FF"/>
+        <stop offset="100" stopColor="#C1D9FF"/>
       </radialGradient>
     </defs>
   </svg>

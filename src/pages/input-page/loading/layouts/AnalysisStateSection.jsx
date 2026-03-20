@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import CompleteIcon from "../components/CompleteIcon";
 import CircularProgressBar from "../components/CircularProgressBar";
 
-function AnalysisStateSection({ completed, progress, title, items }) {
+function AnalysisStateSection({ completed, error, progress, title, items }) {
     const sectionRef = useRef(null);
 
     useEffect(() => {
@@ -20,7 +20,11 @@ function AnalysisStateSection({ completed, progress, title, items }) {
             className="w-full flex gap-5 transition-all duration-500 ease-out"
             style={{ opacity: 0, transform: "translateY(12px)" }}
         >
-            {completed ? <CompleteIcon /> : <CircularProgressBar progress={progress} />}
+            {completed ? (
+                <CompleteIcon />
+            ) : (
+                <CircularProgressBar progress={progress} error={error} />
+            )}
             <div className="flex flex-col gap-[6px]">
                 <h3 className="text-[24px] max-[893px]:text-[16px] font-[500] mb-[6px]">{title}</h3>
                 {!completed &&

@@ -85,7 +85,7 @@ function ResumeSection() {
     };
 
     return (
-        <div className="overflow-y-auto flex flex-col items-center min-[894px]:gap-[100px] max-[893px]:gap-[40px] min-[894px]:mt-[38px] max-[893px]:mt-[34px] mb-[200px]">
+        <div className="overflow-y-auto flex flex-col items-center min-[894px]:gap-[100px] max-[893px]:gap-[40px] min-[894px]:mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
             {/* 학력사항 */}
             <EntryGroupSection
                 caption="학력사항"

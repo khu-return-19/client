@@ -40,7 +40,7 @@ function LandingPage() {
       </div>
 
       <div className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-screen">
-        <section ref={mainRef} className="h-full snap-start">
+        <section ref={mainRef} className="h-full snap-start overflow-hidden">
           <MainSectionLayout />
         </section>
 

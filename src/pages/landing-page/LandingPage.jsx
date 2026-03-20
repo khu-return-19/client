@@ -32,19 +32,15 @@ function LandingPage() {
   }, [mainInView, videoInView, matrixInView, improveInView, reviewInView]);
 
   return (
-    // 배경 일단 검정으로 설정, 영역별 그라데이션 설정 나중에
-    <div className="bg-black h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden">
       <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
       <div className="fixed right-5 top-1/2 -translate-y-1/2 z-20">
         <SectionProgressBar index={activeIndex} total={5} />
       </div>
 
-      <div
-        className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-[calc(100vh-var(--header-height))]"
-        style={{ marginTop: "var(--header-height)" }}
-      >
-        <section ref={mainRef} className="h-full snap-start">
+      <div className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-screen">
+        <section ref={mainRef} className="h-full snap-start overflow-hidden">
           <MainSectionLayout />
         </section>
 

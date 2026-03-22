@@ -26,8 +26,8 @@ function SelfIntroSection() {
         {cards.map((card, index) => (
           <QuestionCard
             key={card.id}
-            showPlus={index === 0}
-            showMinus={index !== 0}
+            showPlus={index === cards.length - 1}
+            showMinus={cards.length > 1}
             onAdd={handleAdd}
             onRemove={() => handleRemove(card.id)}
             isAddDisabled={cards.length >= MAX_CARDS}

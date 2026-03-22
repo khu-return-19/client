@@ -12,7 +12,7 @@ function HeroContent() {
         <span className="text-[30px] font-[200] leading-[150%] text-white">&nbsp;×&nbsp;</span>
         <span className="text-[24px] font-[300] leading-[150%] text-white">Pertineo</span>
       </div>
-      <div className="w-[52.9vw] h-[150px] mt-[6.4vh] flex items-center justify-center">
+      <div className="h-[12vw] mt-[6.4vh] flex items-center justify-center" style={{ width: "clamp(700px, 52.9vw, 762px)" }}>
         <TextMotion />
       </div>
 
@@ -29,18 +29,18 @@ function HeroContent() {
       </div>
 
       {/* 버튼 영역 */}
-      <div className="flex items-center justify-center gap-[16px] w-[376px] h-[52px] mt-[5.4vh]">
-        <button className="group w-[120px] h-[52px] rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
-          <span className="text-[16px] font-[500] leading-[150%] text-[#ECF1F8] group-hover:text-white transition-colors">예시 리포트</span>
+      <div className="flex items-center justify-center gap-[1.11vw] h-[3.61vw] mt-[5.4vh]" style={{ width: "clamp(280px, 26.1vw, 376px)" }}>
+        <button className="group w-[8.33vw] h-full rounded-[4px] border-2 border-white bg-[#ECF1F8]/30 hover:bg-[#ECF1F8]/60 flex items-center justify-center transition-colors">
+          <span className="text-[1.11vw] font-[500] leading-[150%] text-[#ECF1F8] group-hover:text-white transition-colors">예시 리포트</span>
         </button>
 
         <button
-          className="w-[240px] h-[52px] rounded-[4px] bg-white flex items-center justify-center"
+          className="w-[16.67vw] h-full rounded-[4px] bg-white flex items-center justify-center"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
           <span
-            className="text-[16px] font-[500] leading-[150%]"
+            className="text-[1.11vw] font-[500] leading-[150%]"
             style={hovered
               ? { color: "#2876F1" }
               : { background: "linear-gradient(90deg, #002983, #2876F1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }

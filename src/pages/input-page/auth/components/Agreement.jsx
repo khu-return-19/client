@@ -56,7 +56,7 @@ function Agreement({ isEmailVerified = false }) {
         약관 동의
       </h2>
 
-      <div className="w-full mt-[clamp(25px,2.78vw,40px)]">
+      <div className="w-full mt-[40px]">
         <div className="w-full pb-[12px] flex items-center border-b border-[#858585]">
           <div className="flex items-center gap-[20px]">
             <Checkbox checked={allChecked} onChange={handleAllToggle} />
@@ -111,7 +111,7 @@ function Agreement({ isEmailVerified = false }) {
         />
       )}
 
-      <div className="mt-[clamp(74px,8.33vw,120px)]">
+      <div className="mt-[120px]">
         <Button
           size="L"
           status={canStart ? "default" : "disabled"}

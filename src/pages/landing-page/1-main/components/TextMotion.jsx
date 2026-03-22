@@ -21,7 +21,7 @@ function SlideText({ text, direction }) {
     <motion.p
       className={[
         "absolute w-full whitespace-pre-line text-center",
-        "text-[64px] font-bold leading-[120%] tracking-[2.56px]",
+        "font-bold leading-[120%] tracking-[2.56px] text-[clamp(58px,calc(1.25vw+46px),64px)]",
         "bg-[linear-gradient(91deg,#FFFCE5_26.49%,#FFF_47.51%,#D6D2B0_73.51%)]",
         "bg-clip-text text-transparent",
       ].join(" ")}
@@ -44,7 +44,6 @@ function HeroTextCarousel() {
     const cycle = setInterval(() => {
       setIndex(prev => {
         const next = (prev + 1) % TEXTS.length;
-        // 마지막(2번)→처음(0번)은 아래로, 나머지는 위로
         setDirection(next === 0 ? "down" : "up");
         return next;
       });

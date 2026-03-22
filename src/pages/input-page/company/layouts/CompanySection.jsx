@@ -35,8 +35,8 @@ function CompanySection() {
     }, [jobTitle]);
 
     return (
-        <div className="overflow-y-auto flex flex-col items-center gap-[100px] max-[893px]:gap-[40px] mt-[38px] max-[893px]:mt-[34px]">
-            <div className="flex w-full max-w-[1080px] items-center gap-[20px] max-[893px]:flex-col max-[893px]:gap-[20px] max-[893px]:max-w-[452px]">
+        <div className="overflow-y-auto flex flex-col items-center gap-[100px] max-[893px]:gap-[40px] mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
+            <div className="flex w-full min-[894px]:max-w-[1080px] gap-[20px] max-[893px]:flex-col max-[893px]:max-w-[452px]">
                 <EntrySection
                     caption="지원 회사명"
                     value={companyName}
@@ -45,7 +45,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={companyResults}
-                    className="flex-1 max-[893px]:!max-w-[452px]"
+                    className="max-[893px]:!max-w-[452px]"
                 />
                 <EntrySection
                     caption="지원 직무"
@@ -55,7 +55,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={jobTitleResults}
-                    className="flex-1 max-[893px]:!max-w-[452px]"
+                    className="max-[893px]:!max-w-[452px]"
                 />
             </div>
 

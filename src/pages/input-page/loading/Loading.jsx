@@ -55,7 +55,7 @@ function useStreamStages() {
         currentIndexRef.current += 1;
         setStages((prev) => [
           ...prev,
-          { title: event.title, items: [], completed: false },
+          { title: event.title, items: [], completed: false, error: false },
         ]);
         break;
 
@@ -76,6 +76,15 @@ function useStreamStages() {
           const updated = [...prev];
           const i = currentIndexRef.current;
           updated[i] = { ...updated[i], completed: true };
+          return updated;
+        });
+        break;
+
+      case "error":
+        setStages((prev) => {
+          const updated = [...prev];
+          const i = currentIndexRef.current;
+          updated[i] = { ...updated[i], error: true };
           return updated;
         });
         break;
@@ -132,7 +141,8 @@ function Loading() {
           <AnalysisStateSection
             key={index}
             completed={stage.completed}
-            title={`${stage.title} ${stage.completed ? "완료" : "중"}`}
+            error={stage.error}
+            title={`${stage.title} ${stage.completed ? "완료" : stage.error ? "실패" : "중"}`}
             items={stage.items}
           />
         ))}

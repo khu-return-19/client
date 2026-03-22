@@ -108,7 +108,7 @@ const EntryGroupSection = ({
     };
 
     return (
-        <div className={`w-full min-[894px]:max-w-[1020px] max-[893px]:max-w-[452px] ${className}`}>
+        <div className={`w-full min-[894px]:max-w-[1080px] max-[893px]:max-w-[452px] ${className}`}>
             <div className="flex items-center justify-between">
                 <div className="shrink-0 text-[24px] max-[893px]:text-[16px] font-normal text-[#000000] mb-[12px] max-[893px]:mb-[4px]">
                     {caption}

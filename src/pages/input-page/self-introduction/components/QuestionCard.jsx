@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 
 const SHADOW = "0 0 33.6px rgba(116, 154, 220, 0.3)";
 
-function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, isAddDisabled }) {
-  const [question, setQuestion] = useState("");
-  const [content, setContent] = useState("");
+function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, isAddDisabled, question: initialQuestion = "", content: initialContent = "" }) {
+  const [question, setQuestion] = useState(initialQuestion);
+  const [content, setContent] = useState(initialContent);
   const plusBtnRef = useRef(null);
 
   useEffect(() => {

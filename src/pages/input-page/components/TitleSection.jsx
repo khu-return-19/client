@@ -18,7 +18,7 @@ function TitleSection() {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto mt-[clamp(50px,5.56vw,80px)]">
+    <div className="w-full max-w-[1200px] mx-auto mt-[80px]">
       <h1 className="text-[24px] font-medium leading-[120%] text-black font-['Pretendard']">
         Pertineo 3D 역량 분석
       </h1>
@@ -27,9 +27,8 @@ function TitleSection() {
           Pertineo에게 희망 기업과 직무 그리고 본인의 역량을 나타낼 수 있는 정보를 제공하여, 커리어 컨설팅 보고서를 생성할 수 있습니다.
         </p>
 
-        {/* 모바일: 이용 방법 및 주의 사항 버튼 + 오버레이 */}
         <div className="min-[894px]:hidden flex-1 min-w-0 relative">
-          {/* 버튼 (오버레이가 닫혀있을 때 노출) */}
+         
           <button
             className="flex items-center gap-[8px]"
             onClick={() => setIsOverlayOpen(prev => !prev)}
@@ -42,10 +41,9 @@ function TitleSection() {
             />
           </button>
 
-          {/* 오버레이 (absolute로 아래 콘텐츠를 밀지 않음) */}
           {isOverlayOpen && (
             <div className="absolute top-0 left-0 w-full bg-[#F4F6F8] rounded-[10px] z-50 flex flex-col p-[24px_16px] gap-[20px]">
-              {/* 오버레이 최상단: 버튼과 동일 위치에 텍스트 + 닫기 */}
+              
               <button
                 className="flex items-center gap-[8px] self-start"
                 onClick={() => setIsOverlayOpen(false)}
@@ -54,7 +52,7 @@ function TitleSection() {
                 <img src={AngleDownIcon} alt="화살표" className="w-[16px] h-[16px] rotate-180" />
               </button>
 
-              {/* 가이드 내용 */}
+            
               {GUIDE_CONTENT.map((section) => (
                 <div key={section.title}>
                   <p className="text-[#000] font-['Pretendard'] text-[16px] font-[500] leading-[150%] mb-[4px]">
@@ -69,12 +67,11 @@ function TitleSection() {
           )}
         </div>
 
-        {/* 세션 버튼 (shrink-0으로 고정) */}
         <div className="flex items-center gap-[8px] max-[893px]:gap-[6px] shrink-0">
           <Button size="s1">세션 연장</Button>
           <div className="flex items-center gap-[2px]">
-            <img src={SessionIcon} alt="세션" className="w-[24px] h-[24px] max-[893px]:w-[16px] max-[893px]:h-[16px]" />
-            <span className="text-[20px] font-[300] leading-[120%] text-[#09469F] font-['Pretendard'] max-[893px]:text-[14px]">00:00</span>
+            <img src={SessionIcon} alt="세션" className="w-[24px] h-[24px]" />
+            <span className="text-[20px] font-[300] leading-[120%] text-[#09469F] font-['Pretendard']">00:00</span>
           </div>
         </div>
       </div>

@@ -65,3 +65,7 @@ code {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;             /* Chrome, Safari */
 }
+
+@thema {
+  --breakpoint-lg: 960px;
+}

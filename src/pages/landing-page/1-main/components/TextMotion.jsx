@@ -47,7 +47,7 @@ function HeroTextCarousel() {
         setDirection(next === 0 ? "down" : "up");
         return next;
       });
-    }, 1000 + 800);
+    }, 1400 + 600);
 
     return () => clearInterval(cycle);
   }, []);

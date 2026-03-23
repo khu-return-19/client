@@ -8,8 +8,8 @@ function LoadingPageLayout({ children }) {
     return (
         <div>
             <Header />
-            <div className="w-full flex flex-col items-center mt-[40px] px-[20px]">
-                <div className="w-full max-w-[1200px] max-[893px]:max-w-[452px] mb-[80px] max-[768px]:mb-[40px] h-[24px]">
+            <div className="w-full flex flex-col items-center pt-[var(--header-height)] px-[20px]">
+                <div className="w-full max-w-[1200px] max-[893px]:max-w-[452px] mb-[80px] max-[768px]:mb-[40px] h-[24px] min-[894px]:mt-[40px] max-[893px]:mt-[20px] max-[768px]:mt-[16px]">
                     <button className="flex h-full items-center gap-1 outline-none background-none" onClick={() => navigate("/input-page/self-introduction")}>
                         <img src={CancelIcon} alt="취소하기" />
                         <span className="text-[#717171] font-[500] text-[16px]">취소하기</span>

@@ -39,7 +39,7 @@ export default function Review() {
             <img src={BigArrow} alt="화살표" className="w-30 absolute -top-36 z-10" />
             <div className="w-full flex justify-center">
               <div className="relative w-full  flex justify-center">
-                <div className="absolute -top-[12%] left-36 rounded-full bg-[#0D326F] border-1 border-[#C1D9FF] px-6 py-[15px] text-sm font-semibold text-white">
+                <div className="absolute -top-[12%] left-36 rounded-full bg-[#0D326F] border-[1px] border-[#C1D9FF] px-6 py-[15px] text-sm font-semibold text-white">
                   수정 후
                 </div>
                 <div className="rounded-md border w-[965px] border-[#C1D9FF] shadow-[0_0_14.3px_0_rgba(193,217,255,0.70)] bg-white pb-[33px] px-[42px] pt-[46px] text-[20px] font-normal leading-relaxed">

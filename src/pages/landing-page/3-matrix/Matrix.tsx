@@ -10,10 +10,10 @@ export default function Matrix() {
       title="3D 역량평가 모델로 보는 세 가지 핵심 지표" 
       discription="학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z) 을 종합적으로 분석합니다." 
       />
-      <div className="flex flex-col min-[960px]:flex-row items-center justify-center pt-[65px]">
+      <div className="flex flex-col max-h-full min-[960px]:flex-row items-center justify-center pt-[65px]">
         <div className="h-[416px] w-[416px]">report</div>
         <img src={Arrow} alt="화살표" />
-        <div className="border-1 border-[#C1D9FF] rounded-2xl shadow-[0_8px_24px_rgba(193,217,255,0.7)] gap-[73px]">
+        <div className="max-h-full border-[1px] border-[#C1D9FF] rounded-2xl shadow-[0_8px_24px_rgba(193,217,255,0.7)] gap-[73px]">
             <LevelExplain 
                 icon="X"
                 title="학습 수준 Learning Level"

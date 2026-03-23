@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import PERTINEO from "assets/icons/PERTINEO.svg";
 
 const NAV_ITEMS = [
-  { label: "공지사항", path: "#" },
+  { label: "공지사항", path: "/notice" },
   { label: "서비스 소개", path: "/service-introduction" },
   { label: "주요 사이트", path: "#" },
   { label: "자기소개서 분석", path: "/input-page/auth" },

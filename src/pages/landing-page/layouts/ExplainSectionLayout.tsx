@@ -3,7 +3,7 @@ interface ExplainSectionLayoutProps {
 }
 export default function ExplainSectionLayout({ children }: ExplainSectionLayoutProps) {
   return (
-    <section className="flex flex-col px-[120px] py-[122px] bg-[#F4F6F8] w-screen h-screen">
+    <section className="flex flex-col px-[120px] py-[100px] bg-[#F4F6F8] w-screen h-screen">
       {children}
     </section>
   );

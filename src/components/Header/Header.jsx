@@ -1,5 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import PERTINEO from "assets/icons/PERTINEO.svg";
+import LogoWhite from "assets/icons/logo_white.svg";
+import LogoBlack from "assets/icons/logo_black.svg";
+
 
 const NAV_ITEMS = [
   { label: "공지사항", path: "/notice" },
@@ -25,7 +27,7 @@ function Header({ theme = "light" }) {
       <div className="w-[clamp(800px,83.3vw,1200px)] h-[clamp(20px,calc(2.083vw+0px),30px)] mx-auto flex items-center">
         <div className="w-[clamp(400px,calc(41.667vw+0px),600px)] h-[clamp(20px,calc(2.083vw+0px),30px)] flex items-center">
           <Link to="/">
-            <img src={PERTINEO} alt="PERTINEO" />
+             <img src={isDark ? LogoBlack : LogoWhite} alt="Pertineo" />
           </Link>
 
           {/* Navigation 탭 영역 */}

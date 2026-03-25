@@ -21,11 +21,11 @@ function HeroContent() {
       </div>
 
       <div className="flex items-center justify-center w-[536px] mt-[0.5vh]">
-        <span className="text-[16px] font-[600] leading-[150%] text-white">합격자 데이터로 학습된 인공지능 pertineo를 통해 3차원 역량분석 결과를 확인하세요</span>
+        <span className="text-[16px] font-[400] leading-[150%] text-white">합격자 데이터로 학습된 인공지능 pertineo를 통해 3차원 역량분석 결과를 확인하세요</span>
       </div>
 
       <div className="flex items-center justify-center w-[536px] mt-[0.5vh]">
-        <span className="text-[16px] font-[600] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
+        <span className="text-[16px] font-[400] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
       </div>
 
       {/* 버튼 영역 */}

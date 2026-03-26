@@ -51,9 +51,12 @@ export default function Improve() {
   ]
   
   return (
-    <ExplainSectionLayout>
+    <ExplainSectionLayout className="sm:!pr-0">
       <SubTitle title="개선방식 제안" discription="합격자를 비교분석하여 구직자의 장단점 및 개선 전략을 제공합니다." />
-      <div ref={ref} className="w-full flex gap-[7px] mt-[45px]">
+      <div
+        ref={ref}
+        className="max-w-screen lg:pr-[120px] min-h-fit lg:w-full flex gap-[7px] mt-[45px] overflow-x-scroll scrollbar-hide"
+      >
         {
           cardExplain.map((i, index) =>
             <Card
@@ -90,15 +93,15 @@ function Card({
 }: CardProps){
   return (
     <div
-      className={`flex-1 rounded-lg py-10 px-5 relative h-[440px] transform transition-all duration-700 ${
+      className={`lg:flex-1 min-w-[246px] rounded-lg py-10 px-5 pb-[170px] lg:pb-[220px] relative h-auto min-h-[324px] lg:min-h-[431px] xl:min-h-[440px] transform transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
       style={{ backgroundColor: color, transitionDelay: `${index * 150}ms` }}
     >
-      <h3 className="text-white text-[20px] font-bold mb-[32px]">{title}</h3>
-      <p className="text-white text-[15px] font-medium mb-[7px]">{description1}</p>
-      <p className="text-white text-[15px] font-medium whitespace-pre-line">{description2}</p>
-      <img src={image} alt={title} className={`absolute right-0 bottom-5 h-[198px] ${className}`} />
+      <h3 className="text-white text-base lg:text-[19px] xl:text-[20px] font-bold mb-[32px]">{title}</h3>
+      <p className="text-white text-[14px] lg:text-[13px] xl:text-[15px] font-medium mb-[7px]">{description1}</p>
+      <p className="text-white text-[14px] lg:text-[13px] xl:text-[15px] font-medium whitespace-pre-line">{description2}</p>
+      <img src={image} alt={title} className={`absolute right-0 bottom-5 h-[134px] lg:h-[198px] ${className}`} />
     </div>
   )
 }

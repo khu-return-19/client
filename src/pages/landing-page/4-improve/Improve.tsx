@@ -90,7 +90,7 @@ function Card({
 }: CardProps){
   return (
     <div
-      className={`flex-1 rounded-lg py-10 px-6 relative h-[498px] transform transition-all duration-700 ${
+      className={`flex-1 rounded-lg py-10 px-6 relative h-[440px] transform transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
       style={{ backgroundColor: color, transitionDelay: `${index * 150}ms` }}
@@ -98,7 +98,7 @@ function Card({
       <h3 className="text-white text-[22px] font-bold mb-[32px]">{title}</h3>
       <p className="text-white text-[15px] font-medium mb-[7px]">{description1}</p>
       <p className="text-white text-[15px] font-medium whitespace-pre-line">{description2}</p>
-      <img src={image} alt={title} className={`absolute right-0 bottom-5 ${className}`} />
+      <img src={image} alt={title} className={`absolute right-0 bottom-5 h-[198px] ${className}`} />
     </div>
   )
 }

@@ -10,10 +10,10 @@ export default function Matrix() {
       title="3D 역량평가 모델로 보는 세 가지 핵심 지표" 
       discription="학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z) 을 종합적으로 분석합니다." 
       />
-      <div className="flex flex-col max-h-full min-[960px]:flex-row items-center justify-center pt-[65px]">
+      <div className="flex flex-col h-full min-[960px]:flex-row items-center justify-center pt-[65px]">
         <div className="h-[416px] w-[416px]">report</div>
         <img src={Arrow} alt="화살표" />
-        <div className="max-h-full border-[1px] border-[#C1D9FF] rounded-2xl shadow-[0_8px_24px_rgba(193,217,255,0.7)] gap-[73px]">
+        <div className="h-full max-h-[456px] flex flex-col justify-around border-[1px] border-[#C1D9FF] rounded-2xl shadow-[0_8px_24px_rgba(193,217,255,0.7)]">
             <LevelExplain 
                 icon="X"
                 title="학습 수준 Learning Level"
@@ -42,7 +42,7 @@ interface LevelExplainProps {
 }
 function LevelExplain({icon, title, description}: LevelExplainProps){
     return (
-        <div className="flex items-center justify-center py-[37px] px-[40px]">
+        <div className="flex items-center justify-center px-[40px]">
             <div className="text-[64px] px-8 text-[#2876F1]">{icon}</div>
             <div className="flex justify-between flex-col gap-1">
                 <div className="text-[20px] font-semibold">{title}</div>

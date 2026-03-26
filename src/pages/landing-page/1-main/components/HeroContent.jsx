@@ -16,15 +16,15 @@ function HeroContent() {
         <TextMotion />
       </div>
 
-      <div className="flex items-center justify-center w-[clamp(300px,37.2vw,536px)] mt-[6.4vh]">
+      <div className="flex items-center justify-center w-[clamp(480px,37.2vw,536px)] mt-[6.4vh]">
         <span className="text-[clamp(14px,1.25vw,24px)] font-[600] leading-[150%] text-white">3D 역량 분석 보고서 제공</span>
       </div>
 
-      <div className="flex items-center justify-center w-[clamp(300px,37.2vw,536px)] mt-[0.5vh]">
+      <div className="flex items-center justify-center w-[clamp(480px,37.2vw,536px)] mt-[0.5vh]">
         <span className="text-[clamp(11px,0.83vw,16px)] font-[600] leading-[150%] text-white">합격자 데이터로 학습된 인공지능 pertineo를 통해 3차원 역량분석 결과를 확인하세요</span>
       </div>
 
-      <div className="flex items-center justify-center w-[clamp(300px,37.2vw,536px)] mt-[0.5vh]">
+      <div className="flex items-center justify-center w-[clamp(480px,37.2vw,536px)] mt-[0.5vh]">
         <span className="text-[clamp(11px,0.83vw,16px)] font-[600] leading-[150%] text-white">경희대학교 웹메일로 보고서를 전송해요</span>
       </div>
 

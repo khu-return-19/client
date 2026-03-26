@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import KHU from "assets/icons/KHU.svg";
 import TextMotion from "./TextMotion";
 
+
 function HeroContent() {
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleStart = () => {
+    navigate("/input-page/auth");
+  };
 
   return (
     <div className="flex flex-col items-center w-[37.2vw] pt-[18.3vh] pb-[20.1vh]">
@@ -38,6 +45,7 @@ function HeroContent() {
           className="w-[16.67vw] h-full rounded-[4px] bg-white flex items-center justify-center"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
+          onClick={handleStart}
         >
           <span
             className="text-[1.11vw] font-[500] leading-[150%]"

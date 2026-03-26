@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import PERTINEO from "assets/icons/PERTINEO.svg";
+import LogoWhite from "assets/icons/logo_white.svg";
+import LogoBlack from "assets/icons/logo_black.svg";
 import SideButton from "assets/icons/sideButton.svg";
 
 const NAV_ITEMS = [
@@ -19,7 +20,7 @@ function Header({ theme = "light" }) {
     <header
       className={`w-full fixed top-0 z-50 backdrop-blur-[4px] shadow-[0px_4px_12px_rgba(0,0,0,0.06)] h-[clamp(52px,calc(2.5vw+28px),64px)] flex items-center justify-center ${
         isDark
-          ? "bg-white/20 text-[#EEEEEE]"
+          ? "bg-white/20 text-[#ffd0d0]"
           : "bg-white text-[#717171]"
       }`}
     >
@@ -27,7 +28,7 @@ function Header({ theme = "light" }) {
       <div className="hidden min-[894px]:flex w-[clamp(800px,83.3vw,1200px)] h-[clamp(20px,calc(2.083vw+0px),30px)] mx-auto items-center">
         <div className="w-[clamp(400px,calc(41.667vw+0px),600px)] h-[clamp(20px,calc(2.083vw+0px),30px)] flex items-center">
           <Link to="/">
-            <img src={PERTINEO} alt="PERTINEO" />
+            <img src={isDark ? LogoBlack : LogoWhite} alt="PERTINEO" />
           </Link>
           <nav className="w-[clamp(266px,calc(27.917vw+0px),400px)] h-[clamp(20px,calc(2.083vw+0px),30px)] flex items-center justify-between ml-[clamp(40px,calc(4.167vw+0px),60px)]">
             {NAV_ITEMS.map((item) => {
@@ -56,7 +57,7 @@ function Header({ theme = "light" }) {
       {/* 모바일/태블릿 */}
       <div className="flex min-[894px]:hidden w-full px-[20px] items-center justify-between">
         <Link to="/">
-          <img src={PERTINEO} alt="PERTINEO" />
+          <img src={isDark ? LogoBlack : LogoWhite} alt="PERTINEO" />
         </Link>
         <button>
           <img src={SideButton} alt="메뉴" className="w-[24px] h-[24px]" />

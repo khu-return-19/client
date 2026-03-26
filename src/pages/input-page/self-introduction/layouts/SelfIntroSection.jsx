@@ -42,7 +42,7 @@ function SelfIntroSection() {
   };
 
   return (
-    <div className="w-full max-w-[1080px] mx-auto mt-[72px] max-[767px]:mt-[24px] pb-[200px]">
+    <div className="w-full max-w-[1080px] mx-auto mt-[24px] md:mt-[72px] pb-[200px]">
       <p className="text-[12px] font-normal leading-[150%] text-[#717171] mb-[24px]">
         질문과 답변을 한 개 이상 입력해주세요.
       </p>
@@ -62,9 +62,9 @@ function SelfIntroSection() {
         ))}
       </div>
 
-      <div className="mt-[110px] max-[768px]:mt-[40px]">
+      <div className="mt-[40px] md:mt-[110px]">
         {/* 데스크탑/태블릿 */}
-        <div className="hidden min-[769px]:flex flex-col items-center gap-[12px]">
+        <div className="hidden md:flex flex-col items-center gap-[12px]">
           <Button size="M" variant="secondary" className="!h-[52px]">
             임시저장
           </Button>
@@ -74,7 +74,7 @@ function SelfIntroSection() {
           />
         </div>
         {/* 모바일 */}
-        <div className="max-[768px]:flex hidden justify-center gap-[12px]">
+        <div className="flex md:hidden justify-center gap-[12px]">
           <Button size="M" variant="secondary" className="!h-[48px] !w-[140px]">
             임시저장
           </Button>

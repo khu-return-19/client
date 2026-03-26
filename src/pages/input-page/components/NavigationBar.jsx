@@ -27,7 +27,7 @@ function NavigationBar() {
             {index === 0 ? (
               <>
                 <span className="max-[893px]:hidden">{item.label}</span>
-                <span className="min-[894px]:hidden">인증 및 동의</span>
+                <span className="max-[893px]:inline hidden">인증 및 동의</span>
               </>
             ) : (
               item.label

@@ -125,12 +125,13 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
             }}
             onFocus={() => setIsEmailFocused(true)}
             onBlur={() => setIsEmailFocused(false)}
-            className={`flex-1 h-[52px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+            className={`flex-1 h-[52px] max-[767px]:h-[40px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
           />
           <Button
             size="s2"
             status={getEmailButtonStatus()}
             onClick={handleSend}
+            className="max-[767px]:!w-[100px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
           >
             인증번호 전송
           </Button>
@@ -158,7 +159,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
           </div>
 
           <div className="flex items-center gap-[16px] mt-[12px]">
-            <div className="relative w-[384px]">
+            <div className="relative flex-1">
               <input
                 type="text"
                 placeholder="인증번호입력"
@@ -169,9 +170,9 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
                 }}
                 onFocus={() => setIsCodeFocused(true)}
                 onBlur={() => setIsCodeFocused(false)}
-                className={`w-full h-[52px] px-[8px] ${getCodeBorderClassFinal()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+                className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getCodeBorderClassFinal()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
               />
-              <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] font-normal text-[#09469F]">
+              <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] max-[767px]:text-[13px] font-normal text-[#09469F]">
                 {formatTime(timeLeft)}
               </span>
             </div>
@@ -179,6 +180,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
               size="s2"
               status={getCodeButtonStatusFinal()}
               onClick={handleVerify}
+              className="max-[767px]:!w-[100px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
             >
               인증번호 확인
             </Button>

@@ -18,7 +18,7 @@ function NavigationBar() {
           <Link
             key={item.path}
             to={item.path}
-            className={`flex-1 h-[68px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors text-center ${
+            className={`flex-1 h-[68px] flex items-center justify-center text-[20px] max-[767px]:text-[16px] font-normal leading-[120%] font-['Pretendard'] transition-colors text-center ${
               isActive
                 ? "text-[#2876F1] border-b-[3px] border-[#2876F1]"
                 : "text-[#717171] border-b-[1px] border-[#717171] hover:text-[#2876F1]"

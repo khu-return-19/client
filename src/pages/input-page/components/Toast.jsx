@@ -18,8 +18,8 @@ function Toast({ message, onClose }) {
     }, [onClose]);
 
     return (
-        <div className="fixed top-0 bottom-0 left-0 right-0 bg-[#00000030] z-50 flex justify-center items-center overflow-hidden">
-            <div className="flex flex-col items-center justify-center gap-[20px] w-[462px] h-[200px] bg-white rounded-[10px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.12)] relative">
+        <div className="fixed top-0 bottom-0 left-0 right-0 bg-[#00000030] z-50 flex justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-[20px] w-[462px] h-[200px] bg-white rounded-[10px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.12)] relative overflow-hidden">
                 <img src={CheckCircleIcon} alt="check circle" />
                 <p className="text-[20px] font-[500] text-black">{message}</p>
                 <div 

@@ -25,12 +25,12 @@ function Header({ theme = "light" }) {
       }`}
     >
       {/* 데스크탑 */}
-      <div className="hidden min-[894px]:flex w-[clamp(800px,83.3vw,1200px)] h-[clamp(20px,calc(2.083vw+0px),30px)] mx-auto items-center">
-        <div className="w-[clamp(400px,calc(41.667vw+0px),600px)] h-[clamp(20px,calc(2.083vw+0px),30px)] flex items-center">
+      <div className="hidden min-[894px]:flex w-[83.3vw] h-[calc(2.083vw+0px)] mx-auto items-center">
+        <div className="flex items-center">
           <Link to="/">
             <img src={isDark ? LogoBlack : LogoWhite} alt="PERTINEO" />
           </Link>
-          <nav className="w-[clamp(266px,calc(27.917vw+0px),400px)] h-[clamp(20px,calc(2.083vw+0px),30px)] flex items-center justify-between ml-[clamp(40px,calc(4.167vw+0px),60px)]">
+          <nav className="flex items-center justify-between ml-[4.167vw] gap-[2.778vw]">
             {NAV_ITEMS.map((item) => {
               const isActive = location.pathname.startsWith(item.path);
               return (

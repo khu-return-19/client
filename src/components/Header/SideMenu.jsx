@@ -53,7 +53,7 @@ function SideMenu({ onClose }) {
             const isActive = item.path && location.pathname.startsWith(item.path);
             const hasSub = !!SUB_ITEMS[item.label];
             const isSubOpen = openSub === item.label;
-            const isHighlighted = selected === item.label || !!isActive || isSubOpen;
+            const isHighlighted = selected === item.label || isSubOpen || (!selected && !!isActive);
 
             return (
               <div key={item.label}>
@@ -61,15 +61,15 @@ function SideMenu({ onClose }) {
                   <Link
                     to={item.path}
                     onClick={() => handleItemClick(item)}
-                    className={`side-nav-item flex items-center gap-[4px] py-[18px] text-[16px] font-[400] leading-[150%]${isHighlighted ? " active" : ""}`}
+                    className={`flex items-center gap-[4px] py-[18px] text-[16px] font-[400] leading-[150%] ${isHighlighted ? "text-[#09469F]" : "text-[#717171]"}`}
                   >
-                    <span style={{ opacity: isHighlighted ? 1 : 0, fontSize: '20px', fontWeight: '300', lineHeight: '1' }}>|</span>
+                    <span style={{ opacity: isHighlighted ? 1 : 0, fontSize: '30px', fontWeight: '300', lineHeight: '1' }}>|</span>
                     {item.label}
                   </Link>
                 ) : (
                   <button
                     onClick={() => handleItemClick(item)}
-                    className={`side-nav-item w-full flex items-center gap-[8px] py-[18px] text-[16px] font-[400] leading-[150%] text-left${isHighlighted ? " active" : ""}`}
+                    className={`w-full flex items-center gap-[4px] py-[18px] text-[16px] font-[400] leading-[150%] text-left ${isHighlighted ? "text-[#09469F]" : "text-[#717171]"}`}
                   >
                     <span style={{ opacity: isHighlighted ? 1 : 0, fontSize: '30px', fontWeight: '300', lineHeight: '1' }}>|</span>
                     {item.label}

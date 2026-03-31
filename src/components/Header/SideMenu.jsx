@@ -36,17 +36,7 @@ function SideMenu({ onClose }) {
 
   return (
     <>
-      <style>{`
-        .side-nav-item { color: #717171 !important; }
-        .side-nav-item:hover { color: #09469F !important; }
-        .side-nav-item.active { color: #09469F !important; }
-        .side-sub-item { color: #717171 !important; }
-        .side-sub-item:hover { color: #09469F !important; }
-      `}</style>
-
-      <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose} />
-
-      <div className="fixed top-0 right-0 z-50 w-[280px] h-full bg-white flex flex-col shadow-[-4px_0_16px_rgba(0,0,0,0.1)]">
+<div className="fixed top-0 left-0 right-0 z-50 bg-white flex flex-col overflow-hidden" style={{ minHeight: '55%', maxHeight: 'calc(100%)' }}>
         {/* 헤더 */}
         <div className="flex items-center justify-between px-[20px] h-[clamp(52px,calc(2.5vw+28px),64px)] border-b border-[#EEEEEE]">
           <Link to="/" onClick={onClose}>
@@ -58,7 +48,7 @@ function SideMenu({ onClose }) {
         </div>
 
         {/* 메뉴 목록 */}
-        <nav className="flex-1 px-[20px] pt-[24px] flex flex-col">
+        <nav className="flex-1 px-[20px] pt-[30px] flex flex-col">
           {NAV_ITEMS.map((item) => {
             const isActive = item.path && location.pathname.startsWith(item.path);
             const hasSub = !!SUB_ITEMS[item.label];
@@ -71,17 +61,17 @@ function SideMenu({ onClose }) {
                   <Link
                     to={item.path}
                     onClick={() => handleItemClick(item)}
-                    className={`side-nav-item flex items-center gap-[8px] py-[14px] text-[16px] font-[400] leading-[150%]${isHighlighted ? " active" : ""}`}
+                    className={`side-nav-item flex items-center gap-[4px] py-[18px] text-[16px] font-[400] leading-[150%]${isHighlighted ? " active" : ""}`}
                   >
-                    <span style={{ opacity: isHighlighted ? 1 : 0 }}>|</span>
+                    <span style={{ opacity: isHighlighted ? 1 : 0, fontSize: '20px', fontWeight: '300', lineHeight: '1' }}>|</span>
                     {item.label}
                   </Link>
                 ) : (
                   <button
                     onClick={() => handleItemClick(item)}
-                    className={`side-nav-item w-full flex items-center gap-[8px] py-[14px] text-[16px] font-[400] leading-[150%] text-left${isHighlighted ? " active" : ""}`}
+                    className={`side-nav-item w-full flex items-center gap-[8px] py-[18px] text-[16px] font-[400] leading-[150%] text-left${isHighlighted ? " active" : ""}`}
                   >
-                    <span style={{ opacity: isHighlighted ? 1 : 0 }}>|</span>
+                    <span style={{ opacity: isHighlighted ? 1 : 0, fontSize: '30px', fontWeight: '300', lineHeight: '1' }}>|</span>
                     {item.label}
                   </button>
                 )}
@@ -104,6 +94,7 @@ function SideMenu({ onClose }) {
               </div>
             );
           })}
+          <div className="pb-[40px]" />
         </nav>
       </div>
     </>

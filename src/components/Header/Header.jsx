@@ -29,7 +29,7 @@ function Header({ theme = "light" }) {
         }`}
       >
         {/* 데스크탑 */}
-        <div className="hidden min-[894px]:flex w-[83.3vw] h-[calc(2.083vw+0px)] mx-auto items-center">
+        <div className="hidden min-[894px]:flex w-full max-w-[1200px] mx-auto items-center">
           <div className="flex items-center">
             <Link to="/">
               <img src={isDark ? LogoBlack : LogoWhite} alt="PERTINEO" />

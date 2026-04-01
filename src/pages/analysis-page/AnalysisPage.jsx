@@ -31,7 +31,7 @@ function AnalysisPage() {
             <h2 className="text-[24px] font-medium leading-[120%] text-[#111] font-['Pretendard']">
               자기소개서 역량 평가 리포트
             </h2>
-            <button className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px]">
+            <button className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px] hover:bg-[#0D326F] active:bg-[#0D326F] transition-colors">
               메일로 전송
             </button>
           </div>
@@ -40,7 +40,7 @@ function AnalysisPage() {
           <AnalysisNavBar active={activeNav} onChange={handleNavChange} />
 
           {/* 각 컨테이너 간 설정 */}
-          <div className="py-[32px] flex flex-col gap-[32px]">
+          <div className="py-[52px] flex flex-col gap-[32px]">
 
             {/* 경쟁력/평가 전체 */}
             <div className="grid grid-cols-2 gap-[40px]">
@@ -62,7 +62,7 @@ function AnalysisPage() {
                 <div />
                 <div className="flex flex-col">
                   {/* 세로열 */}
-                  <div className="grid grid-cols-[0.5fr_auto_60px] mb-[15px]">
+                  <div className="grid grid-cols-[0.7fr_auto_60px] mb-[15px]">
                     <span />
                     <div className="flex items-center gap-[60px]">
                       <div className="flex items-center gap-[6px]">
@@ -104,7 +104,7 @@ function AnalysisPage() {
 
             {/* 다음 버튼 */}
             <div className="flex justify-center pb-[60px]">
-              <button className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)]">
+              <button className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors">
                 다음
               </button>
             </div>

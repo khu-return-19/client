@@ -19,20 +19,22 @@ uniform vec2 u_res;
 uniform float u_time;
 varying vec2 v_uv;
 
+uniform vec2 u_mouse_vel; // 마우스 속도
+
 void main() {
   vec2 uv = v_uv;
   vec2 mouse = vec2(u_mouse.x / u_res.x, 1.0 - u_mouse.y / u_res.y);
   float dist = distance(uv, mouse);
-  float radius = 0.25;
 
-  if (dist < radius) {
-    float falloff = 1.0 - dist / radius;
-    falloff = falloff * falloff;
-    float wave = sin(dist * 40.0 - u_time * 10.0) * 0.050 * falloff;
-    uv += normalize(uv - mouse) * wave;
-  }
+  // 범위 
+  float pull = exp(-dist * 3.0) * 0.6;
+  uv += (mouse - uv) * pull;
 
-  gl_FragColor = texture2D(u_tex, uv);
+  // 물결
+  float wave = sin(dist * 20.0 - u_time * 6.0) * 0.02 * exp(-dist * 1.5);
+  uv += normalize(uv - mouse) * wave;
+
+  gl_FragColor = texture2D(u_tex, clamp(uv, 0.0, 1.0));
 }
 `;
 

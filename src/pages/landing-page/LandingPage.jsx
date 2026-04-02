@@ -32,14 +32,14 @@ function LandingPage() {
   }, [mainInView, videoInView, matrixInView, improveInView, reviewInView]);
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-[100dvh] overflow-hidden">
       <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
       <div className="hidden min-[894px]:block fixed right-5 top-1/2 -translate-y-1/2 z-20">
         <SectionProgressBar index={activeIndex} total={5} />
       </div>
 
-      <div className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-screen">
+      <div className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
         <section ref={mainRef} className="h-full snap-start overflow-hidden">
           <MainSectionLayout />
         </section>

@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import HeroContent from "../components/HeroContent";
 import bgBlack from "assets/imgs/main-black.svg";
 import bgBlue from "assets/imgs/main-blue.svg";
+import bgMain from "assets/imgs/main.svg";
 
 const VERT = `
 attribute vec2 a_pos;
@@ -43,6 +44,8 @@ function MainSectionLayout() {
     const w = section.offsetWidth;
     const h = section.offsetHeight;
 
+    if (w < 894) return;
+
     const glCanvas = document.createElement("canvas");
     glCanvas.width = w;
     glCanvas.height = h;
@@ -76,7 +79,6 @@ function MainSectionLayout() {
     const uMouse = gl.getUniformLocation(prog, "u_mouse");
     const uTime  = gl.getUniformLocation(prog, "u_time");
 
-    // 투명 배경 활성화
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0, 0, 0, 0);
@@ -102,16 +104,18 @@ function MainSectionLayout() {
 
     let mouseX = w / 2;
     let mouseY = h / 2;
-    let animId;
+    let animId = null;
+    let idleTimer = null;
+    let isRunning = false;
 
-    const handleMouseMove = (e) => {
-      const rect = section.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
+    const stopLoop = () => {
+      if (animId !== null) {
+        cancelAnimationFrame(animId);
+        animId = null;
+        isRunning = false;
+      }
     };
-    window.addEventListener("mousemove", handleMouseMove);
 
-    gl.viewport(0, 0, w, h);
     const draw = (t) => {
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(uMouse, mouseX, mouseY);
@@ -119,10 +123,30 @@ function MainSectionLayout() {
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       animId = requestAnimationFrame(draw);
     };
-    animId = requestAnimationFrame(draw);
+
+    const startLoop = () => {
+      if (!isRunning) {
+        isRunning = true;
+        animId = requestAnimationFrame(draw);
+      }
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(stopLoop, 1500);
+    };
+
+    const handleMouseMove = (e) => {
+      const rect = section.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      startLoop();
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    gl.viewport(0, 0, w, h);
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      clearTimeout(idleTimer);
       window.removeEventListener("mousemove", handleMouseMove);
       section.removeChild(glCanvas);
     };
@@ -130,10 +154,11 @@ function MainSectionLayout() {
 
   return (
     <section ref={sectionRef} className="w-full h-full relative overflow-hidden">
-
-      <img src={bgBlack} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
-     
-      {/* 히어로 컨텐츠 */}
+      {window.innerWidth < 894 ? (
+        <img src={bgMain} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+      ) : (
+        <img src={bgBlack} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+      )}
       <div className="relative w-full h-full flex items-center justify-center z-20">
         <HeroContent />
       </div>

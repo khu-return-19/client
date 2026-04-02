@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import HeroContent from "../components/HeroContent";
-import bgSvg from "assets/imgs/main.svg";
+import bgBlack from "assets/imgs/main-black.svg";
+import bgBlue from "assets/imgs/main-blue.svg";
 
 const VERT = `
 attribute vec2 a_pos;
@@ -19,18 +20,14 @@ uniform vec2 u_res;
 uniform float u_time;
 varying vec2 v_uv;
 
-uniform vec2 u_mouse_vel; // 마우스 속도
-
 void main() {
   vec2 uv = v_uv;
   vec2 mouse = vec2(u_mouse.x / u_res.x, 1.0 - u_mouse.y / u_res.y);
   float dist = distance(uv, mouse);
 
-  // 범위 
   float pull = exp(-dist * 3.0) * 0.6;
   uv += (mouse - uv) * pull;
 
-  // 물결
   float wave = sin(dist * 20.0 - u_time * 6.0) * 0.02 * exp(-dist * 1.5);
   uv += normalize(uv - mouse) * wave;
 
@@ -49,7 +46,7 @@ function MainSectionLayout() {
     const glCanvas = document.createElement("canvas");
     glCanvas.width = w;
     glCanvas.height = h;
-    glCanvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;z-index:0;";
+    glCanvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;z-index:1;";
     section.appendChild(glCanvas);
 
     const gl = glCanvas.getContext("webgl");
@@ -79,13 +76,18 @@ function MainSectionLayout() {
     const uMouse = gl.getUniformLocation(prog, "u_mouse");
     const uTime  = gl.getUniformLocation(prog, "u_time");
 
+    // 투명 배경 활성화
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0, 0, 0, 0);
+
     const tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,1,13,255]));
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,0]));
 
     const img = new Image();
     img.onload = () => {
@@ -96,7 +98,7 @@ function MainSectionLayout() {
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, oc);
     };
-    img.src = bgSvg;
+    img.src = bgBlue;
 
     let mouseX = w / 2;
     let mouseY = h / 2;
@@ -111,6 +113,7 @@ function MainSectionLayout() {
 
     gl.viewport(0, 0, w, h);
     const draw = (t) => {
+      gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(uMouse, mouseX, mouseY);
       gl.uniform1f(uTime, t * 0.001);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -126,7 +129,11 @@ function MainSectionLayout() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full h-full relative bg-[#00010d] overflow-hidden">
+    <section ref={sectionRef} className="w-full h-full relative overflow-hidden">
+
+      <img src={bgBlack} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+     
+      {/* 히어로 컨텐츠 */}
       <div className="relative w-full h-full flex items-center justify-center z-20">
         <HeroContent />
       </div>

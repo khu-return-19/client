@@ -7,9 +7,14 @@ function CompanySection() {
     const navigate = useNavigate();
 
     // 1. 상태 정의
-    const [companyName, setCompanyName] = useState('');
-    const [jobTitle, setJobTitle] = useState('');
-    const [noticeUrl, setNoticeUrl] = useState('');
+    const [companyName, setCompanyName] = useState(() => sessionStorage.getItem('company_companyName') || '');
+    const [jobTitle, setJobTitle] = useState(() => sessionStorage.getItem('company_jobTitle') || '');
+    const [noticeUrl, setNoticeUrl] = useState(() => sessionStorage.getItem('company_noticeUrl') || '');
+
+    // 세션스토리지 저장
+    useEffect(() => { sessionStorage.setItem('company_companyName', companyName); }, [companyName]);
+    useEffect(() => { sessionStorage.setItem('company_jobTitle', jobTitle); }, [jobTitle]);
+    useEffect(() => { sessionStorage.setItem('company_noticeUrl', noticeUrl); }, [noticeUrl]);
 
     // 2. 자동완성용 결과 상태
     const [companyResults, setCompanyResults] = useState([]);

@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 
 const SHADOW = "0 0 33.6px rgba(116, 154, 220, 0.3)";
 
-function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, isAddDisabled }) {
-  const [question, setQuestion] = useState("");
-  const [content, setContent] = useState("");
+function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, isAddDisabled, question: initialQuestion = "", content: initialContent = "" }) {
+  const [question, setQuestion] = useState(initialQuestion);
+  const [content, setContent] = useState(initialContent);
   const plusBtnRef = useRef(null);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, i
 
   return (
     <div className="relative w-full">
-      <div className="w-[calc(100%-60px)] border border-[#717171] rounded-[6px] p-[12px]">
+      <div className="w-full md:w-[calc(100%-60px)] border border-[#717171] rounded-[6px] p-[12px]">
         <input
           type="text"
           placeholder="질문 문항을 입력해주세요"
@@ -62,57 +62,95 @@ function QuestionCard({ onContentChange, showPlus, showMinus, onAdd, onRemove, i
           placeholder="내용을 입력해주세요"
           value={content}
           onChange={handleContentChange}
-          className="w-full h-[256px] bg-[#F5F5F5] rounded-[4px] px-[12px] py-[12px] text-[16px] font-normal leading-[150%] text-black placeholder-[#717171] outline-none resize-none"
+          className="w-full h-[160px] md:h-[256px] bg-[#F5F5F5] rounded-[4px] px-[12px] py-[12px] text-[16px] font-normal leading-[150%] text-black placeholder-[#717171] outline-none resize-none"
         />
-        <div className="w-full h-[17px] mt-[12px] flex justify-end">
-          <span className="text-[14px] font-normal leading-[120%] text-[#717171]">
+        <div className="w-full mt-[12px] flex items-center justify-between">
+          <div className="block md:hidden">
+            {showMinus && (
+              <button
+                className="text-[14px] font-normal text-[#717171] underline cursor-pointer"
+                onClick={() => onRemove?.()}
+              >
+                삭제
+              </button>
+            )}
+          </div>
+          <span className="text-[14px] font-normal leading-[120%] text-[#717171] ml-auto">
             {content.length} 자
           </span>
         </div>
       </div>
 
-      {showPlus && (
-        <button
-          ref={plusBtnRef}
-          disabled={isAddDisabled}
-          className={`absolute top-0 right-0 w-[50px] h-[50px] rounded-[4px] flex items-center justify-center transition-colors
-            ${isAddDisabled
-              ? "border border-[#717171] opacity-40 cursor-not-allowed"
-              : "border border-[#717171] cursor-pointer group hover:border-[#09469F]"
-            }`}
-          onMouseEnter={e => { if (!isAddDisabled) applyHover(e); }}
-          onMouseLeave={e => { if (!isAddDisabled) clearHover(e); }}
-          onMouseDown={e => { if (!isAddDisabled) applyActive(e); }}
-          onMouseUp={e => { if (!isAddDisabled) clearActive(e); }}
-          onClick={() => onAdd?.()}
-        >
-          <div className="relative w-[32px] h-[32px]">
+      <div className="hidden md:flex flex-col absolute top-0 right-0 gap-[10px]">
+        {showMinus && (
+          <button
+            className="w-[50px] h-[50px] rounded-[4px] border border-[#717171] flex items-center justify-center cursor-pointer transition-colors group hover:border-[#09469F]"
+            onMouseEnter={applyHover}
+            onMouseLeave={clearHover}
+            onMouseDown={applyActive}
+            onMouseUp={clearActive}
+            onClick={() => onRemove?.()}
+          >
             <div
-              className={`absolute top-1/2 left-0 w-full -translate-y-1/2 bg-[#717171] transition-colors ${!isAddDisabled ? "group-hover:bg-[#09469F]" : ""}`}
+              className="w-[32px] bg-[#717171] group-hover:bg-[#09469F] transition-colors"
               style={{ height: "1.5px" }}
             />
-            <div
-              className={`absolute left-1/2 top-0 h-full -translate-x-1/2 bg-[#717171] transition-colors ${!isAddDisabled ? "group-hover:bg-[#09469F]" : ""}`}
-              style={{ width: "1.5px" }}
-            />
-          </div>
-        </button>
-      )}
+          </button>
+        )}
+        {showPlus && (
+          <button
+            ref={plusBtnRef}
+            disabled={isAddDisabled}
+            className={`w-[50px] h-[50px] rounded-[4px] flex items-center justify-center transition-colors
+              ${isAddDisabled
+                ? "border border-[#717171] opacity-40 cursor-not-allowed"
+                : "border border-[#717171] cursor-pointer group hover:border-[#09469F]"
+              }`}
+            onMouseEnter={e => { if (!isAddDisabled) applyHover(e); }}
+            onMouseLeave={e => { if (!isAddDisabled) clearHover(e); }}
+            onMouseDown={e => { if (!isAddDisabled) applyActive(e); }}
+            onMouseUp={e => { if (!isAddDisabled) clearActive(e); }}
+            onClick={() => onAdd?.()}
+          >
+            <div className="relative w-[32px] h-[32px]">
+              <div
+                className={`absolute top-1/2 left-0 w-full -translate-y-1/2 bg-[#717171] transition-colors ${!isAddDisabled ? "group-hover:bg-[#09469F]" : ""}`}
+                style={{ height: "1.5px" }}
+              />
+              <div
+                className={`absolute left-1/2 top-0 h-full -translate-x-1/2 bg-[#717171] transition-colors ${!isAddDisabled ? "group-hover:bg-[#09469F]" : ""}`}
+                style={{ width: "1.5px" }}
+              />
+            </div>
+          </button>
+        )}
+      </div>
 
-      {showMinus && (
-        <button
-          className="absolute top-0 right-0 w-[50px] h-[50px] rounded-[4px] border border-[#717171] flex items-center justify-center cursor-pointer transition-colors group hover:border-[#09469F]"
-          onMouseEnter={applyHover}
-          onMouseLeave={clearHover}
-          onMouseDown={applyActive}
-          onMouseUp={clearActive}
-          onClick={() => onRemove?.()}
-        >
-          <div
-            className="w-[32px] bg-[#717171] group-hover:bg-[#09469F] transition-colors"
-            style={{ height: "1.5px" }}
-          />
-        </button>
+      {/* 모바일 */}
+      {showPlus && (
+        <div className="flex md:hidden justify-end mt-[8px] px-[4px]">
+          <button
+            ref={plusBtnRef}
+            disabled={isAddDisabled}
+            className={`w-[32px] h-[32px] rounded-[4px] border flex items-center justify-center transition-colors
+              ${isAddDisabled
+                ? "border-[#717171] opacity-40 cursor-not-allowed"
+                : "border-[#717171] cursor-pointer"
+              }`}
+            onClick={() => onAdd?.()}
+          >
+            <div className="relative w-[18px] h-[18px]">
+              <div
+                className="absolute top-1/2 left-0 w-full -translate-y-1/2 bg-[#717171]"
+                style={{ height: "1.5px" }}
+              />
+              <div
+                className="absolute left-1/2 top-0 h-full -translate-x-1/2 bg-[#717171]"
+                style={{ width: "1.5px" }}
+              />
+            </div>
+          </button>
+        </div>
       )}
     </div>
   );

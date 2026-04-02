@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EntryGroupSection from "../components/EntryGroupSection";
 import Button from "../../components/Button";
@@ -30,12 +30,26 @@ const UNIVERSITIES_DUMMY = ['경희대학교', '서울대학교', '연세대학�
 function ResumeSection() {
     const navigate = useNavigate();
 
+    const loadSession = (key, defaultVal) => {
+        try {
+            const saved = sessionStorage.getItem(key);
+            return saved ? JSON.parse(saved) : defaultVal;
+        } catch { return defaultVal; }
+    };
+
     // 1. 상태 정의
-    const [education, setEducation] = useState([{ university: '경희대학교', major: '', gpa: '', minor: '' }]);
-    const [experience, setExperience] = useState([{ type: '', period: '', company: '', department: '', position: '' }]);
-    const [awards, setAwards] = useState([{ name: '', issuer: '' }]);
-    const [certifications, setCertifications] = useState([{ type: '', date: '' }]);
-    const [languages, setLanguages] = useState([{ type: '', score: '' }]);
+    const [education, setEducation] = useState(() => loadSession('resume_education', [{ university: '경희대학교', major: '', gpa: '', minor: '' }]));
+    const [experience, setExperience] = useState(() => loadSession('resume_experience', [{ type: '', period: '', company: '', department: '', position: '' }]));
+    const [awards, setAwards] = useState(() => loadSession('resume_awards', [{ name: '', issuer: '' }]));
+    const [certifications, setCertifications] = useState(() => loadSession('resume_certifications', [{ type: '', date: '' }]));
+    const [languages, setLanguages] = useState(() => loadSession('resume_languages', [{ type: '', score: '' }]));
+
+    // 세션스토리지 저장
+    useEffect(() => { sessionStorage.setItem('resume_education', JSON.stringify(education)); }, [education]);
+    useEffect(() => { sessionStorage.setItem('resume_experience', JSON.stringify(experience)); }, [experience]);
+    useEffect(() => { sessionStorage.setItem('resume_awards', JSON.stringify(awards)); }, [awards]);
+    useEffect(() => { sessionStorage.setItem('resume_certifications', JSON.stringify(certifications)); }, [certifications]);
+    useEffect(() => { sessionStorage.setItem('resume_languages', JSON.stringify(languages)); }, [languages]);
 
     // 2. 자동완성용 결과 상태
     const [autocompleteResults, setAutocompleteResults] = useState({

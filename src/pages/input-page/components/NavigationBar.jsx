@@ -11,14 +11,14 @@ function NavigationBar() {
   const location = useLocation();
 
   return (
-    <nav className="w-full max-w-[1200px] mx-auto flex mt-[clamp(37px,4.17vw,60px)]">
+    <nav className="w-full max-w-[1200px] mx-auto flex mt-[60px]">
       {TAB_ITEMS.map((item, index) => {
         const isActive = location.pathname === item.path;
         return (
           <Link
             key={item.path}
             to={item.path}
-            className={`flex-1 h-[68px] max-[893px]:h-[44px] flex items-center justify-center text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors max-[893px]:text-[13px] text-center ${
+            className={`flex-1 h-[68px] flex items-center justify-center text-[16px] min-[894px]:text-[20px] font-normal leading-[120%] font-['Pretendard'] transition-colors text-center ${
               isActive
                 ? "text-[#2876F1] border-b-[3px] border-[#2876F1]"
                 : "text-[#717171] border-b-[1px] border-[#717171] hover:text-[#2876F1]"
@@ -26,8 +26,8 @@ function NavigationBar() {
           >
             {index === 0 ? (
               <>
-                <span className="max-[893px]:hidden">{item.label}</span>
-                <span className="min-[894px]:hidden">인증 및 동의</span>
+                <span className="hidden min-[894px]:inline">{item.label}</span>
+                <span className="inline min-[894px]:hidden">인증 및 동의</span>
               </>
             ) : (
               item.label

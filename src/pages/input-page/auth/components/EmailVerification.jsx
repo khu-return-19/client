@@ -111,27 +111,29 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
         </div>
 
         <div className="flex items-center gap-[16px] mt-[12px]">
-          <input
-            type="email"
-            placeholder="이메일 입력"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              if (isSent) {
-                setIsSent(false);
-                onEmailChanged?.();
-              }
-              if (emailError) setEmailError(false);
-            }}
-            onFocus={() => setIsEmailFocused(true)}
-            onBlur={() => setIsEmailFocused(false)}
-            className={`flex-1 h-[52px] max-[767px]:h-[40px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
-          />
+          <div className="relative flex-1">
+            <input
+              type="email"
+              placeholder="이메일 입력"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (isSent) {
+                  setIsSent(false);
+                  onEmailChanged?.();
+                }
+                if (emailError) setEmailError(false);
+              }}
+              onFocus={() => setIsEmailFocused(true)}
+              onBlur={() => setIsEmailFocused(false)}
+              className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+            />
+          </div>
           <Button
             size="s2"
             status={getEmailButtonStatus()}
             onClick={handleSend}
-            className="max-[767px]:!w-[100px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
+            className="max-[767px]:!w-[120px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
           >
             인증번호 전송
           </Button>
@@ -180,7 +182,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
               size="s2"
               status={getCodeButtonStatusFinal()}
               onClick={handleVerify}
-              className="max-[767px]:!w-[100px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
+              className="max-[767px]:!w-[120px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
             >
               인증번호 확인
             </Button>

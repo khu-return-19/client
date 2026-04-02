@@ -4,6 +4,7 @@ import Company from "pages/input-page/company/Company";
 import Resume from "pages/input-page/resume/Resume";
 import SelfIntroduction from "pages/input-page/self-introduction/SelfIntroduction";
 import Loading from "pages/input-page/loading/Loading";
+import AnalysisPage from "pages/analysis-page/AnalysisPage";
 import LandingPage from "pages/landing-page/LandingPage";
 import NoticeList from "pages/notice-page/list/NoticeList";
 import NoticeDetail from "pages/notice-page/detail/NoticeDetail";
@@ -29,6 +30,9 @@ function AppContent() {
         <Route path="/input-page/resume" element={<Resume />} />
         <Route path="/input-page/self-introduction" element={<SelfIntroduction />} />
         <Route path="/input-page/loading" element={<Loading />} />
+
+        {/* 분석 페이지 */}
+        <Route path="/analysis" element={<AnalysisPage />} />
       </Routes>
     </>
   );

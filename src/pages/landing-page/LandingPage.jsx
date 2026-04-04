@@ -35,7 +35,7 @@ function LandingPage() {
     <div className="h-[100dvh] overflow-hidden">
       <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
-      <div className="hidden min-[894px]:block fixed right-5 top-1/2 -translate-y-1/2 z-20">
+      <div className="opacity-0 lg:opacity-100 fixed right-5 top-1/2 -translate-y-1/2 z-20">
         <SectionProgressBar index={activeIndex} total={5} />
       </div>
 

@@ -3,6 +3,13 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    screens: {
+      xs: "375px",
+      sm: "768px",
+      md: "960px",
+      lg: "1280px",
+      xl: "1440px"
+    }, 
     extend: {
       keyframes: {
         "fade-in": {

@@ -16,7 +16,7 @@ function NoticeListItem({ notice }) {
             onClick={() => navigate(`/notice/${notice.id}`)}
         >
             <div className="flex items-center">
-                <NoticeBadge type={2} />
+                <NoticeBadge type={2} /> {/* TODO: 공지사항 타입 추가시 변경 */}
                 <p className="font-['Pretendard'] font-[400] text-[16px] max-[768px]:text-[15px] text-[#121212]">{notice.title}</p>
                 {isNew && <span className="ml-[24px] text-[#2876F1] font-[Pretendard] font-[400] text-[14px] max-[768px]:hidden">NEW</span>}
             </div>

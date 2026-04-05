@@ -21,7 +21,7 @@ function SlideText({ text, direction }) {
     <motion.p
       className={[
         "absolute w-full whitespace-pre-line text-center",
-        "font-bold leading-[120%] tracking-[2.56px] text-[clamp(58px,calc(1.25vw+46px),64px)]",
+        "font-bold leading-[120%] tracking-[0px] md:tracking-[2.56px] text-[clamp(28px,calc(3.06vw+16.5px),40px)] md:text-[calc(1.25vw+46px)]",
         "bg-[linear-gradient(91deg,#FFFCE5_26.49%,#FFF_47.51%,#D6D2B0_73.51%)]",
         "bg-clip-text text-transparent",
       ].join(" ")}

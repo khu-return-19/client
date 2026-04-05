@@ -42,7 +42,10 @@ function SelfIntroSection() {
   };
 
   return (
-    <div className="w-full max-w-[1080px] mx-auto mt-[72px] pb-[200px]">
+    <div className="w-full max-w-[1080px] mx-auto mt-[24px] md:mt-[72px] pb-[200px]">
+      <p className="text-[12px] font-normal leading-[150%] text-[#717171] mb-[24px]">
+        질문과 답변을 한 개 이상 입력해주세요.
+      </p>
       <div className="flex flex-col gap-[60px]">
         {cards.map((card, index) => (
           <QuestionCard
@@ -59,16 +62,28 @@ function SelfIntroSection() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center gap-[12px] mt-[110px]">
-        <div className="flex gap-[12px]">
+      <div className="mt-[40px] md:mt-[110px]">
+        {/* 데스크탑/태블릿 */}
+        <div className="hidden md:flex flex-col items-center gap-[12px]">
           <Button size="M" variant="secondary" className="!h-[52px]">
             임시저장
           </Button>
+          <AnalysisButton
+            status={firstFilled ? "default" : "disabled"}
+            onClick={() => { if (firstFilled) setShowModal(true); }}
+          />
         </div>
-        <AnalysisButton
-          status={firstFilled ? "default" : "disabled"}
-          onClick={() => { if (firstFilled) setShowModal(true); }}
-        />
+        {/* 모바일 */}
+        <div className="flex md:hidden justify-center gap-[12px]">
+          <Button size="M" variant="secondary" className="!h-[48px] !w-[140px]">
+            임시저장
+          </Button>
+          <AnalysisButton
+            status={firstFilled ? "default" : "disabled"}
+            onClick={() => { if (firstFilled) setShowModal(true); }}
+            className="!w-[160px] !h-[48px]"
+          />
+        </div>
       </div>
 
       {showModal && <AnalysisModal onClose={() => setShowModal(false)} />}

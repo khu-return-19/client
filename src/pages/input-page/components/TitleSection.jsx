@@ -23,11 +23,11 @@ function TitleSection() {
         Pertineo 3D 역량 분석
       </h1>
       <div className="flex items-center justify-between gap-[20px] mt-[10px]">
-        <p className="max-[893px]:hidden text-[16px] font-normal leading-[150%] text-black font-['Pretendard']">
+        <p className="hidden min-[894px]:block text-[16px] font-normal leading-[150%] text-black font-['Pretendard']">
           Pertineo에게 희망 기업과 직무 그리고 본인의 역량을 나타낼 수 있는 정보를 제공하여, 커리어 컨설팅 보고서를 생성할 수 있습니다.
         </p>
 
-        <div className="min-[894px]:hidden flex-1 min-w-0 relative">
+        <div className="flex min-[894px]:hidden flex-1 min-w-0 relative">
          
           <button
             className="flex items-center gap-[8px]"
@@ -67,11 +67,11 @@ function TitleSection() {
           )}
         </div>
 
-        <div className="flex items-center gap-[8px] max-[893px]:gap-[6px] shrink-0">
+        <div className="flex items-center gap-[6px] min-[894px]:gap-[8px] shrink-0">
           <Button size="s1">세션 연장</Button>
           <div className="flex items-center gap-[2px]">
-            <img src={SessionIcon} alt="세션" className="w-[24px] h-[24px]" />
-            <span className="text-[20px] font-[300] leading-[120%] text-[#09469F] font-['Pretendard']">00:00</span>
+            <img src={SessionIcon} alt="세션" className="w-[18px] h-[18px] min-[894px]:w-[24px] min-[894px]:h-[24px]" />
+            <span className="text-[14px] min-[894px]:text-[20px] font-[300] leading-[120%] text-[#09469F] font-['Pretendard']">00:00</span>
           </div>
         </div>
       </div>

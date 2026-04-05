@@ -1,14 +1,14 @@
 import { useRef, useEffect } from "react";
 import HeroContent from "../components/HeroContent";
-import bgBlack from "assets/imgs/main-black.svg";
-import bgBlue from "assets/imgs/main-blue.svg";
+import bgBlue from "assets/imgs/gradient_modi.svg";
 import bgMain from "assets/imgs/main.svg";
 
 const VERT = `
 attribute vec2 a_pos;
 varying vec2 v_uv;
 void main() {
-  v_uv = a_pos * 0.5 + 0.5;
+  vec2 uv = a_pos * 0.5 + 0.5;
+  v_uv = vec2(uv.x, 1.0 - uv.y);
   gl_Position = vec4(a_pos, 0.0, 1.0);
 }
 `;
@@ -26,7 +26,7 @@ void main() {
   vec2 mouse = vec2(u_mouse.x / u_res.x, 1.0 - u_mouse.y / u_res.y);
   float dist = distance(uv, mouse);
 
-  float pull = exp(-dist * 3.0) * 0.6;
+  float pull = exp(-dist * 7.0) * 0.6;
   uv += (mouse - uv) * pull;
 
   float wave = sin(dist * 20.0 - u_time * 6.0) * 0.02 * exp(-dist * 1.5);
@@ -96,7 +96,12 @@ function MainSectionLayout() {
       const oc = document.createElement("canvas");
       oc.width = w;
       oc.height = h;
-      oc.getContext("2d").drawImage(img, 0, 0, w, img.height * (w / img.width));
+      const scale = Math.max(w / img.width, h / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+      const dx = (w - dw) / 2;
+      const dy = (h - dh) / 2;
+      oc.getContext("2d").drawImage(img, dx, dy, dw, dh);
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, oc);
     };
@@ -153,11 +158,9 @@ function MainSectionLayout() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full h-full relative overflow-hidden">
-      {window.innerWidth < 894 ? (
+    <section ref={sectionRef} className="w-full h-full relative overflow-hidden bg-[#00010d]">
+      {window.innerWidth < 894 && (
         <img src={bgMain} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
-      ) : (
-        <img src={bgBlack} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
       )}
       <div className="relative w-full h-full flex items-center justify-center z-20">
         <HeroContent />

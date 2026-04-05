@@ -4,10 +4,10 @@ import ReactGA from "react-ga4";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
-ReactGA.initialize("G-VPWZLWE481");
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "lib/reactQueryClient";
+
+ReactGA.initialize("G-VPWZLWE481");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Inspection from "pages/inspection";
 
-
+import ReactGA from "react-ga4";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Header from "shared/header";
@@ -21,6 +21,10 @@ import NotFound from "pages/Error/notFound";
 
 function AppContent() {
   const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location.pathname]);
 
   const noFooterPages = ["/error"];
   const isNoFooterPage = noFooterPages.includes(location.pathname) || location.pathname.startsWith("/analysis");

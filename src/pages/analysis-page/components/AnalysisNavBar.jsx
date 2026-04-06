@@ -7,7 +7,7 @@ const NAV_ITEMS = [
 
 function AnalysisNavBar({ active, onChange }) {
   return (
-    <nav className="w-full max-w-[1200px] mx-auto flex mt-[60px]">
+    <nav className="w-full max-w-[1200px] pt-[17px] mx-auto flex mt-[30px]">
       {NAV_ITEMS.map((item) => (
         <button
           key={item.label}

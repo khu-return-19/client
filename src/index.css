@@ -1,6 +1,17 @@
-@tailwind base;      
+@tailwind base;
 @tailwind components;
-@tailwind utilities;  
+@tailwind utilities;
+
+html {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+}
 
 @font-face {
   font-family: "Pretendard";
@@ -53,4 +64,16 @@ textarea::placeholder {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE와 Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
+}
+
+@thema {
+  --breakpoint-lg: 960px;
 }

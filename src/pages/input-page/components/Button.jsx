@@ -61,8 +61,8 @@ const Button = ({
     const variantStyles = variant === "secondary" || size === "s1" ? variants.secondary : variants.primary[status];
 
     const sizeStyles = {
-        s1: "w-[70px] h-[24px] rounded-[2px] font-normal text-[14px]",
-        s2: "w-[200px] h-[52px] rounded-md font-medium text-[16px]",
+        s1: "w-[60px] min-[894px]:w-[72px] h-[24px] rounded-[2px] font-normal text-[12px] min-[894px]:text-[14px]",
+        s2: "w-[200px] max-[893px]:w-[144px] h-[52px] max-[893px]:h-[44px] rounded-md font-medium text-[16px]",
         M: "w-[410px] h-[60px] rounded-md font-medium text-[20px]",
         L: "w-[600px] h-[60px] rounded-md font-medium text-[20px]",
     };

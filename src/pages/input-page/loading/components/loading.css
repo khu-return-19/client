@@ -1,0 +1,23 @@
+@property --progress-deg {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-subtle {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+}

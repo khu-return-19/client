@@ -17,7 +17,7 @@ function AnalysisPage() {
     "적용 · 재평가": Apply,
   };
 
-  const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
+  const [activeNav, setActiveNav] = useState(SECTION_IDS[1]);
 
   const handleNavChange = (item) => setActiveNav(item);
 

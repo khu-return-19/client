@@ -1,11 +1,12 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 
 interface ExplainSectionLayoutProps {
   children: React.ReactNode;
   className?: string;
 }
 export default function ExplainSectionLayout({
-  children, className
+  children,
+  className,
 }: ExplainSectionLayoutProps) {
   return (
     <section
@@ -14,7 +15,7 @@ export default function ExplainSectionLayout({
         "lg:px-[120px] lg:pt-[90px]",
         "md:px-[176px] md:pt-[180px]",
         "sm:px-[138px]",
-        className
+        className,
       )}
     >
       {children}

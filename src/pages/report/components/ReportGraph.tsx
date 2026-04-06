@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Line, Text, OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
+import { useEffect, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Line, Text, OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
 
 // components
-import UserPlan from './UserPlan';
+import UserPlan from "./UserPlan";
 
-const DEFAULT_CAMERA_POS = new THREE.Vector3(0, 0, 20);
-const DEFAULT_TARGET = new THREE.Vector3(0, 0, 0);
+const DEFAULT_CAMERA_POS = new THREE.Vector3(1.4, -2.3, 18);
+const DEFAULT_TARGET = new THREE.Vector3(1.4, -2.3, 0);
+const GRAPH_CENTER_OFFSET = [1.4, -2.3, 0] as const;
 const RETURN_SPEED = 3; // 초당 복귀 속도
 
 type GraphProps = {
@@ -19,7 +20,10 @@ function Graph({ showZ }: GraphProps) {
     <>
       {/* X축 */}
       <Line
-        points={[[0, 0, 0], [-5, 0, 0]]}
+        points={[
+          [0, 0, 0],
+          [-5, 0, 0],
+        ]}
         color="black"
         lineWidth={2}
       />
@@ -29,7 +33,10 @@ function Graph({ showZ }: GraphProps) {
 
       {/* Y축 */}
       <Line
-        points={[[0, 0, 0], [0, 5, 0]]}
+        points={[
+          [0, 0, 0],
+          [0, 5, 0],
+        ]}
         color="black"
         lineWidth={2}
       />
@@ -53,7 +60,10 @@ function Graph({ showZ }: GraphProps) {
 
           {/* 세로 점선들 */}
           <Line
-            points={[[-2.8, 0, 0], [-2.8, 3.1, 0]]}
+            points={[
+              [-2.8, 0, 0],
+              [-2.8, 3.1, 0],
+            ]}
             color="black"
             lineWidth={1}
             dashed
@@ -61,7 +71,10 @@ function Graph({ showZ }: GraphProps) {
             gapSize={0.1}
           />
           <Line
-            points={[[-2.8, 0, 0], [-2.8, 4.6, 0]]}
+            points={[
+              [-2.8, 0, 0],
+              [-2.8, 4.6, 0],
+            ]}
             color="grey"
             lineWidth={1}
             dashed
@@ -71,7 +84,10 @@ function Graph({ showZ }: GraphProps) {
 
           {/* 가로 점선들 */}
           <Line
-            points={[[0, 3.1, 0], [-2.8, 3.1, 0]]}
+            points={[
+              [0, 3.1, 0],
+              [-2.8, 3.1, 0],
+            ]}
             color="black"
             lineWidth={1}
             dashed
@@ -79,7 +95,10 @@ function Graph({ showZ }: GraphProps) {
             gapSize={0.1}
           />
           <Line
-            points={[[0, 4.6, 0], [-2.8, 4.6, 0]]}
+            points={[
+              [0, 4.6, 0],
+              [-2.8, 4.6, 0],
+            ]}
             color="grey"
             lineWidth={1}
             dashed
@@ -107,7 +126,10 @@ function Graph({ showZ }: GraphProps) {
         <>
           {/* Z축 */}
           <Line
-            points={[[0, 0, 0], [0, 0, -5]]}
+            points={[
+              [0, 0, 0],
+              [0, 0, -5],
+            ]}
             color="black"
             lineWidth={2}
           />
@@ -141,8 +163,8 @@ function ReturnToDefaultControls() {
       setReturning(true);
     };
 
-    el.addEventListener('pointerup', handlePointerUp);
-    return () => el.removeEventListener('pointerup', handlePointerUp);
+    el.addEventListener("pointerup", handlePointerUp);
+    return () => el.removeEventListener("pointerup", handlePointerUp);
   }, [gl.domElement]);
 
   useFrame((_, delta) => {
@@ -162,24 +184,19 @@ function ReturnToDefaultControls() {
     camera.lookAt(DEFAULT_TARGET);
   });
 
-  return (
-    <OrbitControls
-      enabled={!returning}
-      target={[0, 0, 0]}
-    />
-  );
+  return <OrbitControls enabled={!returning} target={[0, 0, 0]} />;
 }
 
 function AnimatedGraphScene() {
   return (
-    <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-2.5, 0, -2.5]} receiveShadow>
+    <group position={GRAPH_CENTER_OFFSET}>
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[-2.5, 0, -2.5]}
+        receiveShadow
+      >
         <planeGeometry args={[5, 5]} />
-        <meshStandardMaterial
-          color="white"
-          transparent
-          opacity={0.12}
-        />
+        <meshStandardMaterial color="white" transparent opacity={0.12} />
       </mesh>
       {/* 축 + 3D 그래프 */}
       <Graph showZ={true} />
@@ -191,10 +208,10 @@ function AnimatedGraphScene() {
 
 function ReportGraph() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <Canvas camera={{ position: [0, 0, 19], fov: 40 }} shadows> 
-        <color attach="background" args={['#f0f0f0']} />
-        
+    <div className="w-full h-full">
+      <Canvas camera={{ position: [1.4, -2.3, 19], fov: 40 }} shadows>
+        <color attach="background" args={["#fff"]} />
+
         {/* 조명 */}
         <ambientLight intensity={0.5} />
         <pointLight

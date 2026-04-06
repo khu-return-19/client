@@ -1,4 +1,5 @@
 import cn from "utils/cn";
+import ReportGraph from "pages/report/components/ReportGraph";
 
 export default function AnalysisDiagnosis() {
   const sections = [
@@ -87,8 +88,10 @@ export default function AnalysisDiagnosis() {
       {sections.map((section) => (
         <div className="mb-[10px]">
           <h3 className="font-semibold text-lg">{section.title}</h3>
-          <div className="flex mt-4 w-full">
-            <div className="w-[350px]">3D 그래프</div>
+          <div className="flex mt-4 w-full gap-10">
+            <div className="pl-10 w-[350px]">
+              <ReportGraph />
+            </div>
             <div>
               <div className="flex gap-8 mb-10">
                 <h4 className={labelStyle}>평가 기준</h4>

@@ -4,14 +4,17 @@ import AnalysisNavBar from "./components/AnalysisNavBar";
 
 // 탭 컴포넌트
 import AnalsisSummary from "./components/AnalsisSummary";
+import AnalysisDiagnosis from "./components/AnalysisDiagnosis";
+import ImproveStrategy from "./components/ImproveStrategy";
+import Apply from "./components/Apply";
 
 function AnalysisPage() {
   const SECTION_IDS = ["분석 요약", "역량 진단", "개선 전략", "적용 · 재평가"];
   const SECTION_COMPONENTS = {
     "분석 요약": AnalsisSummary,
-    "역량 진단": () => <div>역량 진단 섹션</div>,
-    "개선 전략": () => <div>개선 전략 섹션</div>,
-    "적용 · 재평가": () => <div>적용 · 재평가 섹션</div>,
+    "역량 진단": AnalysisDiagnosis,
+    "개선 전략": ImproveStrategy,
+    "적용 · 재평가": Apply,
   };
 
   const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
@@ -31,12 +34,13 @@ function AnalysisPage() {
               메일로 전송
             </button>
           </div>
-
-          {/* 네비게이션 바 */}
-          <AnalysisNavBar active={activeNav} onChange={handleNavChange} />
-          {/* 섹션 내용 */}
-          <div className="mt-[72px] px-[40px]">
-            {SECTION_COMPONENTS[activeNav]()}
+          <div className="bg-white px-[15px]">
+            {/* 탭 바 */}
+            <AnalysisNavBar active={activeNav} onChange={handleNavChange} />
+            {/* 섹션 내용 */}
+            <div className="mt-[72px] px-[40px]">
+              {SECTION_COMPONENTS[activeNav]()}
+            </div>
           </div>
         </div>
       </div>

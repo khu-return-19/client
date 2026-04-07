@@ -89,8 +89,8 @@ export default function AnalysisDiagnosis() {
         <div className="mb-[10px]">
           <h3 className="font-semibold text-lg">{section.title}</h3>
           <div className="flex mt-4 w-full gap-10">
-            <div className="pl-10 w-[350px]">
-              <ReportGraph />
+            <div className="w-[350px]">
+              <ReportGraph position={-1} />
             </div>
             <div>
               <div className="flex gap-8 mb-10">

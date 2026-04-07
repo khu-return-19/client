@@ -40,7 +40,10 @@ function LandingPage() {
       </div>
 
       <div className="overflow-x-hidden lg:snap-y lg:snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
-        <section ref={mainRef} className="h-[100dvh] snap-start overflow-hidden">
+        <section
+          ref={mainRef}
+          className="h-[100dvh] snap-start overflow-hidden"
+        >
           <MainSectionLayout />
         </section>
 
@@ -48,15 +51,15 @@ function LandingPage() {
           <Landing2Layout />
         </section>
 
-        <section ref={matrixRef} className="h-screen snap-start">
+        <section ref={matrixRef} className="snap-start">
           <Matrix />
         </section>
 
-        <section ref={improveRef} className="h-screen snap-start">
+        <section ref={improveRef} className="snap-start">
           <Improve />
         </section>
 
-        <section ref={reviewRef} className="h-screen snap-start">
+        <section ref={reviewRef} className="snap-start">
           <Review />
         </section>
       </div>

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
@@ -13,10 +13,11 @@ interface UserPlanProps {
 
 export default function Plan({ x, y, z, color, lineColor }: UserPlanProps) {
   const groupRef = useRef<THREE.Group>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const delay = 1; // 1초 딜레이
 
   useFrame((state, delta) => {
-    if (state.clock.elapsedTime > delay && groupRef.current) {
+    if (!isDragging && state.clock.elapsedTime > delay && groupRef.current) {
       groupRef.current.position.z = THREE.MathUtils.lerp(
         groupRef.current.position.z,
         -z,
@@ -58,7 +59,11 @@ export default function Plan({ x, y, z, color, lineColor }: UserPlanProps) {
   );
 
   return (
-    <group ref={groupRef}>
+    <group
+      ref={groupRef}
+      onPointerDown={() => setIsDragging(true)}
+      onPointerUp={() => setIsDragging(false)}
+    >
       <mesh castShadow>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[vertices, 3]} />

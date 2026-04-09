@@ -5,13 +5,9 @@ import api from "api/axiosInstance";
 export const useSendVerifyEmail = () => {
   return useMutation({
     mutationFn: async (email) => {
-      const response = await api.post(
-        "/api/auth/email/verification",
-        { email },
-        {
-          headers: { "X-API-Version": "2" },
-        },
-      );
+      const response = await api.post("/api/auth/email/verification", { email }, {
+        headers: { "X-API-Version": "2" },
+      });
       return response.data;
     },
   });
@@ -21,16 +17,12 @@ export const useSendVerifyEmail = () => {
 export const useVerifyEmailCode = () => {
   return useMutation({
     mutationFn: async ({ email, code }) => {
-      const response = await api.post(
-        "/api/auth/email/verify",
-        {
-          email,
-          code: parseInt(code, 10),
-        },
-        {
-          headers: { "X-API-Version": "2" },
-        },
-      );
+      const response = await api.post("/api/auth/email/verify", {
+        email,
+        code: parseInt(code, 10),
+      }, {
+        headers: { "X-API-Version": "2" },
+      });
       return response.data;
     },
   });

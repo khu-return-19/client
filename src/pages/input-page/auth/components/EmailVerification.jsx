@@ -2,11 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import Button from "../../components/Button";
 import errorIcon from "assets/icons/인증_실패.svg";
 import successIcon from "assets/icons/인증_성공.svg";
-import { useSendVerifyEmail } from "api/emailApi";
+import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 import EmailSentModal from "./EmailSentModal";
 
 function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const { mutate: sendVerifyEmail, isPending: isSending } = useSendVerifyEmail();
+  const { mutate: verifyEmailCode, isPending: isVerifying } = useVerifyEmailCode();
 
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
@@ -80,6 +81,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const hasCodeInput = code.trim().length > 0;
 
   const getCodeButtonStatus = () => {
+    if (isVerifying) return "disabled";
     if (hasCodeInput) return "default";
     return "disabled";
   };
@@ -102,7 +104,16 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const handleVerify = () => {
     if (!hasCodeInput) return;
-    // 인증번호 확인 API 구현 후 수정 예정
+    verifyEmailCode({ email, code }, {
+      onSuccess: () => {
+        setIsVerified(true);
+        setCodeError(false);
+        onCodeVerified?.();
+      },
+      onError: () => {
+        setCodeError(true);
+      },
+    });
   };
 
   return (

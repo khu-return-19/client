@@ -16,10 +16,10 @@ export const useSendVerifyEmail = () => {
 // NOTE: 인증번호 확인
 export const useVerifyEmailCode = () => {
   return useMutation({
-    mutationFn: async ({ email, accessCode }) => {
+    mutationFn: async ({ email, code }) => {
       const response = await api.post("/api/auth/email/verify", {
         email,
-        accessCode: parseInt(accessCode, 10),
+        code: parseInt(code, 10),
       }, {
         headers: { "X-API-Version": "2" },
       });

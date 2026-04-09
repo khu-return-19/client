@@ -26,7 +26,7 @@ void main() {
   vec2 mouse = vec2(u_mouse.x / u_res.x, 1.0 - u_mouse.y / u_res.y);
   float dist = distance(uv, mouse);
 
-  float pull = exp(-dist * 3.0) * 0.6;
+  float pull = exp(-dist * 5.0) * 0.6;
   uv += (mouse - uv) * pull;
 
   float wave = sin(dist * 20.0 - u_time * 6.0) * 0.02 * exp(-dist * 1.5);

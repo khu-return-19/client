@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import ReactGA from "react-ga4";
 import Auth from "pages/input-page/auth/Auth";
 import Company from "pages/input-page/company/Company";
 import Resume from "pages/input-page/resume/Resume";
@@ -11,6 +13,12 @@ import NoticeDetail from "pages/notice-page/detail/NoticeDetail";
 import ServiceIntroduction from "pages/service-introduction/ServiceIntroduction";
 
 function AppContent() {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location.pathname]);
+
   return (
     <>
         <Routes>

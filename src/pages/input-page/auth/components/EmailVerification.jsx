@@ -2,8 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import Button from "../../components/Button";
 import errorIcon from "assets/icons/인증_실패.svg";
 import successIcon from "assets/icons/인증_성공.svg";
+import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
+import EmailSentModal from "./EmailSentModal";
 
 function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
+  const { mutate: sendVerifyEmail, isPending: isSending } = useSendVerifyEmail();
+  const { mutate: verifyEmailCode, isPending: isVerifying } = useVerifyEmailCode();
+
+  const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [isSent, setIsSent] = useState(false);
   const [showCodeSection, setShowCodeSection] = useState(false);
@@ -27,12 +33,20 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
       return;
     }
     setEmailError(false);
-    setIsSent(true);
-    setShowCodeSection(true);
-    setTimeLeft(600);
-    setCode("");
-    setCodeError(false);
-    onEmailSent?.();
+    sendVerifyEmail(email, {
+      onSuccess: () => {
+        setIsSent(true);
+        setShowCodeSection(true);
+        setTimeLeft(600);
+        setCode("");
+        setCodeError(false);
+        setShowModal(true);
+        onEmailSent?.();
+      },
+      onError: () => {
+        // 전송 실패 시 별도 UI 없음
+      },
+    });
   };
 
   useEffect(() => {
@@ -52,6 +66,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const getEmailButtonStatus = () => {
     if (isSent) return "completed";
+    if (isSending) return "disabled";
     if (hasInput) return "default";
     return "disabled";
   };
@@ -66,6 +81,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const hasCodeInput = code.trim().length > 0;
 
   const getCodeButtonStatus = () => {
+    if (isVerifying) return "disabled";
     if (hasCodeInput) return "default";
     return "disabled";
   };
@@ -88,11 +104,22 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const handleVerify = () => {
     if (!hasCodeInput) return;
-    // 인증번호 확인 API 구현 후 수정 예정
+    verifyEmailCode({ email, code }, {
+      onSuccess: () => {
+        setIsVerified(true);
+        setCodeError(false);
+        onCodeVerified?.();
+      },
+      onError: () => {
+        setCodeError(true);
+      },
+    });
   };
 
   return (
-    <div className="w-full max-w-[600px]">
+    <>
+      {showModal && <EmailSentModal onClose={() => setShowModal(false)} />}
+      <div className="w-full max-w-[600px]">
       <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
         이메일 인증
       </h2>
@@ -207,7 +234,8 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
           )}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
 

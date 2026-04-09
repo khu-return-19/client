@@ -1,6 +1,5 @@
 import { useRef, useEffect } from "react";
 import HeroContent from "../components/HeroContent";
-import bgBlack from "assets/imgs/main-black.svg";
 import bgBlue from "assets/imgs/gradient_3.svg";
 import bgMain from "assets/imgs/main.svg";
 

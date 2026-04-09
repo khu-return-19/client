@@ -1,7 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import EntryGroupSection from "../components/EntryGroupSection";
 import Button from "../../components/Button";
+import {
+    useFetchUniversities,
+    useFetchMajors,
+    useFetchCompanies,
+    useFetchPositions,
+} from "api/setupApi";
 
 // 어학 종류 리스트
 const LANGUAGES_MASTER = [
@@ -21,14 +27,19 @@ const LANGUAGES_MASTER = [
     'ITT', 'TCT'
 ];
 
-// 기타 더미 데이터
-const MAJORS_DUMMY = ['컴퓨터공학', '전자공학', '산업경영공학', '기계공학', '소프트웨어융합', '데이터사이언스', '경영학', '경제학', '시각디자인', '언론정보학'];
-const COMPANIES_DUMMY = ['pertineo', '삼성전자', '현대자동차', '네이버', '카카오', '쿠팡', '우아한형제들'];
-const POSITIONS_DUMMY = ['신입', '인턴', '주임', '대리', '과장', '팀장', '프론트엔드 엔지니어', '백엔드 엔지니어', '풀스택 엔지니어', '기획자', '디자이너'];
-const UNIVERSITIES_DUMMY = ['경희대학교', '서울대학교', '연세대학교', '고려대학교', '성균관대학교', '한양대학교', '서강대학교', '중앙대학교', '한국외국어대학교', '시립대학교'];
-
 function ResumeSection() {
     const navigate = useNavigate();
+
+    // API 자동완성 데이터
+    const { data: universitiesData } = useFetchUniversities();
+    const { data: majorsData } = useFetchMajors();
+    const { data: companiesData } = useFetchCompanies();
+    const { data: positionsData } = useFetchPositions();
+
+    const universitiesList = useMemo(() => universitiesData?.data?.list ?? [], [universitiesData]);
+    const majorsList = useMemo(() => majorsData?.data?.list ?? [], [majorsData]);
+    const companiesList = useMemo(() => companiesData?.data?.list ?? [], [companiesData]);
+    const positionsList = useMemo(() => positionsData?.data?.list ?? [], [positionsData]);
 
     const loadSession = (key, defaultVal) => {
         try {
@@ -62,9 +73,9 @@ function ResumeSection() {
     });
 
     // 3. 필터링 로직
-    const filterResults = (key, value, dummyList) => {
+    const filterResults = (value, list) => {
         if (!value) return [];
-        return dummyList.filter(item => item.toLowerCase().includes(value.toLowerCase()));
+        return list.filter(item => item.toLowerCase().includes(value.toLowerCase()));
     };
 
     // 행 변경 핸들러 (자동완성 트리거용)
@@ -73,9 +84,9 @@ function ResumeSection() {
         const last = newItems[newItems.length - 1];
         setAutocompleteResults(prev => ({
             ...prev,
-            university: filterResults('university', last.university, UNIVERSITIES_DUMMY),
-            major: filterResults('major', last.major, MAJORS_DUMMY),
-            minor: filterResults('minor', last.minor, MAJORS_DUMMY)
+            university: filterResults(last.university, universitiesList),
+            major: filterResults(last.major, majorsList),
+            minor: filterResults(last.minor, majorsList)
         }));
     };
 
@@ -84,8 +95,8 @@ function ResumeSection() {
         const last = newItems[newItems.length - 1];
         setAutocompleteResults(prev => ({
             ...prev,
-            company: filterResults('company', last.company, COMPANIES_DUMMY),
-            position: filterResults('position', last.position, POSITIONS_DUMMY)
+            company: filterResults(last.company, companiesList),
+            position: filterResults(last.position, positionsList)
         }));
     };
 
@@ -94,7 +105,7 @@ function ResumeSection() {
         const last = newItems[newItems.length - 1];
         setAutocompleteResults(prev => ({
             ...prev,
-            langType: filterResults('type', last.type, LANGUAGES_MASTER)
+            langType: filterResults(last.type, LANGUAGES_MASTER)
         }));
     };
 

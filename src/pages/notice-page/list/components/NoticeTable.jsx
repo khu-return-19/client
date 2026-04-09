@@ -1,55 +1,23 @@
-import { useState, useEffect } from "react";
 import AngleLeftIcon from "../../../../assets/icons/AngleLeft.svg"
 import AngleRightIcon from "../../../../assets/icons/AngleRight.svg"
 import NoticeListItem from "./NoticeListItem";
 
-const noticeList = [
-    {
-        type: 1,
-        id: 1,
-        title: '서비스 점검 안내',
-        isNew: true,
-        date: '2026-03-24',
-    },
-    {
-        type: 1,
-        id: 2,
-        title: '개인정보 처리방침/이용약관 개정 사전 안내',
-        isNew: true,
-        date: '2026-03-24',
-    },
-    {
-        type: 2,
-        id: 3,
-        title: '자기소개서 분석 리포트 생성 기준 업데이트 안내',
-        isNew: true,
-        date: '2026-03-24',
-    },
-    {
-        type: 2,
-        id: 4,
-        title: '서비스 런칭 안내 및 베타 운영 정책',
-        isNew: true,
-        date: '2026-03-24',
-    },
-    {
-        type: 2,
-        id: 5,
-        title: '첨부파일 업로드 형식 및 용량 제한 변경 안내',
-        isNew: true,
-        date: '2026-03-24',
-    }
-]
+const PAGES_PER_GROUP = 5;
 
-function NoticeTable({ filterType, searchText }) {
-    const [currentPage, setCurrentPage] = useState(1);
-    
-    // 필터 로직 처리
-    const filteredNotices = noticeList.filter(notice => {
+function NoticeTable({ notices, filterType, searchText, currentPage, pageSize, onPageChange }) {
+    if (!notices) return null;
+
+    console.log(notices);
+
+    const allNotices = notices.data?.notices ?? [];
+    const totalItems = notices.data?.total ?? 0;
+
+    // 클라이언트 사이드 필터 (서버가 필터를 지원하지 않는 경우 대비)
+    const filteredNotices = allNotices.filter(notice => {
         let typeMatch = true;
         if (filterType === '중요') typeMatch = notice.type === 1;
         if (filterType === '일반') typeMatch = notice.type === 2;
-        
+
         let searchMatch = true;
         if (searchText) {
             searchMatch = notice.title.toLowerCase().includes(searchText.trim().toLowerCase());
@@ -58,17 +26,7 @@ function NoticeTable({ filterType, searchText }) {
         return typeMatch && searchMatch;
     });
 
-    const totalItems = filteredNotices.length;
-    const ITEMS_PER_PAGE = 10;
-    const PAGES_PER_GROUP = 5;
-
-    const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
-    const displayedNotices = filteredNotices.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
-
-    // 필터 조건 변경 시 항상 1페이지로 리셋
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [filterType, searchText]);
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
 
     const currentGroup = Math.ceil(currentPage / PAGES_PER_GROUP);
     const startPage = (currentGroup - 1) * PAGES_PER_GROUP + 1;
@@ -81,20 +39,20 @@ function NoticeTable({ filterType, searchText }) {
 
     const handlePrevGroup = () => {
         if (startPage > 1) {
-            setCurrentPage(startPage - PAGES_PER_GROUP);
+            onPageChange(startPage - PAGES_PER_GROUP);
         }
     };
 
     const handleNextGroup = () => {
         if (endPage < totalPages) {
-            setCurrentPage(startPage + PAGES_PER_GROUP);
+            onPageChange(startPage + PAGES_PER_GROUP);
         }
     };
 
     return (
         <div>
             <div className="w-full h-[500px] flex flex-col gap-[10px]">
-                {displayedNotices.map((notice) => (
+                {filteredNotices.map((notice) => (
                     <NoticeListItem key={notice.id} notice={notice} />
                 ))}
             </div>
@@ -105,7 +63,7 @@ function NoticeTable({ filterType, searchText }) {
                         {pageNumbers.map((num) => (
                             <div 
                                 key={num} 
-                                onClick={() => setCurrentPage(num)}
+                                onClick={() => onPageChange(num)}
                                 className="flex justify-center items-center w-[24px] h-[24px] cursor-pointer"
                             >
                                 {currentPage === num ? (

@@ -39,12 +39,12 @@ function LandingPage() {
         <SectionProgressBar index={activeIndex} total={5} />
       </div>
 
-      <div className="overflow-x-hidden snap-y snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
-        <section ref={mainRef} className="h-full snap-start overflow-hidden">
+      <div className="overflow-x-hidden lg:snap-y lg:snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
+        <section ref={mainRef} className="h-[100dvh] snap-start overflow-hidden">
           <MainSectionLayout />
         </section>
 
-        <section ref={videoRef} className="h-full snap-start">
+        <section ref={videoRef} className="h-[100dvh] snap-start">
           <Landing2Layout />
         </section>
 

@@ -3,14 +3,20 @@ import api from "api/axiosInstance";
 
 interface VerifyEmailData {
   email: string;
-  accessCode: string;
+  code: string;
 }
 
 // NOTE: 인증 이메일 발송
 export const useSendVerifyEmail = () => {
   return useMutation({
-    mutationFn: async (email: string) => {
-      const response = await api.post("/send-verify-email", { email });
+    mutationFn: async (email) => {
+      const response = await api.post(
+        "/api/auth/email/verification",
+        { email },
+        {
+          headers: { "X-API-Version": "2" },
+        },
+      );
       return response.data;
     },
   });
@@ -19,11 +25,17 @@ export const useSendVerifyEmail = () => {
 // NOTE: 인증번호 확인
 export const useVerifyEmailCode = () => {
   return useMutation({
-    mutationFn: async ({ email, accessCode }: VerifyEmailData) => {
-      const response = await api.post("/verify-email", {
-        email,
-        accessCode: parseInt(accessCode, 10),
-      });
+    mutationFn: async ({ email, code }: VerifyEmailData) => {
+      const response = await api.post(
+        "/api/auth/email/verify",
+        {
+          email,
+          code: parseInt(code, 10),
+        },
+        {
+          headers: { "X-API-Version": "2" },
+        },
+      );
       return response.data;
     },
   });

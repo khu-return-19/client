@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import HeroContent from "../components/HeroContent";
-import bgBlue from "assets/imgs/gradient_modi.svg";
+import bgBlue from "assets/imgs/gradient_3.svg";
 import bgMain from "assets/imgs/main.svg";
 
 const VERT = `
@@ -49,7 +49,8 @@ function MainSectionLayout() {
     const glCanvas = document.createElement("canvas");
     glCanvas.width = w;
     glCanvas.height = h;
-    glCanvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;z-index:1;";
+    glCanvas.style.cssText =
+      "position:absolute;inset:0;width:100%;height:100%;z-index:1;";
     section.appendChild(glCanvas);
 
     const gl = glCanvas.getContext("webgl");
@@ -69,7 +70,11 @@ function MainSectionLayout() {
     gl.useProgram(prog);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
     const aPos = gl.getAttribLocation(prog, "a_pos");
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
@@ -77,7 +82,7 @@ function MainSectionLayout() {
     gl.uniform2f(gl.getUniformLocation(prog, "u_res"), w, h);
     gl.uniform1i(gl.getUniformLocation(prog, "u_tex"), 0);
     const uMouse = gl.getUniformLocation(prog, "u_mouse");
-    const uTime  = gl.getUniformLocation(prog, "u_time");
+    const uTime = gl.getUniformLocation(prog, "u_time");
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -89,7 +94,17 @@ function MainSectionLayout() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,0]));
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      1,
+      1,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      new Uint8Array([0, 0, 0, 0]),
+    );
 
     const img = new Image();
     img.onload = () => {
@@ -158,9 +173,16 @@ function MainSectionLayout() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full h-full relative overflow-hidden bg-[#00010d]">
+    <section
+      ref={sectionRef}
+      className="w-full h-full relative overflow-hidden bg-[#00010d]"
+    >
       {window.innerWidth < 894 && (
-        <img src={bgMain} alt="" className="absolute inset-0 w-full h-full object-cover z-0" />
+        <img
+          src={bgMain}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
       )}
       <div className="relative w-full h-full flex items-center justify-center z-20">
         <HeroContent />

@@ -32,7 +32,13 @@ export const useFetchNotice = (id: string | number) => {
     queryKey: ["notice", id],
     queryFn: async () => {
       const response = await api.get(`/notice/${id}`);
-      return response.data;
+      const data = response.data;
+      if (!data.success) {
+        const error = new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
+        error.code = data.code;
+        throw error;
+      }
+      return data;
     },
     enabled: !!id, // id가 있을 때만 요청 실행
   });

@@ -1,15 +1,22 @@
-import { useMutation, useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import api from "api/axiosInstance";
+import { CreateAnalysisData } from "schema/AnalysisData";
 
 // NOTE: 분석 보고서 목록 무한 스크롤 조회
 export const useFetchAnalyses = () => {
   return useInfiniteQuery({
     queryKey: ["analyses"],
-    queryFn: async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam = 1 }: { pageParam?: number }) => {
       const response = await api.get(`/analyses?page=${pageParam}`);
       return response.data;
     },
-    getNextPageParam: (lastPage, allPages) => {
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: any[], allPages: any[][]) => {
       // 응답 데이터가 없으면 더 이상 요청하지 않음
       if (lastPage.length === 0) {
         return undefined;
@@ -21,7 +28,7 @@ export const useFetchAnalyses = () => {
 };
 
 // NOTE: 특정 분석 보고서 조회
-export const useFetchAnalysis = (id) => {
+export const useFetchAnalysis = (id: string | number) => {
   return useQuery({
     queryKey: ["analysis", id],
     queryFn: async () => {
@@ -36,15 +43,15 @@ export const useDeleteAnalyses = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id) => {
+    mutationFn: async (id: string | number) => {
       const response = await api.delete("/analysis", { data: { id } });
       return response.data;
     },
-    onSuccess: (_, id) => {
+    onSuccess: (_, id: string | number) => {
       console.log(id);
-      queryClient.setQueryData(["analyses"], (oldData) => {
+      queryClient.setQueryData(["analyses"], (oldData: any) => {
         const newPagesArray = oldData.pages.map(
-          (page) => page.filter((analysis) => analysis.id !== id) // 삭제된 id 제외한 데이터
+          (page: any[]) => page.filter((analysis: any) => analysis.id !== id), // 삭제된 id 제외한 데이터
         );
 
         return {
@@ -62,7 +69,7 @@ export const useDeleteAnalyses = () => {
 // NOTE: 분석 보고서 생성
 export const useCreateAnalysis = () => {
   return useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data: CreateAnalysisData) => {
       const response = await api.post("/analysis", data);
       return response.data;
     },

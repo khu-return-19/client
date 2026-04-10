@@ -1,6 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import api from "api/axiosInstance";
 
+interface VerifyEmailData {
+  email: string;
+  accessCode: string;
+}
+
 // NOTE: 인증 이메일 발송
 export const useSendVerifyEmail = () => {
   return useMutation({
@@ -14,7 +19,7 @@ export const useSendVerifyEmail = () => {
 // NOTE: 인증번호 확인
 export const useVerifyEmailCode = () => {
   return useMutation({
-    mutationFn: async ({ email, accessCode }) => {
+    mutationFn: async ({ email, accessCode }: VerifyEmailData) => {
       const response = await api.post("/verify-email", {
         email,
         accessCode: parseInt(accessCode, 10),

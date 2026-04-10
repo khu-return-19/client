@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import api from "api/axiosInstance";
-import { CreateAnalysisData } from "schema/AnalysisData";
+import { CreateAnalysisData } from "schema/Analysis";
 
 // NOTE: 분석 보고서 목록 무한 스크롤 조회
 export const useFetchAnalyses = () => {

@@ -16,7 +16,7 @@ export const useFetchResume = () => {
 // NOTE: 이력서 저장
 export const useUpdateResume = () => {
   return useMutation({
-    mutationFn: (data) => api.patch("/resume", data),
+    mutationFn: (data: any) => api.patch("/resume", data),
     onSuccess: () => {
       toast.success("이력서가 성공적으로 저장되었습니다!");
     },

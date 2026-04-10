@@ -7,27 +7,28 @@ import Button from "./Button";
  * @param {string} status - 'default' | 'disabled'
  */
 const AnalysisButton = ({
-    current = 0,
-    total = 3,
-    status = "default",
-    ...props
+  current = 0,
+  total = 3,
+  status = "default",
+  ...props
 }) => {
-    const countColor = status === "disabled" ? "text-[#EEEEEE]" : "text-[#C1D9FF]";
+  const countColor =
+    status === "disabled" ? "text-[#EEEEEE]" : "text-[#C1D9FF]";
 
-    return (
-        <Button
-            size="M"
-            variant="primary"
-            status={status}
-            className="gap-[10px]"
-            {...props}
-        >
-            <span>분석하기</span>
-            <span className={`${countColor}`}>
-                {current}/{total}
-            </span>
-        </Button>
-    );
-}
+  return (
+    <Button
+      size="M"
+      variant="primary"
+      status={status}
+      className="gap-[10px]"
+      {...props}
+    >
+      <span>분석하기</span>
+      <span className={`${countColor}`}>
+        {current}/{total}
+      </span>
+    </Button>
+  );
+};
 
 export default AnalysisButton;

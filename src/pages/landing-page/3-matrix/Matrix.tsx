@@ -3,6 +3,7 @@ import ExplainSectionLayout from "../layouts/ExplainSectionLayout";
 import SubTitle from "pages/landing-page/components/SubTitle";
 import Arrow from "../../../assets/icons/Arrow.svg";
 import cn from "utils/cn";
+import ReportGraph from "pages/report/components/ReportGraph";
 
 export default function Matrix() {
   return (
@@ -11,8 +12,10 @@ export default function Matrix() {
         title="3D 역량평가 모델로 보는 세 가지 핵심 지표"
         discription="학습 수준(X) · 직무적합 수준(Y) · 수행역량 수준(Z) 을 종합적으로 분석합니다."
       />
-      <div className="flex flex-col h-full lg:flex-row items-center justify-center pt-[65px]">
-        <div className="h-[416px] w-[416px]">report</div>
+      <div className="flex flex-col h-full lg:flex-row items-center justify-center min-lg:pt-[65px]">
+        <div className="h-[416px] w-[416px]">
+          <ReportGraph zoom={50} position={-3} />
+        </div>
         <img className="opacity-0 lg:opacity-100" src={Arrow} alt="화살표" />
         <div
           className={cn(

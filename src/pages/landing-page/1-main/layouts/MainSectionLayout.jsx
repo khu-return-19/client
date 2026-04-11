@@ -23,16 +23,19 @@ varying vec2 v_uv;
 
 void main() {
   vec2 uv = v_uv;
-  vec2 mouse = vec2(u_mouse.x / u_res.x, 1.0 - u_mouse.y / u_res.y);
+  vec2 mouse = vec2(u_mouse.x / u_res.x, u_mouse.y / u_res.y);
   float dist = distance(uv, mouse);
 
-  float pull = exp(-dist * 7.0) * 0.6;
+  float pull = exp(-dist * 13.0) * 0.6;
   uv += (mouse - uv) * pull;
 
   float wave = sin(dist * 20.0 - u_time * 6.0) * 0.02 * exp(-dist * 1.5);
   uv += normalize(uv - mouse) * wave;
 
-  gl_FragColor = texture2D(u_tex, clamp(uv, 0.0, 1.0));
+  vec4 color = texture2D(u_tex, clamp(uv, 0.0, 1.0));
+  float grain = fract(sin(dot(uv + fract(u_time * 0.1), vec2(12.9898, 78.233))) * 43758.5453) * 0.06 - 0.03;
+  color.rgb += grain;
+  gl_FragColor = color;
 }
 `;
 

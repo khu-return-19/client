@@ -23,7 +23,7 @@ function loadFromSession() {
 
 function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal] = useState(false);
 
   const { mutateAsync: createAnalysis } = useCreateAnalysis();
 

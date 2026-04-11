@@ -17,9 +17,25 @@ function AnalysisPage() {
     "적용 · 재평가": Apply,
   };
 
-  const [activeNav, setActiveNav] = useState(SECTION_IDS[1]);
+  const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
 
   const handleNavChange = (item) => setActiveNav(item);
+
+  const handleNext = () => {
+    const idx = SECTION_IDS.indexOf(activeNav);
+    if (idx < SECTION_IDS.length - 1) {
+      setActiveNav(SECTION_IDS[idx + 1]);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handlePrev = () => {
+    const idx = SECTION_IDS.indexOf(activeNav);
+    if (idx > 0) {
+      setActiveNav(SECTION_IDS[idx - 1]);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="pt-[clamp(52px,calc(2.5vw+28px),64px)] min-h-screen bg-[#F9FAFB]">
@@ -39,7 +55,7 @@ function AnalysisPage() {
             <AnalysisNavBar active={activeNav} onChange={handleNavChange} />
             {/* 섹션 내용 */}
             <div className="mt-[72px] px-[40px]">
-              {SECTION_COMPONENTS[activeNav]()}
+              {(() => { const C = SECTION_COMPONENTS[activeNav]; return <C onNext={handleNext} onPrev={handlePrev} />; })()}
             </div>
           </div>
         </div>

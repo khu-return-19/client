@@ -92,8 +92,8 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
         </p>
       </SectionCard>
 
-      {/* 다음 버튼 */}
-      <div className="flex justify-center pt-[80px] pb-[60px]">
+      {/* 하단 버튼 */}
+      <div className="flex justify-center gap-[16px] pt-[60px] pb-[60px]">
         <button
           onClick={onNext}
           className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"

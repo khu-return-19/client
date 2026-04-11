@@ -1,6 +1,6 @@
 const liStyle =
-  "text-[16px] font-normal text-[#111] font-['Pretendard'] leading-[150%]";
-const h3Style = "text-[20px] font-semibold text-[#111] font-['Pretendard']";
+  "text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[150%]";
+const h3Style = "text-[clamp(17px,1.39vw,20px)] font-semibold text-[#111] font-['Pretendard']";
 const ulStyle =
   "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
 
@@ -36,15 +36,15 @@ export default function ImproveStrategy({
   onPrev?: () => void;
 }) {
   return (
-    <div className="flex flex-col gap-[56px]">
+    <div className="flex flex-col gap-[clamp(32px,3.9vw,56px)]">
       {/* 결론 섹션 */}
-      <section className="flex flex-col gap-[40px]">
-        <h2 className="text-[24px] font-semibold text-[#09469F] font-['Pretendard']">
+      <section className="flex flex-col gap-[clamp(24px,2.8vw,40px)]">
+        <h2 className="text-[clamp(18px,1.67vw,24px)] font-semibold text-[#09469F] font-['Pretendard']">
           결론
         </h2>
 
         {/* 최종 평가 점수 / 경쟁력 */}
-        <div className="flex flex-col gap-[15px]">
+        <div className="flex flex-col gap-[clamp(10px,1.04vw,15px)]">
           <Row
             label="최종 평가 점수 :"
             value="4.1점"
@@ -58,8 +58,8 @@ export default function ImproveStrategy({
         </div>
 
         {/* 강점 / 약점 */}
-        <div className="grid grid-cols-2 gap-[40px]">
-          <div className="flex flex-col gap-[16px]">
+        <div className="grid grid-cols-2 max-[767px]:grid-cols-1 gap-[clamp(20px,2.8vw,40px)]">
+          <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
             <h3 className={h3Style}>강점</h3>
             <ul className={ulStyle}>
               <li className={liStyle}>항목 1</li>
@@ -67,7 +67,7 @@ export default function ImproveStrategy({
               <li className={liStyle}>항목 3</li>
             </ul>
           </div>
-          <div className="flex flex-col gap-[16px]">
+          <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
             <h3 className={h3Style}>약점</h3>
             <ul className={ulStyle}>
               <li className={liStyle}>항목 1</li>
@@ -78,7 +78,7 @@ export default function ImproveStrategy({
         </div>
 
         {/* 최종 조언 */}
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>최종 조언</h3>
           <ul className={ulStyle}>
             <li className={liStyle}>항목 1</li>
@@ -91,26 +91,26 @@ export default function ImproveStrategy({
       <div className="border-t border-[#AEB4BC]" />
 
       {/* 개선점 및 전략 제안 섹션 */}
-      <section className="flex flex-col gap-[40px]">
-        <h2 className="text-[24px] font-semibold text-[#09469F] font-['Pretendard']">
+      <section className="flex flex-col gap-[clamp(24px,2.8vw,40px)]">
+        <h2 className="text-[clamp(18px,1.67vw,24px)] font-semibold text-[#09469F] font-['Pretendard']">
           개선점 및 전략 제안
         </h2>
 
         {/* 개선 방안 */}
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>개선 방안</h3>
-          <p className="text-[16px] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
+          <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
             개선 방안 텍스트
           </p>
         </div>
 
         {/* 실행 전략 */}
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>실행전략</h3>
-          <div className="flex flex-col gap-[24px]">
+          <div className="flex flex-col gap-[clamp(16px,1.67vw,24px)]">
             {strategies.map((strategy) => (
-              <div key={strategy.title} className="flex flex-col gap-[12px]">
-                <p className="text-[16px] font-normal text-[#111] font-['Pretendard']">
+              <div key={strategy.title} className="flex flex-col gap-[clamp(8px,0.83vw,12px)]">
+                <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard']">
                   {strategy.title}
                 </p>
                 <ul className={ulStyle}>
@@ -127,16 +127,16 @@ export default function ImproveStrategy({
         </div>
 
         {/* 기대 효과 */}
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>기대효과</h3>
-          <p className="text-[16px] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
+          <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
             기대효과 텍스트
           </p>
         </div>
       </section>
 
       {/* 하단 버튼 */}
-      <div className="flex justify-center gap-[16px] pt-[60px] pb-[60px]">
+      <div className="flex justify-center gap-[16px] pt-[clamp(40px,4.2vw,60px)] pb-[clamp(40px,4.2vw,60px)]">
         <button
           onClick={onPrev}
           className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"
@@ -162,17 +162,17 @@ interface RowProps {
 
 function Row({ label, value, sub }: RowProps) {
   return (
-    <div className="flex items-center gap-[20px]">
-      <div className="flex items-center gap-[4px] w-[150px] shrink-0">
-        <span className="text-[16px] font-normal text-[#111] font-['Pretendard']">
+    <div className="flex items-center gap-[clamp(12px,1.39vw,20px)] flex-wrap">
+      <div className="flex items-center gap-[4px] shrink-0">
+        <span className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard']">
           {label}
         </span>
-        <span className="text-[16px] font-bold text-[#111] font-['Pretendard']">
+        <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard']">
           {value}
         </span>
       </div>
       {sub && (
-        <span className="text-[16px] font-normal text-[#111] font-['Pretendard']">
+        <span className="text-[clamp(13px,1.04vw,16px)] font-normal text-[#111] font-['Pretendard']">
           {sub}
         </span>
       )}

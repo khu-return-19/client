@@ -4,6 +4,9 @@ import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
 import AnalysisModal from "../components/AnalysisModal";
 
+// API
+import { useCreateAnalysis } from "api/analysisApi";
+
 const MAX_CARDS = 5;
 const SESSION_KEY = "selfIntroCards";
 
@@ -22,15 +25,21 @@ function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
   const [showModal, setShowModal] = useState(false);
 
+  const { mutateAsync: createAnalysis } = useCreateAnalysis();
+
   useEffect(() => {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(cards));
   }, [cards]);
 
-  const firstFilled = cards[0]?.question.trim().length > 0 && cards[0]?.content.trim().length > 0;
+  const firstFilled =
+    cards[0]?.question.trim().length > 0 && cards[0]?.content.trim().length > 0;
 
   const handleAdd = () => {
     if (cards.length >= MAX_CARDS) return;
-    setCards((prev) => [...prev, { id: Date.now(), question: "", content: "" }]);
+    setCards((prev) => [
+      ...prev,
+      { id: Date.now(), question: "", content: "" },
+    ]);
   };
 
   const handleRemove = (id) => {
@@ -38,7 +47,44 @@ function SelfIntroSection() {
   };
 
   const handleCardChange = (id, question, content) => {
-    setCards((prev) => prev.map((card) => card.id === id ? { ...card, question, content } : card));
+    setCards((prev) =>
+      prev.map((card) =>
+        card.id === id ? { ...card, question, content } : card,
+      ),
+    );
+  };
+
+  const handleAnalysis = async () => {
+    if (!firstFilled) return;
+    const analysisData = {
+      email: "",
+      company: "지원 회사명",
+      position: "지원 직무명",
+      input: cards
+        .map(
+          (card, index) =>
+            `Q${index + 1}: ${card.question}\nA${index + 1}: ${card.content}`,
+        )
+        .join("\n\n"), // 질문과 답변을 텍스트로 합침
+      resume: {
+        major: "전공",
+        universityName: "대학교 졸업",
+        gpa: 3.5,
+        career: "수상실적",
+        languageScore: "어학점수",
+        certificate: "자격증",
+      },
+      url: "지원 링크",
+      accessCode: 123456,
+    };
+
+    try {
+      await createAnalysis(analysisData);
+      // setShowModal(true); // 성공 시 모달 표시
+    } catch (error) {
+      console.error("Analysis creation failed:", error);
+      // 에러 처리 (토스트 메시지 등 추가 가능)
+    }
   };
 
   return (
@@ -70,7 +116,7 @@ function SelfIntroSection() {
           </Button>
           <AnalysisButton
             status={firstFilled ? "default" : "disabled"}
-            onClick={() => { if (firstFilled) setShowModal(true); }}
+            onClick={handleAnalysis}
           />
         </div>
         {/* 모바일 */}
@@ -80,13 +126,13 @@ function SelfIntroSection() {
           </Button>
           <AnalysisButton
             status={firstFilled ? "default" : "disabled"}
-            onClick={() => { if (firstFilled) setShowModal(true); }}
+            onClick={handleAnalysis}
             className="!w-[160px] !h-[48px]"
           />
         </div>
       </div>
 
-      {showModal && <AnalysisModal onClose={() => setShowModal(false)} />}
+      {showModal && <AnalysisModal onClose={() => {}} />}
     </div>
   );
 }

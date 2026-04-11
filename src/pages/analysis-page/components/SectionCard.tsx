@@ -1,4 +1,10 @@
-function SectionCard({ title, children, className = "" }) {
+interface SectionCardProps {
+  title: string;
+  children?: React.ReactNode;
+  className?: string;
+}
+
+function SectionCard({ title, children, className }: SectionCardProps) {
   return (
     <div className={`${className}`}>
       {title && (

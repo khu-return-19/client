@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Checkbox from "./Checkbox";
 import TermsModal from "./TermsModal";
-import { useStartSession } from "api/sessionApi";
+import { useStartSession, SESSION_STORAGE_KEY } from "api/sessionApi";
 
 const AGREEMENT_ITEMS = [
   {
@@ -84,7 +84,10 @@ function Agreement({ isEmailVerified = false, email = "" }) {
         },
       },
       {
-        onSuccess: () => navigate("/input-page/company"),
+        onSuccess: () => {
+          sessionStorage.setItem(SESSION_STORAGE_KEY, String(Date.now()));
+          navigate("/input-page/company");
+        },
       },
     );
   };

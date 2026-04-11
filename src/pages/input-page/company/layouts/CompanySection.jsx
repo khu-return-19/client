@@ -2,10 +2,12 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import EntrySection from "../components/EntrySection";
 import Button from "../../components/Button";
+import TempSaveModal from "../../components/TempSaveModal";
 import { useFetchCompanies, useFetchPositions } from "api/setupApi";
 
 function CompanySection() {
     const navigate = useNavigate();
+    const [showTempSaveModal, setShowTempSaveModal] = useState(false);
 
     // API 자동완성 데이터
     const { data: companiesData } = useFetchCompanies();
@@ -47,6 +49,7 @@ function CompanySection() {
 
     return (
         <div className="overflow-y-auto flex flex-col items-center gap-[100px] max-[893px]:gap-[40px] mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
+            {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
             <div className="flex w-full min-[894px]:max-w-[1080px] gap-[20px] max-[893px]:flex-col max-[893px]:max-w-[452px]">
                 <EntrySection
                     caption="지원 회사명"
@@ -82,9 +85,7 @@ function CompanySection() {
             <div className="mt-[20px] max-[893px]:mt-[30px] flex gap-[12px] max-[893px]:gap-[7px] items-center">
                 <Button
                     variant="secondary"
-                    onClick={() => {
-                        // TODO: 임시저장 로직 구현
-                    }}
+                    onClick={() => setShowTempSaveModal(true)}
                 >
                     임시저장
                 </Button>

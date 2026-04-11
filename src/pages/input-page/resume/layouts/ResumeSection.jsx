@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import EntryGroupSection from "../components/EntryGroupSection";
 import Button from "../../components/Button";
+import TempSaveModal from "../../components/TempSaveModal";
 import {
     useFetchUniversities,
     useFetchMajors,
@@ -29,6 +30,7 @@ const LANGUAGES_MASTER = [
 
 function ResumeSection() {
     const navigate = useNavigate();
+    const [showTempSaveModal, setShowTempSaveModal] = useState(false);
 
     // API 자동완성 데이터
     const { data: universitiesData } = useFetchUniversities();
@@ -111,6 +113,7 @@ function ResumeSection() {
 
     return (
         <div className="overflow-y-auto flex flex-col items-center min-[894px]:gap-[100px] max-[893px]:gap-[40px] min-[894px]:mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
+            {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
             {/* 학력사항 */}
             <EntryGroupSection
                 caption="학력사항"
@@ -189,9 +192,7 @@ function ResumeSection() {
             <div className="min-[894px]:mt-[20px] max-[893px]:mt-[30px] flex gap-[12px] items-center">
                 <Button
                     variant="secondary"
-                    onClick={() => {
-                        // TODO: 임시저장 로직 구현
-                    }}
+                    onClick={() => setShowTempSaveModal(true)}
                 >
                     임시저장
                 </Button>

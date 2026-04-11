@@ -3,6 +3,7 @@ import QuestionCard from "../components/QuestionCard";
 import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
 import AnalysisModal from "../components/AnalysisModal";
+import TempSaveModal from "../../components/TempSaveModal";
 
 // API
 import { useCreateAnalysis } from "api/analysisApi";
@@ -24,6 +25,7 @@ function loadFromSession() {
 function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
   const [showModal] = useState(false);
+  const [showTempSaveModal, setShowTempSaveModal] = useState(false);
 
   const { mutateAsync: createAnalysis } = useCreateAnalysis();
 
@@ -111,7 +113,7 @@ function SelfIntroSection() {
       <div className="mt-[40px] md:mt-[110px]">
         {/* 데스크탑/태블릿 */}
         <div className="hidden md:flex flex-col items-center gap-[12px]">
-          <Button size="M" variant="secondary" className="!h-[52px]">
+          <Button size="M" variant="secondary" className="!h-[52px]" onClick={() => setShowTempSaveModal(true)}>
             임시저장
           </Button>
           <AnalysisButton
@@ -121,7 +123,7 @@ function SelfIntroSection() {
         </div>
         {/* 모바일 */}
         <div className="flex md:hidden justify-center gap-[12px]">
-          <Button size="M" variant="secondary" className="!h-[48px] !w-[140px]">
+          <Button size="M" variant="secondary" className="!h-[48px] !w-[140px]" onClick={() => setShowTempSaveModal(true)}>
             임시저장
           </Button>
           <AnalysisButton
@@ -133,6 +135,7 @@ function SelfIntroSection() {
       </div>
 
       {showModal && <AnalysisModal onClose={() => {}} />}
+      {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
     </div>
   );
 }

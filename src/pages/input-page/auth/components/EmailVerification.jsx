@@ -4,13 +4,22 @@ import errorIcon from "assets/icons/인증_실패.svg";
 import successIcon from "assets/icons/인증_성공.svg";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 import EmailSentModal from "./EmailSentModal";
+import { SESSION_STORAGE_KEY } from "api/sessionApi";
+
+const VERIFIED_EMAIL_KEY = "verifiedEmail";
 
 function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
-  const { mutate: sendVerifyEmail, isPending: isSending } = useSendVerifyEmail();
-  const { mutate: verifyEmailCode, isPending: isVerifying } = useVerifyEmailCode();
+  const { mutate: sendVerifyEmail, isPending: isSending } =
+    useSendVerifyEmail();
+  const { mutate: verifyEmailCode, isPending: isVerifying } =
+    useVerifyEmailCode();
+
+  const savedEmail = sessionStorage.getItem(VERIFIED_EMAIL_KEY) || "";
+  const isAlreadyVerified =
+    !!savedEmail && !!sessionStorage.getItem(SESSION_STORAGE_KEY);
 
   const [showModal, setShowModal] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(savedEmail);
   const [isSent, setIsSent] = useState(false);
   const [showCodeSection, setShowCodeSection] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -19,12 +28,22 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [code, setCode] = useState("");
   const [isCodeFocused, setIsCodeFocused] = useState(false);
   const [codeError, setCodeError] = useState(false);
-  const [isVerified, setIsVerified] = useState(false); // eslint-disable-line no-unused-vars
+  const [isVerified, setIsVerified] = useState(isAlreadyVerified);
   const [timeLeft, setTimeLeft] = useState(600);
   const timerRef = useRef(null);
 
+  // 이미 인증된 상태로 돌아온 경우 부모에 상태 복원
+  useEffect(() => {
+    if (isAlreadyVerified) {
+      onEmailSent?.();
+      onCodeVerified?.(savedEmail);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const hasInput = email.trim().length > 0;
-  const isValidEmail = email.endsWith("@khu.ac.kr") && email.split("@")[0].length > 0;
+  const isValidEmail =
+    email.endsWith("@khu.ac.kr") && email.split("@")[0].length > 0;
 
   const handleSend = () => {
     if (!hasInput) return;
@@ -44,7 +63,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
         onEmailSent?.();
       },
       onError: () => {
-        // 전송 실패 시 별도 UI 없음
+        // 전송 실패
       },
     });
   };
@@ -65,6 +84,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   };
 
   const getEmailButtonStatus = () => {
+    if (isAlreadyVerified) return "completed";
     if (isSent) return "completed";
     if (isSending) return "disabled";
     if (hasInput) return "default";
@@ -73,7 +93,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const getEmailBorderClass = () => {
     if (emailError) return "border-b border-[#B60000]";
-    if (isSent) return "border-b border-[#717171]";
+    if (isSent || isAlreadyVerified) return "border-b border-[#717171]";
     if (isEmailFocused) return "border-b-2 border-[#09469F]";
     return "border-b border-[#858585]";
   };
@@ -104,136 +124,163 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
 
   const handleVerify = () => {
     if (!hasCodeInput) return;
-    verifyEmailCode({ email, code }, {
-      onSuccess: () => {
-        setIsVerified(true);
-        setCodeError(false);
-        onCodeVerified?.();
+    verifyEmailCode(
+      { email, code },
+      {
+        onSuccess: () => {
+          setIsVerified(true);
+          setCodeError(false);
+          sessionStorage.setItem(VERIFIED_EMAIL_KEY, email);
+          onCodeVerified?.(email);
+        },
+        onError: () => {
+          setCodeError(true);
+        },
       },
-      onError: () => {
-        setCodeError(true);
-      },
-    });
+    );
   };
 
   return (
     <>
       {showModal && <EmailSentModal onClose={() => setShowModal(false)} />}
       <div className="w-full max-w-[600px]">
-      <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
-        이메일 인증
-      </h2>
+        <h2 className="text-[24px] font-medium leading-[120%] text-black text-center">
+          이메일 인증
+        </h2>
 
-      <div className="w-full mt-[40px]">
-        <div className="flex items-center gap-[4px]">
-          <span className="text-[20px] font-medium leading-[150%] text-black">
-            이메일
-          </span>
-          <span className="text-[20px] font-medium leading-[150%] text-[#2876F1]">
-            *
-          </span>
-          <span className="text-[16px] font-normal leading-[150%] text-[#717171] ml-[5px]">
-            경희대학교 메일만 가능합니다.
-          </span>
-        </div>
-
-        <div className="flex items-center gap-[16px] mt-[12px]">
-          <div className="relative flex-1">
-            <input
-              type="email"
-              placeholder="이메일 입력"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (isSent) {
-                  setIsSent(false);
-                  onEmailChanged?.();
-                }
-                if (emailError) setEmailError(false);
-              }}
-              onFocus={() => setIsEmailFocused(true)}
-              onBlur={() => setIsEmailFocused(false)}
-              className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
-            />
-          </div>
-          <Button
-            size="s2"
-            status={getEmailButtonStatus()}
-            onClick={handleSend}
-            className="max-[767px]:!w-[120px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
-          >
-            인증번호 전송
-          </Button>
-        </div>
-
-        {emailError && (
-          <div className="flex items-center gap-[4px] mt-[4px]">
-            <img src={errorIcon} alt="error" className="w-[24px] h-[24px]" />
-            <span className="text-[16px] font-normal leading-[150%] text-[#A40F16]">
-              이메일이 올바르지 않습니다.
-            </span>
-          </div>
-        )}
-      </div>
-
-      {showCodeSection && (
         <div className="w-full mt-[40px]">
           <div className="flex items-center gap-[4px]">
             <span className="text-[20px] font-medium leading-[150%] text-black">
-              인증번호
+              이메일
             </span>
             <span className="text-[20px] font-medium leading-[150%] text-[#2876F1]">
               *
+            </span>
+            <span className="text-[16px] font-normal leading-[150%] text-[#717171] ml-[5px]">
+              경희대학교 메일만 가능합니다.
             </span>
           </div>
 
           <div className="flex items-center gap-[16px] mt-[12px]">
             <div className="relative flex-1">
               <input
-                type="text"
-                placeholder="인증번호입력"
-                value={code}
+                type="email"
+                placeholder="이메일 입력"
+                value={email}
+                disabled={isAlreadyVerified}
                 onChange={(e) => {
-                  setCode(e.target.value);
-                  if (codeError) setCodeError(false);
+                  setEmail(e.target.value);
+                  if (isSent) {
+                    setIsSent(false);
+                    onEmailChanged?.();
+                  }
+                  if (emailError) setEmailError(false);
                 }}
-                onFocus={() => setIsCodeFocused(true)}
-                onBlur={() => setIsCodeFocused(false)}
-                className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getCodeBorderClassFinal()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+                onFocus={() => setIsEmailFocused(true)}
+                onBlur={() => setIsEmailFocused(false)}
+                className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getEmailBorderClass()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent disabled:text-[#717171]`}
               />
-              <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] max-[767px]:text-[13px] font-normal text-[#09469F]">
-                {formatTime(timeLeft)}
-              </span>
             </div>
             <Button
               size="s2"
-              status={getCodeButtonStatusFinal()}
-              onClick={handleVerify}
+              status={getEmailButtonStatus()}
+              onClick={handleSend}
               className="max-[767px]:!w-[120px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
             >
-              인증번호 확인
+              인증번호 전송
             </Button>
           </div>
 
-          {codeError && (
+          {emailError && (
             <div className="flex items-center gap-[4px] mt-[4px]">
               <img src={errorIcon} alt="error" className="w-[24px] h-[24px]" />
               <span className="text-[16px] font-normal leading-[150%] text-[#A40F16]">
-                인증번호가 일치하지 않습니다.
+                이메일이 올바르지 않습니다.
               </span>
             </div>
           )}
 
-          {isVerified && (
-            <div className="flex items-center gap-[4px] mt-[4px]">
-              <img src={successIcon} alt="success" className="w-[24px] h-[24px]" />
+          {/* 이미 인증된 상태로 돌아온 경우 */}
+          {isAlreadyVerified && (
+            <div className="flex items-center gap-[4px] mt-[12px]">
+              <img
+                src={successIcon}
+                alt="success"
+                className="w-[24px] h-[24px]"
+              />
               <span className="text-[16px] font-normal leading-[150%] text-[#09469F]">
                 인증되었습니다.
               </span>
             </div>
           )}
         </div>
-      )}
+
+        {showCodeSection && !isAlreadyVerified && (
+          <div className="w-full mt-[40px]">
+            <div className="flex items-center gap-[4px]">
+              <span className="text-[20px] font-medium leading-[150%] text-black">
+                인증번호
+              </span>
+              <span className="text-[20px] font-medium leading-[150%] text-[#2876F1]">
+                *
+              </span>
+            </div>
+
+            <div className="flex items-center gap-[16px] mt-[12px]">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="인증번호입력"
+                  value={code}
+                  onChange={(e) => {
+                    setCode(e.target.value);
+                    if (codeError) setCodeError(false);
+                  }}
+                  onFocus={() => setIsCodeFocused(true)}
+                  onBlur={() => setIsCodeFocused(false)}
+                  className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getCodeBorderClassFinal()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
+                />
+                <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] max-[767px]:text-[13px] font-normal text-[#09469F]">
+                  {formatTime(timeLeft)}
+                </span>
+              </div>
+              <Button
+                size="s2"
+                status={getCodeButtonStatusFinal()}
+                onClick={handleVerify}
+                className="max-[767px]:!w-[120px] max-[767px]:!h-[40px] max-[767px]:!text-[13px]"
+              >
+                인증번호 확인
+              </Button>
+            </div>
+
+            {codeError && (
+              <div className="flex items-center gap-[4px] mt-[4px]">
+                <img
+                  src={errorIcon}
+                  alt="error"
+                  className="w-[24px] h-[24px]"
+                />
+                <span className="text-[16px] font-normal leading-[150%] text-[#A40F16]">
+                  인증번호가 일치하지 않습니다.
+                </span>
+              </div>
+            )}
+
+            {isVerified && (
+              <div className="flex items-center gap-[4px] mt-[4px]">
+                <img
+                  src={successIcon}
+                  alt="success"
+                  className="w-[24px] h-[24px]"
+                />
+                <span className="text-[16px] font-normal leading-[150%] text-[#09469F]">
+                  인증되었습니다.
+                </span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

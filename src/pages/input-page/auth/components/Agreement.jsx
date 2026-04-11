@@ -3,18 +3,44 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Checkbox from "./Checkbox";
 import TermsModal from "./TermsModal";
+import { useStartSession } from "api/sessionApi";
 
 const AGREEMENT_ITEMS = [
-  { id: "terms",      type: "필수", label: "이용약관에 동의합니다.",              modalTitle: "Pertineo 이용약관",         url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/terms-of-service.html" },
-  { id: "privacy",    type: "필수", label: "개인정보처리 수집 및 이용에 동의합니다.", modalTitle: "Pertineo 개인정보 처리 및 수집 및 이용 동의서", url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-collection-and-use.html" },
-  { id: "policy",     type: "필수", label: "개인정보처리방침에 동의합니다.",          modalTitle: "Pertineo 개인정보 처리방침",                  url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-policy.html" },
-  { id: "thirdParty", type: "선택", label: "개인정보 제3자 제공에 동의합니다.",       modalTitle: "Pertineo 개인정보 제3자 제공 동의서",          url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/third-party-data-sharing.html" },
+  {
+    id: "terms",
+    type: "필수",
+    label: "이용약관에 동의합니다.",
+    modalTitle: "Pertineo 이용약관",
+    url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/terms-of-service.html",
+  },
+  {
+    id: "privacy",
+    type: "필수",
+    label: "개인정보처리 수집 및 이용에 동의합니다.",
+    modalTitle: "Pertineo 개인정보 처리 및 수집 및 이용 동의서",
+    url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-collection-and-use.html",
+  },
+  {
+    id: "policy",
+    type: "필수",
+    label: "개인정보처리방침에 동의합니다.",
+    modalTitle: "Pertineo 개인정보 처리방침",
+    url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/privacy-policy.html",
+  },
+  {
+    id: "thirdParty",
+    type: "선택",
+    label: "개인정보 제3자 제공에 동의합니다.",
+    modalTitle: "Pertineo 개인정보 제3자 제공 동의서",
+    url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/third-party-data-sharing.html",
+  },
 ];
 
 const REQUIRED_IDS = ["terms", "privacy", "policy"];
 
-function Agreement({ isEmailVerified = false }) {
+function Agreement({ isEmailVerified = false, email = "" }) {
   const navigate = useNavigate();
+  const { mutate: startSession, isPending } = useStartSession();
   const [checked, setChecked] = useState({
     terms: false,
     privacy: false,
@@ -22,7 +48,7 @@ function Agreement({ isEmailVerified = false }) {
     thirdParty: false,
   });
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [openModal, setOpenModal] = useState(null); 
+  const [openModal, setOpenModal] = useState(null);
 
   const allChecked = Object.values(checked).every(Boolean);
   const allRequiredChecked = REQUIRED_IDS.every((id) => checked[id]);
@@ -46,8 +72,21 @@ function Agreement({ isEmailVerified = false }) {
   };
 
   const handleStart = () => {
-    if (!canStart) return;
-    navigate("/input-page/company");
+    if (!canStart || isPending) return;
+    startSession(
+      {
+        email,
+        agreements: {
+          termsOfServiceAgreed: checked.terms,
+          privacyCollectionAgreed: checked.privacy,
+          privacyPolicyAgreed: checked.policy,
+          thirdPartySharingAgreed: checked.thirdParty,
+        },
+      },
+      {
+        onSuccess: () => navigate("/input-page/company"),
+      },
+    );
   };
 
   return (
@@ -71,10 +110,21 @@ function Agreement({ isEmailVerified = false }) {
 
         <div className="flex flex-col gap-[16px] mt-[20px]">
           {AGREEMENT_ITEMS.map((item) => (
-            <div key={item.id} className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-[20px] cursor-pointer" onClick={() => handleToggle(item.id)}>
-                <Checkbox checked={checked[item.id]} onChange={() => handleToggle(item.id)} />
-                <span className={`text-[16px] font-normal leading-[150%] ${item.type === "선택" ? "text-[#717171]" : "text-black"}`}>
+            <div
+              key={item.id}
+              className="w-full flex items-center justify-between"
+            >
+              <div
+                className="flex items-center gap-[20px] cursor-pointer"
+                onClick={() => handleToggle(item.id)}
+              >
+                <Checkbox
+                  checked={checked[item.id]}
+                  onChange={() => handleToggle(item.id)}
+                />
+                <span
+                  className={`text-[16px] font-normal leading-[150%] ${item.type === "선택" ? "text-[#717171]" : "text-black"}`}
+                >
                   {item.type}
                 </span>
                 <span className="text-[16px] font-normal leading-[150%] text-black">
@@ -85,7 +135,13 @@ function Agreement({ isEmailVerified = false }) {
                 className="w-[24px] h-[24px] flex items-center justify-center cursor-pointer group"
                 onClick={() => setOpenModal(item)}
               >
-                <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="9"
+                  height="16"
+                  viewBox="0 0 9 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M8.59082 7.53027L1.06055 15.0605L0 14L6.46973 7.53027L0 1.06055L1.06055 0L8.59082 7.53027Z"
                     className="fill-[#B5B5B5] group-hover:fill-[#717171] transition-colors"
@@ -114,7 +170,7 @@ function Agreement({ isEmailVerified = false }) {
       <div className="mt-[120px]">
         <Button
           size="L"
-          status={canStart ? "default" : "disabled"}
+          status={canStart && !isPending ? "default" : "disabled"}
           onClick={handleStart}
           className="!w-full"
         >

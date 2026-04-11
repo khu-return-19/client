@@ -108,7 +108,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
       onSuccess: () => {
         setIsVerified(true);
         setCodeError(false);
-        onCodeVerified?.();
+        onCodeVerified?.(email);
       },
       onError: () => {
         setCodeError(true);

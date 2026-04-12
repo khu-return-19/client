@@ -72,7 +72,7 @@ export default function Review() {
               >
                 수정 후
               </div>
-              <div className="rounded-md border w-full border-[#C1D9FF] shadow-[0_0_14.3px_0_rgba(193,217,255,0.70)] bg-white pb-[19px] px-[42px] pt-[46px] text-[14px] lg:text-[20px] font-normal leading-relaxed">
+              <div className="rounded-md border w-full border-[#C1D9FF] shadow-[0_0_14.3px_0_rgba(193,217,255,0.70)] bg-white pb-[19px] px-5 lg:px-[90px] pt-[46px] text-[14px] lg:text-[20px] font-normal leading-relaxed">
                 <p className="lg:hidden">
                   00동아리 부장으로 활동하며, 회의록 작성 및 문서 관리 과정에서
                   팀원 간 소통의 어려움을 인식했습니다. 000를 활용한{" "}

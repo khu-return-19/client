@@ -14,7 +14,7 @@ interface StartSessionData {
   };
 }
 
-// NOTE: 세션 시작 (이메일 인증 + 약관 동의 후 세션 쿠키 발급)
+// 세션 시작 (이메일 인증 + 약관 동의 후 세션 쿠키 발급)
 export const useStartSession = () => {
   return useMutation({
     mutationFn: async (data: StartSessionData) => {
@@ -26,14 +26,14 @@ export const useStartSession = () => {
   });
 };
 
-// NOTE: 세션 연장
+// 세션 연장
 export const useExtendSession = () => {
   return useMutation({
     mutationFn: async () => {
       const response = await api.post(
         "/api/sessions/extend",
-        { extendMinutes: 30 },
-        { headers: { "X-API-Version": "2" } }
+        {},
+        { headers: { "X-API-Version": "2" } },
       );
       return response.data;
     },

@@ -37,25 +37,39 @@ const AGREEMENT_ITEMS = [
 ];
 
 const REQUIRED_IDS = ["terms", "privacy", "policy"];
+const AGREEMENT_CHECKED_KEY = "agreementChecked";
 
 function Agreement({ isEmailVerified = false, email = "" }) {
   const navigate = useNavigate();
   const { mutate: startSession, isPending } = useStartSession();
-  const [checked, setChecked] = useState({
-    terms: false,
-    privacy: false,
-    policy: false,
-    thirdParty: false,
-  });
+  const isSessionActive = !!sessionStorage.getItem(SESSION_STORAGE_KEY);
+
+  const getSavedChecked = () => {
+    try {
+      const saved = sessionStorage.getItem(AGREEMENT_CHECKED_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return null;
+  };
+
+  const [checked, setChecked] = useState(
+    getSavedChecked() ?? {
+      terms: false,
+      privacy: false,
+      policy: false,
+      thirdParty: false,
+    }
+  );
   const [hasInteracted, setHasInteracted] = useState(false);
   const [openModal, setOpenModal] = useState(null);
 
   const allChecked = Object.values(checked).every(Boolean);
   const allRequiredChecked = REQUIRED_IDS.every((id) => checked[id]);
-  const canStart = isEmailVerified && allRequiredChecked;
+  const canStart = isEmailVerified && allRequiredChecked && !isSessionActive;
   const showError = hasInteracted && !allRequiredChecked;
 
   const handleAllToggle = () => {
+    if (isSessionActive) return;
     setHasInteracted(true);
     const newValue = !allChecked;
     setChecked({
@@ -67,6 +81,7 @@ function Agreement({ isEmailVerified = false, email = "" }) {
   };
 
   const handleToggle = (id) => {
+    if (isSessionActive) return;
     setHasInteracted(true);
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -86,6 +101,7 @@ function Agreement({ isEmailVerified = false, email = "" }) {
       {
         onSuccess: () => {
           sessionStorage.setItem(SESSION_STORAGE_KEY, String(Date.now()));
+          sessionStorage.setItem(AGREEMENT_CHECKED_KEY, JSON.stringify(checked));
           navigate("/input-page/company");
         },
       },

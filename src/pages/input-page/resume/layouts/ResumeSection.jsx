@@ -111,6 +111,11 @@ function ResumeSection() {
         }));
     };
 
+    // 학력사항(required)의 필수 필드가 모두 입력된 경우에만 다음 버튼 활성화
+    const canProceed = education.every(
+        (row) => row.university?.trim() !== '' && row.major?.trim() !== ''
+    );
+
     return (
         <div className="overflow-y-auto flex flex-col items-center min-[894px]:gap-[100px] max-[893px]:gap-[40px] min-[894px]:mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
             {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
@@ -196,12 +201,16 @@ function ResumeSection() {
                 >
                     임시저장
                 </Button>
-                <Button onClick={() => navigate('/input-page/self-intro')}>
+                <Button
+                    status={canProceed ? 'default' : 'disabled'}
+                    onClick={() => navigate('/input-page/self-introduction')}
+                >
                     다음
                 </Button>
             </div>
         </div>
     );
+
 }
 
 export default ResumeSection;

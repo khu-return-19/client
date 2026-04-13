@@ -17,7 +17,7 @@ function TempSaveModal({ onClose }) {
           </button>
         </div>
 
-        <div className="flex flex-col items-center justify-center flex-1 gap-[16px] pb-[32px]">
+        <div className="flex flex-col items-center justify-center flex-1 gap-[32px] pb-[32px]">
           <img src={modalCheckIcon} alt="check" className="w-[40px] h-[40px]" />
           <div className="flex flex-col items-center gap-[8px]">
             <p className="text-[20px] font-medium leading-[120%] text-black text-center">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import KHU from "assets/icons/KHU.svg";
+import KHUxPertineo from "assets/icons/KHUxpertineo.svg";
 import TextMotion from "./TextMotion";
 
 
@@ -16,9 +16,7 @@ function HeroContent() {
     <div className="flex flex-col items-center w-full px-[24px] md:px-0 md:w-[37.2vw] pt-[10vh] md:pt-[18.3vh] pb-[20.1vh]">
       {/* KHU × Pertineo */}
       <div className="flex items-center justify-center h-[36px] md:h-[calc(1.042vw+30px)]">
-        <img src={KHU} alt="KHU" className="w-[44px] h-[26px] md:w-[calc(1.667vw+36px)] md:h-[calc(1.042vw+20px)]" />
-        <span className="text-[22px] md:text-[2.08vw] font-[200] leading-[150%] text-white">&nbsp;×&nbsp;</span>
-        <span className="text-[18px] md:text-[1.67vw] font-[300] leading-[150%] text-white">Pertineo</span>
+        <img src={KHUxPertineo} alt="KHU × Pertineo" className="h-full w-auto" />
       </div>
 
       {/* 타이틀 */}

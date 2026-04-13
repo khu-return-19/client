@@ -42,12 +42,12 @@ function HeroTextCarousel() {
 
   useEffect(() => {
     const cycle = setInterval(() => {
-      setIndex(prev => {
+      setIndex((prev) => {
         const next = (prev + 1) % TEXTS.length;
         setDirection(next === 0 ? "down" : "up");
         return next;
       });
-    }, 1400 + 600);
+    }, 2200 + 600);
 
     return () => clearInterval(cycle);
   }, []);

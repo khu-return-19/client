@@ -17,7 +17,7 @@ export const useFetchNotices = (page: number, size: number) => {
   return useQuery({
     queryKey: ["notices", page, size],
     queryFn: async () => {
-      const response = await api.get("/notice", {
+      const response = await api.get("/api/notice", {
         params: { page, size }, //
       });
       return response.data;
@@ -31,10 +31,10 @@ export const useFetchNotice = (id: string | number) => {
   return useQuery({
     queryKey: ["notice", id],
     queryFn: async () => {
-      const response = await api.get(`/notice/${id}`);
+      const response = await api.get(`/api/notice/${id}`);
       const data = response.data;
       if (!data.success) {
-        const error = new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
+        const error = new Error(data.message ?? "알 수 없는 오류가 발생했습니다.") as Error & { code?: string | number };
         error.code = data.code;
         throw error;
       }
@@ -50,7 +50,7 @@ export const useCreateNotice = () => {
 
   return useMutation({
     mutationFn: async (noticeData: NoticeData) => {
-      const response = await api.post("/notice", noticeData);
+      const response = await api.post("/api/notice", noticeData);
       return response.data;
     },
     onSuccess: () => {
@@ -66,7 +66,7 @@ export const useDeleteNotice = () => {
 
   return useMutation({
     mutationFn: async (id: string | number) => {
-      const response = await api.delete("/notice", {
+      const response = await api.delete("/api/notice", {
         data: { id },
       });
       return response.data;
@@ -84,7 +84,7 @@ export const useUpdateNotice = () => {
 
   return useMutation({
     mutationFn: async ({ id, title, content }: UpdateNoticeData) => {
-      const response = await api.patch("/notice", { id, title, content });
+      const response = await api.patch("/api/notice", { id, title, content });
       return response.data;
     },
     onSuccess: () => {

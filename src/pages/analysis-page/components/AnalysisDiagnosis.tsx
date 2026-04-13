@@ -1,5 +1,7 @@
 import cn from "utils/cn";
 import ReportGraph from "pages/report/components/ReportGraph";
+import { useAnalysisStore } from "stores/analysisStore";
+import AnalysisHeader from "./AnalysisHeader";
 
 export default function AnalysisDiagnosis({
   onNext,
@@ -8,129 +10,237 @@ export default function AnalysisDiagnosis({
   onNext?: () => void;
   onPrev?: () => void;
 }) {
+  const { evaluationResult } = useAnalysisStore();
+  const averageScore =
+    evaluationResult &&
+    (evaluationResult.x.score +
+      evaluationResult.y.score +
+      evaluationResult.z.score) /
+      3;
   const sections = [
     {
       axis: "X",
       title: "X축 (학습수준) 평가",
-      score: "4.1점",
-      scoreText:
-        "국제 학술대회/대외공모전(Top100) 실적, 실제 서비스 출시 및 학술 활동, 이론+실무 수준 모두 우수",
-      criteria: [
-        "(컴퓨터융합/IT개발) 연구개발·생산 직군 평가를 기준 평가로 적용",
-        "이론적 기반, 전공 학점 성적, 프로젝트/대회 경험, 실무 프로젝트 경험 포함 평가",
-        "SCI/SCIE 논문, 대형 공모전, 인턴/교내 프로젝트 등으로 가산",
-      ],
-      evidence: [
-        "전공(컴퓨터융합), **GPA 4.3(정성평)**, 3.94(교과대)**로 학업 우수, 이론 베이스가 강함",
-        "Java, Flutter, Android, VM/Garbage Collection 등 컴퓨터공학 핵심 기술에 대한 구체적 학습 언급",
-        "Google Solution Challenge Global Top100, 학회·스터디 등 대외경험",
-        "이학계열 SCI/SCIE 논문, 학점 트랙(학부) 수준에서 충분히 경쟁력 보유",
-      ],
-      chartLabels: ["X", "4.1", "4.0", "4.2"],
+      score: evaluationResult?.x.score.toFixed(1),
+      scoreText: evaluationResult?.x.summary || "",
+      criteria: evaluationResult?.x.criteria || [],
+      evidence: evaluationResult?.x.basis || [],
     },
     {
       axis: "Y",
       title: "Y축 (직무적합성 수준) 평가",
-      score: "4.0점",
-      scoreText:
-        "실제 서비스 구현+지속적 개선 경험, 최신 트렌드 사례, 글로벌 공모전에서 검증된 팀워크 역량까지 보유",
-      criteria: [
-        "(연구개발/생산) 직무 직접 관련 경험, 프로젝트 리더, 결과물, S/W 개발 직무 적합성",
-        "실무 프로젝트/대회 공모전 경험, 서비스 출시 중심으로 가산",
-      ],
-      evidence: [
-        "모바일(Flutter/Android), Back-End와의 연계, 서버-아키텍처 이해도 강조",
-        "직접 서비스 출시 및 애플리케이션 유지보수의 소통 경험(팀원 협업과 관리 능력 포함)",
-        "Google Solution Challenge 등 대회경험과 팀워크 역량 증명(Top 100)",
-        "Back-End/Tech_SW개발 중심에 부합하는 광고/공모전 Tech동향/F4E 참여 활동 약간 내",
-      ],
-      extraItems: [
-        {
-          label: "Role Fit",
-          text: "모바일(Flutter/Android), Back-End와의 연계, 서버-아키텍처 이해도 강조",
-        },
-        {
-          label: "Domain Fit",
-          text: "모바일(Flutter/Android), Back-End와의 연계, 서버-아키텍처 이해도 강조",
-        },
-        {
-          label: "Culture Fit",
-          text: "모바일(Flutter/Android), Back-End와의 연계, 서버-아키텍처 이해도 강조",
-        },
-        {
-          label: "Skill Fit",
-          text: "모바일(Flutter/Android), Back-End와의 연계, 서버-아키텍처 이해도 강조",
-        },
-      ],
-      chartLabels: ["Y", "4.0", "4.1", "4.2"],
+      score: evaluationResult?.y.score.toFixed(1),
+      scoreText: evaluationResult?.y.summary || "",
+      criteria: evaluationResult?.y.criteria || [],
+      evidence: evaluationResult?.y.basis || [],
     },
     {
       axis: "Z",
       title: "Z축 (수행역량 수준) 평가",
-      score: "4.2점",
-      scoreText:
-        "실제 서비스 완성형 개선(지속적 개선 프로세스, 피드백 루프, 실험적 문제해결력, 구체적 수치 기반 성과)",
-      criteria: [
-        "(연구개발/생산) 실질적 성과/결과, 실무 적용, 문제 해결력, 결과물/기여도 집중",
-        "서비스 출시, 사용자 피드백 반영, 성능·안정성 향상 노력에 가산점",
-      ],
-      evidence: [
-        "실제 기획/상용 앱 서비스 출시 유지보수(시장 검증) 지속적 피드백 및 유지보수",
-        "사용자 피드백 수집, 성능/안정성 향상 반복 구현(실무형 기여도 상승)",
-        "사용자 중심 설계로 VR 프로젝트 구현 및 완성도 점수 향상(정량적 사례 포함)",
-        "팀 프로젝트 내 역할 명확화, 협업과 기술적 성과 하이라이트",
-      ],
-      chartLabels: ["Z", "4.2", "4.0", "4.1"],
+      score: evaluationResult?.z.score.toFixed(1),
+      scoreText: evaluationResult?.z.summary || "",
+      criteria: evaluationResult?.z.criteria || [],
+      evidence: evaluationResult?.z.basis || [],
     },
   ];
 
   const labelStyle = "font-medium text-[16px] text-gray900 shrink-0";
 
   return (
-    <section>
-      <h2 className="text-navy900 font-semibold text-2xl mb-10">
-        3D 평가 세부 결과
-      </h2>
-      {sections.map((section) => (
-        <div className="mb-[10px]">
-          <h3 className="font-semibold text-lg">{section.title}</h3>
-          <div className="flex mt-4 w-full gap-10">
-            <div className="w-[350px]">
-              <ReportGraph position={-1} />
-            </div>
-            <div>
-              <div className="flex gap-8 mb-10">
-                <h4 className={labelStyle}>평가 기준</h4>
-                <div className="flex flex-col gap-[6px]">
-                  {section.criteria.map((criterion, index) => (
-                    <p key={index}>• {criterion}</p>
-                  ))}
-                </div>
+    <>
+      <section>
+        <AnalysisHeader title="3D 평가 세부 결과" />
+        {sections.map((section) => (
+          <div className="mb-[10px]">
+            <h3 className="font-semibold text-lg">{section.title}</h3>
+            <div className="flex mt-4 w-full gap-10">
+              <div className="w-[350px]">
+                <ReportGraph
+                  position={-1}
+                  userX={evaluationResult?.x.score}
+                  userY={evaluationResult?.y.score}
+                  userZ={evaluationResult?.z.score}
+                />
               </div>
-              <div className="flex gap-8 mb-10">
-                <h4 className={labelStyle}>평가 근거</h4>
-                <div className="flex flex-col gap-[6px]">
-                  {section.evidence.map((evidence, index) => (
-                    <p key={index}>• {evidence}</p>
-                  ))}
-                </div>
-              </div>
-              <div className="flex gap-8 mb-10">
-                <h4 className={cn(labelStyle, "mt-[2px]")}>
-                  {section.axis}축 점수
-                </h4>
-                <div className="flex flex-col gap-[10px]">
-                  <div className="text-[#2876F1] text-xl font-semibold">
-                    {section.score}
+              <div>
+                <div className="flex gap-8 mb-10">
+                  <h4 className={labelStyle}>평가 기준</h4>
+                  <div className="flex flex-col gap-[6px]">
+                    {section.criteria.map((criterion, index) => (
+                      <p key={index}>• {criterion}</p>
+                    ))}
                   </div>
-                  <div>{section.scoreText}</div>
+                </div>
+                <div className="flex gap-8 mb-10">
+                  <h4 className={labelStyle}>평가 근거</h4>
+                  <div className="flex flex-col gap-[6px]">
+                    {section.evidence.map((evidence, index) => (
+                      <p key={index}>• {evidence}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-8 mb-10">
+                  <h4 className={cn(labelStyle, "mt-[2px]")}>
+                    {section.axis}축 점수
+                  </h4>
+                  <div className="flex flex-col gap-[10px]">
+                    <div className="text-[#2876F1] text-xl font-semibold">
+                      {section.score}점
+                    </div>
+                    <div>{section.scoreText}</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        ))}
+      </section>
+      {/* 종합 평가 및 경쟁력 */}
+      <section className="px-5 py-[75px] border-y-[1px] border-[#B5B5B5]">
+        <AnalysisHeader title="종합평가 및 경쟁력" />
+        <div className="flex gap-8">
+          <div className="flex flex-col gap-4 shrink-0">
+            <div className="flex gap-[18px]">
+              <h3 className="font-semibold text-lg">3D 평가 점수</h3>
+              <div className="text-lg">
+                {sections.map((section, index) => (
+                  <span key={section.axis}>
+                    <span>
+                      {section.score} ({section.axis}){" "}
+                      {index !== sections.length - 1 ? "/ " : ""}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-[18px]">
+              <h3 className="font-semibold text-lg">평균</h3>
+              <div className="text-lg">{averageScore?.toFixed(1)}</div>
+            </div>
+            <div className="flex gap-[18px]">
+              <h3 className="font-semibold text-lg">경쟁력</h3>
+              <div className="text-lg">{evaluationResult?.level}</div>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-lg mb-1">요약</h3>
+            <div className="text-lg flex flex-col gap-[7px]">
+              {evaluationResult?.scoreSummary?.map((summary, index) => (
+                <div className="flex gap-2">
+                  <span>• </span>
+                  <p key={index}>{summary}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      ))}
+      </section>
+      <section className="pt-[75px]">
+        <AnalysisHeader title="기존 합격자 비교 분석" />
+        <div className="flex gap-4">
+          <div className="flex-shrink-0">
+            <ReportGraph
+              userX={evaluationResult?.x.score}
+              userY={evaluationResult?.y.score}
+              userZ={evaluationResult?.z.score}
+            />
+          </div>
+          <div className="flex flex-col py-4 flex-1 min-w-0">
+            {/* Header */}
+            <div className="flex gap-0 pb-2 mb-1">
+              <div className="flex-[2] text-base">평가 항목</div>
+              <div className="flex-[1.5] flex flex-col items-center text-base">
+                합격자 평균
+                <div className="text-[12px] text-gray900">(227건, 동직군)</div>
+              </div>
+              <div className="flex-[1] flex justify-center text-base px-3">
+                지원자
+              </div>
+              <div className="flex-[2.5] text-base">비교분석</div>
+            </div>
 
+            {/* Row 1 */}
+            <div className="flex items-center py-3">
+              <div className="flex-[2] text-xs text-gray900">
+                X축 (학습 수준)
+              </div>
+              <div className="flex-[1.5] text-base flex justify-center">
+                {evaluationResult?.x.score || ""}
+              </div>
+              <div className="flex-[1] flex flex-col items-center px-3">
+                <div className="text-base font-medium text-gray-900">4.1</div>
+                <div className="text-[10px] text-blue-500">+0.54p</div>
+              </div>
+              <div className="flex-[2.5] text-xs text-gray-900">
+                {evaluationResult?.x.compareScore || ""}
+              </div>
+            </div>
+
+            {/* Row 2 */}
+            <div className="flex items-center py-3">
+              <div className="flex-[2] text-xs text-gray900">
+                Y축 (직무 적성)
+              </div>
+              <div className="flex-[1.5] text-base flex justify-center">
+                {evaluationResult?.y.score || ""}
+              </div>
+              <div className="flex-[1] flex flex-col items-center px-3">
+                <div className="text-base font-medium text-gray-900">4.0</div>
+                <div className="text-[10px] text-blue-500">+0.6p</div>
+              </div>
+              <div className="flex-[2.5] text-xs text-gray-900">
+                {evaluationResult?.y.compareScore || ""}
+              </div>
+            </div>
+
+            {/* Row 3 */}
+            <div className="flex items-center py-3">
+              <div className="flex-[2] text-xs text-gray900">
+                Z축 (수행 역량)
+              </div>
+              <div className="flex-[1.5] text-base flex justify-center">
+                {evaluationResult?.z.score || ""}
+              </div>
+              <div className="flex-[1] flex flex-col items-center px-3">
+                <div className="text-base font-medium text-gray-900">4.2</div>
+                <div className="text-[10px] text-red-500">-0.6p</div>
+              </div>
+              <div className="flex-[2.5] text-xs text-gray-900">
+                {evaluationResult?.z.compareScore || ""}
+              </div>
+            </div>
+
+            {/* Row 4 */}
+            <div className="flex items-center py-3">
+              <div className="flex-[2] text-xs font-medium text-gray900">
+                최종 평가 점수
+              </div>
+              <div className="flex-[1.5] text-base flex justify-center">
+                {averageScore ? averageScore.toFixed(1) : ""}
+              </div>
+              <div className="flex-[1] flex flex-col items-center px-3">
+                <div className="text-base font-medium text-gray-900">4.1</div>
+              </div>
+              <div className="flex-[2.5] text-xs text-gray-900">
+                동직군 대조, 전 항목 우위
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-xl mb-4 mt-[52px]">
+                경쟁력 비교
+              </h4>
+              {evaluationResult?.compareProb.map((prob, index) => (
+                <div className="flex gap-2">
+                  <span>• </span>
+                  <p key={index} className="text-base">
+                    {prob}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
       {/* 하단 버튼 */}
       <div className="flex justify-center gap-[16px] pt-[60px] pb-[60px]">
         <button
@@ -146,6 +256,6 @@ export default function AnalysisDiagnosis({
           다음
         </button>
       </div>
-    </section>
+    </>
   );
 }

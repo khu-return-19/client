@@ -1,6 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
+// 컴포넌트
 import AnalysisStateSection from "./layouts/AnalysisStateSection";
 import LoadingPageLayout from "./layouts/LoadingPageLayout";
+
+// hooks
+import { useAnalysisStore } from "stores/analysisStore";
 
 // 개발용 시뮬레이션 데이터 — 실제 스트림 연결 시 제거
 const SIMULATION_SCENARIO = [
@@ -90,7 +96,6 @@ function useStreamStages() {
         break;
 
       case "done":
-        // TODO: 결과 페이지로 이동
         break;
 
       default:
@@ -100,11 +105,6 @@ function useStreamStages() {
 
   useEffect(() => {
     // TODO: 아래 시뮬레이션을 실제 스트림 소비 코드로 교체
-    // 예시 (SSE):
-    //   const es = new EventSource('/api/analysis');
-    //   es.onmessage = (e) => dispatch(JSON.parse(e.data));
-    //   return () => es.close();
-    //
     // 예시 (fetch ReadableStream):
     //   const res = await fetch('/api/analysis');
     //   for await (const chunk of res.body) { dispatch(parse(chunk)); }
@@ -133,6 +133,15 @@ function useStreamStages() {
 
 function Loading() {
   const { stages } = useStreamStages();
+  const status = useAnalysisStore((state) => state.status);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("현재 상태:", status);
+    if (status === "done") {
+      navigate("/analysis");
+    }
+  }, [status, navigate]);
 
   return (
     <LoadingPageLayout>

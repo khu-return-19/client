@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
@@ -6,7 +7,8 @@ import AnalysisModal from "../components/AnalysisModal";
 import TempSaveModal from "../../components/TempSaveModal";
 
 // API
-import { useCreateAnalysis } from "api/analysisApi";
+import { useCreateAnalysis } from "hooks/useCreateAnalysis";
+import { useAnalysisStore } from "stores/analysisStore";
 
 const MAX_CARDS = 5;
 const SESSION_KEY = "selfIntroCards";
@@ -23,15 +25,23 @@ function loadFromSession() {
 }
 
 function SelfIntroSection() {
+  const navigate = useNavigate();
   const [cards, setCards] = useState(loadFromSession);
   const [showModal] = useState(false);
   const [showTempSaveModal, setShowTempSaveModal] = useState(false);
 
-  const { mutateAsync: createAnalysis } = useCreateAnalysis();
+  const { start } = useCreateAnalysis();
+  const status = useAnalysisStore((state) => state.status);
 
   useEffect(() => {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(cards));
   }, [cards]);
+
+  useEffect(() => {
+    if (status === "running") {
+      navigate("/input-page/loading");
+    }
+  }, [status, navigate]);
 
   const firstFilled =
     cards[0]?.question.trim().length > 0 && cards[0]?.content.trim().length > 0;
@@ -56,32 +66,46 @@ function SelfIntroSection() {
     );
   };
 
+  const resumeEducation = JSON.parse(
+    sessionStorage.getItem("resume_education") || "[]",
+  );
+  const analysisData = {
+    userId: sessionStorage.getItem("verifiedEmail") || "",
+    questionList: cards.map((card) => card.question),
+    answerList: cards.map((card) => card.content),
+    education: "경희대학교 졸업",
+    gpa: resumeEducation[0]?.gpa || null,
+    major: resumeEducation[0]?.major || "",
+    backgroundCareerAward: JSON.parse(
+      sessionStorage.getItem("resume_awards") || "[]",
+    )
+      .map((data) => data.name)
+      .join(","),
+
+    certificates: JSON.parse(
+      sessionStorage.getItem("resume_certificates") || "[]",
+    )
+      .map((data) => data.type)
+      .join(","),
+    linguisticAbility: JSON.parse(
+      sessionStorage.getItem("resume_languages") || "[]",
+    )
+      .map((data) => data.type)
+      .join(","),
+    company: sessionStorage.getItem("company_companyName") || "",
+    jobPosition: "개발" || "",
+    jobField: "개발" || "",
+    url: sessionStorage.getItem("company_noticeUrl") || "",
+    division: "",
+    applyUrl: "",
+  };
+  console.log(analysisData);
+
   const handleAnalysis = async () => {
     if (!firstFilled) return;
-    const analysisData = {
-      email: "",
-      company: "지원 회사명",
-      position: "지원 직무명",
-      input: cards
-        .map(
-          (card, index) =>
-            `Q${index + 1}: ${card.question}\nA${index + 1}: ${card.content}`,
-        )
-        .join("\n\n"), // 질문과 답변을 텍스트로 합침
-      resume: {
-        major: "전공",
-        universityName: "대학교 졸업",
-        gpa: 3.5,
-        career: "수상실적",
-        languageScore: "어학점수",
-        certificate: "자격증",
-      },
-      url: "지원 링크",
-      accessCode: 123456,
-    };
 
     try {
-      await createAnalysis(analysisData);
+      await start(analysisData);
       // setShowModal(true); // 성공 시 모달 표시
     } catch (error) {
       console.error("Analysis creation failed:", error);
@@ -113,7 +137,12 @@ function SelfIntroSection() {
       <div className="mt-[40px] md:mt-[110px]">
         {/* 데스크탑/태블릿 */}
         <div className="hidden md:flex flex-col items-center gap-[12px]">
-          <Button size="M" variant="secondary" className="!h-[52px]" onClick={() => setShowTempSaveModal(true)}>
+          <Button
+            size="M"
+            variant="secondary"
+            className="!h-[52px]"
+            onClick={() => setShowTempSaveModal(true)}
+          >
             임시저장
           </Button>
           <AnalysisButton
@@ -123,7 +152,12 @@ function SelfIntroSection() {
         </div>
         {/* 모바일 */}
         <div className="flex md:hidden justify-center gap-[12px]">
-          <Button size="M" variant="secondary" className="!h-[48px] !w-[140px]" onClick={() => setShowTempSaveModal(true)}>
+          <Button
+            size="M"
+            variant="secondary"
+            className="!h-[48px] !w-[140px]"
+            onClick={() => setShowTempSaveModal(true)}
+          >
             임시저장
           </Button>
           <AnalysisButton
@@ -135,7 +169,9 @@ function SelfIntroSection() {
       </div>
 
       {showModal && <AnalysisModal onClose={() => {}} />}
-      {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
+      {showTempSaveModal && (
+        <TempSaveModal onClose={() => setShowTempSaveModal(false)} />
+      )}
     </div>
   );
 }

@@ -52,31 +52,41 @@ function NoticeTable({ notices, filterType, searchText, currentPage, pageSize, o
     return (
         <div>
             <div className="w-full h-[500px] flex flex-col gap-[10px]">
-                {filteredNotices.map((notice) => (
-                    <NoticeListItem key={notice.id} notice={notice} />
-                ))}
-            </div>
-            <div className="w-full flex justify-center mt-[40px] mb-[100px]">
-                <div className="w-[288px] flex justify-between items-center">
-                    <img src={AngleLeftIcon} alt="left" className="w-[24px] h-[24px] cursor-pointer" onClick={handlePrevGroup} />
-                    <div className="flex items-center gap-[5px]">
-                        {pageNumbers.map((num) => (
-                            <div 
-                                key={num} 
-                                onClick={() => onPageChange(num)}
-                                className="flex justify-center items-center w-[24px] h-[24px] cursor-pointer"
-                            >
-                                {currentPage === num ? (
-                                    <span className="font-['Pretendard'] font-[600] text-[16px] text-[#09469F]">{num}</span>
-                                ) : (
-                                    <span className="font-['Pretendard'] font-[400] text-[16px] text-[#717171]">{num}</span>
-                                )}
-                            </div>
-                        ))}
+                {filteredNotices.length === 0 ? (
+                    <div className="w-full h-full flex items-center justify-center">
+                        <span className="font-['Pretendard'] font-normal text-[16px] leading-[150%] text-[#717171]">
+                            등록된 공지사항이 없습니다.
+                        </span>
                     </div>
-                    <img src={AngleRightIcon} alt="right" className="w-[24px] h-[24px] cursor-pointer" onClick={handleNextGroup} />
-                </div>
+                ) : (
+                    filteredNotices.map((notice) => (
+                        <NoticeListItem key={notice.id} notice={notice} />
+                    ))
+                )}
             </div>
+            {filteredNotices.length > 0 && (
+                <div className="w-full flex justify-center mt-[40px] mb-[100px]">
+                    <div className="w-[288px] flex justify-between items-center">
+                        <img src={AngleLeftIcon} alt="left" className="w-[24px] h-[24px] cursor-pointer" onClick={handlePrevGroup} />
+                        <div className="flex items-center gap-[5px]">
+                            {pageNumbers.map((num) => (
+                                <div 
+                                    key={num} 
+                                    onClick={() => onPageChange(num)}
+                                    className="flex justify-center items-center w-[24px] h-[24px] cursor-pointer"
+                                >
+                                    {currentPage === num ? (
+                                        <span className="font-['Pretendard'] font-[600] text-[16px] text-[#09469F]">{num}</span>
+                                    ) : (
+                                        <span className="font-['Pretendard'] font-[400] text-[16px] text-[#717171]">{num}</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        <img src={AngleRightIcon} alt="right" className="w-[24px] h-[24px] cursor-pointer" onClick={handleNextGroup} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

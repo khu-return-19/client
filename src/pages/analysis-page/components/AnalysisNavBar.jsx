@@ -12,7 +12,7 @@ function AnalysisNavBar({ active, onChange }) {
         <button
           key={item.label}
           onClick={() => onChange(item.label)}
-          className={`flex-1 h-[68px] flex items-center justify-center text-[16px] min-[894px]:text-[20px] font-medium leading-[120%] font-['Pretendard'] transition-colors text-center ${
+          className={`flex-1 h-[68px] flex items-center justify-center text-[12px] min-[894px]:text-[20px] font-medium leading-[120%] font-['Pretendard'] transition-colors text-center ${
             active === item.label
               ? "text-[#2876F1] border-b-[3px] border-[#2876F1]"
               : "text-[#717171] border-b-[1px] border-[#717171] hover:text-[#2876F1]"

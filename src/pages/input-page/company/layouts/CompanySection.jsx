@@ -47,10 +47,12 @@ function CompanySection() {
         }
     }, [jobTitle, positionsList]);
 
+    const canProceed = companyName.trim() !== '' && jobTitle.trim() !== '';
+
     return (
         <div className="overflow-y-auto flex flex-col items-center gap-[100px] max-[893px]:gap-[40px] mt-[38px] max-[893px]:mt-[34px] mb-[150px]">
             {showTempSaveModal && <TempSaveModal onClose={() => setShowTempSaveModal(false)} />}
-            <div className="flex w-full min-[894px]:max-w-[1080px] gap-[20px] max-[893px]:flex-col max-[893px]:max-w-[452px]">
+            <div className="flex w-full min-[894px]:max-w-[1080px] gap-[20px] max-[893px]:flex-col">
                 <EntrySection
                     caption="지원 회사명"
                     value={companyName}
@@ -59,7 +61,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={companyResults}
-                    className="max-[893px]:!max-w-[452px]"
+
                 />
                 <EntrySection
                     caption="지원 직무"
@@ -69,7 +71,7 @@ function CompanySection() {
                     width={530}
                     required={true}
                     autocompleteResults={jobTitleResults}
-                    className="max-[893px]:!max-w-[452px]"
+
                 />
             </div>
 
@@ -79,7 +81,6 @@ function CompanySection() {
                 onChange={setNoticeUrl}
                 placeholder="https://pertineo.khu.ac.kr/"
                 width={1080}
-                className="max-[893px]:!max-w-[452px]"
             />
 
             <div className="mt-[20px] max-[893px]:mt-[30px] flex gap-[12px] max-[893px]:gap-[7px] items-center">
@@ -89,12 +90,16 @@ function CompanySection() {
                 >
                     임시저장
                 </Button>
-                <Button onClick={() => navigate('/input-page/resume')}>
+                <Button
+                    status={canProceed ? 'default' : 'disabled'}
+                    onClick={() => navigate('/input-page/resume')}
+                >
                     다음
                 </Button>
             </div>
         </div>
     );
+
 }
 
 export default CompanySection;

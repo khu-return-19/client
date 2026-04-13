@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import api from "api/axiosInstance";
-import { CreateAnalysisData } from "schema/Analysis";
+import { CreateAnalysisData, AnalysisEvent } from "schema/Analysis";
 
 // NOTE: 분석 보고서 목록 무한 스크롤 조회
 export const useFetchAnalyses = () => {
@@ -66,12 +66,37 @@ export const useDeleteAnalyses = () => {
   });
 };
 
-// NOTE: 분석 보고서 생성
-export const useCreateAnalysis = () => {
-  return useMutation({
-    mutationFn: async (data: CreateAnalysisData) => {
-      const response = await api.post("/analysis", data);
-      return response.data;
-    },
+// 스트리밍 fetch + EventSorce 방식 사용을 위해 fetch API로 직접 구현
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+export const createAnalysis = async (
+  data: CreateAnalysisData,
+  onEvent: (event: AnalysisEvent) => void,
+) => {
+  const response = await fetch(`${BASE_URL}/api/analysis`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-API-Version": "2" },
+    body: JSON.stringify(data),
   });
+
+  if (!response.ok) throw new Error("분석 요청 실패");
+
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+
+    for (const line of lines) {
+      if (!line.startsWith("data:")) continue;
+      const event = JSON.parse(line.slice(5));
+      onEvent(event);
+    }
+  }
 };

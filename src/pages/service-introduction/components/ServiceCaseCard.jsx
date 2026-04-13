@@ -32,7 +32,7 @@ function ServiceCaseCard({ img, title, desc }) {
     return (
         <div className="flex items-center gap-[65px]">
             <img src={img} alt={title} className="w-[103px] h-[103px] shrink-0" />
-            <div className="flex flex-col gap-[12px] flex-1 min-w-0 relative" ref={containerRef}>
+            <div className="flex flex-col gap-[12px] flex-1 min-w-0 relative overflow-hidden" ref={containerRef}>
                 <h3 className="text-[20px] max-[768px]:text-[16px] font-[500] leading-[120%]">{title}</h3>
                 
                 {/* Visible responsive text */}

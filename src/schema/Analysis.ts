@@ -74,7 +74,7 @@ export interface AxisScore {
   criteria: string[];
   basis: string[];
   summary: string;
-  compareScore: string;
+  compareScore: number; // 합격자 평균 점수
 }
 export interface ImproveStrategy {
   strategyName: string;
@@ -88,9 +88,9 @@ export interface EvaluateResultData {
   domainFit: string;
   cultureFit: string;
   skillFit: string;
-  compareProb: string[];
+  compareProb: string[]; // 합격 가능성 비교
   scoreSummary: string[];
-  level: string;
+  level: string; // 경쟁력 (매우 높음, 높음, 보통, 낮음, 매우 낮음)
   jobSummary: string;
   overall: string;
   strength: string[];
@@ -117,10 +117,9 @@ export interface FinalStateData {
   certificates: string;
   company: string;
   contextDB: string | null;
-  contextWeb: string;
+  contextWeb: string | null;
   division: string | null;
   education: string;
-  evaluationPassed: boolean;
   evaluationResult: EvaluateResultData;
   gpa: string | null;
   isEvaluationPassed: boolean;

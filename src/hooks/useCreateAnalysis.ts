@@ -18,6 +18,9 @@ export const useCreateAnalysis = () => {
 
         setEvents((prev) => [...prev, event]);
 
+        if(event.status === "COMPLETED"){
+          console.log(event.data);
+        }
         if (event.type === "final_state" && event.status === "COMPLETED") {
           setFinalData(event.data as any);
           setStatus("done");

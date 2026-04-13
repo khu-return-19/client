@@ -66,25 +66,43 @@ function SelfIntroSection() {
     );
   };
 
+  const resumeEducation = JSON.parse(
+    sessionStorage.getItem("resume_education") || "[]",
+  );
+  const analysisData = {
+    userId: sessionStorage.getItem("verifiedEmail") || "",
+    questionList: cards.map((card) => card.question),
+    answerList: cards.map((card) => card.content),
+    education: "경희대학교 졸업",
+    gpa: resumeEducation[0]?.gpa || null,
+    major: resumeEducation[0]?.major || "",
+    backgroundCareerAward: JSON.parse(
+      sessionStorage.getItem("resume_awards") || "[]",
+    )
+      .map((data) => data.name)
+      .join(","),
+
+    certificates: JSON.parse(
+      sessionStorage.getItem("resume_certificates") || "[]",
+    )
+      .map((data) => data.type)
+      .join(","),
+    linguisticAbility: JSON.parse(
+      sessionStorage.getItem("resume_languages") || "[]",
+    )
+      .map((data) => data.type)
+      .join(","),
+    company: sessionStorage.getItem("company_companyName") || "",
+    jobPosition: "개발" || "",
+    jobField: "개발" || "",
+    url: sessionStorage.getItem("company_noticeUrl") || "",
+    division: "",
+    applyUrl: "",
+  };
+  console.log(analysisData);
+
   const handleAnalysis = async () => {
     if (!firstFilled) return;
-    const analysisData = {
-      userId: sessionStorage.getItem("verifiedEmail") || "",
-      questionList: cards.map((card) => card.question),
-      answerList: cards.map((card) => card.content),
-      education: "경희대학교 졸업",
-      gpa: sessionStorage.getItem("resume_education").gpa || "",
-      major: sessionStorage.getItem("resume_education").major || "",
-      backgroundCareerAward: "",
-      linguisticAbility: "",
-      certificates: "",
-      company: sessionStorage.getItem("company_companyName") || "",
-      jobPosition: sessionStorage.getItem("company_jobTitle") || "",
-      jobField: sessionStorage.getItem("company_jobField") || "",
-      url: sessionStorage.getItem("company_noticeUrl") || "",
-      division: "",
-      applyUrl: "",
-    };
 
     try {
       await start(analysisData);

@@ -58,7 +58,7 @@ function Agreement({ isEmailVerified = false, email = "" }) {
       privacy: false,
       policy: false,
       thirdParty: false,
-    }
+    },
   );
   const [hasInteracted, setHasInteracted] = useState(false);
   const [openModal, setOpenModal] = useState(null);
@@ -101,7 +101,10 @@ function Agreement({ isEmailVerified = false, email = "" }) {
       {
         onSuccess: () => {
           sessionStorage.setItem(SESSION_STORAGE_KEY, String(Date.now()));
-          sessionStorage.setItem(AGREEMENT_CHECKED_KEY, JSON.stringify(checked));
+          sessionStorage.setItem(
+            AGREEMENT_CHECKED_KEY,
+            JSON.stringify(checked),
+          );
           navigate("/input-page/company");
         },
       },
@@ -134,7 +137,7 @@ function Agreement({ isEmailVerified = false, email = "" }) {
               className="w-full flex items-center justify-between"
             >
               <div
-                className="flex items-center gap-[20px] cursor-pointer"
+                className="flex items-center gap-[20px] cursor-pointer overflow-visible"
                 onClick={() => handleToggle(item.id)}
               >
                 <Checkbox

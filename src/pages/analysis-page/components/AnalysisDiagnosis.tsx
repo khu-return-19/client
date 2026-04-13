@@ -165,14 +165,14 @@ export default function AnalysisDiagnosis({
                 X축 (학습 수준)
               </div>
               <div className="flex-[1.5] text-base flex justify-center">
-                3.56
+                {evaluationResult?.x.score || ""}
               </div>
               <div className="flex-[1] flex flex-col items-center px-3">
                 <div className="text-base font-medium text-gray-900">4.1</div>
                 <div className="text-[10px] text-blue-500">+0.54p</div>
               </div>
               <div className="flex-[2.5] text-xs text-gray-900">
-                전공+공모전+실무 확장
+                {evaluationResult?.x.compareScore || ""}
               </div>
             </div>
 
@@ -182,14 +182,14 @@ export default function AnalysisDiagnosis({
                 Y축 (직무 적성)
               </div>
               <div className="flex-[1.5] text-base flex justify-center">
-                3.4
+                {evaluationResult?.y.score || ""}
               </div>
               <div className="flex-[1] flex flex-col items-center px-3">
                 <div className="text-base font-medium text-gray-900">4.0</div>
                 <div className="text-[10px] text-blue-500">+0.6p</div>
               </div>
               <div className="flex-[2.5] text-xs text-gray-900">
-                실제 서비스+프로젝트 경험내용
+                {evaluationResult?.y.compareScore || ""}
               </div>
             </div>
 
@@ -199,14 +199,14 @@ export default function AnalysisDiagnosis({
                 Z축 (수행 역량)
               </div>
               <div className="flex-[1.5] text-base flex justify-center">
-                3.24
+                {evaluationResult?.z.score || ""}
               </div>
               <div className="flex-[1] flex flex-col items-center px-3">
                 <div className="text-base font-medium text-gray-900">4.2</div>
                 <div className="text-[10px] text-red-500">-0.6p</div>
               </div>
               <div className="flex-[2.5] text-xs text-gray-900">
-                실질 성과/실무 중심
+                {evaluationResult?.z.compareScore || ""}
               </div>
             </div>
 
@@ -216,7 +216,7 @@ export default function AnalysisDiagnosis({
                 최종 평가 점수
               </div>
               <div className="flex-[1.5] text-base flex justify-center">
-                3.4
+                {averageScore ? averageScore.toFixed(1) : ""}
               </div>
               <div className="flex-[1] flex flex-col items-center px-3">
                 <div className="text-base font-medium text-gray-900">4.1</div>

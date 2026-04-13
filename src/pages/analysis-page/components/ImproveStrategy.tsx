@@ -1,32 +1,4 @@
-const liStyle =
-  "text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[150%]";
-const h3Style = "text-[clamp(17px,1.39vw,20px)] font-semibold text-[#111] font-['Pretendard']";
-const ulStyle =
-  "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
-
-const strategies = [
-  {
-    title: "(1) 백엔드/서버 심화 경험 보강",
-    items: {
-      개선방안:
-        "Java/Spring 기반 API 설계, 데이터베이스 설계, 서버 운영 등 경험 및 실무 예시 제시",
-      실행전략:
-        "개인·팀 프로젝트에서 REST API/DB 설계, Spring/Hibernate 활용 미니 서비스 구현, AWS·Docker 배포 실습 추가",
-      제안배경:
-        "네이버 백엔드 개발의 주요 평가포인트(자사 클라우드·분산환경/서버사이드 아키텍처)",
-      "의도/목적": "실무 역량의 질적 심화, 코딩테스트/기술면접 경쟁력 확충",
-    },
-  },
-  {
-    title: "(2) 데이터 2...",
-    items: {
-      개선방안: "1",
-      실행전략: "2",
-      제안배경: "3",
-      "의도/목적": "4",
-    },
-  },
-];
+import { useAnalysisStore } from "stores/analysisStore";
 
 export default function ImproveStrategy({
   onNext,
@@ -35,6 +7,45 @@ export default function ImproveStrategy({
   onNext?: () => void;
   onPrev?: () => void;
 }) {
+  const liStyle =
+    "text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[150%]";
+  const h3Style =
+    "text-[clamp(17px,1.39vw,20px)] font-semibold text-[#111] font-['Pretendard']";
+  const ulStyle =
+    "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
+
+  const { evaluationResult } = useAnalysisStore();
+  const averageScore =
+    evaluationResult &&
+    (evaluationResult.x.score +
+      evaluationResult.y.score +
+      evaluationResult.z.score) /
+      3;
+
+  // const strategies = [
+  //   {
+  //     title: "(1) 백엔드/서버 심화 경험 보강",
+  //     items: {
+  //       개선방안:
+  //         "Java/Spring 기반 API 설계, 데이터베이스 설계, 서버 운영 등 경험 및 실무 예시 제시",
+  //       실행전략:
+  //         "개인·팀 프로젝트에서 REST API/DB 설계, Spring/Hibernate 활용 미니 서비스 구현, AWS·Docker 배포 실습 추가",
+  //       제안배경:
+  //         "네이버 백엔드 개발의 주요 평가포인트(자사 클라우드·분산환경/서버사이드 아키텍처)",
+  //       "의도/목적": "실무 역량의 질적 심화, 코딩테스트/기술면접 경쟁력 확충",
+  //     },
+  //   },
+  //   {
+  //     title: "(2) 데이터 2...",
+  //     items: {
+  //       개선방안: "1",
+  //       실행전략: "2",
+  //       제안배경: "3",
+  //       "의도/목적": "4",
+  //     },
+  //   },
+  // ];
+
   return (
     <div className="flex flex-col gap-[clamp(32px,3.9vw,56px)]">
       {/* 결론 섹션 */}
@@ -47,12 +58,12 @@ export default function ImproveStrategy({
         <div className="flex flex-col gap-[clamp(10px,1.04vw,15px)]">
           <Row
             label="최종 평가 점수 :"
-            value="4.1점"
+            value={averageScore + "점"}
             sub="기존합격자 평균 3.4점 대비 +0.7 ↑"
           />
           <Row
             label="경쟁력 :"
-            value="매우 높음"
+            value={evaluationResult?.level || "보통"}
             sub="기존합격자 수치 42.1% 대비 약 6~10%P ↑"
           />
         </div>
@@ -62,17 +73,21 @@ export default function ImproveStrategy({
           <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
             <h3 className={h3Style}>강점</h3>
             <ul className={ulStyle}>
-              <li className={liStyle}>항목 1</li>
-              <li className={liStyle}>항목 2</li>
-              <li className={liStyle}>항목 3</li>
+              {evaluationResult?.strength.map((strength, index) => (
+                <li key={index} className={liStyle}>
+                  {strength}
+                </li>
+              )) || <li className={liStyle}>강점 정보가 없습니다.</li>}
             </ul>
           </div>
           <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
             <h3 className={h3Style}>약점</h3>
             <ul className={ulStyle}>
-              <li className={liStyle}>항목 1</li>
-              <li className={liStyle}>항목 2</li>
-              <li className={liStyle}>항목 3</li>
+              {evaluationResult?.weakness.map((weakness, index) => (
+                <li key={index} className={liStyle}>
+                  {weakness}
+                </li>
+              )) || <li className={liStyle}>약점 정보가 없습니다.</li>}
             </ul>
           </div>
         </div>
@@ -81,9 +96,11 @@ export default function ImproveStrategy({
         <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>최종 조언</h3>
           <ul className={ulStyle}>
-            <li className={liStyle}>항목 1</li>
-            <li className={liStyle}>항목 2</li>
-            <li className={liStyle}>항목 3</li>
+            {evaluationResult?.advice.map((item, index) => (
+              <li key={index} className={liStyle}>
+                {item}
+              </li>
+            )) || <li className={liStyle}>조언 정보가 없습니다.</li>}
           </ul>
         </div>
       </section>
@@ -108,18 +125,20 @@ export default function ImproveStrategy({
         <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>실행전략</h3>
           <div className="flex flex-col gap-[clamp(16px,1.67vw,24px)]">
-            {strategies.map((strategy) => (
-              <div key={strategy.title} className="flex flex-col gap-[clamp(8px,0.83vw,12px)]">
+            {evaluationResult?.improveStrategy.map((strategy, index) => (
+              <div
+                key={strategy.strategyName}
+                className="flex flex-col gap-[clamp(8px,0.83vw,12px)]"
+              >
                 <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard']">
-                  {strategy.title}
+                  ({index + 1}) {strategy.strategyName}
                 </p>
                 <ul className={ulStyle}>
-                  {Object.entries(strategy.items).map(([key, val]) => (
+                  {strategy.actionItems.map((val, key) => (
                     <li key={key} className={liStyle}>
-                      <span className="font-medium">{key}: </span>
                       {val}
                     </li>
-                  ))}
+                  )) || <li className={liStyle}>실행 전략 정보가 없습니다.</li>}
                 </ul>
               </div>
             ))}

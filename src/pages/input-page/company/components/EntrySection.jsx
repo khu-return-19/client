@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import EntryInput from "../../components/EntryInput";
 
 /**
@@ -7,7 +8,7 @@ import EntryInput from "../../components/EntryInput";
  * @param {string} caption - 좌측/상단에 표시될 라벨
  * @param {string} value - 입력 값
  * @param {function} onChange - 값 변경 핸들러
- * @param {string|number} width - 입력 박스의 너비 (기본값: 1020px)
+ * @param {string|number} width - 입력 박스의 너비 (기본값: 1020px), 894px 이상에서만 적용됨
  * @param {string} placeholder - 플레이스홀더
  * @param {boolean} required - 필수 여부
  * @param {Array} autocompleteResults - 자동완성 결과 리스트
@@ -24,8 +25,22 @@ const EntrySection = ({
   className = "",
   ...props
 }) => {
+  const [isDesktop, setIsDesktop] = useState(() =>
+    window.matchMedia("(min-width: 894px)").matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 894px)");
+    const handler = (e) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   return (
-    <div className={`w-full ${className}`} style={{ maxWidth: `${width}px` }}>
+    <div
+      className={`w-full ${className}`}
+      style={isDesktop ? { maxWidth: `${width}px` } : undefined}
+    >
       {caption && (
         <div className="shrink-0 text-[24px] max-[893px]:text-[16px] font-normal text-[#000000] mb-[12px] max-[893px]:mb-[4px]">
           {caption}

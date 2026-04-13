@@ -42,11 +42,15 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
               <span />
               <div className="flex items-center justify-center gap-[6px]">
                 <div className="w-[clamp(11px,1.04vw,15px)] h-[clamp(11px,1.04vw,15px)] rounded-[2px] shrink-0 bg-[rgba(40,118,241,0.5)] border border-[#024FCB]" />
-                <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">내 점수</span>
+                <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">
+                  내 점수
+                </span>
               </div>
               <div className="flex items-center justify-center gap-[6px]">
                 <div className="w-[clamp(11px,1.04vw,15px)] h-[clamp(11px,1.04vw,15px)] rounded-[2px] shrink-0 bg-[rgba(193,217,255,0.3)] border border-[#AEB4BC]" />
-                <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">합격자 점수</span>
+                <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">
+                  합격자 점수
+                </span>
               </div>
               <span />
             </div>
@@ -65,7 +69,7 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
                 <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard'] text-center">
                   {row.my}
                 </span>
-                <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard'] text-center">
+                <span className="text-[clamp(14px,1.1vw,16px)] font-medium text-[#111] font-['Pretendard'] text-center">
                   {row.pass}
                 </span>
                 {row.mark ? (

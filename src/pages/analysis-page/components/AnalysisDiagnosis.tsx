@@ -60,6 +60,7 @@ export default function AnalysisDiagnosis({
                   userX={evaluationResult?.x.score}
                   userY={evaluationResult?.y.score}
                   userZ={evaluationResult?.z.score}
+                  highlightAxis={section.axis as "X" | "Y" | "Z"}
                 />
               </div>
               <div>

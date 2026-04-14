@@ -35,7 +35,7 @@ function CompanySection() {
         if (companyName) {
             setCompanyResults(companiesList.filter(c => c.toLowerCase().includes(companyName.toLowerCase())));
         } else {
-            setCompanyResults([]);
+            setCompanyResults(companiesList);
         }
     }, [companyName, companiesList]);
 
@@ -43,7 +43,7 @@ function CompanySection() {
         if (jobTitle) {
             setJobTitleResults(positionsList.filter(j => j.toLowerCase().includes(jobTitle.toLowerCase())));
         } else {
-            setJobTitleResults([]);
+            setJobTitleResults(positionsList);
         }
     }, [jobTitle, positionsList]);
 

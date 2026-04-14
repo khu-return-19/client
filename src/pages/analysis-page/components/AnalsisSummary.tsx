@@ -1,23 +1,12 @@
 import SectionCard from "./SectionCard";
 import ReportGraph from "pages/report/components/ReportGraph";
-
-// data
+import NavigationButtons from "./shared/NavigationButtons";
 import { useAnalysisStore } from "stores/analysisStore";
+import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
   const { evaluationResult, normalData } = useAnalysisStore();
-  const averageScore =
-    evaluationResult &&
-    (evaluationResult.x.score +
-      evaluationResult.y.score +
-      evaluationResult.z.score) /
-      3;
-  const averageCompareScore =
-    evaluationResult &&
-    (evaluationResult.x.compareScore +
-      evaluationResult.y.compareScore +
-      evaluationResult.z.compareScore) /
-      3;
+  const { averageScore, averageCompareScore } = useEvaluationScores();
 
   const labelStyle =
     "text-[14px] min-[894px]:text-[16px] font-medium leading-[150%] text-[#717171] font-['Pretendard'] shrink-0 whitespace-nowrap";
@@ -151,15 +140,7 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
         </p>
       </SectionCard>
 
-      {/* 하단 버튼 */}
-      <div className="flex justify-center gap-[16px] pt-[clamp(40px,4.2vw,60px)] pb-[clamp(40px,4.2vw,60px)]">
-        <button
-          onClick={onNext}
-          className="w-[160px] h-[44px] bg-white rounded-[6px] text-[16px] font-medium text-[#717171] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.12)] border border-transparent hover:border-[#09469F] hover:text-[#09469F] transition-colors"
-        >
-          다음
-        </button>
-      </div>
+      <NavigationButtons onNext={onNext} />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import CompleteIcon from "../components/CompleteIcon";
 import CircularProgressBar from "../components/CircularProgressBar";
+import "../components/loading.css";
 
-function UrlItem({ url, hostname }) {
+function UrlItem({ url, hostname, animated = true }) {
   const faviconSrc = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
 
   return (
@@ -10,7 +11,7 @@ function UrlItem({ url, hostname }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-[8px] animate-fade-in mt-[6px] w-fit whitespace-nowrap"
+      className={`flex items-center gap-[8px] mt-[6px] w-fit whitespace-nowrap${animated ? " animate-slide-up" : ""}`}
     >
       <img
         src={faviconSrc}
@@ -31,7 +32,6 @@ function AnalysisStateSection({ completed, error, title, completedTitle, items, 
   const sectionRef = useRef(null);
   const [progressFull, setProgressFull] = useState(false);
   const [urlExpanded, setUrlExpanded] = useState(false);
-  const [textExpanded, setTextExpanded] = useState(false);
 
   const showCompleteIcon = completed && progressFull;
   const displayTitle = showCompleteIcon ? (completedTitle || title) : title;
@@ -85,40 +85,18 @@ function AnalysisStateSection({ completed, error, title, completedTitle, items, 
           {displayTitle}
         </p>
 
-        {/* 텍스트 항목: 한 줄 truncate + ⏷ 인라인 토글 */}
-        {textItems.map((item, index) => (
-          <div key={item.value + index} className="mt-[6px] min-w-0">
-            {textExpanded ? (
-              <>
-                <p className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] break-keep animate-fade-in">
-                  {item.value}
-                </p>
-                <button
-                  onClick={() => setTextExpanded(false)}
-                  className="text-[14px] max-[893px]:text-[12px] text-[#717171] font-[400] underline mt-[4px] outline-none"
-                >
-                  접기 ⏶
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={() => setTextExpanded(true)}
-                className="flex items-center w-full min-w-0 text-left underline outline-none"
-              >
-                <span className="truncate text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400]">
-                  {item.value}
-                </span>
-                <span className="shrink-0 text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] ml-[4px]">
-                  ⏷
-                </span>
-              </button>
-            )}
+        {/* 텍스트 항목: 완료 후에만 슬라이드업으로 표시 */}
+        {showCompleteIcon && textItems.map((item, index) => (
+          <div key={item.value + index} className="mt-[6px] min-w-0 animate-slide-up">
+            <p className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] break-keep">
+              {item.value}
+            </p>
           </div>
         ))}
 
         {/* URL 항목 */}
         {urlItems.length > 0 && (
-          <div className="overflow-x-auto">
+          <div>
             {showCompleteIcon ? (
               /* 완료 후: favicon + hostname + 외 N개 검색 완료 ⏷ 전체를 버튼으로 */
               <div className="flex flex-col">
@@ -136,23 +114,25 @@ function AnalysisStateSection({ completed, error, title, completedTitle, items, 
                   />
                   <span className="text-[16px] max-[893px]:text-[14px] font-[400]">
                     {urlItems[0].hostname}
-                    {urlItems.length > 1 && ` 외 ${urlItems.length - 1}개 검색 완료`}
+                    {!urlExpanded && urlItems.length > 1 && ` 외 ${urlItems.length - 1}개 검색 완료`}
                     {urlExpanded ? " ⏶" : " ⏷"}
                   </span>
                 </button>
                 {urlExpanded && (
                   <div className="mt-[2px]">
-                    {urlItems.slice(1).map((item, index) => (
-                      <UrlItem key={item.url + index} url={item.url} hostname={item.hostname} />
+                    {urlItems.slice(1).map((item) => (
+                      <UrlItem key={item.url} url={item.url} hostname={item.hostname} animated={false} />
                     ))}
                   </div>
                 )}
               </div>
             ) : (
-              /* 진행 중: 최근 2개 슬라이딩 윈도우 */
-              urlItems.slice(-2).map((item, index) => (
-                <UrlItem key={item.url + index} url={item.url} hostname={item.hostname} />
-              ))
+              /* 진행 중: 최근 2개 컨베이어 — key에 슬라이스 인덱스 포함해 이동 시 재애니메이션 */
+              <div className="overflow-hidden">
+                {urlItems.slice(-2).map((item, i) => (
+                  <UrlItem key={item.url + "-" + i} url={item.url} hostname={item.hostname} />
+                ))}
+              </div>
             )}
           </div>
         )}

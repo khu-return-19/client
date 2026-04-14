@@ -135,6 +135,7 @@ function Loading() {
   const navigate = useNavigate();
   const processedCountRef = useRef(0);
   const passScoreStartedRef = useRef(false);
+  const schemerDoneRef = useRef(false);
 
   useEffect(() => {
     if (events.length === 0) return;
@@ -158,13 +159,18 @@ function Loading() {
 
         case "schemer_result":
           if (event.data?.validation_reason) {
+            // validation_reason이 있으면 즉시 1단계 완료 처리 후 텍스트를 슬라이드업으로 표시
+            schemerDoneRef.current = true;
+            dispatch({ type: "stage_done" });
             dispatch({ type: "message", text: event.data.validation_reason });
           }
           break;
 
         case "schemer_end":
-          // _end 이벤트는 status와 무관하게 단계 종료
-          dispatch({ type: "stage_done" });
+          // schemer_result에서 이미 완료 처리하지 않은 경우 fallback
+          if (!schemerDoneRef.current) {
+            dispatch({ type: "stage_done" });
+          }
           break;
 
         case "web_search_start":

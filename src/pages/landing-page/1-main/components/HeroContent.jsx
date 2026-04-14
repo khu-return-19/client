@@ -20,7 +20,8 @@ function HeroContent() {
         <img
           src={KHUxPertineo}
           alt="KHU × Pertineo"
-          className="h-full w-auto"
+          className="h-full w-auto select-none"
+          draggable="false"
         />
       </div>
 

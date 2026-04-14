@@ -7,10 +7,6 @@ const TEXTS = [
   "합격 가능성 향상을 위한\n자기소개서 진단",
 ];
 
-const textStyle = {
-  textShadow: "0px 4px 4px rgba(0,0,0,0.25)",
-};
-
 const easeInOutBack = [0.68, -0.55, 0.265, 1.55];
 
 function SlideText({ text, direction }) {
@@ -25,7 +21,6 @@ function SlideText({ text, direction }) {
         "bg-[linear-gradient(91deg,#FFFCE5_26.49%,#FFF_47.51%,#D6D2B0_73.51%)]",
         "bg-clip-text text-transparent",
       ].join(" ")}
-      style={textStyle}
       initial={{ opacity: 0, y: enterY }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: exitY }}

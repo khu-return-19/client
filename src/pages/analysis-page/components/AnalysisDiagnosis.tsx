@@ -2,6 +2,7 @@ import cn from "utils/cn";
 import ReportGraph from "pages/report/components/ReportGraph";
 import { useAnalysisStore } from "stores/analysisStore";
 import AnalysisHeader from "./AnalysisHeader";
+import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function AnalysisDiagnosis({
   onNext,
@@ -11,12 +12,7 @@ export default function AnalysisDiagnosis({
   onPrev?: () => void;
 }) {
   const { evaluationResult } = useAnalysisStore();
-  const averageScore =
-    evaluationResult &&
-    (evaluationResult.x.score +
-      evaluationResult.y.score +
-      evaluationResult.z.score) /
-      3;
+  const { averageScore } = useEvaluationScores();
   const sections = [
     {
       axis: "X",

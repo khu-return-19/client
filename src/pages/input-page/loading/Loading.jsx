@@ -8,60 +8,41 @@ import LoadingPageLayout from "./layouts/LoadingPageLayout";
 // hooks
 import { useAnalysisStore } from "stores/analysisStore";
 
-// 개발용 시뮬레이션 데이터 — 실제 스트림 연결 시 제거
-const SIMULATION_SCENARIO = [
-  {
-    title: "학습 수준 분석",
-    messages: [
-      "학습 이력 데이터를 수집하고 있습니다.",
-      "학습 성취도를 평가하고 있습니다.",
-      "학습 패턴을 분석하고 있습니다.",
-      "역량 수준을 산출하고 있습니다.",
-    ],
-  },
-  {
-    title: "직무적합 수준 분석",
-    messages: [
-      "합격자 데이터를 참조하고 있습니다.",
-      "직무 역량 매칭을 분석하고 있습니다.",
-      "산업별 요구 역량을 비교하고 있습니다.",
-      "적합도 점수를 계산하고 있습니다.",
-    ],
-  },
-  {
-    title: "수행역량 수준 분석",
-    messages: [
-      "OKR 달성 능력 데이터를 참고하고 있습니다.",
-      "KPI 달성 데이터를 참조하고 있습니다.",
-      "프로젝트 수행 이력을 분석하고 있습니다.",
-      "종합 역량 점수를 산출하고 있습니다.",
-    ],
-  },
-];
+// 각 단계의 예상 소요 시간 (ms) — 프로그레스 속도 계산에 사용
+const STAGE_DURATIONS = {
+  schemer:    2000,
+  web_search: 2700,
+  pass_score: 50,
+  evaluate:   15000,
+  revise:     10000,
+};
 
-/**
- * 스트림 이벤트를 stages 상태로 변환하는 훅.
- *
- * 스트림이 연결되면 useEffect 내부의 시뮬레이션을 제거하고
- * 실제 스트림 이벤트를 파싱해 dispatch를 호출하면 됩니다.
- *
- * 이벤트 스펙 (서버와 협의 후 확정):
- *   { type: 'stage_start', title: string }
- *   { type: 'message',     text: string  }
- *   { type: 'stage_done'                 }
- *   { type: 'done'                       }  ← 스트림 종료 신호 (확정 전)
- */
 function useStreamStages() {
   const [stages, setStages] = useState([]);
+  const [queueDone, setQueueDone] = useState(true);
   const currentIndexRef = useRef(-1);
+  const queueRef = useRef([]);
+  const processingRef = useRef(false);
+  const mountedRef = useRef(true);
 
-  const dispatch = useCallback((event) => {
+  useEffect(() => {
+    return () => { mountedRef.current = false; };
+  }, []);
+
+  const applyEvent = useCallback((event) => {
     switch (event.type) {
       case "stage_start":
         currentIndexRef.current += 1;
         setStages((prev) => [
           ...prev,
-          { title: event.title, items: [], completed: false, error: false },
+          {
+            title: event.title,
+            completedTitle: event.completedTitle,
+            items: [],
+            completed: false,
+            error: false,
+            expectedDuration: event.expectedDuration,
+          },
         ]);
         break;
 
@@ -69,9 +50,21 @@ function useStreamStages() {
         setStages((prev) => {
           const updated = [...prev];
           const i = currentIndexRef.current;
+          if (i < 0 || i >= updated.length) return prev;
           const stage = { ...updated[i] };
-          const newItems = [...stage.items, event.text];
-          stage.items = newItems.length > 2 ? newItems.slice(-2) : newItems;
+          stage.items = [...(stage.items ?? []), { type: "text", value: event.text }];
+          updated[i] = stage;
+          return updated;
+        });
+        break;
+
+      case "url_item":
+        setStages((prev) => {
+          const updated = [...prev];
+          const i = currentIndexRef.current;
+          if (i < 0 || i >= updated.length) return prev;
+          const stage = { ...updated[i] };
+          stage.items = [...(stage.items ?? []), { type: "url", url: event.url, hostname: event.hostname }];
           updated[i] = stage;
           return updated;
         });
@@ -81,6 +74,7 @@ function useStreamStages() {
         setStages((prev) => {
           const updated = [...prev];
           const i = currentIndexRef.current;
+          if (i < 0 || i >= updated.length) return prev;
           updated[i] = { ...updated[i], completed: true };
           return updated;
         });
@@ -90,12 +84,14 @@ function useStreamStages() {
         setStages((prev) => {
           const updated = [...prev];
           const i = currentIndexRef.current;
+          if (i < 0 || i >= updated.length) return prev;
           updated[i] = { ...updated[i], error: true };
           return updated;
         });
         break;
 
-      case "done":
+      case "all_done":
+        setStages((prev) => prev.map((s) => ({ ...s, completed: true })));
         break;
 
       default:
@@ -103,56 +99,172 @@ function useStreamStages() {
     }
   }, []);
 
-  useEffect(() => {
-    // TODO: 아래 시뮬레이션을 실제 스트림 소비 코드로 교체
-    // 예시 (fetch ReadableStream):
-    //   const res = await fetch('/api/analysis');
-    //   for await (const chunk of res.body) { dispatch(parse(chunk)); }
+  // 비동기 큐: stage_done 후 1000ms 대기하여 완료 애니메이션이 보이도록 순차 처리
+  const processQueue = useCallback(async () => {
+    if (processingRef.current) return;
+    processingRef.current = true;
+    if (mountedRef.current) setQueueDone(false);
 
-    const delay = (ms) => new Promise((r) => setTimeout(r, ms));
-
-    async function simulate() {
-      for (const scenario of SIMULATION_SCENARIO) {
-        dispatch({ type: "stage_start", title: scenario.title });
-        for (const text of scenario.messages) {
-          await delay(1500);
-          dispatch({ type: "message", text });
-        }
-        await delay(1500);
-        dispatch({ type: "stage_done" });
-        await delay(800);
+    while (queueRef.current.length > 0) {
+      if (!mountedRef.current) break;
+      const item = queueRef.current.shift();
+      applyEvent(item.event);
+      if (item.afterDelay > 0) {
+        await new Promise((r) => setTimeout(r, item.afterDelay));
       }
-      dispatch({ type: "done" });
     }
 
-    simulate();
-  }, [dispatch]);
+    processingRef.current = false;
+    if (mountedRef.current) setQueueDone(true);
+  }, [applyEvent]);
 
-  return { stages };
+  const dispatch = useCallback((event) => {
+    // stage_done 후 1000ms 대기 (800ms 강제완료 + 200ms 전환 여유)
+    const afterDelay = event.type === "stage_done" ? 1000 : 0;
+    queueRef.current.push({ event, afterDelay });
+    processQueue();
+  }, [processQueue]);
+
+  return { stages, dispatch, queueDone };
 }
 
 function Loading() {
-  const { stages } = useStreamStages();
+  const { stages, dispatch, queueDone } = useStreamStages();
   const status = useAnalysisStore((state) => state.status);
+  const events = useAnalysisStore((state) => state.events);
   const navigate = useNavigate();
+  const processedCountRef = useRef(0);
+  const passScoreStartedRef = useRef(false);
 
   useEffect(() => {
-    console.log("현재 상태:", status);
-    if (status === "done") {
-      navigate("/analysis");
+    if (events.length === 0) return;
+    console.log("[stream event]", events[events.length - 1]);
+  }, [events]);
+
+  useEffect(() => {
+    const newEvents = events.slice(processedCountRef.current);
+    processedCountRef.current = events.length;
+
+    for (const event of newEvents) {
+      switch (event.type) {
+        case "schemer_start":
+          dispatch({
+            type: "stage_start",
+            title: "사용자의 입력을 검증중이에요.",
+            completedTitle: "사용자의 입력을 검증했어요.",
+            expectedDuration: STAGE_DURATIONS.schemer,
+          });
+          break;
+
+        case "schemer_result":
+          if (event.data?.validation_reason) {
+            dispatch({ type: "message", text: event.data.validation_reason });
+          }
+          break;
+
+        case "schemer_end":
+          // _end 이벤트는 status와 무관하게 단계 종료
+          dispatch({ type: "stage_done" });
+          break;
+
+        case "web_search_start":
+          dispatch({
+            type: "stage_start",
+            title: "트랜드 파악을 위해 웹을 조회하고 있어요.",
+            completedTitle: "웹 조회를 완료했어요.",
+            expectedDuration: STAGE_DURATIONS.web_search,
+          });
+          break;
+
+        case "web_search_result":
+          if (event.data?.items) {
+            for (const item of event.data.items) {
+              try {
+                const hostname = new URL(item.url).hostname;
+                dispatch({ type: "url_item", url: item.url, hostname });
+              } catch {}
+            }
+          }
+          break;
+
+        case "web_search_end":
+          dispatch({ type: "stage_done" });
+          break;
+
+        case "pass_score":
+          if (!passScoreStartedRef.current) {
+            passScoreStartedRef.current = true;
+            dispatch({
+              type: "stage_start",
+              title: "합격 데이터를 참조하여 경쟁력을 알아보고 있어요.",
+              completedTitle: "합격 데이터 참조를 완료했어요.",
+              expectedDuration: STAGE_DURATIONS.pass_score,
+            });
+          }
+          break;
+
+        case "evaluate_start":
+          // pass_score 단계가 열려 있으면 evaluate_start 시점에 자동 완료
+          if (passScoreStartedRef.current) {
+            dispatch({ type: "stage_done" });
+          }
+          dispatch({
+            type: "stage_start",
+            title: "역량을 평가하고 있어요.",
+            completedTitle: "역량 평가를 완료했어요.",
+            expectedDuration: STAGE_DURATIONS.evaluate,
+          });
+          break;
+
+        case "evaluate_end":
+          dispatch({ type: "stage_done" });
+          break;
+
+        case "revise_start":
+          dispatch({
+            type: "stage_start",
+            title: "개선 방향을 생각중이에요.",
+            completedTitle: "개선 방향 도출을 완료했어요.",
+            expectedDuration: STAGE_DURATIONS.revise,
+          });
+          break;
+
+        case "revise_result":
+          if (event.status === "COMPLETED") {
+            dispatch({ type: "stage_done" });
+          }
+          break;
+
+        case "final_state":
+          // 개별 완료 신호를 놓쳤을 경우를 대비한 catch-all
+          dispatch({ type: "all_done" });
+          break;
+
+        default:
+          break;
+      }
     }
-  }, [status, navigate]);
+  }, [events, dispatch]);
+
+  // stream 완료 + UI 큐 소진 후 1500ms 대기 후 이동
+  useEffect(() => {
+    if (status !== "done" || !queueDone) return;
+    const timer = setTimeout(() => navigate("/analysis"), 1500);
+    return () => clearTimeout(timer);
+  }, [status, queueDone, navigate]);
 
   return (
     <LoadingPageLayout>
-      <div className="flex flex-col gap-[60px] max-[893px]:gap-[30px]">
+      <div className="flex flex-col gap-[60px] max-[893px]:gap-[30px] pb-[120px]">
         {stages.map((stage, index) => (
           <AnalysisStateSection
             key={index}
             completed={stage.completed}
             error={stage.error}
-            title={`${stage.title} ${stage.completed ? "완료" : stage.error ? "실패" : "중"}`}
+            title={stage.title}
+            completedTitle={stage.completedTitle}
             items={stage.items}
+            expectedDuration={stage.expectedDuration}
           />
         ))}
       </div>

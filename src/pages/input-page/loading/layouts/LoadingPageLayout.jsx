@@ -6,7 +6,7 @@ function LoadingPageLayout({ children }) {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="min-h-screen overflow-y-auto">
             <Header />
             <div className="w-full flex flex-col items-center pt-[var(--header-height)] px-[20px]">
                 <div className="w-full max-w-[1200px] max-[893px]:max-w-[452px] mb-[80px] max-[768px]:mb-[40px] h-[24px] min-[894px]:mt-[40px] max-[893px]:mt-[20px] max-[768px]:mt-[16px]">

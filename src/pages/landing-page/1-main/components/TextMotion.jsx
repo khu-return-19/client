@@ -7,12 +7,7 @@ const TEXTS = [
   "합격 가능성 향상을 위한\n자기소개서 진단",
 ];
 
-const easeInOutBack = [0.68, -0.55, 0.265, 1.55];
-
-function SlideText({ text, direction }) {
-  const enterY = direction === "up" ? 32 : -32;
-  const exitY = direction === "up" ? -32 : 32;
-
+function SlideText({ text }) {
   return (
     <motion.p
       className={[
@@ -21,10 +16,10 @@ function SlideText({ text, direction }) {
         "bg-[linear-gradient(91deg,#FFFCE5_26.49%,#FFF_47.51%,#D6D2B0_73.51%)]",
         "bg-clip-text text-transparent",
       ].join(" ")}
-      initial={{ opacity: 0, y: enterY }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: exitY }}
-      transition={{ duration: 0.8, ease: easeInOutBack }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: "linear" }}
     >
       {text}
     </motion.p>
@@ -33,16 +28,11 @@ function SlideText({ text, direction }) {
 
 function HeroTextCarousel() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState("up");
 
   useEffect(() => {
     const cycle = setInterval(() => {
-      setIndex((prev) => {
-        const next = (prev + 1) % TEXTS.length;
-        setDirection(next === 0 ? "down" : "up");
-        return next;
-      });
-    }, 2200 + 600);
+      setIndex((prev) => (prev + 1) % TEXTS.length);
+    }, 1500 + 500);
 
     return () => clearInterval(cycle);
   }, []);
@@ -50,7 +40,7 @@ function HeroTextCarousel() {
   return (
     <div className="relative w-full h-full overflow-hidden">
       <AnimatePresence mode="wait">
-        <SlideText key={index} text={TEXTS[index]} direction={direction} />
+        <SlideText key={index} text={TEXTS[index]} />
       </AnimatePresence>
     </div>
   );

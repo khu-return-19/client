@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import {
   AnalysisEvent,
   FinalStateData,
@@ -20,24 +21,39 @@ interface AnalysisStore {
   reset: () => void;
 }
 
-export const useAnalysisStore = create<AnalysisStore>((set) => ({
-  events: [],
-  status: "idle",
-  normalData: null,
-  evaluationResult: null,
-  revisedResult: null,
-  setEvents: (updater) => set((state) => ({ events: updater(state.events) })),
-  setStatus: (status) => set({ status }),
-  setFinalData: (data) => {
-    const { evaluationResult, revisedResult, ...normalData } = data;
-    set({ normalData, evaluationResult, revisedResult });
-  },
-  reset: () =>
-    set({
+export const useAnalysisStore = create<AnalysisStore>()(
+  persist(
+    (set) => ({
       events: [],
       status: "idle",
       normalData: null,
       evaluationResult: null,
       revisedResult: null,
+      setEvents: (updater) =>
+        set((state) => ({ events: updater(state.events) })),
+      setStatus: (status) => set({ status }),
+      setFinalData: (data) => {
+        const { evaluationResult, revisedResult, ...normalData } = data;
+        set({ normalData, evaluationResult, revisedResult });
+      },
+      reset: () =>
+        set({
+          events: [],
+          status: "idle",
+          normalData: null,
+          evaluationResult: null,
+          revisedResult: null,
+        }),
     }),
-}));
+    {
+      name: "analysis-store",
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({
+        status: state.status,
+        normalData: state.normalData,
+        evaluationResult: state.evaluationResult,
+        revisedResult: state.revisedResult,
+      }),
+    }
+  )
+);

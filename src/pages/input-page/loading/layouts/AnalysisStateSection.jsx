@@ -28,7 +28,7 @@ function UrlItem({ url, hostname, animated = true }) {
   );
 }
 
-function AnalysisStateSection({ completed, error, title, completedTitle, items, expectedDuration }) {
+function AnalysisStateSection({ completed, error, title, completedTitle, items, expectedDuration, showCompletedItems = true }) {
   const sectionRef = useRef(null);
   const [progressFull, setProgressFull] = useState(false);
   const [urlExpanded, setUrlExpanded] = useState(false);
@@ -85,14 +85,24 @@ function AnalysisStateSection({ completed, error, title, completedTitle, items, 
           {displayTitle}
         </p>
 
-        {/* 텍스트 항목: 완료 후에만 슬라이드업으로 표시 */}
-        {showCompleteIcon && textItems.map((item, index) => (
-          <div key={item.value + index} className="mt-[6px] min-w-0 animate-slide-up">
-            <p className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] break-keep">
-              {item.value}
-            </p>
-          </div>
-        ))}
+        {/* 진행 중: 최근 2개 fade-in 컨베이어 / 완료 후: showCompletedItems=true일 때만 전체 slide-up */}
+        {!showCompleteIcon
+          ? textItems.slice(-2).map((item, i) => (
+              <p
+                key={item.value + "-" + i}
+                className="mt-[6px] text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] animate-fade-in"
+              >
+                {item.value}
+              </p>
+            ))
+          : showCompletedItems && textItems.map((item, index) => (
+              <div key={item.value + index} className="mt-[6px] min-w-0 animate-slide-up">
+                <p className="text-[16px] max-[893px]:text-[14px] text-[#717171] font-[400] break-keep">
+                  {item.value}
+                </p>
+              </div>
+            ))
+        }
 
         {/* URL 항목 */}
         {urlItems.length > 0 && (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 // 컴포넌트
 import AnalysisStateSection from "./layouts/AnalysisStateSection";
 import LoadingPageLayout from "./layouts/LoadingPageLayout";
+import AnalysisErrorModal from "./components/AnalysisErrorModal";
 
 // hooks
 import { useAnalysisStore } from "stores/analysisStore";
@@ -42,6 +43,8 @@ function useStreamStages() {
             completed: false,
             error: false,
             expectedDuration: event.expectedDuration,
+            // false인 경우 완료 후 하위 요소를 표시하지 않음 (4, 5단계)
+            showCompletedItems: event.showCompletedItems !== false,
           },
         ]);
         break;
@@ -119,7 +122,6 @@ function useStreamStages() {
   }, [applyEvent]);
 
   const dispatch = useCallback((event) => {
-    // stage_done 후 1000ms 대기 (800ms 강제완료 + 200ms 전환 여유)
     const afterDelay = event.type === "stage_done" ? 1000 : 0;
     queueRef.current.push({ event, afterDelay });
     processQueue();
@@ -128,6 +130,18 @@ function useStreamStages() {
   return { stages, dispatch, queueDone };
 }
 
+// 에러 모달 텍스트 상수
+const SCHEMER_FAILED_TITLE    = "자기소개서 내용을 검토해 주세요";
+const SCHEMER_FAILED_FALLBACK = "제출하신 자기소개서의 내용이 올바르지 않습니다.\n내용을 재검토하신 후 다시 제출해 주시기 바랍니다.";
+const SCHEMER_FAILED_HINT     = "자소서 내용을 수정하여 다시 시도해 주시기 바랍니다.";
+
+const ANALYSIS_ERROR_TITLE    = "분석 중 오류가 발생했습니다";
+const ANALYSIS_ERROR_FALLBACK = "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해 주시기 바랍니다.";
+
+// pass_score 데이터 없음 안내
+const PASS_SCORE_NO_DATA =
+  "합격자 데이터가 없어, 직무 요구 역량 기준으로 분석을 진행할게요.";
+
 function Loading() {
   const { stages, dispatch, queueDone } = useStreamStages();
   const status = useAnalysisStore((state) => state.status);
@@ -135,19 +149,28 @@ function Loading() {
   const navigate = useNavigate();
   const processedCountRef = useRef(0);
   const passScoreStartedRef = useRef(false);
+  const passScoreDoneRef = useRef(false);
+  const passScoreDataRef = useRef(null);
   const schemerDoneRef = useRef(false);
+  const [errorModal, setErrorModal] = useState(null); // { title, message, hint? } | null
 
-  useEffect(() => {
-    if (events.length === 0) return;
-    console.log("[stream event]", events[events.length - 1]);
-  }, [events]);
+  // 에러 모달 닫기 — X / 확인 버튼 모두 자소서 페이지로 이동
+  const handleErrorModalClose = useCallback(() => {
+    setErrorModal(null);
+    navigate("/input-page/self-introduction");
+  }, [navigate]);
 
   useEffect(() => {
     const newEvents = events.slice(processedCountRef.current);
     processedCountRef.current = events.length;
 
     for (const event of newEvents) {
+      // 모든 이벤트 raw 로그 — pass_score data null 여부 등 백엔드 검증용
+      console.log("[stream event]", event.type, "status:", event.status, "data:", event.data);
+
       switch (event.type) {
+
+        // ── 1단계: 입력 검증 ─────────────────────────────────────
         case "schemer_start":
           dispatch({
             type: "stage_start",
@@ -159,7 +182,6 @@ function Loading() {
 
         case "schemer_result":
           if (event.data?.validation_reason) {
-            // validation_reason이 있으면 즉시 1단계 완료 처리 후 텍스트를 슬라이드업으로 표시
             schemerDoneRef.current = true;
             dispatch({ type: "stage_done" });
             dispatch({ type: "message", text: event.data.validation_reason });
@@ -167,12 +189,29 @@ function Loading() {
           break;
 
         case "schemer_end":
-          // schemer_result에서 이미 완료 처리하지 않은 경우 fallback
           if (!schemerDoneRef.current) {
             dispatch({ type: "stage_done" });
           }
           break;
 
+        case "schemer_failed":
+          dispatch({ type: "error" });
+          setErrorModal({
+            title: SCHEMER_FAILED_TITLE,
+            message: event.data || SCHEMER_FAILED_FALLBACK,
+            hint: SCHEMER_FAILED_HINT,
+          });
+          break;
+
+        case "schemer_error":
+          dispatch({ type: "error" });
+          setErrorModal({
+            title: ANALYSIS_ERROR_TITLE,
+            message: event.data || ANALYSIS_ERROR_FALLBACK,
+          });
+          break;
+
+        // ── 2단계: 웹 조회 — URL 항목만 표시, 텍스트 메시지 생략 ──
         case "web_search_start":
           dispatch({
             type: "stage_start",
@@ -197,6 +236,15 @@ function Loading() {
           dispatch({ type: "stage_done" });
           break;
 
+        case "web_search_error":
+          dispatch({ type: "error" });
+          setErrorModal({
+            title: ANALYSIS_ERROR_TITLE,
+            message: event.data || ANALYSIS_ERROR_FALLBACK,
+          });
+          break;
+
+        // ── 3단계: 합격 데이터 참조 ───────────────────────────────
         case "pass_score":
           if (!passScoreStartedRef.current) {
             passScoreStartedRef.current = true;
@@ -207,32 +255,65 @@ function Loading() {
               expectedDuration: STAGE_DURATIONS.pass_score,
             });
           }
+          if (event.data?.overall != null && passScoreDataRef.current === null) {
+            passScoreDataRef.current = event.data;
+          }
           break;
 
+        // ── 4단계: 역량 평가 — 완료 후 하위 요소 미표시 ─────────
         case "evaluate_start":
-          // pass_score 단계가 열려 있으면 evaluate_start 시점에 자동 완료
-          if (passScoreStartedRef.current) {
+          // pass_score 단계 완료 처리 + 데이터 유무에 따른 안내 메시지
+          if (passScoreStartedRef.current && !passScoreDoneRef.current) {
+            passScoreDoneRef.current = true;
             dispatch({ type: "stage_done" });
+            if (passScoreDataRef.current) {
+              const { company, position, overall } = passScoreDataRef.current;
+              dispatch({
+                type: "message",
+                text: `${company} ${position} 합격자 평균 종합 점수 ${Math.ceil(overall * 10) / 10}점을 기준으로 분석을 진행할게요.`,
+              });
+            } else {
+              dispatch({ type: "message", text: PASS_SCORE_NO_DATA });
+            }
           }
           dispatch({
             type: "stage_start",
             title: "역량을 평가하고 있어요.",
             completedTitle: "역량 평가를 완료했어요.",
             expectedDuration: STAGE_DURATIONS.evaluate,
+            showCompletedItems: false,
           });
+          break;
+
+        case "evaluate_generation":
+          if (event.data) dispatch({ type: "message", text: String(event.data) });
           break;
 
         case "evaluate_end":
           dispatch({ type: "stage_done" });
           break;
 
+        case "evaluate_error":
+          dispatch({ type: "error" });
+          setErrorModal({
+            title: ANALYSIS_ERROR_TITLE,
+            message: event.data || ANALYSIS_ERROR_FALLBACK,
+          });
+          break;
+
+        // ── 5단계: 개선 방향 — 완료 후 하위 요소 미표시 ─────────
         case "revise_start":
           dispatch({
             type: "stage_start",
             title: "개선 방향을 생각중이에요.",
             completedTitle: "개선 방향 도출을 완료했어요.",
             expectedDuration: STAGE_DURATIONS.revise,
+            showCompletedItems: false,
           });
+          break;
+
+        case "revise_generation":
+          if (event.data) dispatch({ type: "message", text: String(event.data) });
           break;
 
         case "revise_result":
@@ -241,8 +322,15 @@ function Loading() {
           }
           break;
 
+        case "revise_error":
+          dispatch({ type: "error" });
+          setErrorModal({
+            title: ANALYSIS_ERROR_TITLE,
+            message: event.data || ANALYSIS_ERROR_FALLBACK,
+          });
+          break;
+
         case "final_state":
-          // 개별 완료 신호를 놓쳤을 경우를 대비한 catch-all
           dispatch({ type: "all_done" });
           break;
 
@@ -271,9 +359,19 @@ function Loading() {
             completedTitle={stage.completedTitle}
             items={stage.items}
             expectedDuration={stage.expectedDuration}
+            showCompletedItems={stage.showCompletedItems}
           />
         ))}
       </div>
+      {errorModal && (
+        <AnalysisErrorModal
+          title={errorModal.title}
+          message={errorModal.message}
+          hint={errorModal.hint}
+          onClose={handleErrorModalClose}
+          onConfirm={handleErrorModalClose}
+        />
+      )}
     </LoadingPageLayout>
   );
 }

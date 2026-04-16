@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "components/Header/Header";
 import AnalysisNavBar from "./components/AnalysisNavBar";
 
@@ -7,6 +7,8 @@ import AnalsisSummary from "./components/AnalsisSummary";
 import AnalysisDiagnosis from "./components/AnalysisDiagnosis";
 import ImproveStrategy from "./components/ImproveStrategy";
 import Apply from "./components/Apply";
+
+export const ANALYSIS_REPORT_KEY = "analysisReport";
 
 function AnalysisPage() {
   const SECTION_IDS = ["분석 요약", "역량 진단", "개선 전략", "적용 · 재평가"];
@@ -18,6 +20,10 @@ function AnalysisPage() {
   };
 
   const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
+
+  useEffect(() => {
+    sessionStorage.setItem(ANALYSIS_REPORT_KEY, "true");
+  }, []);
 
   const handleNavChange = (item) => setActiveNav(item);
 

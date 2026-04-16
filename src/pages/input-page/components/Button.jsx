@@ -52,7 +52,7 @@ const Button = ({
     const variants = {
         primary: {
             default: "bg-[var(--light-navy)] hover:bg-[var(--navy)] text-white cursor-pointer",
-            disabled: "bg-[var(--gray)] text-[var(--text-light)] cursor-not-allowed",
+            disabled: "bg-[var(--gray)] text-[var(--text-light)] cursor-default",
             completed: "bg-[var(--light-blue)] text-white cursor-default"
         },
         secondary: "text-[var(--navy)] border-[var(--navy)] border-solid border-[1px] hover:bg-[var(--hover-bg)] cursor-pointer"

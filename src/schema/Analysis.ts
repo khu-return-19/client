@@ -20,20 +20,25 @@ export type AnalysisEventType =
   | "schemer_start"
   | "schemer_result"
   | "schemer_end"
+  | "schemer_failed"
+  | "schemer_error"
   | "web_search_start"
   | "web_search_planning"
   | "web_search_plan_generated"
   | "web_search_query"
   | "web_search_result"
   | "web_search_end"
+  | "web_search_error"
   | "pass_score"
   | "evaluate_start"
   | "evaluate_generation"
   | "evaluate_result"
   | "evaluate_end"
+  | "evaluate_error"
   | "revise_start"
   | "revise_generation"
   | "revise_result"
+  | "revise_error"
   | "final_state";
 
 export type AnalysisEventStatus = "RUNNING" | "COMPLETED" | "FAILED";
@@ -108,6 +113,16 @@ export interface ReviseResultData {
   expectation: string[];
 }
 
+// pass_score
+export interface PassScoreData {
+  company: string;
+  position: string;
+  x: number;
+  y: number;
+  z: number;
+  overall: number;
+}
+
 // final_state
 export interface FinalStateData {
   analyzerRetryCount: number;
@@ -145,14 +160,19 @@ export interface AnalysisEventDataMap {
   web_search_query: SearchQueryData;
   web_search_result: SearchResultData;
   web_search_end: string;
-  pass_score: null;
+  web_search_error: string;
+  pass_score: PassScoreData;
   evaluate_start: string;
   evaluate_generation: string;
   evaluate_result: EvaluateResultData;
   evaluate_end: string;
+  evaluate_error: string;
   revise_start: string;
   revise_generation: string;
   revise_result: ReviseResultData;
+  revise_error: string;
+  schemer_failed: string;
+  schemer_error: string;
   final_state: FinalStateData;
 }
 

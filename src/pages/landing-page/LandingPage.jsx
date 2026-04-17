@@ -35,12 +35,20 @@ function LandingPage() {
     <div className="h-[100dvh] overflow-hidden">
       <Header theme={activeIndex <= 1 ? "dark" : "light"} />
 
-      <div className="opacity-0 lg:opacity-100 fixed right-5 top-1/2 -translate-y-1/2 z-20">
-        <SectionProgressBar index={activeIndex} total={5} />
+      <div className="opacity-0 lg:opacity-100 fixed right-5 top-1/2 -translate-y-1/2 z-50">
+        <SectionProgressBar
+          index={activeIndex}
+          total={5}
+          onIndexClick={(i) => {
+            const ids = ["section-main", "section-video", "section-matrix", "section-improve", "section-review"];
+            document.getElementById(ids[i])?.scrollIntoView({ behavior: "smooth" });
+          }}
+        />
       </div>
 
       <div className="overflow-x-hidden lg:snap-y lg:snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
         <section
+          id="section-main"
           ref={mainRef}
           className="h-[100dvh] snap-start overflow-hidden"
         >
@@ -51,15 +59,15 @@ function LandingPage() {
           <Landing2Layout />
         </section>
 
-        <section ref={matrixRef} className="snap-start">
+        <section id="section-matrix" ref={matrixRef} className="snap-start">
           <Matrix />
         </section>
 
-        <section ref={improveRef} className="snap-start">
+        <section id="section-improve" ref={improveRef} className="snap-start">
           <Improve />
         </section>
 
-        <section ref={reviewRef} className="snap-start">
+        <section id="section-review" ref={reviewRef} className="snap-start">
           <Review />
         </section>
       </div>

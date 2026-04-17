@@ -1,4 +1,5 @@
 import { useAnalysisStore } from "stores/analysisStore";
+import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function ImproveStrategy({
   onNext,
@@ -15,36 +16,7 @@ export default function ImproveStrategy({
     "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
 
   const { evaluationResult } = useAnalysisStore();
-  const averageScore =
-    evaluationResult &&
-    (evaluationResult.x.score +
-      evaluationResult.y.score +
-      evaluationResult.z.score) /
-      3;
-
-  // const strategies = [
-  //   {
-  //     title: "(1) 백엔드/서버 심화 경험 보강",
-  //     items: {
-  //       개선방안:
-  //         "Java/Spring 기반 API 설계, 데이터베이스 설계, 서버 운영 등 경험 및 실무 예시 제시",
-  //       실행전략:
-  //         "개인·팀 프로젝트에서 REST API/DB 설계, Spring/Hibernate 활용 미니 서비스 구현, AWS·Docker 배포 실습 추가",
-  //       제안배경:
-  //         "네이버 백엔드 개발의 주요 평가포인트(자사 클라우드·분산환경/서버사이드 아키텍처)",
-  //       "의도/목적": "실무 역량의 질적 심화, 코딩테스트/기술면접 경쟁력 확충",
-  //     },
-  //   },
-  //   {
-  //     title: "(2) 데이터 2...",
-  //     items: {
-  //       개선방안: "1",
-  //       실행전략: "2",
-  //       제안배경: "3",
-  //       "의도/목적": "4",
-  //     },
-  //   },
-  // ];
+  const { averageScore } = useEvaluationScores();
 
   return (
     <div className="flex flex-col gap-[clamp(32px,3.9vw,56px)]">
@@ -59,12 +31,12 @@ export default function ImproveStrategy({
           <Row
             label="최종 평가 점수 :"
             value={averageScore + "점"}
-            sub="기존합격자 평균 3.4점 대비 +0.7 ↑"
+            sub="기존합격자 대비 +0.7 ↑"
           />
           <Row
             label="경쟁력 :"
             value={evaluationResult?.level || "보통"}
-            sub="기존합격자 수치 42.1% 대비 약 6~10%P ↑"
+            sub="기존합격자 대비 약 6~10%P ↑"
           />
         </div>
 
@@ -117,7 +89,7 @@ export default function ImproveStrategy({
         <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>개선 방안</h3>
           <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
-            개선 방안 텍스트
+            {evaluationResult?.improveOverall.join("\n")}
           </p>
         </div>
 
@@ -149,7 +121,7 @@ export default function ImproveStrategy({
         <div className="flex flex-col gap-[clamp(10px,1.1vw,16px)]">
           <h3 className={h3Style}>기대효과</h3>
           <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
-            기대효과 텍스트
+            {evaluationResult?.improveExpectation.join("\n")}
           </p>
         </div>
       </section>

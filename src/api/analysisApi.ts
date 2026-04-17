@@ -72,11 +72,13 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const createAnalysis = async (
   data: CreateAnalysisData,
   onEvent: (event: AnalysisEvent) => void,
+  signal?: AbortSignal,
 ) => {
   const response = await fetch(`${BASE_URL}/api/analysis`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-API-Version": "2" },
     body: JSON.stringify(data),
+    signal,
   });
 
   if (!response.ok) throw new Error("분석 요청 실패");
@@ -85,9 +87,12 @@ export const createAnalysis = async (
   const decoder = new TextDecoder();
   let buffer = "";
 
+  // signal abort 시 reader도 강제 취소
+  signal?.addEventListener("abort", () => { reader.cancel(); });
+
   while (true) {
     const { done, value } = await reader.read();
-    if (done) break;
+    if (done || signal?.aborted) break;
 
     buffer += decoder.decode(value, { stream: true });
     const lines = buffer.split("\n");

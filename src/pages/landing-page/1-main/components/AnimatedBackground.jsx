@@ -7,7 +7,7 @@ export function AnimatedBackground() {
       <motion.img
         src={bg}
         alt=""
-        className="absolute left-0 w-full"
+        className="absolute left-0 w-full mobile-bg-pos"
         style={{ top: "calc(100vh - 43vw)" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

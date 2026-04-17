@@ -109,7 +109,11 @@ function Header({ theme = "light" }) {
                     <Link
                       key={item.path}
                       to={item.path}
-                      onClick={item.label === "자기소개서 분석" ? handleAnalysisClick : undefined}
+                      onClick={
+                        item.label === "자기소개서 분석"
+                          ? handleAnalysisClick
+                          : undefined
+                      }
                       className={`text-[clamp(12px,calc(1.042vw+2px),16px)] whitespace-nowrap transition-colors pb-[2px] ${
                         isActive
                           ? isDark

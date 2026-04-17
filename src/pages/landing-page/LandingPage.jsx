@@ -47,7 +47,7 @@ function LandingPage() {
           <MainSectionLayout />
         </section>
 
-        <section ref={videoRef} className="h-[100dvh] snap-start">
+        <section ref={videoRef} className="h-[100dvh] snap-start hidden min-[900px]:block">
           <Landing2Layout />
         </section>
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import KHUxPertineo from "assets/icons/KHUxpertineo.svg";
 import { SESSION_STORAGE_KEY } from "api/sessionApi";
+import { ANALYSIS_REPORT_KEY } from "pages/analysis-page/AnalysisPage";
 import TextMotion from "./TextMotion";
 
 function HeroContent() {
@@ -10,7 +11,13 @@ function HeroContent() {
 
   const handleStart = () => {
     const isSessionActive = !!sessionStorage.getItem(SESSION_STORAGE_KEY);
-    navigate(isSessionActive ? "/input-page/company" : "/input-page/auth");
+    const hasReport = !!sessionStorage.getItem(ANALYSIS_REPORT_KEY);
+    if (isSessionActive && hasReport) {
+      sessionStorage.setItem("showReportModal", "true");
+      navigate("/input-page/auth");
+    } else {
+      navigate(isSessionActive ? "/input-page/company" : "/input-page/auth");
+    }
   };
 
   return (
@@ -20,7 +27,8 @@ function HeroContent() {
         <img
           src={KHUxPertineo}
           alt="KHU × Pertineo"
-          className="h-full w-auto"
+          className="h-full w-auto select-none"
+          draggable="false"
         />
       </div>
 

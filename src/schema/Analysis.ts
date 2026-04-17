@@ -81,6 +81,7 @@ export interface AxisScore {
   summary: string;
   compareScore: number; // 합격자 평균 점수
 }
+
 export interface ImproveStrategy {
   strategyName: string;
   actionItems: string[];

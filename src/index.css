@@ -77,3 +77,9 @@ code {
 @thema {
   --breakpoint-lg: 960px;
 }
+
+@media (max-width: 767px) {
+  .mobile-bg-pos {
+    top: calc(100vh - 80vw) !important;
+  }
+}

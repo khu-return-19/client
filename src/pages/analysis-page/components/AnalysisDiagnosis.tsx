@@ -29,6 +29,12 @@ export default function AnalysisDiagnosis({
       scoreText: evaluationResult?.y.summary || "",
       criteria: evaluationResult?.y.criteria || [],
       evidence: evaluationResult?.y.basis || [],
+      Fit: {
+        "Role Fit": evaluationResult?.roleFit || "",
+        "Culture Fit": evaluationResult?.cultureFit || "",
+        "Domain Fit": evaluationResult?.domainFit || "",
+        "Skill Fit": evaluationResult?.skillFit || "",
+      },
     },
     {
       axis: "Z",
@@ -76,6 +82,25 @@ export default function AnalysisDiagnosis({
                     ))}
                   </div>
                 </div>
+                {section.Fit &&
+                  (Object.entries(section.Fit) as [string, string][]).map(
+                    ([fitType, fitValue], index) => (
+                      <div
+                        className={cn(
+                          "flex mb-2",
+                          index === 1 || index === 2 ? "gap-3" : "gap-8",
+                          index === 3 ? "mb-10" : "",
+                        )}
+                      >
+                        <h4 className={cn(labelStyle, "mt-[2px]")}>
+                          {fitType}
+                        </h4>
+                        <div className="flex flex-col gap-[6px]">
+                          <p>{fitValue}</p>
+                        </div>
+                      </div>
+                    ),
+                  )}
                 <div className="flex gap-8 mb-10">
                   <h4 className={cn(labelStyle, "mt-[2px]")}>
                     {section.axis}축 점수
@@ -112,7 +137,7 @@ export default function AnalysisDiagnosis({
             </div>
             <div className="flex gap-[18px]">
               <h3 className="font-semibold text-lg">평균</h3>
-              <div className="text-lg">{averageScore?.toFixed(1)}</div>
+              <div className="text-lg">{averageScore}</div>
             </div>
             <div className="flex gap-[18px]">
               <h3 className="font-semibold text-lg">경쟁력</h3>
@@ -134,7 +159,7 @@ export default function AnalysisDiagnosis({
       </section>
       <section className="pt-[75px]">
         <AnalysisHeader title="기존 합격자 비교 분석" />
-        <div className="flex gap-4">
+        <div className="flex gap-10">
           <div className="flex-shrink-0">
             <ReportGraph
               userX={evaluationResult?.x.score}
@@ -145,82 +170,80 @@ export default function AnalysisDiagnosis({
           <div className="flex flex-col py-4 flex-1 min-w-0">
             {/* Header */}
             <div className="flex gap-0 pb-2 mb-1">
-              <div className="flex-[2] text-base">평가 항목</div>
-              <div className="flex-[1.5] flex flex-col items-center text-base">
+              <div className="flex-[0.5] text-base">평가 항목</div>
+              <div className="flex-[1] flex flex-col items-center text-base">
                 합격자 평균
                 <div className="text-[12px] text-gray900">(227건, 동직군)</div>
               </div>
-              <div className="flex-[1] flex justify-center text-base px-3">
+              <div className="flex-[1] flex justify-center text-base pr-3">
                 지원자
               </div>
-              <div className="flex-[2.5] text-base">비교분석</div>
+              <div className="flex-[1] text-base">비교분석</div>
             </div>
 
             {/* Row 1 */}
             <div className="flex items-center py-3">
-              <div className="flex-[2] text-xs text-gray900">
+              <div className="flex-[0.5] text-xs text-gray900">
                 X축 (학습 수준)
               </div>
-              <div className="flex-[1.5] text-base flex justify-center">
+              <div className="flex-[1] text-base flex justify-center">
                 {evaluationResult?.x.score || ""}
               </div>
-              <div className="flex-[1] flex flex-col items-center px-3">
+              <div className="flex-[1] flex flex-col items-center pr-3">
                 <div className="text-base font-medium text-gray-900">4.1</div>
                 <div className="text-[10px] text-blue-500">+0.54p</div>
               </div>
-              <div className="flex-[2.5] text-xs text-gray-900">
+              <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.x.compareScore || ""}
               </div>
             </div>
 
             {/* Row 2 */}
             <div className="flex items-center py-3">
-              <div className="flex-[2] text-xs text-gray900">
+              <div className="flex-[0.5] text-xs text-gray900">
                 Y축 (직무 적성)
               </div>
-              <div className="flex-[1.5] text-base flex justify-center">
+              <div className="flex-[1] text-base flex justify-center">
                 {evaluationResult?.y.score || ""}
               </div>
-              <div className="flex-[1] flex flex-col items-center px-3">
+              <div className="flex-[1] flex flex-col items-center pr-3">
                 <div className="text-base font-medium text-gray-900">4.0</div>
                 <div className="text-[10px] text-blue-500">+0.6p</div>
               </div>
-              <div className="flex-[2.5] text-xs text-gray-900">
+              <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.y.compareScore || ""}
               </div>
             </div>
 
             {/* Row 3 */}
             <div className="flex items-center py-3">
-              <div className="flex-[2] text-xs text-gray900">
+              <div className="flex-[0.5] text-xs text-gray900">
                 Z축 (수행 역량)
               </div>
-              <div className="flex-[1.5] text-base flex justify-center">
+              <div className="flex-[1] text-base flex justify-center">
                 {evaluationResult?.z.score || ""}
               </div>
-              <div className="flex-[1] flex flex-col items-center px-3">
+              <div className="flex-[1] flex flex-col items-center pr-3">
                 <div className="text-base font-medium text-gray-900">4.2</div>
                 <div className="text-[10px] text-red-500">-0.6p</div>
               </div>
-              <div className="flex-[2.5] text-xs text-gray-900">
+              <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.z.compareScore || ""}
               </div>
             </div>
 
             {/* Row 4 */}
             <div className="flex items-center py-3">
-              <div className="flex-[2] text-xs font-medium text-gray900">
+              <div className="flex-[0.5] text-xs font-medium text-gray900">
                 최종 평가 점수
               </div>
-              <div className="flex-[1.5] text-base flex justify-center">
-                {averageScore ? averageScore.toFixed(1) : ""}
+              <div className="flex-[1] text-base flex justify-center">
+                {averageScore ? averageScore : ""}
               </div>
-              <div className="flex-[1] flex flex-col items-center px-3">
+              <div className="flex-[1] flex flex-col items-center pr-3">
                 <div className="text-base font-medium text-gray-900">4.1</div>
               </div>
-              <div className="flex-[2.5] text-xs text-gray-900">
-                동직군 대조, 전 항목 우위
-              </div>
+              <div className="flex-[1] text-xs text-gray-900"></div>
             </div>
             <div>
               <h4 className="font-semibold text-xl mb-4 mt-[52px]">

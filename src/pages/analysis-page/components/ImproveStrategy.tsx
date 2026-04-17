@@ -31,12 +31,12 @@ export default function ImproveStrategy({
           <Row
             label="최종 평가 점수 :"
             value={averageScore + "점"}
-            sub="기존합격자 평균 3.4점 대비 +0.7 ↑"
+            sub="기존합격자 대비 +0.7 ↑"
           />
           <Row
             label="경쟁력 :"
             value={evaluationResult?.level || "보통"}
-            sub="기존합격자 수치 42.1% 대비 약 6~10%P ↑"
+            sub="기존합격자 대비 약 6~10%P ↑"
           />
         </div>
 

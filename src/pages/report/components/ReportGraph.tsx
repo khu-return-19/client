@@ -273,7 +273,13 @@ export default function ReportGraph({
         <group position={[0, position || -3, 0]}>
           <Axis highlightAxis={highlightAxis} highlightScore={highlightScore} />
           <Plan x={userX || 2} y={userY || 2} z={userZ || 2} color="#2876F1" />
-          <Plan x={3} y={3} z={3} color="#C1D9FF4D" lineColor="#AEB4BC" />
+          <Plan
+            x={3}
+            y={3}
+            z={3}
+            color="rgba(193,217,255,0.3)"
+            lineColor="#AEB4BC"
+          />
           {highlightAxis && (
             <AxisScoreLine
               highlightAxis={highlightAxis}

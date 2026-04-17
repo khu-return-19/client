@@ -3,9 +3,11 @@ import { useAnalysisStore } from "stores/analysisStore";
 import { CreateAnalysisData } from "schema/Analysis";
 
 export const useCreateAnalysis = () => {
-  const { setEvents, setStatus, setFinalData } = useAnalysisStore();
+  const { setEvents, setStatus, setFinalData, setAbortController } = useAnalysisStore();
 
   const start = async (data: CreateAnalysisData) => {
+    const controller = new AbortController();
+    setAbortController(controller);
     setStatus("running");
     setEvents(() => []);
 
@@ -23,9 +25,14 @@ export const useCreateAnalysis = () => {
           setFinalData(event.data as any);
           setStatus("done");
         }
-      });
-    } catch (e) {
-      setStatus("failed");
+      }, controller.signal);
+    } catch (e: any) {
+      // 사용자가 취소한 경우(AbortError)는 에러 처리 생략
+      if (e?.name !== "AbortError") {
+        setStatus("failed");
+      }
+    } finally {
+      setAbortController(null);
     }
   };
 

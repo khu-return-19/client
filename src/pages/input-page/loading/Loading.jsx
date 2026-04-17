@@ -146,6 +146,7 @@ function Loading() {
   const { stages, dispatch, queueDone } = useStreamStages();
   const status = useAnalysisStore((state) => state.status);
   const events = useAnalysisStore((state) => state.events);
+  const reset = useAnalysisStore((state) => state.reset);
   const navigate = useNavigate();
   const processedCountRef = useRef(0);
   const passScoreStartedRef = useRef(false);
@@ -153,6 +154,20 @@ function Loading() {
   const passScoreDataRef = useRef(null);
   const schemerDoneRef = useRef(false);
   const [errorModal, setErrorModal] = useState(null); // { title, message, hint? } | null
+  const bottomRef = useRef(null);
+
+  // 새 단계가 추가될 때마다 하단으로 자동 스크롤
+  useEffect(() => {
+    if (stages.length > 0) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [stages.length]);
+
+  // 취소하기 — fetch 중단 + 스토어 초기화 후 이동
+  const handleCancel = useCallback(() => {
+    reset();
+    navigate("/input-page/self-introduction");
+  }, [reset, navigate]);
 
   // 에러 모달 닫기 — X / 확인 버튼 모두 자소서 페이지로 이동
   const handleErrorModalClose = useCallback(() => {
@@ -353,7 +368,7 @@ function Loading() {
   }, [status, queueDone, navigate]);
 
   return (
-    <LoadingPageLayout>
+    <LoadingPageLayout onCancel={handleCancel}>
       <div className="flex flex-col gap-[60px] max-[893px]:gap-[30px] pb-[120px]">
         {stages.map((stage, index) => (
           <AnalysisStateSection
@@ -367,6 +382,7 @@ function Loading() {
             showCompletedItems={stage.showCompletedItems}
           />
         ))}
+        <div ref={bottomRef} />
       </div>
       {errorModal && (
         <AnalysisErrorModal

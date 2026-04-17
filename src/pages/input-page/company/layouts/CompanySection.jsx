@@ -70,8 +70,8 @@ function CompanySection() {
                     placeholder="소프트웨어 엔지니어"
                     width={530}
                     required={true}
-                    autocompleteResults={jobTitleResults}
-
+                    autocompleteResults={positionsList}
+                    selectOnly={true}
                 />
             </div>
 

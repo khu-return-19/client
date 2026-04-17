@@ -1,4 +1,5 @@
 import { useAnalysisStore } from "stores/analysisStore";
+import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function ImproveStrategy({
   onNext,
@@ -15,12 +16,7 @@ export default function ImproveStrategy({
     "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
 
   const { evaluationResult } = useAnalysisStore();
-  const averageScore =
-    evaluationResult &&
-    (evaluationResult.x.score +
-      evaluationResult.y.score +
-      evaluationResult.z.score) /
-      3;
+  const { averageScore } = useEvaluationScores();
 
   return (
     <div className="flex flex-col gap-[clamp(32px,3.9vw,56px)]">

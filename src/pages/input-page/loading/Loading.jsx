@@ -198,7 +198,8 @@ function Loading() {
           dispatch({ type: "error" });
           setErrorModal({
             title: SCHEMER_FAILED_TITLE,
-            message: event.data || SCHEMER_FAILED_FALLBACK,
+            message: SCHEMER_FAILED_FALLBACK,
+            detail: event.data || null,   // 토글로 펼치는 구체적 사유
             hint: SCHEMER_FAILED_HINT,
           });
           break;
@@ -207,7 +208,8 @@ function Loading() {
           dispatch({ type: "error" });
           setErrorModal({
             title: ANALYSIS_ERROR_TITLE,
-            message: event.data || ANALYSIS_ERROR_FALLBACK,
+            message: ANALYSIS_ERROR_FALLBACK,
+            detail: event.data || null,
           });
           break;
 
@@ -240,7 +242,8 @@ function Loading() {
           dispatch({ type: "error" });
           setErrorModal({
             title: ANALYSIS_ERROR_TITLE,
-            message: event.data || ANALYSIS_ERROR_FALLBACK,
+            message: ANALYSIS_ERROR_FALLBACK,
+            detail: event.data || null,
           });
           break;
 
@@ -297,7 +300,8 @@ function Loading() {
           dispatch({ type: "error" });
           setErrorModal({
             title: ANALYSIS_ERROR_TITLE,
-            message: event.data || ANALYSIS_ERROR_FALLBACK,
+            message: ANALYSIS_ERROR_FALLBACK,
+            detail: event.data || null,
           });
           break;
 
@@ -326,7 +330,8 @@ function Loading() {
           dispatch({ type: "error" });
           setErrorModal({
             title: ANALYSIS_ERROR_TITLE,
-            message: event.data || ANALYSIS_ERROR_FALLBACK,
+            message: ANALYSIS_ERROR_FALLBACK,
+            detail: event.data || null,
           });
           break;
 
@@ -367,6 +372,7 @@ function Loading() {
         <AnalysisErrorModal
           title={errorModal.title}
           message={errorModal.message}
+          detail={errorModal.detail}
           hint={errorModal.hint}
           onClose={handleErrorModalClose}
           onConfirm={handleErrorModalClose}

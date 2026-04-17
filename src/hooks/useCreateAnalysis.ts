@@ -11,16 +11,14 @@ export const useCreateAnalysis = () => {
 
     try {
       await createAnalysis(data, (event) => {
+        // FAILED 이벤트도 events에 먼저 추가 — Loading.jsx에서 에러 타입·메시지 처리
+        setEvents((prev) => [...prev, event]);
+
         if (event.status === "FAILED") {
           setStatus("failed");
           return;
         }
 
-        setEvents((prev) => [...prev, event]);
-
-        if(event.status === "COMPLETED"){
-          console.log(event.data);
-        }
         if (event.type === "final_state" && event.status === "COMPLETED") {
           setFinalData(event.data as any);
           setStatus("done");

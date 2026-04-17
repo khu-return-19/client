@@ -73,7 +73,7 @@ function SelfIntroSection() {
     userId: sessionStorage.getItem("verifiedEmail") || "",
     questionList: cards.map((card) => card.question),
     answerList: cards.map((card) => card.content),
-    education: "경희대학교 졸업",
+    education: resumeEducation[0]?.university + "졸업",
     gpa: resumeEducation[0]?.gpa || null,
     major: resumeEducation[0]?.major || "",
     backgroundCareerAward: JSON.parse(
@@ -93,11 +93,11 @@ function SelfIntroSection() {
       .map((data) => data.type)
       .join(","),
     company: sessionStorage.getItem("company_companyName") || "",
-    jobPosition: "개발" || "",
-    jobField: "개발" || "",
+    jobPosition: sessionStorage.getItem("company_jobTitle") || "",
+    jobField: sessionStorage.getItem("company_jobTitle") || "",
     url: sessionStorage.getItem("company_noticeUrl") || "",
     division: "",
-    applyUrl: "",
+    applyUrl: sessionStorage.getItem("company_noticeUrl") || "",
   };
   console.log(analysisData);
 

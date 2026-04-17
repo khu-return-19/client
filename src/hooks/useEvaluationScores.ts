@@ -1,8 +1,8 @@
 import { useAnalysisStore } from "stores/analysisStore";
 
 interface EvaluationScores {
-  averageScore: number | null;
-  averageCompareScore: number | null;
+  averageScore: number | null | string;
+  averageCompareScore: number | null | string;
 }
 
 export function useEvaluationScores(): EvaluationScores {
@@ -13,9 +13,27 @@ export function useEvaluationScores(): EvaluationScores {
   }
 
   const { x, y, z } = evaluationResult;
+  const isString = (...vals: unknown[]) =>
+    vals.some((v) => typeof v === "string");
 
   return {
-    averageScore: (x.score + y.score + z.score) / 3,
-    averageCompareScore: (x.compareScore + y.compareScore + z.compareScore) / 3,
+    averageScore: isString(x.score, y.score, z.score)
+      ? "-"
+      : ((
+          ((x.score as number) + (y.score as number) + (z.score as number)) /
+          3
+        ).toFixed(1) as unknown as number),
+    averageCompareScore: isString(
+      x.compareScore,
+      y.compareScore,
+      z.compareScore,
+    )
+      ? "-"
+      : ((
+          ((x.compareScore as number) +
+            (y.compareScore as number) +
+            (z.compareScore as number)) /
+          3
+        ).toFixed(1) as unknown as number),
   };
 }

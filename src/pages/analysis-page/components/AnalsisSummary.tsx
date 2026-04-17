@@ -100,10 +100,8 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
               },
               {
                 label: "평균",
-                my: averageScore ? averageScore.toFixed(2) : "-",
-                pass: averageCompareScore
-                  ? averageCompareScore.toFixed(2)
-                  : "-",
+                my: averageScore,
+                pass: averageCompareScore,
                 mark: true,
               },
             ].map((row) => (

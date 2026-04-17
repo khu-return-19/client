@@ -137,7 +137,6 @@ function Loading() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("현재 상태:", status);
     if (status === "done") {
       navigate("/analysis");
     }

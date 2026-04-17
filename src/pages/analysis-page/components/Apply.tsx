@@ -33,7 +33,7 @@ export default function Apply({ onPrev }: { onPrev?: () => void }) {
           </section>
         </div>
       ))}
-      <AnalysisHeader title="수정된 자기소개서 3D 역량평가" />
+      {/* <AnalysisHeader title="수정된 자기소개서 3D 역량평가" />
       <div className="flex flex-col gap-5">
         <div>
           <div>학습수준</div>
@@ -48,7 +48,7 @@ export default function Apply({ onPrev }: { onPrev?: () => void }) {
           <div>학습수준</div>
           <div>근거:</div>
         </div>
-      </div>
+      </div> */}
       {/* 하단 버튼 */}
       <div className="flex justify-center gap-[16px] pt-[120px] pb-[60px]">
         <button

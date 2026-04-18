@@ -123,15 +123,15 @@ export default function AnalysisDiagnosis({
       {/* 종합 평가 및 경쟁력 */}
       <section className="px-5 py-[75px] border-y-[1px] border-[#B5B5B5]">
         <AnalysisHeader title="종합평가 및 경쟁력" />
-        <div className="flex gap-8">
-          <div className="flex flex-col gap-4 shrink-0">
+        <div className="flex flex-col gap-8">
+          <div className="flex gap-24 shrink-0">
             <div className="flex gap-[18px]">
               <h3 className="font-semibold text-lg">3D 평가 점수</h3>
               <div className="text-lg">
                 {sections.map((section, index) => (
                   <span key={section.axis}>
                     <span>
-                      {section.score} ({section.axis}){" "}
+                      {section.score}{" "}
                       {index !== sections.length - 1 ? "/ " : ""}
                     </span>
                   </span>

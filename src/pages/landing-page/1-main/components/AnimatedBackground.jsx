@@ -19,8 +19,8 @@ export function AnimatedBackground() {
       <motion.img
         src={bgMobile}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover block min-[768px]:hidden"
-        style={{ top: 0, objectPosition: "center 70%" }}
+        className="absolute left-0 w-full block min-[768px]:hidden"
+        style={{ top: "calc(100vh - 155vw)" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 4, ease: "easeInOut" }}

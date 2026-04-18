@@ -74,6 +74,7 @@ export interface AxisScore {
   criteria: string[];
   basis: string[];
   summary: string;
+  compareScore: string;
 }
 
 export interface ImproveStrategy {

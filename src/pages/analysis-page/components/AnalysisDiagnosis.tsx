@@ -11,7 +11,7 @@ export default function AnalysisDiagnosis({
   onNext?: () => void;
   onPrev?: () => void;
 }) {
-  const { evaluationResult } = useAnalysisStore();
+  const { evaluationResult, passScoreData } = useAnalysisStore();
   const { averageScore } = useEvaluationScores();
   const sections = [
     {
@@ -59,9 +59,6 @@ export default function AnalysisDiagnosis({
               <div className="w-[350px]">
                 <ReportGraph
                   position={-1}
-                  userX={evaluationResult?.x.score}
-                  userY={evaluationResult?.y.score}
-                  userZ={evaluationResult?.z.score}
                   highlightAxis={section.axis as "X" | "Y" | "Z"}
                 />
               </div>
@@ -161,11 +158,7 @@ export default function AnalysisDiagnosis({
         <AnalysisHeader title="기존 합격자 비교 분석" />
         <div className="flex gap-10">
           <div className="flex-shrink-0">
-            <ReportGraph
-              userX={evaluationResult?.x.score}
-              userY={evaluationResult?.y.score}
-              userZ={evaluationResult?.z.score}
-            />
+            <ReportGraph />
           </div>
           <div className="flex flex-col py-4 flex-1 min-w-0">
             {/* Header */}
@@ -194,7 +187,7 @@ export default function AnalysisDiagnosis({
                 <div className="text-[10px] text-blue-500">+0.54p</div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.x.compareScore || ""}
+                {passScoreData?.x ?? ""}
               </div>
             </div>
 
@@ -211,7 +204,7 @@ export default function AnalysisDiagnosis({
                 <div className="text-[10px] text-blue-500">+0.6p</div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.y.compareScore || ""}
+                {passScoreData?.y ?? ""}
               </div>
             </div>
 
@@ -228,7 +221,7 @@ export default function AnalysisDiagnosis({
                 <div className="text-[10px] text-red-500">-0.6p</div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.z.compareScore || ""}
+                {passScoreData?.z ?? ""}
               </div>
             </div>
 

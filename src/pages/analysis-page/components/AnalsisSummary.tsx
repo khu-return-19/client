@@ -5,7 +5,7 @@ import { useAnalysisStore } from "stores/analysisStore";
 import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
-  const { evaluationResult, normalData } = useAnalysisStore();
+  const { evaluationResult, normalData, passScoreData } = useAnalysisStore();
   const { averageScore, averageCompareScore } = useEvaluationScores();
 
   const labelStyle =
@@ -45,11 +45,7 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
       <SectionCard title="3D 평가 결과">
         <div className="grid grid-cols-2 max-[767px]:grid-cols-1 gap-[clamp(20px,2.8vw,40px)]">
           <div className="max-[767px]:hidden">
-            <ReportGraph
-              userX={evaluationResult?.x.score}
-              userY={evaluationResult?.y.score}
-              userZ={evaluationResult?.z.score}
-            />
+            <ReportGraph />
           </div>
           <div className="flex flex-col">
             {/* 헤더행 */}
@@ -74,28 +70,19 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
               {
                 label: "X 학습수준",
                 my: evaluationResult?.x?.score,
-                pass:
-                  typeof evaluationResult?.x?.compareScore === "number"
-                    ? evaluationResult.x.compareScore
-                    : "-",
+                pass: passScoreData != null ? passScoreData.x : "-",
                 mark: false,
               },
               {
                 label: "Y 직무적합수준",
                 my: evaluationResult?.y?.score,
-                pass:
-                  typeof evaluationResult?.y?.compareScore === "number"
-                    ? evaluationResult.y.compareScore
-                    : "-",
+                pass: passScoreData != null ? passScoreData.y : "-",
                 mark: false,
               },
               {
                 label: "Z 수행역량수준",
                 my: evaluationResult?.z?.score,
-                pass:
-                  typeof evaluationResult?.z?.compareScore === "number"
-                    ? evaluationResult.z.compareScore
-                    : "-",
+                pass: passScoreData != null ? passScoreData.z : "-",
                 mark: false,
               },
               {

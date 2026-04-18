@@ -74,7 +74,6 @@ export interface AxisScore {
   criteria: string[];
   basis: string[];
   summary: string;
-  compareScore: number; // 합격자 평균 점수
 }
 
 export interface ImproveStrategy {
@@ -146,7 +145,7 @@ export interface AnalysisEventDataMap {
   web_search_query: SearchQueryData;
   web_search_result: SearchResultData;
   web_search_end: string;
-  pass_score: null;
+  pass_score: { company: string; position: string; x: number; y: number; z: number; overall: number };
   evaluate_start: string;
   evaluate_generation: string;
   evaluate_result: EvaluateResultData;

@@ -8,6 +8,9 @@ import { useMemo, useRef, useState } from "react";
 import Plan from "./Plan";
 import GradientFloor from "./GradientFloor";
 
+// stores
+import { useAnalysisStore } from "stores/analysisStore";
+
 function ResetCamera({
   controlsRef,
   isResetting,
@@ -230,20 +233,19 @@ function Axis({
 interface UserPlanProps {
   zoom?: number;
   position?: number;
-  userX: number | undefined;
-  userY: number | undefined;
-  userZ: number | undefined;
   highlightAxis?: "X" | "Y" | "Z";
 }
 
 export default function ReportGraph({
   zoom,
   position,
-  userX,
-  userY,
-  userZ,
   highlightAxis,
 }: UserPlanProps) {
+  const { evaluationResult, passScoreData } = useAnalysisStore();
+  const userX = evaluationResult?.x.score;
+  const userY = evaluationResult?.y.score;
+  const userZ = evaluationResult?.z.score;
+
   const highlightScore =
     highlightAxis === "X"
       ? userX
@@ -274,9 +276,9 @@ export default function ReportGraph({
           <Axis highlightAxis={highlightAxis} highlightScore={highlightScore} />
           <Plan x={userX || 2} y={userY || 2} z={userZ || 2} color="#2876F1" />
           <Plan
-            x={3}
-            y={3}
-            z={3}
+            x={passScoreData != null ? passScoreData.x : 3}
+            y={passScoreData != null ? passScoreData.y : 3}
+            z={passScoreData != null ? passScoreData.z : 3}
             color="rgba(193,217,255,0.3)"
             lineColor="#AEB4BC"
           />

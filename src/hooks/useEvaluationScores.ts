@@ -6,7 +6,7 @@ interface EvaluationScores {
 }
 
 export function useEvaluationScores(): EvaluationScores {
-  const { evaluationResult } = useAnalysisStore();
+  const { evaluationResult, passScoreData } = useAnalysisStore();
 
   if (!evaluationResult) {
     return { averageScore: null, averageCompareScore: null };
@@ -23,17 +23,9 @@ export function useEvaluationScores(): EvaluationScores {
           ((x.score as number) + (y.score as number) + (z.score as number)) /
           3
         ).toFixed(1) as unknown as number),
-    averageCompareScore: isString(
-      x.compareScore,
-      y.compareScore,
-      z.compareScore,
-    )
-      ? "-"
-      : ((
-          ((x.compareScore as number) +
-            (y.compareScore as number) +
-            (z.compareScore as number)) /
-          3
-        ).toFixed(1) as unknown as number),
+    averageCompareScore:
+      passScoreData == null
+        ? "-"
+        : ((Math.ceil(passScoreData.overall * 10) / 10) as unknown as number),
   };
 }

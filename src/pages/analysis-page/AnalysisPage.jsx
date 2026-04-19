@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "components/Header/Header";
 import AnalysisNavBar from "./components/AnalysisNavBar";
+import { useDownloadPDF } from "hooks/useDownloadPDF";
 
 // 탭 컴포넌트
 import AnalsisSummary from "./components/AnalsisSummary";
@@ -20,6 +21,7 @@ function AnalysisPage() {
   };
 
   const [activeNav, setActiveNav] = useState(SECTION_IDS[0]);
+  const { containerRef, isGenerating, download } = useDownloadPDF();
 
   useEffect(() => {
     sessionStorage.setItem(ANALYSIS_REPORT_KEY, "true");
@@ -52,8 +54,38 @@ function AnalysisPage() {
             <h2 className="text-[24px] font-medium leading-[120%] text-[#111] font-['Pretendard']">
               자기소개서 역량 평가 리포트
             </h2>
-            <button className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px] hover:bg-[#0D326F] active:bg-[#0D326F] transition-colors">
-              메일로 전송
+            <button
+              onClick={download}
+              disabled={isGenerating}
+              className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px] hover:bg-[#0D326F] active:bg-[#0D326F] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {isGenerating ? (
+                <>
+                  <svg
+                    className="animate-spin h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  생성 중...
+                </>
+              ) : (
+                "리포트 다운로드"
+              )}
             </button>
           </div>
           <div className="bg-white px-[15px]">
@@ -61,10 +93,33 @@ function AnalysisPage() {
             <AnalysisNavBar active={activeNav} onChange={handleNavChange} />
             {/* 섹션 내용 */}
             <div className="mt-[72px] px-[40px]">
-              {(() => { const C = SECTION_COMPONENTS[activeNav]; return <C onNext={handleNext} onPrev={handlePrev} />; })()}
+              {(() => {
+                const C = SECTION_COMPONENTS[activeNav];
+                return <C onNext={handleNext} onPrev={handlePrev} />;
+              })()}
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        ref={containerRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: 0,
+          width: "910px",
+        }}
+      >
+        {SECTION_IDS.map((id) => {
+          const C = SECTION_COMPONENTS[id];
+          return (
+            <div key={id} data-pdf-section className="bg-white p-[40px]">
+              <C />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

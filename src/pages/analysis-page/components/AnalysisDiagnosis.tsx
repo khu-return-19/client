@@ -11,8 +11,14 @@ export default function AnalysisDiagnosis({
   onNext?: () => void;
   onPrev?: () => void;
 }) {
-  const { evaluationResult } = useAnalysisStore();
-  const { averageScore } = useEvaluationScores();
+  const { evaluationResult, passScoreData } = useAnalysisStore();
+  const {
+    averageScore,
+    averageCompareScore,
+    xScoreDiff,
+    yScoreDiff,
+    zScoreDiff,
+  } = useEvaluationScores();
   const sections = [
     {
       axis: "X",
@@ -59,9 +65,6 @@ export default function AnalysisDiagnosis({
               <div className="w-[350px]">
                 <ReportGraph
                   position={-1}
-                  userX={evaluationResult?.x.score}
-                  userY={evaluationResult?.y.score}
-                  userZ={evaluationResult?.z.score}
                   highlightAxis={section.axis as "X" | "Y" | "Z"}
                 />
               </div>
@@ -120,15 +123,15 @@ export default function AnalysisDiagnosis({
       {/* 종합 평가 및 경쟁력 */}
       <section className="px-5 py-[75px] border-y-[1px] border-[#B5B5B5]">
         <AnalysisHeader title="종합평가 및 경쟁력" />
-        <div className="flex gap-8">
-          <div className="flex flex-col gap-4 shrink-0">
+        <div className="flex flex-col gap-8">
+          <div className="flex gap-24 shrink-0">
             <div className="flex gap-[18px]">
               <h3 className="font-semibold text-lg">3D 평가 점수</h3>
               <div className="text-lg">
                 {sections.map((section, index) => (
                   <span key={section.axis}>
                     <span>
-                      {section.score} ({section.axis}){" "}
+                      {section.score}{" "}
                       {index !== sections.length - 1 ? "/ " : ""}
                     </span>
                   </span>
@@ -161,11 +164,7 @@ export default function AnalysisDiagnosis({
         <AnalysisHeader title="기존 합격자 비교 분석" />
         <div className="flex gap-10">
           <div className="flex-shrink-0">
-            <ReportGraph
-              userX={evaluationResult?.x.score}
-              userY={evaluationResult?.y.score}
-              userZ={evaluationResult?.z.score}
-            />
+            <ReportGraph />
           </div>
           <div className="flex flex-col py-4 flex-1 min-w-0">
             {/* Header */}
@@ -187,11 +186,22 @@ export default function AnalysisDiagnosis({
                 X축 (학습 수준)
               </div>
               <div className="flex-[1] text-base flex justify-center">
-                {evaluationResult?.x.score || ""}
+                {passScoreData?.x || "-"}
               </div>
               <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">4.1</div>
-                <div className="text-[10px] text-blue-500">+0.54p</div>
+                <div className="text-base font-medium text-gray-900">
+                  {evaluationResult?.x.score || ""}
+                </div>
+                <div
+                  className={cn(
+                    "text-[10px]",
+                    xScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                  )}
+                >
+                  {xScoreDiff > 0
+                    ? `+${xScoreDiff.toFixed(2)}p`
+                    : `${xScoreDiff.toFixed(2)}p`}
+                </div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.x.compareScore || ""}
@@ -204,11 +214,22 @@ export default function AnalysisDiagnosis({
                 Y축 (직무 적성)
               </div>
               <div className="flex-[1] text-base flex justify-center">
-                {evaluationResult?.y.score || ""}
+                {passScoreData?.y || "-"}
               </div>
               <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">4.0</div>
-                <div className="text-[10px] text-blue-500">+0.6p</div>
+                <div className="text-base font-medium text-gray-900">
+                  {evaluationResult?.y.score || ""}
+                </div>
+                <div
+                  className={cn(
+                    "text-[10px]",
+                    yScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                  )}
+                >
+                  {yScoreDiff > 0
+                    ? `+${yScoreDiff.toFixed(2)}p`
+                    : `${yScoreDiff.toFixed(2)}p`}
+                </div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.y.compareScore || ""}
@@ -221,11 +242,22 @@ export default function AnalysisDiagnosis({
                 Z축 (수행 역량)
               </div>
               <div className="flex-[1] text-base flex justify-center">
-                {evaluationResult?.z.score || ""}
+                {passScoreData?.z || "-"}
               </div>
               <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">4.2</div>
-                <div className="text-[10px] text-red-500">-0.6p</div>
+                <div className="text-base font-medium text-gray-900">
+                  {evaluationResult?.z.score || ""}
+                </div>
+                <div
+                  className={cn(
+                    "text-[10px]",
+                    zScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                  )}
+                >
+                  {zScoreDiff > 0
+                    ? `+${zScoreDiff.toFixed(2)}p`
+                    : `${zScoreDiff.toFixed(2)}p`}
+                </div>
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.z.compareScore || ""}
@@ -238,10 +270,12 @@ export default function AnalysisDiagnosis({
                 최종 평가 점수
               </div>
               <div className="flex-[1] text-base flex justify-center">
-                {averageScore ? averageScore : ""}
+                {averageCompareScore || "-"}
               </div>
               <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">4.1</div>
+                <div className="text-base font-medium text-gray-900">
+                  {averageScore || ""}
+                </div>
               </div>
               <div className="flex-[1] text-xs text-gray-900"></div>
             </div>

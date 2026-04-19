@@ -16,7 +16,7 @@ export default function ImproveStrategy({
     "flex flex-col gap-[8px] list-disc list-outside pl-[16px] ml-[16px]";
 
   const { evaluationResult } = useAnalysisStore();
-  const { averageScore } = useEvaluationScores();
+  const { averageScore, averageDiff } = useEvaluationScores();
 
   return (
     <div className="flex flex-col gap-[clamp(32px,3.9vw,56px)]">
@@ -31,12 +31,12 @@ export default function ImproveStrategy({
           <Row
             label="최종 평가 점수 :"
             value={averageScore + "점"}
-            sub="기존합격자 대비 +0.7 ↑"
+            sub={`기존합격자 대비 ${averageDiff.toFixed(1)} ${averageDiff > 0 ? "↑" : "↓"}`}
           />
           <Row
             label="경쟁력 :"
             value={evaluationResult?.level || "보통"}
-            sub="기존합격자 대비 약 6~10%P ↑"
+            sub=""
           />
         </div>
 

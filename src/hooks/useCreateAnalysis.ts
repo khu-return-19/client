@@ -3,7 +3,8 @@ import { useAnalysisStore } from "stores/analysisStore";
 import { CreateAnalysisData } from "schema/Analysis";
 
 export const useCreateAnalysis = () => {
-  const { setEvents, setStatus, setFinalData, setAbortController } = useAnalysisStore();
+  const { setEvents, setStatus, setFinalData, setPassScoreData, setAbortController } =
+    useAnalysisStore();
 
   const start = async (data: CreateAnalysisData) => {
     const controller = new AbortController();
@@ -18,6 +19,17 @@ export const useCreateAnalysis = () => {
 
         if (event.status === "FAILED") {
           setStatus("failed");
+          return;
+        }
+
+        if (event.type === "pass_score") {
+          const { x, y, z, overall } = event.data as any;
+          setPassScoreData({
+            x: Math.ceil(x * 10) / 10,
+            y: Math.ceil(y * 10) / 10,
+            z: Math.ceil(z * 10) / 10,
+            overall,
+          });
           return;
         }
 

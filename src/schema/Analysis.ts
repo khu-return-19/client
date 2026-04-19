@@ -79,7 +79,7 @@ export interface AxisScore {
   criteria: string[];
   basis: string[];
   summary: string;
-  compareScore: number; // 합격자 평균 점수
+  compareScore: string;
 }
 
 export interface ImproveStrategy {

@@ -7,7 +7,7 @@ interface SubTitleProps {
 
 function SubTitle({ title, discription }: SubTitleProps) {
   return (
-    <div className="flex flex-col gap-[10px] lg:gap-0">
+    <div className="flex flex-col gap-[10px]">
       <h2 className={cn("text-xl text-[#00010D] lg:text-[28px] font-semibold")}>
         {title}
       </h2>

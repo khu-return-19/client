@@ -20,6 +20,7 @@ const AnalysisButton = ({
   const [btnStatus, setBtnStatus] = useState(status);
 
   // API에서 count 가져오기 - 마운트될 때마다 렌더링
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const fetchCount = async () => {
       try {

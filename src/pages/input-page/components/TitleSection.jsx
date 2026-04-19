@@ -60,6 +60,7 @@ function TitleSection() {
     if (!startTime) return;
     startTimer();
     return () => clearInterval(intervalRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
   const handleExtend = () => {

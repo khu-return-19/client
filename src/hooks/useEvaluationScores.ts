@@ -39,12 +39,6 @@ export function useEvaluationScores(): EvaluationScores {
       ? "-"
       : ((Math.ceil(passScoreData.overall * 10) / 10) as unknown as number);
 
-  console.log(
-    typeof averageScore,
-    typeof averageCompareScore,
-    averageScore,
-    averageCompareScore,
-  );
   return {
     averageScore,
     averageCompareScore,

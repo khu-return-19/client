@@ -12,35 +12,44 @@ export function useDownloadPDF() {
 
     try {
       const sections = Array.from(
-        containerRef.current.querySelectorAll<HTMLElement>("[data-pdf-section]"),
+        containerRef.current.querySelectorAll<HTMLElement>(
+          "[data-pdf-section]",
+        ),
       );
 
-      const pdf = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
+      const canvases = await Promise.all(
+        sections.map((section) =>
+          html2canvas(section, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            width: section.scrollWidth,
+            height: section.scrollHeight,
+            windowWidth: section.scrollWidth,
+          }),
+        ),
+      );
 
-      for (let i = 0; i < sections.length; i++) {
-        const canvas = await html2canvas(sections[i], {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-        });
+      let pdf: jsPDF | null = null;
 
+      for (let i = 0; i < canvases.length; i++) {
+        const canvas = canvases[i];
         const imgData = canvas.toDataURL("image/jpeg", 0.95);
-        const ratio = Math.min(
-          pageWidth / canvas.width,
-          pageHeight / canvas.height,
-        );
-        const imgW = canvas.width * ratio;
-        const imgH = canvas.height * ratio;
-        const x = (pageWidth - imgW) / 2;
-        const y = (pageHeight - imgH) / 2;
 
-        if (i > 0) pdf.addPage();
-        pdf.addImage(imgData, "JPEG", x, y, imgW, imgH);
+        if (i === 0) {
+          pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "px",
+            format: [canvas.width, canvas.height],
+          });
+        } else {
+          pdf!.addPage([canvas.width, canvas.height]);
+        }
+
+        pdf!.addImage(imgData, "JPEG", 0, 0, canvas.width, canvas.height);
       }
 
-      pdf.save("역량평가_리포트.pdf");
+      pdf!.save("역량평가_리포트.pdf");
     } finally {
       setIsGenerating(false);
     }

@@ -96,11 +96,15 @@ function AnalysisPage() {
         </div>
       </div>
 
-      {/* PDF 캡쳐용 숨겨진 렌더링 영역 */}
       <div
         ref={containerRef}
         aria-hidden="true"
-        style={{ position: "absolute", left: "-9999px", top: 0, width: "1200px" }}
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: 0,
+          width: "910px",
+        }}
       >
         {SECTION_IDS.map((id) => {
           const C = SECTION_COMPONENTS[id];

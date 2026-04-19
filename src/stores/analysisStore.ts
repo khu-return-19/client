@@ -17,31 +17,35 @@ interface AnalysisStore {
   evaluationResult: EvaluateResultData | null;
   revisedResult: ReviseResultData | null;
   passScoreData: PassScoreData | null;
+  abortController: AbortController | null;
   setEvents: (updater: (prev: AnalysisEvent[]) => AnalysisEvent[]) => void;
   setStatus: (status: AnalysisStore["status"]) => void;
   setFinalData: (data: FinalStateData) => void;
   setPassScoreData: (data: PassScoreData) => void;
+  setAbortController: (ctrl: AbortController | null) => void;
   reset: () => void;
 }
 
 export const useAnalysisStore = create<AnalysisStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       events: [],
       status: "idle",
       normalData: null,
       evaluationResult: null,
       revisedResult: null,
       passScoreData: null,
-      setEvents: (updater) =>
-        set((state) => ({ events: updater(state.events) })),
+      abortController: null,
+      setEvents: (updater) => set((state) => ({ events: updater(state.events) })),
       setStatus: (status) => set({ status }),
       setFinalData: (data) => {
         const { evaluationResult, revisedResult, ...normalData } = data;
         set({ normalData, evaluationResult, revisedResult });
       },
       setPassScoreData: (data) => set({ passScoreData: data }),
-      reset: () =>
+      setAbortController: (ctrl) => set({ abortController: ctrl }),
+      reset: () => {
+        get().abortController?.abort();
         set({
           events: [],
           status: "idle",
@@ -49,7 +53,9 @@ export const useAnalysisStore = create<AnalysisStore>()(
           evaluationResult: null,
           revisedResult: null,
           passScoreData: null,
-        }),
+          abortController: null,
+        });
+      },
     }),
     {
       name: "analysis-store",

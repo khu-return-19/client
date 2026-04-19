@@ -100,7 +100,7 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
                 <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard'] text-center">
                   {row.my}
                 </span>
-                <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard'] text-center">
+                <span className="text-[clamp(14px,1.1vw,16px)] font-medium text-[#111] font-['Pretendard'] text-center">
                   {row.pass}
                 </span>
                 {row.mark ? (

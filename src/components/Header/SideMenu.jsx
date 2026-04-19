@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import XIcon from "assets/icons/x.svg";
 import LogoWhite from "assets/icons/logo_white.svg";
+import { SESSION_STORAGE_KEY } from "api/sessionApi";
+import { ANALYSIS_REPORT_KEY } from "pages/analysis-page/AnalysisPage";
 
 const SUB_ITEMS = {
   "주요 사이트": [
-    { label: "미래인재센터", path: "#" },
-    { label: "취창업스쿨", path: "#" },
-    { label: "상담신청", path: "#" },
-    { label: "Info21", path: "#" },
+    { label: "미래인재센터", path: "https://goodjob.khu.ac.kr/" },
+    { label: "취창업스쿨", path: "https://goodjob.khu.ac.kr/s2/s2_2_2.php" },
+    { label: "상담신청", path: "https://aladdin.khu.ac.kr/portfolio/ptfol/cusl/main/index.do" },
+    { label: "Info21", path: "https://portal.khu.ac.kr/" },
   ],
 };
 
@@ -21,6 +23,7 @@ const NAV_ITEMS = [
 
 function SideMenu({ onClose }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [openSub, setOpenSub] = useState(null);
   const [selected, setSelected] = useState(null);
 
@@ -28,6 +31,15 @@ function SideMenu({ onClose }) {
     if (SUB_ITEMS[item.label]) {
       setOpenSub(openSub === item.label ? null : item.label);
       setSelected(item.label);
+    } else if (item.label === "자기소개서 분석") {
+      const isSessionActive = !!sessionStorage.getItem(SESSION_STORAGE_KEY);
+      const hasReport = !!sessionStorage.getItem(ANALYSIS_REPORT_KEY);
+      if (isSessionActive && hasReport) {
+        sessionStorage.setItem("showReportModal", "true");
+      }
+      setSelected(item.label);
+      onClose();
+      navigate("/input-page/auth");
     } else {
       setSelected(item.label);
       onClose();
@@ -79,15 +91,17 @@ function SideMenu({ onClose }) {
                 {hasSub && isSubOpen && (
                   <div className="flex flex-col pl-[20px] pb-[8px]">
                     {SUB_ITEMS[item.label].map((sub) => (
-                      <Link
+                      <a
                         key={sub.label}
-                        to={sub.path}
+                        href={sub.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={onClose}
                         className="side-sub-item py-[10px] text-[16px] font-[400] leading-[150%]"
                         style={{ color: "#717171" }}
                       >
                         {sub.label}
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 )}

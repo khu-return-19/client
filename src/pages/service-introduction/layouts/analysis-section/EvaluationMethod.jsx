@@ -28,7 +28,7 @@ function EvaluationMethod() {
 
     return (
         <SectionContent title="평가 방식">
-            <div className="relative" style={{ marginLeft: 'clamp(0px, calc(100vw - 1096px), 171px)' }}>
+            <div className="relative w-full min-[991px]:w-[914px] min-[991px]:ml-auto">
                 <div className="flex flex-col">
                     <div className="relative">
                         <div

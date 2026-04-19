@@ -16,7 +16,8 @@ function NoticeTable({ notices, filterType, searchText, currentPage, pageSize, o
     const filteredNotices = allNotices.filter(notice => {
         let typeMatch = true;
         if (filterType === '중요') typeMatch = notice.type === 1;
-        if (filterType === '일반') typeMatch = notice.type === 2;
+        // if (filterType === '일반') typeMatch = notice.type === 2;
+        if (filterType === '일반') typeMatch = true;
 
         let searchMatch = true;
         if (searchText) {

@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import { SESSION_STORAGE_KEY } from "api/sessionApi";
 import ReactGA from "react-ga4";
 import Auth from "pages/input-page/auth/Auth";
 import Company from "pages/input-page/company/Company";
@@ -11,6 +12,10 @@ import LandingPage from "pages/landing-page/LandingPage";
 import NoticeList from "pages/notice-page/list/NoticeList";
 import NoticeDetail from "pages/notice-page/detail/NoticeDetail";
 import ServiceIntroduction from "pages/service-introduction/ServiceIntroduction";
+
+function SessionRoute({ element }) {
+  return !!sessionStorage.getItem(SESSION_STORAGE_KEY) ? element : <Navigate to="/input-page/auth" replace />;
+}
 
 function AppContent() {
   const location = useLocation();
@@ -34,13 +39,13 @@ function AppContent() {
 
         {/* 입력 페이지 */}
         <Route path="/input-page/auth" element={<Auth />} />
-        <Route path="/input-page/company" element={<Company />} />
-        <Route path="/input-page/resume" element={<Resume />} />
-        <Route path="/input-page/self-introduction" element={<SelfIntroduction />} />
-        <Route path="/input-page/loading" element={<Loading />} />
+        <Route path="/input-page/company" element={<SessionRoute element={<Company />} />} />
+        <Route path="/input-page/resume" element={<SessionRoute element={<Resume />} />} />
+        <Route path="/input-page/self-introduction" element={<SessionRoute element={<SelfIntroduction />} />} />
+        <Route path="/input-page/loading" element={<SessionRoute element={<Loading />} />} />
 
         {/* 분석 페이지 */}
-        <Route path="/analysis" element={<AnalysisPage />} />
+        <Route path="/analysis" element={<SessionRoute element={<AnalysisPage />} />} />
       </Routes>
     </>
   );

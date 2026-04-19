@@ -28,24 +28,15 @@ function CompanySection() {
 
     // 2. 자동완성용 결과 상태
     const [companyResults, setCompanyResults] = useState([]);
-    const [jobTitleResults, setJobTitleResults] = useState([]);
 
     // 3. 필터링 로직
     useEffect(() => {
         if (companyName) {
             setCompanyResults(companiesList.filter(c => c.toLowerCase().includes(companyName.toLowerCase())));
         } else {
-            setCompanyResults([]);
+            setCompanyResults(companiesList);
         }
     }, [companyName, companiesList]);
-
-    useEffect(() => {
-        if (jobTitle) {
-            setJobTitleResults(positionsList.filter(j => j.toLowerCase().includes(jobTitle.toLowerCase())));
-        } else {
-            setJobTitleResults([]);
-        }
-    }, [jobTitle, positionsList]);
 
     const canProceed = companyName.trim() !== '' && jobTitle.trim() !== '';
 
@@ -70,8 +61,8 @@ function CompanySection() {
                     placeholder="소프트웨어 엔지니어"
                     width={530}
                     required={true}
-                    autocompleteResults={jobTitleResults}
-
+                    autocompleteResults={positionsList}
+                    selectOnly={true}
                 />
             </div>
 

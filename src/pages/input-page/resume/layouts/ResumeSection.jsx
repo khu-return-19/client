@@ -136,58 +136,42 @@ function ResumeSection() {
     sessionStorage.setItem("resume_languages", JSON.stringify(languages));
   }, [languages]);
 
-  // 2. 자동완성용 결과 상태
-  const [autocompleteResults, setAutocompleteResults] = useState({
-    university: [],
-    major: [],
-    minor: [],
-    company: [],
-    position: [],
-    langType: [],
-  });
-
   // 3. 필터링 로직
   const filterResults = (value, list) => {
-    if (!value) return [];
+    if (!value) return list;
     return list.filter((item) =>
       item.toLowerCase().includes(value.toLowerCase()),
     );
   };
 
-  // 행 변경 핸들러 (자동완성 트리거용)
-  const handleEduChange = (newItems) => {
-    setEducation(newItems);
-    const last = newItems[newItems.length - 1];
-    setAutocompleteResults((prev) => ({
-      ...prev,
-      university: filterResults(last.university, universitiesList),
-      major: filterResults(last.major, majorsList),
-      minor: filterResults(last.minor, majorsList),
+  // 행별 자동완성 결과 동적 계산 
+  const eduAutocomplete = useMemo(() => {
+    return education.map((row) => ({
+      university: filterResults(row.university, universitiesList),
+      major: filterResults(row.major, majorsList),
+      minor: filterResults(row.minor, majorsList),
     }));
-  };
+  }, [education, universitiesList, majorsList]);
 
-  const handleExpChange = (newItems) => {
-    setExperience(newItems);
-    const last = newItems[newItems.length - 1];
-    setAutocompleteResults((prev) => ({
-      ...prev,
-      company: filterResults(last.company, companiesList),
-      position: filterResults(last.position, positionsList),
+  const expAutocomplete = useMemo(() => {
+    return experience.map((row) => ({
+      company: filterResults(row.company, companiesList),
+      position: filterResults(row.position, positionsList),
     }));
-  };
+  }, [experience, companiesList, positionsList]);
 
-  const handleLangChange = (newItems) => {
-    setLanguages(newItems);
-    const last = newItems[newItems.length - 1];
-    setAutocompleteResults((prev) => ({
-      ...prev,
-      langType: filterResults(last.type, LANGUAGES_MASTER),
+  const langAutocomplete = useMemo(() => {
+    return languages.map((row) => ({
+      type: filterResults(row.type, LANGUAGES_MASTER),
     }));
-  };
+  }, [languages]);
 
   // 학력사항(required)의 필수 필드가 모두 입력된 경우에만 다음 버튼 활성화
   const canProceed = education.every(
-    (row) => row.university?.trim() !== "" && row.major?.trim() !== "",
+    (row) =>
+      row.university?.trim() !== "" &&
+      row.major?.trim() !== "" &&
+      row.gpa?.trim() !== "",
   );
 
   return (
@@ -199,7 +183,7 @@ function ResumeSection() {
       <EntryGroupSection
         caption="학력사항"
         items={education}
-        onChange={handleEduChange}
+        onChange={setEducation}
         required={true}
         newItem={{ university: "경희대학교", major: "", gpa: "", minor: "" }}
         placeholders={{
@@ -208,18 +192,14 @@ function ResumeSection() {
           gpa: "학점 (4.3기준)",
           minor: "부전공",
         }}
-        autocompleteResults={{
-          university: autocompleteResults.university,
-          major: autocompleteResults.major,
-          minor: autocompleteResults.minor,
-        }}
+        autocompleteResults={eduAutocomplete}
       />
 
       {/* 경력사항 */}
       <EntryGroupSection
         caption="경력사항"
         items={experience}
-        onChange={handleExpChange}
+        onChange={setExperience}
         placeholders={{
           type: "고용 형태",
           period: "기간",
@@ -227,10 +207,7 @@ function ResumeSection() {
           department: "부서명",
           position: "직책",
         }}
-        autocompleteResults={{
-          company: autocompleteResults.company,
-          position: autocompleteResults.position,
-        }}
+        autocompleteResults={expAutocomplete}
       />
 
       {/* 수상실적 */}
@@ -259,14 +236,12 @@ function ResumeSection() {
       <EntryGroupSection
         caption="어학사항"
         items={languages}
-        onChange={handleLangChange}
+        onChange={setLanguages}
         placeholders={{
           type: "어학 종류",
           score: "등급/점수",
         }}
-        autocompleteResults={{
-          type: autocompleteResults.langType,
-        }}
+        autocompleteResults={langAutocomplete}
       />
 
       {/* 다음 단계 버튼 */}

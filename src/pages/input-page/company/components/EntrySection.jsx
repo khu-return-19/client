@@ -22,6 +22,7 @@ const EntrySection = ({
   placeholder = "",
   autocompleteResults = [],
   required = false,
+  selectOnly = false,
   className = "",
   ...props
 }) => {
@@ -53,6 +54,7 @@ const EntrySection = ({
           onChange={(e) => onChange && onChange(e.target.value)}
           placeholder={placeholder}
           autocompleteResults={autocompleteResults}
+          selectOnly={selectOnly}
           {...props}
         />
       </div>

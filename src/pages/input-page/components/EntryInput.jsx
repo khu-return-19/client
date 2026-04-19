@@ -19,6 +19,7 @@ const EntryInput = forwardRef(({
     placeholder,
     className = '',
     autocompleteResults = [],
+    selectOnly = false,
     ...props
 }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -33,6 +34,8 @@ const EntryInput = forwardRef(({
         if (onBlur) onBlur(e);
     };
 
+    const handleClick = selectOnly ? () => setIsFocused(true) : undefined;
+
     return (
         <div className={`relative w-full ${isFocused ? 'z-[1000]' : 'z-0'} ${className}`}>
             {/* 인풋 영역: 고정 높이 52px, 레이아웃 밀림 방지를 위해 border를 별도 div로 분리 */}
@@ -40,14 +43,16 @@ const EntryInput = forwardRef(({
                 <input
                     ref={ref}
                     value={value}
-                    onChange={onChange}
+                    onChange={selectOnly ? undefined : onChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
+                    onClick={handleClick}
                     placeholder={placeholder}
-                    className="
+                    readOnly={selectOnly}
+                    className={`
                         w-full h-full
-                        bg-transparent 
-                        outline-none 
+                        bg-transparent
+                        outline-none
                         placeholder:text-[#717171]
                         text-[#000000]
                         px-[10px]
@@ -55,7 +60,8 @@ const EntryInput = forwardRef(({
                         text-[16px]
                         max-[893px]:text-[15px]
                         font-['Pretendard']
-                    "
+                        ${selectOnly ? 'cursor-pointer' : ''}
+                    `}
                     {...props}
                 />
                 {/* 하단 보더 (Layout Shift 방지) */}

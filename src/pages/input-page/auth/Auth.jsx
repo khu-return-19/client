@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import InputPageLayout from "../layouts/InputPageLayout";
 import GuideSection from "./layouts/GuideSection";
 import AuthFormSection from "./layouts/AuthFormSection";
 import GuideBox from "./components/GuideBox";
 import Button from "../components/Button";
 import Header from "components/Header/Header";
+import ReportExistsModal from "pages/landing-page/1-main/components/ReportExistsModal";
 
 const isMobile = () => window.innerWidth <= 767;
 
 function Auth() {
   const [guideConfirmed, setGuideConfirmed] = useState(!isMobile());
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("showReportModal") === "true") {
+      sessionStorage.removeItem("showReportModal");
+      setShowModal(true);
+    }
+  }, []);
 
   if (!guideConfirmed) {
     return (
+      <>
+        {showModal && (
+          <ReportExistsModal
+            onClose={() => setShowModal(false)}
+            onConfirm={() => { setShowModal(false); navigate("/analysis"); }}
+          />
+        )}
       <div className="min-h-screen flex flex-col">
         <Header />
           <div className="flex-1 flex flex-col px-[20px] pt-[calc(clamp(52px,calc(2.5vw+28px),64px)+24px)] pb-[40px]">
@@ -30,14 +48,23 @@ function Auth() {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <InputPageLayout>
-      <GuideSection />
-      <AuthFormSection />
-    </InputPageLayout>
+    <>
+      {showModal && (
+        <ReportExistsModal
+          onClose={() => setShowModal(false)}
+          onConfirm={() => { setShowModal(false); navigate("/analysis"); }}
+        />
+      )}
+      <InputPageLayout>
+        <GuideSection />
+        <AuthFormSection />
+      </InputPageLayout>
+    </>
   );
 }
 

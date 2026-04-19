@@ -40,13 +40,21 @@ function LandingPage() {
           index={activeIndex}
           total={5}
           onIndexClick={(i) => {
-            const ids = ["section-main", "section-video", "section-matrix", "section-improve", "section-review"];
-            document.getElementById(ids[i])?.scrollIntoView({ behavior: "smooth" });
+            const ids = [
+              "section-main",
+              "section-video",
+              "section-matrix",
+              "section-improve",
+              "section-review",
+            ];
+            document
+              .getElementById(ids[i])
+              ?.scrollIntoView({ behavior: "smooth" });
           }}
         />
       </div>
 
-      <div className="overflow-x-hidden lg:snap-y lg:snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
+      <div className="overflow-x-hidden bg-[#F4F6F8] lg:snap-y lg:snap-mandatory overflow-y-scroll scrollbar-hide h-[100dvh]">
         <section
           id="section-main"
           ref={mainRef}
@@ -55,7 +63,11 @@ function LandingPage() {
           <MainSectionLayout />
         </section>
 
-        <section ref={videoRef} className="h-[100dvh] snap-start hidden min-[900px]:block">
+        <section
+          ref={videoRef}
+          id="section-video"
+          className="h-[100dvh] snap-start hidden min-[900px]:block"
+        >
           <Landing2Layout />
         </section>
 

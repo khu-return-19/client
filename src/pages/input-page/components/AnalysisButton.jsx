@@ -1,5 +1,5 @@
 import Button from "./Button";
-
+import { useUserStore } from "stores/userStore";
 /**
  * 분석하기 전용 버튼 컴포넌트
  * @param {number} current - 분석 시도 횟수
@@ -12,6 +12,8 @@ const AnalysisButton = ({
   status = "default",
   ...props
 }) => {
+  const count = useUserStore((state) => state.count);
+
   const countColor =
     status === "disabled" ? "text-[#EEEEEE]" : "text-[#C1D9FF]";
 
@@ -25,7 +27,7 @@ const AnalysisButton = ({
     >
       <span>분석하기</span>
       <span className={`${countColor}`}>
-        {current}/{total}
+        {3 - count}/{total}
       </span>
     </Button>
   );

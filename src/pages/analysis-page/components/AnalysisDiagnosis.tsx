@@ -172,7 +172,6 @@ export default function AnalysisDiagnosis({
               <div className="flex-[0.5] text-base">평가 항목</div>
               <div className="flex-[1] flex flex-col items-center text-base">
                 합격자 평균
-                <div className="text-[12px] text-gray900">(227건, 동직군)</div>
               </div>
               <div className="flex-[1] flex justify-center text-base pr-3">
                 지원자

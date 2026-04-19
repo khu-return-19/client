@@ -161,6 +161,7 @@ function SelfIntroSection() {
           </Button>
           <AnalysisButton
             status={firstFilled ? "default" : "disabled"}
+            email={sessionStorage.getItem("verifiedEmail") || ""}
             onClick={handleAnalysis}
             className="!w-[160px] !h-[48px]"
           />

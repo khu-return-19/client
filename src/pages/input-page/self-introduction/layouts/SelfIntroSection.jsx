@@ -99,7 +99,6 @@ function SelfIntroSection() {
     division: "",
     applyUrl: sessionStorage.getItem("company_noticeUrl") || "",
   };
-  console.log(analysisData);
 
   const handleAnalysis = async () => {
     if (!firstFilled) return;

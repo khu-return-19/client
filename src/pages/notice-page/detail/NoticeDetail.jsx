@@ -52,7 +52,7 @@ function NoticeDetail() {
 
     return (
         <NoticePageLayout>
-            <NoticeDetailLayout notice={notice} />
+            <NoticeDetailLayout notice={notice.data} />
         </NoticePageLayout>
     );
 }

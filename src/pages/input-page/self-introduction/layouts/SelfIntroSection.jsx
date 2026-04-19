@@ -5,7 +5,6 @@ import Button from "../../components/Button";
 import AnalysisButton from "../../components/AnalysisButton";
 import AnalysisModal from "../components/AnalysisModal";
 import TempSaveModal from "../../components/TempSaveModal";
-import api from "api/axiosInstance";
 
 // API
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
@@ -30,7 +29,6 @@ function SelfIntroSection() {
   const [cards, setCards] = useState(loadFromSession);
   const [showModal] = useState(false);
   const [showTempSaveModal, setShowTempSaveModal] = useState(false);
-  const [credit, setCredit] = useState(0);
 
   const { start } = useCreateAnalysis();
   const status = useAnalysisStore((state) => state.status);
@@ -44,25 +42,6 @@ function SelfIntroSection() {
       navigate("/input-page/loading");
     }
   }, [status, navigate]);
-
-  // credit 가져오기 - 마운트될 때마다 실행
-  useEffect(() => {
-    const getCredit = async () => {
-      try {
-        const userId = sessionStorage.getItem("verifiedEmail") || "";
-        const response = await api.get(
-          `/api/auth/email/credit?email=${userId}`,
-          { headers: { "X-API-Version": "2" } }
-        );
-        setCredit(response.data?.credit || 0);
-      } catch (error) {
-        console.error("Failed to fetch credit:", error);
-        setCredit(3);
-      }
-    };
-
-    getCredit();
-  }, []);
 
   const firstFilled =
     cards[0]?.question.trim().length > 0 && cards[0]?.content.trim().length > 0;
@@ -166,9 +145,8 @@ function SelfIntroSection() {
             임시저장
           </Button>
           <AnalysisButton
-            status={firstFilled && credit < 3 ? "default" : "disabled"}
+            status={firstFilled ? "default" : "disabled"}
             onClick={handleAnalysis}
-            email={analysisData.userId}
           />
         </div>
         {/* 모바일 */}
@@ -182,9 +160,8 @@ function SelfIntroSection() {
             임시저장
           </Button>
           <AnalysisButton
-            status={firstFilled && credit < 3 ? "default" : "disabled"}
+            status={firstFilled ? "default" : "disabled"}
             onClick={handleAnalysis}
-            email={analysisData.userId}
             className="!w-[160px] !h-[48px]"
           />
         </div>

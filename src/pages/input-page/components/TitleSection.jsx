@@ -36,11 +36,11 @@ function TitleSection() {
   const [timeLeft, setTimeLeft] = useState(SESSION_DURATION_MS);
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    const startTime = Number(sessionStorage.getItem(SESSION_STORAGE_KEY));
-    if (!startTime) return;
-
+  const startTimer = () => {
+    clearInterval(intervalRef.current);
     const tick = () => {
+      const startTime = Number(sessionStorage.getItem(SESSION_STORAGE_KEY));
+      if (!startTime) return;
       const elapsed = Date.now() - startTime;
       const remaining = SESSION_DURATION_MS - elapsed;
       if (remaining <= 0) {
@@ -51,9 +51,14 @@ function TitleSection() {
         setTimeLeft(remaining);
       }
     };
-
     tick();
     intervalRef.current = setInterval(tick, 1000);
+  };
+
+  useEffect(() => {
+    const startTime = Number(sessionStorage.getItem(SESSION_STORAGE_KEY));
+    if (!startTime) return;
+    startTimer();
     return () => clearInterval(intervalRef.current);
   }, [navigate]);
 
@@ -63,6 +68,7 @@ function TitleSection() {
         const newStart = Date.now();
         sessionStorage.setItem(SESSION_STORAGE_KEY, String(newStart));
         setTimeLeft(SESSION_DURATION_MS);
+        startTimer();
       },
     });
   };

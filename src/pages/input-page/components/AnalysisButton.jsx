@@ -19,7 +19,7 @@ const AnalysisButton = ({
   const [count, setCount] = useState(0);
   const [btnStatus, setBtnStatus] = useState(status);
 
-  // API에서 count 가져오기 - 화면에 나타날때마다 렌더링
+  // API에서 count 가져오기 - 마운트될 때마다 렌더링
   useEffect(() => {
     const fetchCount = async () => {
       try {
@@ -36,7 +36,7 @@ const AnalysisButton = ({
     };
     
     if (email) fetchCount();
-  }, [email, props]);
+  }, []);
 
   // count 변화 감지해서 btnStatus 업데이트
   useEffect(() => {

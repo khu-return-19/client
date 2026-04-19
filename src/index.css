@@ -83,3 +83,8 @@ code {
     top: calc(100vh - 80vw) !important;
   }
 }
+
+.notice-content p { margin-bottom: 0.75em; }
+.notice-content ul, .notice-content ol { padding-left: 1.5em; margin-bottom: 0.75em; }
+.notice-content li { margin-bottom: 0.25em; }
+.notice-content strong { font-weight: 600; }

@@ -66,6 +66,21 @@ export const useDeleteAnalyses = () => {
   });
 };
 
+export const getNumOfAnalysis = async () => {
+  const email = sessionStorage.getItem("verifiedEmail");
+  const response = await api.get("/api/auth/email/credit", {
+    params: { email },
+  });
+  return response.data;
+};
+
+export const useNumOfAnalysis = () => {
+  return useQuery({
+    queryKey: ["numOfAnalysis"],
+    queryFn: getNumOfAnalysis,
+  });
+};
+
 // 스트리밍 fetch + EventSorce 방식 사용을 위해 fetch API로 직접 구현
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 

@@ -5,7 +5,6 @@ import successIcon from "assets/icons/인증_성공.svg";
 import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
 import EmailSentModal from "./EmailSentModal";
 import { SESSION_STORAGE_KEY } from "api/sessionApi";
-import { useUserStore } from "stores/userStore";
 
 const VERIFIED_EMAIL_KEY = "verifiedEmail";
 
@@ -14,7 +13,6 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
     useSendVerifyEmail();
   const { mutate: verifyEmailCode, isPending: isVerifying } =
     useVerifyEmailCode();
-  const { setCount } = useUserStore();
 
   const savedEmail = sessionStorage.getItem(VERIFIED_EMAIL_KEY) || "";
   const isAlreadyVerified =
@@ -133,8 +131,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
           setIsVerified(true);
           setCodeError(false);
           sessionStorage.setItem(VERIFIED_EMAIL_KEY, email);
-          if (data?.data?.count != null) setCount(data.data.count);
-          onCodeVerified?.(email);
+onCodeVerified?.(email);
         },
         onError: () => {
           setCodeError(true);

@@ -29,14 +29,14 @@ const AGREEMENT_ITEMS = [
   },
   {
     id: "thirdParty",
-    type: "선택",
+    type: "필수",
     label: "개인정보 제3자 제공에 동의합니다.",
     modalTitle: "Pertineo 개인정보 제3자 제공 동의서",
     url: "https://d2qlxukzyb0szn.cloudfront.net/terms-of-service/v1/third-party-data-sharing.html",
   },
 ];
 
-const REQUIRED_IDS = ["terms", "privacy", "policy"];
+const REQUIRED_IDS = ["terms", "privacy", "policy", "thirdParty"];
 const AGREEMENT_CHECKED_KEY = "agreementChecked";
 
 function Agreement({ isEmailVerified = false, email = "" }) {

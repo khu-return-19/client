@@ -144,6 +144,49 @@ function ResumeSection() {
     );
   };
 
+  // GPA 범위 검증 함수
+  const validateGPA = (gpa) => {
+    if (!gpa) return null;
+    const gpaNum = parseFloat(gpa);
+    if (isNaN(gpaNum)) return "범위가 벗어났습니다";
+    if (gpaNum < 0.0 || gpaNum > 4.3) return "범위가 벗어났습니다";
+    return null;
+  };
+
+  // 각 education 행의 GPA 에러 상태
+  const educationGPAErrors = education.map((row) => validateGPA(row.gpa));
+
+  // Education 변경 핸들러 (GPA 필터링 포함)
+  const handleEducationChange = (newEducation) => {
+    const filteredEducation = newEducation.map((row) => {
+      let gpa = row.gpa;
+      
+      // 숫자와 첫 번째 점 이외의 모든 것 제거
+      let numericPart = '';
+      let hasDot = false;
+      
+      for (let char of gpa) {
+        if (char === '.' && !hasDot) {
+          numericPart += '.';
+          hasDot = true;
+        } else if (/[0-9]/.test(char)) {
+          numericPart += char;
+        }
+      }
+      
+      // 점으로 시작하는 경우만 제거 (끝나는 경우는 허용)
+      if (numericPart.startsWith('.')) {
+        numericPart = numericPart.slice(1);
+      }
+      
+      return {
+        ...row,
+        gpa: numericPart
+      };
+    });
+    setEducation(filteredEducation);
+  };
+
   // 행별 자동완성 결과 동적 계산 
   const eduAutocomplete = useMemo(() => {
     return education.map((row) => ({
@@ -168,10 +211,17 @@ function ResumeSection() {
 
   // 학력사항(required)의 필수 필드가 모두 입력된 경우에만 다음 버튼 활성화
   const canProceed = education.every(
-    (row) =>
-      row.university?.trim() !== "" &&
-      row.major?.trim() !== "" &&
-      row.gpa?.trim() !== "",
+    (row) => {
+      const gpa = parseFloat(row.gpa);
+      return (
+        row.university?.trim() !== "" &&
+        row.major?.trim() !== "" &&
+        row.gpa?.trim() !== "" &&
+        !isNaN(gpa) &&
+        gpa >= 0.0 &&
+        gpa <= 4.3
+      );
+    }
   );
 
   return (
@@ -183,7 +233,7 @@ function ResumeSection() {
       <EntryGroupSection
         caption="학력사항"
         items={education}
-        onChange={setEducation}
+        onChange={handleEducationChange}
         required={true}
         newItem={{ university: "경희대학교", major: "", gpa: "", minor: "" }}
         placeholders={{
@@ -194,6 +244,19 @@ function ResumeSection() {
         }}
         autocompleteResults={eduAutocomplete}
       />
+      
+      {/* GPA 에러 메시지 */}
+      {educationGPAErrors.some((err) => err !== null) && (
+        <div className="w-full min-[894px]:max-w-[1080px]">
+          {educationGPAErrors.map((error, idx) =>
+            error ? (
+              <div key={idx} className="text-[#E74C3C] text-[14px] font-normal mt-[8px]">
+                {error}
+              </div>
+            ) : null
+          )}
+        </div>
+      )}
 
       {/* 경력사항 */}
       <EntryGroupSection

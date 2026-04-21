@@ -10,7 +10,7 @@ import TempSaveModal from "../../components/TempSaveModal";
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
 import { useAnalysisStore } from "stores/analysisStore";
 
-const MAX_CARDS = 5;
+const MAX_CARDS = 10;
 const SESSION_KEY = "selfIntroCards";
 
 const defaultCards = () => [{ id: 0, question: "", content: "" }];

@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import EntrySection from "../components/EntrySection";
 import Button from "../../components/Button";
 import TempSaveModal from "../../components/TempSaveModal";
-import { useFetchCompanies, useFetchPositions } from "api/setupApi";
+import { 
+    useFetchCompanies,
+    // useFetchPositions
+} from "api/setupApi";
 
 function CompanySection() {
     const navigate = useNavigate();
@@ -11,10 +14,10 @@ function CompanySection() {
 
     // API 자동완성 데이터
     const { data: companiesData } = useFetchCompanies();
-    const { data: positionsData } = useFetchPositions();
+    // const { data: positionsData } = useFetchPositions();
 
     const companiesList = useMemo(() => companiesData?.data?.list ?? [], [companiesData]);
-    const positionsList = useMemo(() => positionsData?.data?.list ?? [], [positionsData]);
+    // const positionsList = useMemo(() => positionsData?.data?.list ?? [], [positionsData]);
 
     // 1. 상태 정의
     const [companyName, setCompanyName] = useState(() => sessionStorage.getItem('company_companyName') || '');
@@ -48,7 +51,6 @@ function CompanySection() {
                     caption="지원 회사명"
                     value={companyName}
                     onChange={setCompanyName}
-                    placeholder="pertineo"
                     width={530}
                     required={true}
                     autocompleteResults={companyResults}
@@ -58,11 +60,10 @@ function CompanySection() {
                     caption="지원 직무"
                     value={jobTitle}
                     onChange={setJobTitle}
-                    placeholder="소프트웨어 엔지니어"
                     width={530}
                     required={true}
-                    autocompleteResults={positionsList}
-                    selectOnly={true}
+                    // autocompleteResults={positionsList}
+                    // selectOnly={true}
                 />
             </div>
 
@@ -70,7 +71,6 @@ function CompanySection() {
                 caption="지원 공고 사이트 URL"
                 value={noticeUrl}
                 onChange={setNoticeUrl}
-                placeholder="https://pertineo.khu.ac.kr/"
                 width={1080}
             />
 

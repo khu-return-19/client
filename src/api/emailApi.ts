@@ -10,18 +10,23 @@ interface VerifyEmailData {
 export const useSendVerifyEmail = () => {
   return useMutation({
     mutationFn: async (email) => {
-      const response = await api.post(
-        "/api/auth/email/verification",
-        { email },
-        {
-          headers: { "X-API-Version": "2" },
-        },
-      );
-      return response.data;
-    },
+  try {
+    const response = await api.post(
+      "/api/auth/email/verification",
+      { email },
+      { headers: { "X-API-Version": "2" } },
+    );
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+ } catch (error: any) {
+  const message = error.response?.data?.message || error.message;
+  throw new Error(message);
+}
+},
   });
 };
-
 // NOTE: 인증번호 확인
 export const useVerifyEmailCode = () => {
   return useMutation({

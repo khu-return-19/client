@@ -24,6 +24,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [showCodeSection, setShowCodeSection] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [emailError, setEmailError] = useState(false);
+const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바르지 않습니다.");
 
   const [code, setCode] = useState("");
   const [isCodeFocused, setIsCodeFocused] = useState(false);
@@ -42,9 +43,7 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   }, []);
 
   const hasInput = email.trim().length > 0;
-  const isValidEmail =
-    email.endsWith("@khu.ac.kr") && email.split("@")[0].length > 0;
-
+  const isValidEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   const handleSend = () => {
     if (!hasInput) return;
     if (!isValidEmail) {
@@ -62,9 +61,10 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
         setShowModal(true);
         onEmailSent?.();
       },
-      onError: () => {
-        // 전송 실패
-      },
+      onError: (error) => {
+  setEmailError(true);
+  setEmailErrorMessage(error.message);
+},
     });
   };
 
@@ -156,9 +156,9 @@ onCodeVerified?.(email);
             <span className="text-[20px] font-medium leading-[150%] text-[#2876F1]">
               *
             </span>
-            <span className="text-[16px] font-normal leading-[150%] text-[#717171] ml-[5px]">
+            {/* <span className="text-[16px] font-normal leading-[150%] text-[#717171] ml-[5px]">
               경희대학교 메일만 가능합니다.
-            </span>
+            </span>  */}
           </div>
 
           <div className="flex items-center gap-[16px] mt-[12px]">
@@ -174,7 +174,10 @@ onCodeVerified?.(email);
                     setIsSent(false);
                     onEmailChanged?.();
                   }
-                  if (emailError) setEmailError(false);
+                  if (emailError) {
+                    setEmailError(false);
+                    setEmailErrorMessage("이메일이 올바르지 않습니다.");
+                  }
                 }}
                 onFocus={() => setIsEmailFocused(true)}
                 onBlur={() => setIsEmailFocused(false)}
@@ -195,7 +198,7 @@ onCodeVerified?.(email);
             <div className="flex items-center gap-[4px] mt-[4px]">
               <img src={errorIcon} alt="error" className="w-[24px] h-[24px]" />
               <span className="text-[16px] font-normal leading-[150%] text-[#A40F16]">
-                이메일이 올바르지 않습니다.
+                  {emailErrorMessage}
               </span>
             </div>
           )}

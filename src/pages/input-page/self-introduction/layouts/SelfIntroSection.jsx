@@ -6,6 +6,7 @@ import AnalysisButton from "../../components/AnalysisButton";
 import AnalysisModal from "../components/AnalysisModal";
 import TempSaveModal from "../../components/TempSaveModal";
 import BulkInputModal from "../components/BulkInputModal";
+import BulkInputErrorModal from "../components/BulkInputErrorModal";
 
 // API
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
@@ -35,6 +36,7 @@ function SelfIntroSection() {
   const { start } = useCreateAnalysis();
   const status = useAnalysisStore((state) => state.status);
   const [showBulkInputModal, setShowBulkInputModal] = useState(false);
+  const [showBulkErrorModal, setShowBulkErrorModal] = useState(false);
 
   useEffect(() => {
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(cards));
@@ -117,6 +119,10 @@ function SelfIntroSection() {
 const handleBulkConfirm = (content) => {
   parseSelfIntro(content, {
     onSuccess: ({ question_list, answer_list }) => {
+      if (!question_list || question_list.length === 0) {
+        setShowBulkErrorModal(true);
+        return;
+      }
       const parsed = question_list.map((question, index) => ({
         id: Date.now() + index,
         question,
@@ -127,6 +133,7 @@ const handleBulkConfirm = (content) => {
     },
     onError: (error) => {
       console.error("파싱 실패:", error);
+      setShowBulkErrorModal(true);
     },
   });
 };
@@ -206,6 +213,9 @@ const handleBulkConfirm = (content) => {
     isLoading={isParsing}
   />
 )}
+      {showBulkErrorModal && (
+        <BulkInputErrorModal onClose={() => setShowBulkErrorModal(false)} />
+      )}
     </div>
   );
 }

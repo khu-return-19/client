@@ -134,10 +134,19 @@ jobs:
             "${JIRA_BASE_URL}/rest/dev-status/1.0/issue/detail?issueId=${ISSUE_KEY}&type=branch"
 
       - name: Add comment with Jira issue link
-        if: steps.issue-type.outputs.type == 'Epic' || steps.issue-type.outputs.type == 'Task' || steps.issue-type.outputs.type == 'Bug'
-        uses: actions-cool/issues-helper@v3
+        uses: actions/github-script@v9
+        env:
+          JIRA_ISSUE: ${{ steps.create.outputs.issue }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         with:
-          actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.issue.number }}
-          body: 'Jira Issue Created: [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueKey = process.env.JIRA_ISSUE;
+            const jiraBaseUrl = process.env.JIRA_BASE_URL.replace(/\/$/, '');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Jira Issue Created: [${issueKey}](${jiraBaseUrl}/browse/${issueKey})`
+            });

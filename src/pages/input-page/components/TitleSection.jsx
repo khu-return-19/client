@@ -8,6 +8,7 @@ import {
   SESSION_STORAGE_KEY,
   SESSION_DURATION_MS,
 } from "api/sessionApi";
+import { clearClientAuthState } from "api/authRecovery";
 
 const GUIDE_CONTENT = [
   {
@@ -45,8 +46,8 @@ function TitleSection() {
       const remaining = SESSION_DURATION_MS - elapsed;
       if (remaining <= 0) {
         clearInterval(intervalRef.current);
-        sessionStorage.clear();
-        navigate("/");
+        clearClientAuthState();
+        navigate("/input-page/auth", { replace: true });
       } else {
         setTimeLeft(remaining);
       }

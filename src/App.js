@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { SESSION_STORAGE_KEY } from "api/sessionApi";
+import { AUTH_EXPIRED_EVENT, clearClientAuthState } from "api/authRecovery";
 import ReactGA from "react-ga4";
 import Auth from "pages/input-page/auth/Auth";
 import Company from "pages/input-page/company/Company";
@@ -19,10 +20,23 @@ function SessionRoute({ element }) {
 
 function AppContent() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     ReactGA.send({ hitType: "pageview", page: location.pathname });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleAuthExpired = () => {
+      clearClientAuthState();
+      if (location.pathname !== "/input-page/auth") {
+        navigate("/input-page/auth", { replace: true });
+      }
+    };
+
+    window.addEventListener(AUTH_EXPIRED_EVENT, handleAuthExpired);
+    return () => window.removeEventListener(AUTH_EXPIRED_EVENT, handleAuthExpired);
+  }, [location.pathname, navigate]);
 
   return (
     <>

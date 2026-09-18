@@ -2,21 +2,34 @@ import { useState, useEffect, useRef } from "react";
 import Button from "../../components/Button";
 import errorIcon from "assets/icons/인증_실패.svg";
 import successIcon from "assets/icons/인증_성공.svg";
-import { useSendVerifyEmail, useVerifyEmailCode } from "api/emailApi";
+import {
+  getResponseStatus,
+  getRetryAfterSeconds,
+  useSendVerifyEmail,
+  useVerifyEmailCode,
+} from "api/emailApi";
 import EmailSentModal from "./EmailSentModal";
-import { SESSION_STORAGE_KEY } from "api/sessionApi";
+import { clearClientAuthState } from "api/authRecovery";
+import {
+  EMAIL_CHALLENGE_DURATION_SECONDS,
+  resetVerificationState,
+} from "./verificationState";
 
 const VERIFIED_EMAIL_KEY = "verifiedEmail";
 
-function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
+function EmailVerification({
+  resetKey = 0,
+  onEmailSent,
+  onEmailChanged,
+  onVerificationExpired,
+  onCodeVerified,
+}) {
   const { mutate: sendVerifyEmail, isPending: isSending } =
     useSendVerifyEmail();
   const { mutate: verifyEmailCode, isPending: isVerifying } =
     useVerifyEmailCode();
 
   const savedEmail = sessionStorage.getItem(VERIFIED_EMAIL_KEY) || "";
-  const isAlreadyVerified =
-    !!savedEmail && !!sessionStorage.getItem(SESSION_STORAGE_KEY);
 
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState(savedEmail);
@@ -24,28 +37,75 @@ function EmailVerification({ onEmailSent, onEmailChanged, onCodeVerified }) {
   const [showCodeSection, setShowCodeSection] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [emailError, setEmailError] = useState(false);
-const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바르지 않습니다.");
+  const [emailErrorMessage, setEmailErrorMessage] = useState(
+    "이메일이 올바르지 않습니다.",
+  );
+  const [emailRetryAfter, setEmailRetryAfter] = useState(0);
 
   const [code, setCode] = useState("");
   const [isCodeFocused, setIsCodeFocused] = useState(false);
   const [codeError, setCodeError] = useState(false);
-  const [isVerified, setIsVerified] = useState(isAlreadyVerified);
-  const [timeLeft, setTimeLeft] = useState(600);
+  const [codeErrorMessage, setCodeErrorMessage] = useState(
+    "인증번호가 일치하지 않습니다.",
+  );
+  const [codeRetryAfter, setCodeRetryAfter] = useState(0);
+  const [isVerified, setIsVerified] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(EMAIL_CHALLENGE_DURATION_SECONDS);
   const timerRef = useRef(null);
 
-  // 이미 인증된 상태로 돌아온 경우 부모에 상태 복원
   useEffect(() => {
-    if (isAlreadyVerified) {
-      onEmailSent?.();
-      onCodeVerified?.(savedEmail);
+    if (emailRetryAfter > 0) {
+      const timer = setTimeout(
+        () => setEmailRetryAfter((previous) => Math.max(0, previous - 1)),
+        1000,
+      );
+      return () => clearTimeout(timer);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return undefined;
+  }, [emailRetryAfter]);
+
+  useEffect(() => {
+    if (codeRetryAfter > 0) {
+      const timer = setTimeout(
+        () => setCodeRetryAfter((previous) => Math.max(0, previous - 1)),
+        1000,
+      );
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [codeRetryAfter]);
+
+  useEffect(() => {
+    if (resetKey === 0) return;
+
+    const reset = resetVerificationState();
+    setShowModal(false);
+    setIsSent(reset.isSent);
+    setShowCodeSection(reset.showCodeSection);
+    setIsVerified(reset.isVerified);
+    setCode(reset.code);
+    setCodeError(reset.codeError);
+    setCodeErrorMessage("인증번호가 일치하지 않습니다.");
+    setEmailError(false);
+    setEmailErrorMessage("이메일이 올바르지 않습니다.");
+    setEmailRetryAfter(0);
+    setCodeRetryAfter(reset.codeRetryAfter);
+    setTimeLeft(reset.timeLeft);
+  }, [resetKey]);
 
   const hasInput = email.trim().length > 0;
   const isValidEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   const handleSend = () => {
-    if (!hasInput) return;
+    if (
+      isSending ||
+      isVerifying ||
+      isSent ||
+      isVerified ||
+      !hasInput ||
+      emailRetryAfter > 0
+    ) {
+      return;
+    }
     if (!isValidEmail) {
       setEmailError(true);
       return;
@@ -55,16 +115,30 @@ const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바�
       onSuccess: () => {
         setIsSent(true);
         setShowCodeSection(true);
-        setTimeLeft(600);
+        setTimeLeft(EMAIL_CHALLENGE_DURATION_SECONDS);
         setCode("");
         setCodeError(false);
+        setCodeErrorMessage("인증번호가 일치하지 않습니다.");
+        setIsVerified(false);
+        setEmailRetryAfter(0);
+        setCodeRetryAfter(0);
         setShowModal(true);
         onEmailSent?.();
       },
       onError: (error) => {
-  setEmailError(true);
-  setEmailErrorMessage(error.message);
-},
+        const status = getResponseStatus(error);
+        const retryAfter = getRetryAfterSeconds(error);
+        setEmailError(true);
+        if (status === 429) {
+          const seconds = retryAfter || 60;
+          setEmailRetryAfter(seconds);
+          setEmailErrorMessage(
+            `인증번호 요청이 너무 많습니다. ${seconds}초 후 다시 시도해주세요.`,
+          );
+        } else {
+          setEmailErrorMessage(error.message);
+        }
+      },
     });
   };
 
@@ -77,6 +151,22 @@ const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바�
     return () => clearInterval(timerRef.current);
   }, [isSent, timeLeft]);
 
+  useEffect(() => {
+    if (!isSent || isVerified || timeLeft > 0) return;
+
+    clearClientAuthState();
+    const reset = resetVerificationState();
+    setIsSent(reset.isSent);
+    setShowCodeSection(reset.showCodeSection);
+    setIsVerified(reset.isVerified);
+    setCode(reset.code);
+    setCodeError(reset.codeError);
+    setCodeErrorMessage("인증번호가 일치하지 않습니다.");
+    setCodeRetryAfter(reset.codeRetryAfter);
+    setTimeLeft(reset.timeLeft);
+    onVerificationExpired?.();
+  }, [isSent, isVerified, timeLeft, onVerificationExpired]);
+
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
     const s = String(seconds % 60).padStart(2, "0");
@@ -84,16 +174,15 @@ const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바�
   };
 
   const getEmailButtonStatus = () => {
-    if (isAlreadyVerified) return "completed";
     if (isSent) return "completed";
-    if (isSending) return "disabled";
+    if (isSending || emailRetryAfter > 0) return "disabled";
     if (hasInput) return "default";
     return "disabled";
   };
 
   const getEmailBorderClass = () => {
     if (emailError) return "border-b border-[#B60000]";
-    if (isSent || isAlreadyVerified) return "border-b border-[#717171]";
+    if (isSent || isVerified) return "border-b border-[#717171]";
     if (isEmailFocused) return "border-b-2 border-[#09469F]";
     return "border-b border-[#858585]";
   };
@@ -101,7 +190,7 @@ const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바�
   const hasCodeInput = code.trim().length > 0;
 
   const getCodeButtonStatus = () => {
-    if (isVerifying) return "disabled";
+    if (isVerifying || codeRetryAfter > 0) return "disabled";
     if (hasCodeInput) return "default";
     return "disabled";
   };
@@ -123,18 +212,44 @@ const [emailErrorMessage, setEmailErrorMessage] = useState("이메일이 올바�
   };
 
   const handleVerify = () => {
-    if (!hasCodeInput) return;
+    if (
+      isSending ||
+      isVerifying ||
+      !isSent ||
+      isVerified ||
+      !showCodeSection ||
+      !hasCodeInput ||
+      codeRetryAfter > 0
+    ) {
+      return;
+    }
     verifyEmailCode(
       { email, code },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           setIsVerified(true);
+          // The five-minute proof cookie starts at verification time. The
+          // challenge countdown no longer represents a deadline after this.
+          setTimeLeft(0);
           setCodeError(false);
+          setCodeErrorMessage("인증번호가 일치하지 않습니다.");
+          setCodeRetryAfter(0);
           sessionStorage.setItem(VERIFIED_EMAIL_KEY, email);
-onCodeVerified?.(email);
+          onCodeVerified?.(email);
         },
-        onError: () => {
+        onError: (error) => {
+          const status = getResponseStatus(error);
+          const retryAfter = getRetryAfterSeconds(error);
           setCodeError(true);
+          if (status === 429) {
+            const seconds = retryAfter || 60;
+            setCodeRetryAfter(seconds);
+            setCodeErrorMessage(
+              `인증번호 확인 요청이 너무 많습니다. ${seconds}초 후 다시 시도해주세요.`,
+            );
+          } else {
+            setCodeErrorMessage("인증번호가 일치하지 않습니다.");
+          }
         },
       },
     );
@@ -167,11 +282,21 @@ onCodeVerified?.(email);
                 type="email"
                 placeholder="이메일 입력"
                 value={email}
-                disabled={isAlreadyVerified}
+                disabled={isSending || isVerifying}
                 onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (isSent) {
-                    setIsSent(false);
+                  const nextEmail = e.target.value;
+                  setEmail(nextEmail);
+                  if (nextEmail !== email) {
+                    clearClientAuthState();
+                    const reset = resetVerificationState();
+                    setIsSent(reset.isSent);
+                    setShowCodeSection(reset.showCodeSection);
+                    setIsVerified(reset.isVerified);
+                    setCode(reset.code);
+                    setCodeError(reset.codeError);
+                    setEmailRetryAfter(0);
+                    setCodeRetryAfter(reset.codeRetryAfter);
+                    setTimeLeft(reset.timeLeft);
                     onEmailChanged?.();
                   }
                   if (emailError) {
@@ -203,8 +328,7 @@ onCodeVerified?.(email);
             </div>
           )}
 
-          {/* 이미 인증된 상태로 돌아온 경우 */}
-          {isAlreadyVerified && (
+          {isVerified && (
             <div className="flex items-center gap-[4px] mt-[12px]">
               <img
                 src={successIcon}
@@ -218,7 +342,7 @@ onCodeVerified?.(email);
           )}
         </div>
 
-        {showCodeSection && !isAlreadyVerified && (
+        {showCodeSection && (
           <div className="w-full mt-[40px]">
             <div className="flex items-center gap-[4px]">
               <span className="text-[20px] font-medium leading-[150%] text-black">
@@ -243,9 +367,11 @@ onCodeVerified?.(email);
                   onBlur={() => setIsCodeFocused(false)}
                   className={`w-full h-[52px] max-[767px]:h-[40px] px-[8px] ${getCodeBorderClassFinal()} text-[16px] font-normal text-black placeholder-silver outline-none bg-transparent`}
                 />
-                <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] max-[767px]:text-[13px] font-normal text-[#09469F]">
-                  {formatTime(timeLeft)}
-                </span>
+                {!isVerified && (
+                  <span className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[16px] max-[767px]:text-[13px] font-normal text-[#09469F]">
+                    {formatTime(timeLeft)}
+                  </span>
+                )}
               </div>
               <Button
                 size="s2"
@@ -265,7 +391,7 @@ onCodeVerified?.(email);
                   className="w-[24px] h-[24px]"
                 />
                 <span className="text-[16px] font-normal leading-[150%] text-[#A40F16]">
-                  인증번호가 일치하지 않습니다.
+                  {codeErrorMessage}
                 </span>
               </div>
             )}

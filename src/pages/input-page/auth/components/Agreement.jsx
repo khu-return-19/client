@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Checkbox from "./Checkbox";
 import TermsModal from "./TermsModal";
 import { useStartSession, SESSION_STORAGE_KEY } from "api/sessionApi";
+import { clearClientAuthState } from "api/authRecovery";
 
 const AGREEMENT_ITEMS = [
   {
@@ -39,10 +40,18 @@ const AGREEMENT_ITEMS = [
 const REQUIRED_IDS = ["terms", "privacy", "policy", "thirdParty"];
 const AGREEMENT_CHECKED_KEY = "agreementChecked";
 
-function Agreement({ isEmailVerified = false, email = "" }) {
+function Agreement({
+  isEmailVerified = false,
+  email = "",
+  emailChangeKey = 0,
+  onEmailInvalidated,
+}) {
   const navigate = useNavigate();
   const { mutate: startSession, isPending } = useStartSession();
-  const isSessionActive = !!sessionStorage.getItem(SESSION_STORAGE_KEY);
+  const [isSessionActive, setIsSessionActive] = useState(
+    () => !!sessionStorage.getItem(SESSION_STORAGE_KEY),
+  );
+  const [startError, setStartError] = useState("");
 
   const getSavedChecked = () => {
     try {
@@ -68,6 +77,18 @@ function Agreement({ isEmailVerified = false, email = "" }) {
   const canStart = isEmailVerified && allRequiredChecked && !isSessionActive;
   const showError = hasInteracted && !allRequiredChecked;
 
+  useEffect(() => {
+    if (!isEmailVerified) {
+      setIsSessionActive(false);
+    }
+  }, [isEmailVerified]);
+
+  useEffect(() => {
+    if (emailChangeKey > 0) {
+      setStartError("");
+    }
+  }, [emailChangeKey]);
+
   const handleAllToggle = () => {
     if (isSessionActive) return;
     setHasInteracted(true);
@@ -88,6 +109,7 @@ function Agreement({ isEmailVerified = false, email = "" }) {
 
   const handleStart = () => {
     if (!canStart || isPending) return;
+    setStartError("");
     startSession(
       {
         email,
@@ -106,6 +128,19 @@ function Agreement({ isEmailVerified = false, email = "" }) {
             JSON.stringify(checked),
           );
           navigate("/input-page/company");
+        },
+        onError: (error) => {
+          const status = error?.status ?? error?.response?.status;
+          if (status === 401) {
+            clearClientAuthState();
+            setIsSessionActive(false);
+            setStartError(
+              "이메일 인증이 만료되었습니다. 이메일을 다시 인증해 주세요.",
+            );
+            onEmailInvalidated?.();
+            return;
+          }
+          setStartError("세션을 시작할 수 없습니다. 잠시 후 다시 시도해 주세요.");
         },
       },
     );
@@ -177,6 +212,11 @@ function Agreement({ isEmailVerified = false, email = "" }) {
         {showError && (
           <p className="text-[16px] font-normal leading-[150%] text-[#A40F16] mt-[12px]">
             필수 약관에 동의해주세요.
+          </p>
+        )}
+        {startError && (
+          <p className="text-[16px] font-normal leading-[150%] text-[#A40F16] mt-[12px]">
+            {startError}
           </p>
         )}
       </div>

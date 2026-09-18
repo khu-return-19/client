@@ -5,6 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import api from "api/axiosInstance";
+import { dispatchAuthExpired } from "api/authRecovery";
 import { CreateAnalysisData, AnalysisEvent } from "schema/Analysis";
 
 // NOTE: 분석 보고서 목록 무한 스크롤 조회
@@ -92,11 +93,19 @@ export const createAnalysis = async (
   const response = await fetch(`${BASE_URL}/api/analysis`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-API-Version": "2" },
+    credentials: "include",
     body: JSON.stringify(data),
     signal,
   });
 
-  if (!response.ok) throw new Error("분석 요청 실패");
+  if (!response.ok) {
+    if (response.status === 401) {
+      dispatchAuthExpired();
+    }
+    const error = new Error("분석 요청 실패") as Error & { status?: number };
+    error.status = response.status;
+    throw error;
+  }
 
   const reader = response.body!.getReader();
   const decoder = new TextDecoder();

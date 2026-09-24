@@ -23,7 +23,7 @@ describe("createAnalysis authentication contract", () => {
     await createAnalysis({} as any, jest.fn());
 
     expect(global.fetch).toHaveBeenCalledWith(
-      expect.stringContaining("/api/analysis"),
+      "/api/analysis",
       expect.objectContaining({
         credentials: "include",
         headers: expect.objectContaining({ "X-API-Version": "2" }),

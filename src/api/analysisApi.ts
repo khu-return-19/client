@@ -83,7 +83,7 @@ export const useNumOfAnalysis = () => {
 };
 
 // 스트리밍 fetch + EventSorce 방식 사용을 위해 fetch API로 직접 구현
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = api.defaults.baseURL || "";
 
 export const createAnalysis = async (
   data: CreateAnalysisData,

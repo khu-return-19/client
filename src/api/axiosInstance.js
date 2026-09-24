@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_BASE_URL } from "./baseUrl";
 import { dispatchAuthExpired, isProtectedApiUrl } from "api/authRecovery";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
   headers: {
     "X-API-Version": "2",

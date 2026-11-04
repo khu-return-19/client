@@ -12,6 +12,7 @@ import BulkInputErrorModal from "../components/BulkInputErrorModal";
 import { useCreateAnalysis } from "hooks/useCreateAnalysis";
 import { useAnalysisStore } from "stores/analysisStore";
 import { useParseSelfIntro } from "api/parseApi";
+import posthog, { isPostHogEnabled, posthogLogger } from "../../../../posthog";
 
 const MAX_CARDS = 10;
 const SESSION_KEY = "selfIntroCards";
@@ -109,6 +110,12 @@ function SelfIntroSection() {
     if (!firstFilled) return;
 
     try {
+      if (isPostHogEnabled) {
+        posthog.capture("analysis_requested");
+        posthogLogger.info("analysis_request_started", {
+          entry_point: "self_introduction",
+        });
+      }
       await start(analysisData);
       // setShowModal(true); // 성공 시 모달 표시
     } catch (error) {

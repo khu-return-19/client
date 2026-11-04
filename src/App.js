@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate, Navig
 import { useEffect } from "react";
 import { SESSION_STORAGE_KEY } from "api/sessionApi";
 import { AUTH_EXPIRED_EVENT, clearClientAuthState } from "api/authRecovery";
+import posthog, { isPostHogEnabled } from "./posthog";
 import ReactGA from "react-ga4";
 import Auth from "pages/input-page/auth/Auth";
 import Company from "pages/input-page/company/Company";
@@ -25,6 +26,13 @@ function AppContent() {
   useEffect(() => {
     ReactGA.send({ hitType: "pageview", page: location.pathname });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const email = sessionStorage.getItem("verifiedEmail");
+    if (sessionStorage.getItem(SESSION_STORAGE_KEY) && email && isPostHogEnabled) {
+      posthog.identify(email, { email });
+    }
+  }, []);
 
   useEffect(() => {
     const handleAuthExpired = () => {

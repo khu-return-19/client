@@ -14,6 +14,7 @@ import {
   EMAIL_CHALLENGE_DURATION_SECONDS,
   resetVerificationState,
 } from "./verificationState";
+import posthog, { isPostHogEnabled } from "../../../../posthog";
 
 const VERIFIED_EMAIL_KEY = "verifiedEmail";
 
@@ -123,6 +124,9 @@ function EmailVerification({
         setEmailRetryAfter(0);
         setCodeRetryAfter(0);
         setShowModal(true);
+        if (isPostHogEnabled) {
+          posthog.capture("email_verification_requested");
+        }
         onEmailSent?.();
       },
       onError: (error) => {
@@ -235,6 +239,9 @@ function EmailVerification({
           setCodeErrorMessage("인증번호가 일치하지 않습니다.");
           setCodeRetryAfter(0);
           sessionStorage.setItem(VERIFIED_EMAIL_KEY, email);
+          if (isPostHogEnabled) {
+            posthog.capture("email_verification_completed");
+          }
           onCodeVerified?.(email);
         },
         onError: (error) => {

@@ -8,6 +8,7 @@ import AnalysisErrorModal from "./components/AnalysisErrorModal";
 
 // hooks
 import { useAnalysisStore } from "stores/analysisStore";
+import posthog, { isPostHogEnabled, posthogLogger } from "../../../posthog";
 
 // 각 단계의 예상 소요 시간 (ms) — 프로그레스 속도 계산에 사용
 const STAGE_DURATIONS = {
@@ -156,6 +157,8 @@ function Loading() {
   const passScoreDoneRef = useRef(false);
   const passScoreDataRef = useRef(null);
   const schemerDoneRef = useRef(false);
+  const analysisCompletionCapturedRef = useRef(false);
+  const analysisFailureLoggedRef = useRef(false);
   const [errorModal, setErrorModal] = useState(null); // { title, message, hint? } | null
   const bottomRef = useRef(null);
 
@@ -366,6 +369,10 @@ function Loading() {
   // HTTP 요청 자체 실패 (네트워크 오류, 서버 오류 등) — 스트림 이벤트 에러와 별개로 처리
   useEffect(() => {
     if (status !== "failed") return;
+    if (isPostHogEnabled && !analysisFailureLoggedRef.current) {
+      analysisFailureLoggedRef.current = true;
+      posthogLogger.warn("analysis_request_failed");
+    }
     // 이미 이벤트 기반 에러 모달이 열려 있으면 중복 표시하지 않음
     setErrorModal((prev) =>
       prev
@@ -380,6 +387,11 @@ function Loading() {
   // stream 완료 + UI 큐 소진 후 1500ms 대기 후 이동
   useEffect(() => {
     if (status !== "done" || !queueDone) return;
+    if (isPostHogEnabled && !analysisCompletionCapturedRef.current) {
+      analysisCompletionCapturedRef.current = true;
+      posthog.capture("analysis_completed");
+      posthogLogger.info("analysis_completed");
+    }
     const timer = setTimeout(() => navigate("/analysis"), 1500);
     return () => clearTimeout(timer);
   }, [status, queueDone, navigate]);

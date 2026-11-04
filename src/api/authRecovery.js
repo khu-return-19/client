@@ -1,3 +1,5 @@
+import posthog, { isPostHogEnabled } from "../posthog";
+
 export const AUTH_EXPIRED_EVENT = "pertineo:auth-expired";
 
 // These values are client-side hints only. The HttpOnly cookies issued by the
@@ -28,6 +30,11 @@ function getSessionStorage() {
 
 export function clearClientAuthState(storage = getSessionStorage()) {
   if (!storage) return;
+
+  if (storage.getItem("sessionStartTime") && isPostHogEnabled) {
+    posthog.reset();
+  }
+
   AUTH_STORAGE_KEYS.forEach((key) => storage.removeItem(key));
 }
 

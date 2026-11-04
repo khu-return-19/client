@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "components/Header/Header";
 import AnalysisNavBar from "./components/AnalysisNavBar";
 import { useDownloadPDF } from "hooks/useDownloadPDF";
+import posthog, { isPostHogEnabled } from "../../posthog";
 
 // 탭 컴포넌트
 import AnalsisSummary from "./components/AnalsisSummary";
@@ -29,6 +30,13 @@ function AnalysisPage() {
 
   const handleNavChange = (item) => setActiveNav(item);
 
+  const handleDownload = () => {
+    if (isPostHogEnabled) {
+      posthog.capture("analysis_report_download_requested");
+    }
+    download();
+  };
+
   const handleNext = () => {
     const idx = SECTION_IDS.indexOf(activeNav);
     if (idx < SECTION_IDS.length - 1) {
@@ -55,7 +63,7 @@ function AnalysisPage() {
               자기소개서 역량 평가 리포트
             </h2>
             <button
-              onClick={download}
+              onClick={handleDownload}
               disabled={isGenerating}
               className="w-[160px] h-[44px] bg-[#09469F] text-white text-[16px] font-medium rounded-[6px] hover:bg-[#0D326F] active:bg-[#0D326F] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
@@ -99,7 +107,7 @@ function AnalysisPage() {
                       <C
                         onNext={handleNext}
                         onPrev={handlePrev}
-                        onDownload={download}     
+                        onDownload={handleDownload}     
                         isGenerating={isGenerating} 
                       />
                     );

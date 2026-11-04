@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "utils/reactQueryClient";
+import "./posthog";
 
 ReactGA.initialize(process.env.REACT_APP_GA_ID);
 

@@ -5,6 +5,7 @@ import Checkbox from "./Checkbox";
 import TermsModal from "./TermsModal";
 import { useStartSession, SESSION_STORAGE_KEY } from "api/sessionApi";
 import { clearClientAuthState } from "api/authRecovery";
+import posthog, { isPostHogEnabled } from "../../../../posthog";
 
 const AGREEMENT_ITEMS = [
   {
@@ -123,6 +124,10 @@ function Agreement({
       {
         onSuccess: () => {
           sessionStorage.setItem(SESSION_STORAGE_KEY, String(Date.now()));
+          if (email && isPostHogEnabled) {
+            posthog.identify(email, { email });
+            posthog.capture("session_started");
+          }
           sessionStorage.setItem(
             AGREEMENT_CHECKED_KEY,
             JSON.stringify(checked),

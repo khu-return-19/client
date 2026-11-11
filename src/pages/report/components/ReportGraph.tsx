@@ -256,6 +256,8 @@ export default function ReportGraph({
           : undefined;
   const controlsRef = useRef<any>(null);
   const [isResetting, setIsResetting] = useState(false);
+  // 리포트에서 합격자 표본이 없으면 합격자 면을 그리지 않는다. 리포트가 없는 랜딩 그래프는 예시 면을 그대로 둔다.
+  const showPassPlan = passScoreData != null || evaluationResult == null;
 
   return (
     <div className="w-full h-full">
@@ -275,13 +277,15 @@ export default function ReportGraph({
         <group position={[0, position || -3, 0]}>
           <Axis highlightAxis={highlightAxis} highlightScore={highlightScore} />
           <Plan x={userX || 2} y={userY || 2} z={userZ || 2} color="#2876F1" />
-          <Plan
-            x={passScoreData != null ? passScoreData.x : 3}
-            y={passScoreData != null ? passScoreData.y : 3}
-            z={passScoreData != null ? passScoreData.z : 3}
-            color="rgba(193,217,255,0.3)"
-            lineColor="#AEB4BC"
-          />
+          {showPassPlan && (
+            <Plan
+              x={passScoreData != null ? passScoreData.x : 3}
+              y={passScoreData != null ? passScoreData.y : 3}
+              z={passScoreData != null ? passScoreData.z : 3}
+              color="rgba(193,217,255,0.3)"
+              lineColor="#AEB4BC"
+            />
+          )}
           {highlightAxis && (
             <AxisScoreLine
               highlightAxis={highlightAxis}

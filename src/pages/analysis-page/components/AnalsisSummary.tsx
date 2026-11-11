@@ -117,6 +117,11 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
                 )}
               </div>
             ))}
+            {evaluationResult != null && passScoreData == null && (
+              <p className="mt-[8px] text-[clamp(12px,0.97vw,14px)] text-[#717171] font-['Pretendard']">
+                합격자 표본이 아직 없어 직무 요구 역량 기준으로 평가했습니다.
+              </p>
+            )}
           </div>
         </div>
       </SectionCard>

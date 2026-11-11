@@ -191,16 +191,18 @@ export default function AnalysisDiagnosis({
                 <div className="text-base font-medium text-gray-900">
                   {evaluationResult?.x.score || ""}
                 </div>
-                <div
-                  className={cn(
-                    "text-[10px]",
-                    xScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                  )}
-                >
-                  {xScoreDiff > 0
-                    ? `+${xScoreDiff.toFixed(2)}p`
-                    : `${xScoreDiff.toFixed(2)}p`}
-                </div>
+                {xScoreDiff != null && (
+                  <div
+                    className={cn(
+                      "text-[10px]",
+                      xScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                    )}
+                  >
+                    {xScoreDiff > 0
+                      ? `+${xScoreDiff.toFixed(2)}p`
+                      : `${xScoreDiff.toFixed(2)}p`}
+                  </div>
+                )}
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.x.compareScore || ""}
@@ -219,16 +221,18 @@ export default function AnalysisDiagnosis({
                 <div className="text-base font-medium text-gray-900">
                   {evaluationResult?.y.score || ""}
                 </div>
-                <div
-                  className={cn(
-                    "text-[10px]",
-                    yScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                  )}
-                >
-                  {yScoreDiff > 0
-                    ? `+${yScoreDiff.toFixed(2)}p`
-                    : `${yScoreDiff.toFixed(2)}p`}
-                </div>
+                {yScoreDiff != null && (
+                  <div
+                    className={cn(
+                      "text-[10px]",
+                      yScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                    )}
+                  >
+                    {yScoreDiff > 0
+                      ? `+${yScoreDiff.toFixed(2)}p`
+                      : `${yScoreDiff.toFixed(2)}p`}
+                  </div>
+                )}
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.y.compareScore || ""}
@@ -247,16 +251,18 @@ export default function AnalysisDiagnosis({
                 <div className="text-base font-medium text-gray-900">
                   {evaluationResult?.z.score || ""}
                 </div>
-                <div
-                  className={cn(
-                    "text-[10px]",
-                    zScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                  )}
-                >
-                  {zScoreDiff > 0
-                    ? `+${zScoreDiff.toFixed(2)}p`
-                    : `${zScoreDiff.toFixed(2)}p`}
-                </div>
+                {zScoreDiff != null && (
+                  <div
+                    className={cn(
+                      "text-[10px]",
+                      zScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                    )}
+                  >
+                    {zScoreDiff > 0
+                      ? `+${zScoreDiff.toFixed(2)}p`
+                      : `${zScoreDiff.toFixed(2)}p`}
+                  </div>
+                )}
               </div>
               <div className="flex-[1] text-xs text-gray-900">
                 {evaluationResult?.z.compareScore || ""}

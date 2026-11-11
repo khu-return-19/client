@@ -90,6 +90,7 @@ export interface EvaluateResultData {
   x: AxisScore;
   y: AxisScore;
   z: AxisScore;
+  averageScore?: number; // 서버가 x/y/z로 계산한 평균 (이전에 저장된 리포트에는 없음)
   roleFit: string;
   domainFit: string;
   cultureFit: string;

@@ -2,6 +2,7 @@ import cn from "utils/cn";
 import ReportGraph from "pages/report/components/ReportGraph";
 import { useAnalysisStore } from "stores/analysisStore";
 import AnalysisHeader from "./AnalysisHeader";
+import NoPassSampleNotice from "./shared/NoPassSampleNotice";
 import { useEvaluationScores } from "hooks/useEvaluationScores";
 
 export default function AnalysisDiagnosis({
@@ -162,143 +163,148 @@ export default function AnalysisDiagnosis({
       </section>
       <section className="pt-[75px]">
         <AnalysisHeader title="기존 합격자 비교 분석" />
-        <div className="flex gap-10">
-          <div className="flex-shrink-0">
-            <ReportGraph />
+        {/* 합격자 표본이 없으면 그래프·비교 표·경쟁력 비교를 모두 빼고 안내 문구만 보여 준다 (QA TC-01) */}
+        {passScoreData == null ? (
+          <NoPassSampleNotice className="text-base text-gray-900" />
+        ) : (
+          <div className="flex gap-10">
+            <div className="flex-shrink-0">
+              <ReportGraph />
+            </div>
+            <div className="flex flex-col py-4 flex-1 min-w-0">
+              {/* Header */}
+              <div className="flex gap-0 pb-2 mb-1">
+                <div className="flex-[0.5] text-base">평가 항목</div>
+                <div className="flex-[1] flex flex-col items-center text-base">
+                  합격자 평균
+                </div>
+                <div className="flex-[1] flex justify-center text-base pr-3">
+                  지원자
+                </div>
+                <div className="flex-[1] text-base">비교분석</div>
+              </div>
+
+              {/* Row 1 */}
+              <div className="flex items-center py-3">
+                <div className="flex-[0.5] text-xs text-gray900">
+                  X축 (학습 수준)
+                </div>
+                <div className="flex-[1] text-base flex justify-center">
+                  {passScoreData?.x || "-"}
+                </div>
+                <div className="flex-[1] flex flex-col items-center pr-3">
+                  <div className="text-base font-medium text-gray-900">
+                    {evaluationResult?.x.score || ""}
+                  </div>
+                  {xScoreDiff != null && (
+                    <div
+                      className={cn(
+                        "text-[10px]",
+                        xScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                      )}
+                    >
+                      {xScoreDiff > 0
+                        ? `+${xScoreDiff.toFixed(2)}p`
+                        : `${xScoreDiff.toFixed(2)}p`}
+                    </div>
+                  )}
+                </div>
+                <div className="flex-[1] text-xs text-gray-900">
+                  {evaluationResult?.x.compareScore || ""}
+                </div>
+              </div>
+
+              {/* Row 2 */}
+              <div className="flex items-center py-3">
+                <div className="flex-[0.5] text-xs text-gray900">
+                  Y축 (직무 적성)
+                </div>
+                <div className="flex-[1] text-base flex justify-center">
+                  {passScoreData?.y || "-"}
+                </div>
+                <div className="flex-[1] flex flex-col items-center pr-3">
+                  <div className="text-base font-medium text-gray-900">
+                    {evaluationResult?.y.score || ""}
+                  </div>
+                  {yScoreDiff != null && (
+                    <div
+                      className={cn(
+                        "text-[10px]",
+                        yScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                      )}
+                    >
+                      {yScoreDiff > 0
+                        ? `+${yScoreDiff.toFixed(2)}p`
+                        : `${yScoreDiff.toFixed(2)}p`}
+                    </div>
+                  )}
+                </div>
+                <div className="flex-[1] text-xs text-gray-900">
+                  {evaluationResult?.y.compareScore || ""}
+                </div>
+              </div>
+
+              {/* Row 3 */}
+              <div className="flex items-center py-3">
+                <div className="flex-[0.5] text-xs text-gray900">
+                  Z축 (수행 역량)
+                </div>
+                <div className="flex-[1] text-base flex justify-center">
+                  {passScoreData?.z || "-"}
+                </div>
+                <div className="flex-[1] flex flex-col items-center pr-3">
+                  <div className="text-base font-medium text-gray-900">
+                    {evaluationResult?.z.score || ""}
+                  </div>
+                  {zScoreDiff != null && (
+                    <div
+                      className={cn(
+                        "text-[10px]",
+                        zScoreDiff > 0 ? "text-blue-500" : "text-red-500",
+                      )}
+                    >
+                      {zScoreDiff > 0
+                        ? `+${zScoreDiff.toFixed(2)}p`
+                        : `${zScoreDiff.toFixed(2)}p`}
+                    </div>
+                  )}
+                </div>
+                <div className="flex-[1] text-xs text-gray-900">
+                  {evaluationResult?.z.compareScore || ""}
+                </div>
+              </div>
+
+              {/* Row 4 */}
+              <div className="flex items-center py-3">
+                <div className="flex-[0.5] text-xs font-medium text-gray900">
+                  최종 평가 점수
+                </div>
+                <div className="flex-[1] text-base flex justify-center">
+                  {averageCompareScore || "-"}
+                </div>
+                <div className="flex-[1] flex flex-col items-center pr-3">
+                  <div className="text-base font-medium text-gray-900">
+                    {averageScore || ""}
+                  </div>
+                </div>
+                <div className="flex-[1] text-xs text-gray-900"></div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-xl mb-4 mt-[52px]">
+                  경쟁력 비교
+                </h4>
+                {evaluationResult?.compareProb.map((prob, index) => (
+                  <div className="flex gap-2">
+                    <span>• </span>
+                    <p key={index} className="text-base">
+                      {prob}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col py-4 flex-1 min-w-0">
-            {/* Header */}
-            <div className="flex gap-0 pb-2 mb-1">
-              <div className="flex-[0.5] text-base">평가 항목</div>
-              <div className="flex-[1] flex flex-col items-center text-base">
-                합격자 평균
-              </div>
-              <div className="flex-[1] flex justify-center text-base pr-3">
-                지원자
-              </div>
-              <div className="flex-[1] text-base">비교분석</div>
-            </div>
-
-            {/* Row 1 */}
-            <div className="flex items-center py-3">
-              <div className="flex-[0.5] text-xs text-gray900">
-                X축 (학습 수준)
-              </div>
-              <div className="flex-[1] text-base flex justify-center">
-                {passScoreData?.x || "-"}
-              </div>
-              <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">
-                  {evaluationResult?.x.score || ""}
-                </div>
-                {xScoreDiff != null && (
-                  <div
-                    className={cn(
-                      "text-[10px]",
-                      xScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                    )}
-                  >
-                    {xScoreDiff > 0
-                      ? `+${xScoreDiff.toFixed(2)}p`
-                      : `${xScoreDiff.toFixed(2)}p`}
-                  </div>
-                )}
-              </div>
-              <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.x.compareScore || ""}
-              </div>
-            </div>
-
-            {/* Row 2 */}
-            <div className="flex items-center py-3">
-              <div className="flex-[0.5] text-xs text-gray900">
-                Y축 (직무 적성)
-              </div>
-              <div className="flex-[1] text-base flex justify-center">
-                {passScoreData?.y || "-"}
-              </div>
-              <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">
-                  {evaluationResult?.y.score || ""}
-                </div>
-                {yScoreDiff != null && (
-                  <div
-                    className={cn(
-                      "text-[10px]",
-                      yScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                    )}
-                  >
-                    {yScoreDiff > 0
-                      ? `+${yScoreDiff.toFixed(2)}p`
-                      : `${yScoreDiff.toFixed(2)}p`}
-                  </div>
-                )}
-              </div>
-              <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.y.compareScore || ""}
-              </div>
-            </div>
-
-            {/* Row 3 */}
-            <div className="flex items-center py-3">
-              <div className="flex-[0.5] text-xs text-gray900">
-                Z축 (수행 역량)
-              </div>
-              <div className="flex-[1] text-base flex justify-center">
-                {passScoreData?.z || "-"}
-              </div>
-              <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">
-                  {evaluationResult?.z.score || ""}
-                </div>
-                {zScoreDiff != null && (
-                  <div
-                    className={cn(
-                      "text-[10px]",
-                      zScoreDiff > 0 ? "text-blue-500" : "text-red-500",
-                    )}
-                  >
-                    {zScoreDiff > 0
-                      ? `+${zScoreDiff.toFixed(2)}p`
-                      : `${zScoreDiff.toFixed(2)}p`}
-                  </div>
-                )}
-              </div>
-              <div className="flex-[1] text-xs text-gray-900">
-                {evaluationResult?.z.compareScore || ""}
-              </div>
-            </div>
-
-            {/* Row 4 */}
-            <div className="flex items-center py-3">
-              <div className="flex-[0.5] text-xs font-medium text-gray900">
-                최종 평가 점수
-              </div>
-              <div className="flex-[1] text-base flex justify-center">
-                {averageCompareScore || "-"}
-              </div>
-              <div className="flex-[1] flex flex-col items-center pr-3">
-                <div className="text-base font-medium text-gray-900">
-                  {averageScore || ""}
-                </div>
-              </div>
-              <div className="flex-[1] text-xs text-gray-900"></div>
-            </div>
-            <div>
-              <h4 className="font-semibold text-xl mb-4 mt-[52px]">
-                경쟁력 비교
-              </h4>
-              {evaluationResult?.compareProb.map((prob, index) => (
-                <div className="flex gap-2">
-                  <span>• </span>
-                  <p key={index} className="text-base">
-                    {prob}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
       </section>
       {/* 하단 버튼 */}
       <div className="flex justify-center gap-[16px] pt-[60px] pb-[60px]">

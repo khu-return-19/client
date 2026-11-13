@@ -3,10 +3,11 @@ import { useAnalysisStore } from "stores/analysisStore";
 interface EvaluationScores {
   averageScore: number | null | string;
   averageCompareScore: number | null | string;
-  xScoreDiff: number;
-  yScoreDiff: number;
-  zScoreDiff: number;
-  averageDiff: number;
+  // 합격자 표본이 없으면 null (비교하지 않음)
+  xScoreDiff: number | null;
+  yScoreDiff: number | null;
+  zScoreDiff: number | null;
+  averageDiff: number | null;
 }
 
 export function useEvaluationScores(): EvaluationScores {
@@ -16,10 +17,10 @@ export function useEvaluationScores(): EvaluationScores {
     return {
       averageScore: null,
       averageCompareScore: null,
-      xScoreDiff: 0,
-      yScoreDiff: 0,
-      zScoreDiff: 0,
-      averageDiff: 0,
+      xScoreDiff: null,
+      yScoreDiff: null,
+      zScoreDiff: null,
+      averageDiff: null,
     };
   }
 
@@ -46,12 +47,12 @@ export function useEvaluationScores(): EvaluationScores {
   return {
     averageScore,
     averageCompareScore,
-    xScoreDiff: x.score - (passScoreData?.x || 0),
-    yScoreDiff: y.score - (passScoreData?.y || 0),
-    zScoreDiff: z.score - (passScoreData?.z || 0),
+    xScoreDiff: passScoreData != null ? x.score - passScoreData.x : null,
+    yScoreDiff: passScoreData != null ? y.score - passScoreData.y : null,
+    zScoreDiff: passScoreData != null ? z.score - passScoreData.z : null,
     averageDiff:
       averageScore !== "-" && averageCompareScore !== "-"
         ? averageScore - averageCompareScore
-        : 0,
+        : null,
   };
 }

@@ -112,6 +112,8 @@ export interface ReviseResultData {
   best_reply: string[];
   reply_reason: string[];
   expectation: string[];
+  required_inputs?: string[][]; // 답변별로 지원자가 직접 채워야 하는 항목
+  needs_user_input?: boolean; // true이면 수정본을 그대로 제출할 수 없음
 }
 
 // pass_score

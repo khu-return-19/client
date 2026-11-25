@@ -31,7 +31,11 @@ export default function ImproveStrategy({
           <Row
             label="최종 평가 점수 :"
             value={averageScore + "점"}
-            sub={`기존합격자 대비 ${averageDiff.toFixed(1)} ${averageDiff > 0 ? "↑" : "↓"}`}
+            sub={
+              averageDiff != null
+                ? `기존합격자 대비 ${averageDiff.toFixed(1)} ${averageDiff > 0 ? "↑" : "↓"}`
+                : ""
+            }
           />
           <Row
             label="경쟁력 :"

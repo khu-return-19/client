@@ -1,12 +1,20 @@
 import SectionCard from "./SectionCard";
 import ReportGraph from "pages/report/components/ReportGraph";
 import NavigationButtons from "./shared/NavigationButtons";
+import NoPassSampleNotice from "./shared/NoPassSampleNotice";
 import { useAnalysisStore } from "stores/analysisStore";
 import { useEvaluationScores } from "hooks/useEvaluationScores";
+import cn from "utils/cn";
 
 export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
   const { evaluationResult, normalData, passScoreData } = useAnalysisStore();
   const { averageScore, averageCompareScore } = useEvaluationScores();
+
+  // 합격자 표본이 없으면 합격자 점수 열을 빼고 안내 문구만 보여 준다 (QA TC-01).
+  const hasPassSample = passScoreData != null;
+  const rowGrid = hasPassSample
+    ? "grid grid-cols-[clamp(100px,9.7vw,140px)_1fr_1fr_clamp(44px,4.2vw,60px)]"
+    : "grid grid-cols-[clamp(100px,9.7vw,140px)_1fr_clamp(44px,4.2vw,60px)]";
 
   const labelStyle =
     "text-[14px] min-[894px]:text-[16px] font-medium leading-[150%] text-[#717171] font-['Pretendard'] shrink-0 whitespace-nowrap";
@@ -54,7 +62,7 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
           </div>
           <div className="flex flex-col">
             {/* 헤더행 */}
-            <div className="grid grid-cols-[clamp(100px,9.7vw,140px)_1fr_1fr_clamp(44px,4.2vw,60px)] mb-[15px]">
+            <div className={cn(rowGrid, "mb-[15px]")}>
               <span />
               <div className="flex items-center justify-center gap-[6px]">
                 <div className="w-[clamp(11px,1.04vw,15px)] h-[clamp(11px,1.04vw,15px)] rounded-[2px] shrink-0 bg-[rgba(40,118,241,0.5)] border border-[#024FCB]" />
@@ -62,12 +70,14 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
                   내 점수
                 </span>
               </div>
-              <div className="flex items-center justify-center gap-[6px]">
-                <div className="w-[clamp(11px,1.04vw,15px)] h-[clamp(11px,1.04vw,15px)] rounded-[2px] shrink-0 bg-[rgba(193,217,255,0.3)] border border-[#AEB4BC]" />
-                <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">
-                  합격자 점수
-                </span>
-              </div>
+              {hasPassSample && (
+                <div className="flex items-center justify-center gap-[6px]">
+                  <div className="w-[clamp(11px,1.04vw,15px)] h-[clamp(11px,1.04vw,15px)] rounded-[2px] shrink-0 bg-[rgba(193,217,255,0.3)] border border-[#AEB4BC]" />
+                  <span className="text-[clamp(12px,0.97vw,14px)] font-medium text-[#717171] font-['Pretendard']">
+                    합격자 점수
+                  </span>
+                </div>
+              )}
               <span />
             </div>
             {/* 가로행 */}
@@ -99,15 +109,17 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
             ].map((row) => (
               <div
                 key={row.label}
-                className="grid grid-cols-[clamp(100px,9.7vw,140px)_1fr_1fr_clamp(44px,4.2vw,60px)] py-[clamp(8px,0.83vw,12px)]"
+                className={cn(rowGrid, "py-[clamp(8px,0.83vw,12px)]")}
               >
                 <span className={labelStyle}>{row.label}</span>
                 <span className="text-[clamp(14px,1.1vw,16px)] font-bold text-[#111] font-['Pretendard'] text-center">
                   {row.my}
                 </span>
-                <span className="text-[clamp(14px,1.1vw,16px)] font-medium text-[#111] font-['Pretendard'] text-center">
-                  {row.pass}
-                </span>
+                {hasPassSample && (
+                  <span className="text-[clamp(14px,1.1vw,16px)] font-medium text-[#111] font-['Pretendard'] text-center">
+                    {row.pass}
+                  </span>
+                )}
                 {row.mark ? (
                   <span className="text-[clamp(10px,0.83vw,12px)] text-[#717171] font-['Pretendard'] self-center">
                     *5.0만점
@@ -117,6 +129,9 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
                 )}
               </div>
             ))}
+            {evaluationResult != null && !hasPassSample && (
+              <NoPassSampleNotice className="mt-[8px] text-[clamp(12px,0.97vw,14px)] text-[#717171]" />
+            )}
           </div>
         </div>
       </SectionCard>

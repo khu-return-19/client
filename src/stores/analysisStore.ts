@@ -21,7 +21,7 @@ interface AnalysisStore {
   setEvents: (updater: (prev: AnalysisEvent[]) => AnalysisEvent[]) => void;
   setStatus: (status: AnalysisStore["status"]) => void;
   setFinalData: (data: FinalStateData) => void;
-  setPassScoreData: (data: PassScoreData) => void;
+  setPassScoreData: (data: PassScoreData | null) => void;
   setAbortController: (ctrl: AbortController | null) => void;
   reset: () => void;
 }

@@ -3,10 +3,11 @@ import { useAnalysisStore } from "stores/analysisStore";
 interface EvaluationScores {
   averageScore: number | null | string;
   averageCompareScore: number | null | string;
-  xScoreDiff: number;
-  yScoreDiff: number;
-  zScoreDiff: number;
-  averageDiff: number;
+  // 합격자 표본이 없으면 null (비교하지 않음)
+  xScoreDiff: number | null;
+  yScoreDiff: number | null;
+  zScoreDiff: number | null;
+  averageDiff: number | null;
 }
 
 export function useEvaluationScores(): EvaluationScores {
@@ -16,10 +17,10 @@ export function useEvaluationScores(): EvaluationScores {
     return {
       averageScore: null,
       averageCompareScore: null,
-      xScoreDiff: 0,
-      yScoreDiff: 0,
-      zScoreDiff: 0,
-      averageDiff: 0,
+      xScoreDiff: null,
+      yScoreDiff: null,
+      zScoreDiff: null,
+      averageDiff: null,
     };
   }
 
@@ -27,12 +28,16 @@ export function useEvaluationScores(): EvaluationScores {
   const isString = (...vals: unknown[]) =>
     vals.some((v) => typeof v === "string");
 
-  const averageScore = isString(x.score, y.score, z.score)
-    ? "-"
-    : ((
-        ((x.score as number) + (y.score as number) + (z.score as number)) /
-        3
-      ).toFixed(1) as unknown as number);
+  // 서버가 계산한 평균을 우선 쓰고, averageScore가 없는 이전 리포트만 직접 계산한다.
+  const averageScore =
+    typeof evaluationResult.averageScore === "number"
+      ? (evaluationResult.averageScore.toFixed(1) as unknown as number)
+      : isString(x.score, y.score, z.score)
+        ? "-"
+        : ((
+            ((x.score as number) + (y.score as number) + (z.score as number)) /
+            3
+          ).toFixed(1) as unknown as number);
 
   const averageCompareScore =
     passScoreData == null
@@ -42,12 +47,12 @@ export function useEvaluationScores(): EvaluationScores {
   return {
     averageScore,
     averageCompareScore,
-    xScoreDiff: x.score - (passScoreData?.x || 0),
-    yScoreDiff: y.score - (passScoreData?.y || 0),
-    zScoreDiff: z.score - (passScoreData?.z || 0),
+    xScoreDiff: passScoreData != null ? x.score - passScoreData.x : null,
+    yScoreDiff: passScoreData != null ? y.score - passScoreData.y : null,
+    zScoreDiff: passScoreData != null ? z.score - passScoreData.z : null,
     averageDiff:
       averageScore !== "-" && averageCompareScore !== "-"
         ? averageScore - averageCompareScore
-        : 0,
+        : null,
   };
 }

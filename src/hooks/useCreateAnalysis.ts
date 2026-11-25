@@ -11,6 +11,8 @@ export const useCreateAnalysis = () => {
     setAbortController(controller);
     setStatus("running");
     setEvents(() => []);
+    // 이전 분석의 합격자 점수가 남지 않게 비운다. 이번 분석에 합격자 표본이 없으면 null로 남는다.
+    setPassScoreData(null);
 
     try {
       await createAnalysis(data, (event) => {

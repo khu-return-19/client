@@ -19,6 +19,11 @@ export default function AnalsisSummary({ onNext }: { onNext?: () => void }) {
           <div className="flex flex-col gap-[clamp(20px,2.2vw,32px)]">
             <span className="text-[clamp(28px,2.8vw,40px)] font-normal text-[#2876F1] font-['Pretendard'] leading-[120%]">
               {evaluationResult?.level || "보통"}
+              {averageScore != null && averageScore !== "-" && (
+                <span className="ml-[8px] text-[clamp(16px,1.4vw,20px)] text-[#717171]">
+                  ({averageScore} / 5.0)
+                </span>
+              )}
             </span>
             <p className="text-[clamp(14px,1.1vw,16px)] font-normal text-[#111] font-['Pretendard'] leading-[170%]">
               본 분석 결과, 귀하는 {normalData?.company}{" "}

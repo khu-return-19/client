@@ -27,12 +27,16 @@ export function useEvaluationScores(): EvaluationScores {
   const isString = (...vals: unknown[]) =>
     vals.some((v) => typeof v === "string");
 
-  const averageScore = isString(x.score, y.score, z.score)
-    ? "-"
-    : ((
-        ((x.score as number) + (y.score as number) + (z.score as number)) /
-        3
-      ).toFixed(1) as unknown as number);
+  // 서버가 계산한 평균을 우선 쓰고, averageScore가 없는 이전 리포트만 직접 계산한다.
+  const averageScore =
+    typeof evaluationResult.averageScore === "number"
+      ? (evaluationResult.averageScore.toFixed(1) as unknown as number)
+      : isString(x.score, y.score, z.score)
+        ? "-"
+        : ((
+            ((x.score as number) + (y.score as number) + (z.score as number)) /
+            3
+          ).toFixed(1) as unknown as number);
 
   const averageCompareScore =
     passScoreData == null
